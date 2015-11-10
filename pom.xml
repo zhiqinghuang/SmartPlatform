@@ -52,8 +52,9 @@
 				<configuration>
 					<scanIntervalSeconds>10</scanIntervalSeconds>
 					<webApp>
-						<contextPath>/abc</contextPath>
+						<contextPath>/SmartPlatform</contextPath>
 					</webApp>
+					<jettyXml>jetty.xml</jettyXml>
 				</configuration>
 			</plugin>
 			<plugin>
