@@ -16,6 +16,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import javax.servlet.ServletOutputStream;
+import javax.servlet.WriteListener;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 import java.io.IOException;
@@ -544,6 +545,18 @@ abstract class OnCommittedResponseWrapper extends HttpServletResponseWrapper {
 
 		public String toString() {
 			return getClass().getName() + "[delegate=" + delegate.toString() + "]";
+		}
+
+		@Override
+		public boolean isReady() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public void setWriteListener(WriteListener writeListener) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 }
