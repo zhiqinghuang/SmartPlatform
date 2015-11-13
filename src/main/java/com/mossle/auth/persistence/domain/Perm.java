@@ -24,182 +24,180 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "AUTH_PERM")
 public class Perm implements java.io.Serializable {
-    private static final long serialVersionUID = 0L;
+	private static final long serialVersionUID = 0L;
 
-    /** null. */
-    private Long id;
+	/** null. */
+	private Long id;
 
-    /** null. */
-    private PermType permType;
+	/** null. */
+	private PermType permType;
 
-    /** null. */
-    private String code;
+	/** null. */
+	private String code;
 
-    /** null. */
-    private String name;
+	/** null. */
+	private String name;
 
-    /** null. */
-    private String tenantId;
+	/** null. */
+	private String tenantId;
 
-    /** null. */
-    private Integer priority;
+	/** null. */
+	private Integer priority;
 
-    /** . */
-    private Set<RoleDef> roleDefs = new HashSet<RoleDef>(0);
+	/** . */
+	private Set<RoleDef> roleDefs = new HashSet<RoleDef>(0);
 
-    /** . */
-    private Set<Access> accesses = new HashSet<Access>(0);
+	/** . */
+	private Set<Access> accesses = new HashSet<Access>(0);
 
-    /** . */
-    private Set<Menu> menus = new HashSet<Menu>(0);
+	/** . */
+	private Set<Menu> menus = new HashSet<Menu>(0);
 
-    public Perm() {
-    }
+	public Perm() {
+	}
 
-    public Perm(PermType permType) {
-        this.permType = permType;
-    }
+	public Perm(PermType permType) {
+		this.permType = permType;
+	}
 
-    public Perm(PermType permType, String code, String name, String tenantId,
-            Integer priority, Set<RoleDef> roleDefs, Set<Access> accesses,
-            Set<Menu> menus) {
-        this.permType = permType;
-        this.code = code;
-        this.name = name;
-        this.tenantId = tenantId;
-        this.priority = priority;
-        this.roleDefs = roleDefs;
-        this.accesses = accesses;
-        this.menus = menus;
-    }
+	public Perm(PermType permType, String code, String name, String tenantId, Integer priority, Set<RoleDef> roleDefs, Set<Access> accesses, Set<Menu> menus) {
+		this.permType = permType;
+		this.code = code;
+		this.name = name;
+		this.tenantId = tenantId;
+		this.priority = priority;
+		this.roleDefs = roleDefs;
+		this.accesses = accesses;
+		this.menus = menus;
+	}
 
-    /** @return null. */
-    @Id
-    @GeneratedValue
-    @Column(name = "ID", unique = true, nullable = false)
-    public Long getId() {
-        return this.id;
-    }
+	/** @return null. */
+	@Id
+	@GeneratedValue
+	@Column(name = "ID", unique = true, nullable = false)
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * @param id
-     *            null.
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * @param id
+	 *            null.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /** @return null. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PERM_TYPE_ID", nullable = false)
-    public PermType getPermType() {
-        return this.permType;
-    }
+	/** @return null. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PERM_TYPE_ID", nullable = false)
+	public PermType getPermType() {
+		return this.permType;
+	}
 
-    /**
-     * @param permType
-     *            null.
-     */
-    public void setPermType(PermType permType) {
-        this.permType = permType;
-    }
+	/**
+	 * @param permType
+	 *            null.
+	 */
+	public void setPermType(PermType permType) {
+		this.permType = permType;
+	}
 
-    /** @return null. */
-    @Column(name = "CODE", length = 200)
-    public String getCode() {
-        return this.code;
-    }
+	/** @return null. */
+	@Column(name = "CODE", length = 200)
+	public String getCode() {
+		return this.code;
+	}
 
-    /**
-     * @param code
-     *            null.
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
+	/**
+	 * @param code
+	 *            null.
+	 */
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    /** @return null. */
-    @Column(name = "NAME", length = 200)
-    public String getName() {
-        return this.name;
-    }
+	/** @return null. */
+	@Column(name = "NAME", length = 200)
+	public String getName() {
+		return this.name;
+	}
 
-    /**
-     * @param name
-     *            null.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+	/**
+	 * @param name
+	 *            null.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    /** @return null. */
-    @Column(name = "TENANT_ID", length = 50)
-    public String getTenantId() {
-        return this.tenantId;
-    }
+	/** @return null. */
+	@Column(name = "TENANT_ID", length = 50)
+	public String getTenantId() {
+		return this.tenantId;
+	}
 
-    /**
-     * @param tenantId
-     *            null.
-     */
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
+	/**
+	 * @param tenantId
+	 *            null.
+	 */
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+	}
 
-    /** @return null. */
-    @Column(name = "PRIORITY")
-    public Integer getPriority() {
-        return this.priority;
-    }
+	/** @return null. */
+	@Column(name = "PRIORITY")
+	public Integer getPriority() {
+		return this.priority;
+	}
 
-    /**
-     * @param priority
-     *            null.
-     */
-    public void setPriority(Integer priority) {
-        this.priority = priority;
-    }
+	/**
+	 * @param priority
+	 *            null.
+	 */
+	public void setPriority(Integer priority) {
+		this.priority = priority;
+	}
 
-    /** @return . */
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "AUTH_PERM_ROLE_DEF", joinColumns = { @JoinColumn(name = "PERM_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ROLE_DEF_ID", nullable = false, updatable = false) })
-    public Set<RoleDef> getRoleDefs() {
-        return this.roleDefs;
-    }
+	/** @return . */
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "AUTH_PERM_ROLE_DEF", joinColumns = { @JoinColumn(name = "PERM_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ROLE_DEF_ID", nullable = false, updatable = false) })
+	public Set<RoleDef> getRoleDefs() {
+		return this.roleDefs;
+	}
 
-    /**
-     * @param roleDefs
-     *            .
-     */
-    public void setRoleDefs(Set<RoleDef> roleDefs) {
-        this.roleDefs = roleDefs;
-    }
+	/**
+	 * @param roleDefs
+	 *            .
+	 */
+	public void setRoleDefs(Set<RoleDef> roleDefs) {
+		this.roleDefs = roleDefs;
+	}
 
-    /** @return . */
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "perm")
-    public Set<Access> getAccesses() {
-        return this.accesses;
-    }
+	/** @return . */
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "perm")
+	public Set<Access> getAccesses() {
+		return this.accesses;
+	}
 
-    /**
-     * @param accesses
-     *            .
-     */
-    public void setAccesses(Set<Access> accesses) {
-        this.accesses = accesses;
-    }
+	/**
+	 * @param accesses
+	 *            .
+	 */
+	public void setAccesses(Set<Access> accesses) {
+		this.accesses = accesses;
+	}
 
-    /** @return . */
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "perm")
-    public Set<Menu> getMenus() {
-        return this.menus;
-    }
+	/** @return . */
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "perm")
+	public Set<Menu> getMenus() {
+		return this.menus;
+	}
 
-    /**
-     * @param menus
-     *            .
-     */
-    public void setMenus(Set<Menu> menus) {
-        this.menus = menus;
-    }
+	/**
+	 * @param menus
+	 *            .
+	 */
+	public void setMenus(Set<Menu> menus) {
+		this.menus = menus;
+	}
 }

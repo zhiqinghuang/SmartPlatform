@@ -6,67 +6,67 @@ import java.util.List;
 import java.util.Map;
 
 public class NotificationDTO {
-    private List<String> types = new ArrayList<String>();
-    private String receiver;
-    private String receiverType;
-    private String subject;
-    private String content;
-    private String template;
-    private Map<String, Object> data = new HashMap<String, Object>();
+	private List<String> types = new ArrayList<String>();
+	private String receiver;
+	private String receiverType;
+	private String subject;
+	private String content;
+	private String template;
+	private Map<String, Object> data = new HashMap<String, Object>();
 
-    public List<String> getTypes() {
-        return types;
-    }
+	public List<String> getTypes() {
+		return types;
+	}
 
-    public void setTypes(List<String> types) {
-        this.types = types;
-    }
+	public void setTypes(List<String> types) {
+		this.types = types;
+	}
 
-    public String getReceiver() {
-        return receiver;
-    }
+	public String getReceiver() {
+		return receiver;
+	}
 
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
-    }
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
+	}
 
-    public String getReceiverType() {
-        return receiverType;
-    }
+	public String getReceiverType() {
+		return receiverType;
+	}
 
-    public void setReceiverType(String receiverType) {
-        this.receiverType = receiverType;
-    }
+	public void setReceiverType(String receiverType) {
+		this.receiverType = receiverType;
+	}
 
-    public String getSubject() {
-        return subject;
-    }
+	public String getSubject() {
+		return subject;
+	}
 
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
 
-    public String getContent() {
-        return content;
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    public String getTemplate() {
-        return template;
-    }
+	public String getTemplate() {
+		return template;
+	}
 
-    public void setTemplate(String template) {
-        this.template = template;
-    }
+	public void setTemplate(String template) {
+		this.template = template;
+	}
 
-    public Map<String, Object> getData() {
-        return data;
-    }
+	public Map<String, Object> getData() {
+		return data;
+	}
 
-    public void setData(Map<String, Object> data) {
-        this.data = data;
-    }
+	public void setData(Map<String, Object> data) {
+		this.data = data;
+	}
 }

@@ -22,158 +22,157 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "AUTH_USER_STATUS")
 public class UserStatus implements java.io.Serializable {
-    private static final long serialVersionUID = 0L;
+	private static final long serialVersionUID = 0L;
 
-    /** null. */
-    private Long id;
+	/** null. */
+	private Long id;
 
-    /** null. */
-    private String username;
+	/** null. */
+	private String username;
 
-    /** null. */
-    private String password;
+	/** null. */
+	private String password;
 
-    /** null. */
-    private Integer status;
+	/** null. */
+	private Integer status;
 
-    /** null. */
-    private String ref;
+	/** null. */
+	private String ref;
 
-    /** null. */
-    private String userRepoRef;
+	/** null. */
+	private String userRepoRef;
 
-    /** null. */
-    private String tenantId;
+	/** null. */
+	private String tenantId;
 
-    /** . */
-    private Set<Role> roles = new HashSet<Role>(0);
+	/** . */
+	private Set<Role> roles = new HashSet<Role>(0);
 
-    public UserStatus() {
-    }
+	public UserStatus() {
+	}
 
-    public UserStatus(String username, String password, Integer status,
-            String ref, String userRepoRef, String tenantId, Set<Role> roles) {
-        this.username = username;
-        this.password = password;
-        this.status = status;
-        this.ref = ref;
-        this.userRepoRef = userRepoRef;
-        this.tenantId = tenantId;
-        this.roles = roles;
-    }
+	public UserStatus(String username, String password, Integer status, String ref, String userRepoRef, String tenantId, Set<Role> roles) {
+		this.username = username;
+		this.password = password;
+		this.status = status;
+		this.ref = ref;
+		this.userRepoRef = userRepoRef;
+		this.tenantId = tenantId;
+		this.roles = roles;
+	}
 
-    /** @return null. */
-    @Id
-    @GeneratedValue
-    @Column(name = "ID", unique = true, nullable = false)
-    public Long getId() {
-        return this.id;
-    }
+	/** @return null. */
+	@Id
+	@GeneratedValue
+	@Column(name = "ID", unique = true, nullable = false)
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * @param id
-     *            null.
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * @param id
+	 *            null.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /** @return null. */
-    @Column(name = "USERNAME", length = 50)
-    public String getUsername() {
-        return this.username;
-    }
+	/** @return null. */
+	@Column(name = "USERNAME", length = 50)
+	public String getUsername() {
+		return this.username;
+	}
 
-    /**
-     * @param username
-     *            null.
-     */
-    public void setUsername(String username) {
-        this.username = username;
-    }
+	/**
+	 * @param username
+	 *            null.
+	 */
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    /** @return null. */
-    @Column(name = "PASSWORD", length = 50)
-    public String getPassword() {
-        return this.password;
-    }
+	/** @return null. */
+	@Column(name = "PASSWORD", length = 50)
+	public String getPassword() {
+		return this.password;
+	}
 
-    /**
-     * @param password
-     *            null.
-     */
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	/**
+	 * @param password
+	 *            null.
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    /** @return null. */
-    @Column(name = "STATUS")
-    public Integer getStatus() {
-        return this.status;
-    }
+	/** @return null. */
+	@Column(name = "STATUS")
+	public Integer getStatus() {
+		return this.status;
+	}
 
-    /**
-     * @param status
-     *            null.
-     */
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+	/**
+	 * @param status
+	 *            null.
+	 */
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
-    /** @return null. */
-    @Column(name = "REF", length = 200)
-    public String getRef() {
-        return this.ref;
-    }
+	/** @return null. */
+	@Column(name = "REF", length = 200)
+	public String getRef() {
+		return this.ref;
+	}
 
-    /**
-     * @param ref
-     *            null.
-     */
-    public void setRef(String ref) {
-        this.ref = ref;
-    }
+	/**
+	 * @param ref
+	 *            null.
+	 */
+	public void setRef(String ref) {
+		this.ref = ref;
+	}
 
-    /** @return null. */
-    @Column(name = "USER_REPO_REF", length = 50)
-    public String getUserRepoRef() {
-        return this.userRepoRef;
-    }
+	/** @return null. */
+	@Column(name = "USER_REPO_REF", length = 50)
+	public String getUserRepoRef() {
+		return this.userRepoRef;
+	}
 
-    /**
-     * @param userRepoRef
-     *            null.
-     */
-    public void setUserRepoRef(String userRepoRef) {
-        this.userRepoRef = userRepoRef;
-    }
+	/**
+	 * @param userRepoRef
+	 *            null.
+	 */
+	public void setUserRepoRef(String userRepoRef) {
+		this.userRepoRef = userRepoRef;
+	}
 
-    /** @return null. */
-    @Column(name = "TENANT_ID", length = 50)
-    public String getTenantId() {
-        return this.tenantId;
-    }
+	/** @return null. */
+	@Column(name = "TENANT_ID", length = 50)
+	public String getTenantId() {
+		return this.tenantId;
+	}
 
-    /**
-     * @param tenantId
-     *            null.
-     */
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
+	/**
+	 * @param tenantId
+	 *            null.
+	 */
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+	}
 
-    /** @return . */
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "AUTH_USER_ROLE", joinColumns = { @JoinColumn(name = "USER_STATUS_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID", nullable = false, updatable = false) })
-    public Set<Role> getRoles() {
-        return this.roles;
-    }
+	/** @return . */
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "AUTH_USER_ROLE", joinColumns = { @JoinColumn(name = "USER_STATUS_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "ROLE_ID", nullable = false, updatable = false) })
+	public Set<Role> getRoles() {
+		return this.roles;
+	}
 
-    /**
-     * @param roles
-     *            .
-     */
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
+	/**
+	 * @param roles
+	 *            .
+	 */
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
 }
