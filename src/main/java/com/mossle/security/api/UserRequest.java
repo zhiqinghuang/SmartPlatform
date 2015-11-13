@@ -1,11 +1,11 @@
 package com.mossle.security.api;
 
 public interface UserRequest {
-    String getId();
+	String getId();
 
-    String getTenantId();
+	String getTenantId();
 
-    String getUsername();
+	String getUsername();
 
-    String getPassword();
+	String getPassword();
 }

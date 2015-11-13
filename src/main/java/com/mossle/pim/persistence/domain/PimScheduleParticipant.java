@@ -18,122 +18,121 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "PIM_SCHEDULE_PARTICIPANT")
 public class PimScheduleParticipant implements java.io.Serializable {
-    private static final long serialVersionUID = 0L;
+	private static final long serialVersionUID = 0L;
 
-    /** null. */
-    private Long id;
+	/** null. */
+	private Long id;
 
-    /** null. */
-    private PimSchedule pimSchedule;
+	/** null. */
+	private PimSchedule pimSchedule;
 
-    /** null. */
-    private Integer type;
+	/** null. */
+	private Integer type;
 
-    /** null. */
-    private String userId;
+	/** null. */
+	private String userId;
 
-    /** null. */
-    private Integer status;
+	/** null. */
+	private Integer status;
 
-    /** null. */
-    private String tenantId;
+	/** null. */
+	private String tenantId;
 
-    public PimScheduleParticipant() {
-    }
+	public PimScheduleParticipant() {
+	}
 
-    public PimScheduleParticipant(PimSchedule pimSchedule, Integer type,
-            String userId, Integer status, String tenantId) {
-        this.pimSchedule = pimSchedule;
-        this.type = type;
-        this.userId = userId;
-        this.status = status;
-        this.tenantId = tenantId;
-    }
+	public PimScheduleParticipant(PimSchedule pimSchedule, Integer type, String userId, Integer status, String tenantId) {
+		this.pimSchedule = pimSchedule;
+		this.type = type;
+		this.userId = userId;
+		this.status = status;
+		this.tenantId = tenantId;
+	}
 
-    /** @return null. */
-    @Id
-    @GeneratedValue
-    @Column(name = "ID", unique = true, nullable = false)
-    public Long getId() {
-        return this.id;
-    }
+	/** @return null. */
+	@Id
+	@GeneratedValue
+	@Column(name = "ID", unique = true, nullable = false)
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * @param id
-     *            null.
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * @param id
+	 *            null.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /** @return null. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "SCHEDULE_ID")
-    public PimSchedule getPimSchedule() {
-        return this.pimSchedule;
-    }
+	/** @return null. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "SCHEDULE_ID")
+	public PimSchedule getPimSchedule() {
+		return this.pimSchedule;
+	}
 
-    /**
-     * @param pimSchedule
-     *            null.
-     */
-    public void setPimSchedule(PimSchedule pimSchedule) {
-        this.pimSchedule = pimSchedule;
-    }
+	/**
+	 * @param pimSchedule
+	 *            null.
+	 */
+	public void setPimSchedule(PimSchedule pimSchedule) {
+		this.pimSchedule = pimSchedule;
+	}
 
-    /** @return null. */
-    @Column(name = "TYPE")
-    public Integer getType() {
-        return this.type;
-    }
+	/** @return null. */
+	@Column(name = "TYPE")
+	public Integer getType() {
+		return this.type;
+	}
 
-    /**
-     * @param type
-     *            null.
-     */
-    public void setType(Integer type) {
-        this.type = type;
-    }
+	/**
+	 * @param type
+	 *            null.
+	 */
+	public void setType(Integer type) {
+		this.type = type;
+	}
 
-    /** @return null. */
-    @Column(name = "USER_ID", length = 64)
-    public String getUserId() {
-        return this.userId;
-    }
+	/** @return null. */
+	@Column(name = "USER_ID", length = 64)
+	public String getUserId() {
+		return this.userId;
+	}
 
-    /**
-     * @param userId
-     *            null.
-     */
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+	/**
+	 * @param userId
+	 *            null.
+	 */
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
-    /** @return null. */
-    @Column(name = "STATUS")
-    public Integer getStatus() {
-        return this.status;
-    }
+	/** @return null. */
+	@Column(name = "STATUS")
+	public Integer getStatus() {
+		return this.status;
+	}
 
-    /**
-     * @param status
-     *            null.
-     */
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
+	/**
+	 * @param status
+	 *            null.
+	 */
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
-    /** @return null. */
-    @Column(name = "TENANT_ID", length = 64)
-    public String getTenantId() {
-        return this.tenantId;
-    }
+	/** @return null. */
+	@Column(name = "TENANT_ID", length = 64)
+	public String getTenantId() {
+		return this.tenantId;
+	}
 
-    /**
-     * @param tenantId
-     *            null.
-     */
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
+	/**
+	 * @param tenantId
+	 *            null.
+	 */
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+	}
 }

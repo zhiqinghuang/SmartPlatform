@@ -1,26 +1,16 @@
 package com.mossle.security.util;
 
 import java.net.InetAddress;
-
 import java.util.Date;
 
 import javax.annotation.Resource;
 
-import com.mossle.api.audit.AuditConnector;
-import com.mossle.api.audit.AuditDTO;
-
-import com.mossle.core.auth.LoginEvent;
-
-import com.mossle.security.impl.SpringSecurityUserAuth;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
-
 import org.springframework.security.authentication.event.AuthenticationFailureBadCredentialsEvent;
 import org.springframework.security.authentication.event.AuthenticationFailureCredentialsExpiredEvent;
 import org.springframework.security.authentication.event.AuthenticationFailureDisabledEvent;
@@ -30,299 +20,282 @@ import org.springframework.security.authentication.event.InteractiveAuthenticati
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 
-public class SpringSecurityListener implements ApplicationListener,
-        ApplicationContextAware {
-    private static Logger logger = LoggerFactory
-            .getLogger(SpringSecurityListener.class);
-    private AuditConnector auditConnector;
-    private ApplicationContext ctx;
+import com.mossle.api.audit.AuditConnector;
+import com.mossle.api.audit.AuditDTO;
+import com.mossle.core.auth.LoginEvent;
+import com.mossle.security.impl.SpringSecurityUserAuth;
 
-    public void onApplicationEvent(ApplicationEvent event) {
-        try {
-            if (event instanceof InteractiveAuthenticationSuccessEvent) {
-                this.logLoginSuccess(event);
-            }
+public class SpringSecurityListener implements ApplicationListener, ApplicationContextAware {
+	private static Logger logger = LoggerFactory.getLogger(SpringSecurityListener.class);
+	private AuditConnector auditConnector;
+	private ApplicationContext ctx;
 
-            if (event instanceof AuthenticationFailureBadCredentialsEvent) {
-                this.logBadCredential(event);
-            }
+	public void onApplicationEvent(ApplicationEvent event) {
+		try {
+			if (event instanceof InteractiveAuthenticationSuccessEvent) {
+				this.logLoginSuccess(event);
+			}
 
-            if (event instanceof AuthenticationFailureLockedEvent) {
-                this.logLocked(event);
-            }
+			if (event instanceof AuthenticationFailureBadCredentialsEvent) {
+				this.logBadCredential(event);
+			}
 
-            if (event instanceof AuthenticationFailureDisabledEvent) {
-                this.logDisabled(event);
-            }
+			if (event instanceof AuthenticationFailureLockedEvent) {
+				this.logLocked(event);
+			}
 
-            if (event instanceof AuthenticationFailureExpiredEvent) {
-                this.logAccountExpired(event);
-            }
+			if (event instanceof AuthenticationFailureDisabledEvent) {
+				this.logDisabled(event);
+			}
 
-            if (event instanceof AuthenticationFailureCredentialsExpiredEvent) {
-                this.logCredentialExpired(event);
-            }
-        } catch (Exception ex) {
-            logger.error(ex.getMessage(), ex);
-        }
-    }
+			if (event instanceof AuthenticationFailureExpiredEvent) {
+				this.logAccountExpired(event);
+			}
 
-    public void logLoginSuccess(ApplicationEvent event) throws Exception {
-        InteractiveAuthenticationSuccessEvent interactiveAuthenticationSuccessEvent = (InteractiveAuthenticationSuccessEvent) event;
-        Authentication authentication = interactiveAuthenticationSuccessEvent
-                .getAuthentication();
+			if (event instanceof AuthenticationFailureCredentialsExpiredEvent) {
+				this.logCredentialExpired(event);
+			}
+		} catch (Exception ex) {
+			logger.error(ex.getMessage(), ex);
+		}
+	}
 
-        String tenantId = this.getTenantId(authentication);
-        Object principal = authentication.getPrincipal();
-        String user = null;
+	public void logLoginSuccess(ApplicationEvent event) throws Exception {
+		InteractiveAuthenticationSuccessEvent interactiveAuthenticationSuccessEvent = (InteractiveAuthenticationSuccessEvent) event;
+		Authentication authentication = interactiveAuthenticationSuccessEvent.getAuthentication();
 
-        if (principal instanceof SpringSecurityUserAuth) {
-            user = ((SpringSecurityUserAuth) principal).getId();
-        } else {
-            user = authentication.getName();
-        }
+		String tenantId = this.getTenantId(authentication);
+		Object principal = authentication.getPrincipal();
+		String user = null;
 
-        AuditDTO auditDto = new AuditDTO();
-        auditDto.setUser(user);
-        auditDto.setAuditTime(new Date());
-        auditDto.setAction("login");
-        auditDto.setResult("success");
-        auditDto.setApplication("lemon");
-        auditDto.setClient(getUserIp(authentication));
-        auditDto.setServer(InetAddress.getLocalHost().getHostAddress());
-        auditDto.setTenantId(tenantId);
-        auditConnector.log(auditDto);
+		if (principal instanceof SpringSecurityUserAuth) {
+			user = ((SpringSecurityUserAuth) principal).getId();
+		} else {
+			user = authentication.getName();
+		}
 
-        // 登录成功，再发送一个消息，以后这里的功能都要改成listener，不用直接写接口了。解耦更好一些。
-        ctx.publishEvent(new LoginEvent(authentication, user, this
-                .getSessionId(authentication), "success", "default", tenantId));
-    }
+		AuditDTO auditDto = new AuditDTO();
+		auditDto.setUser(user);
+		auditDto.setAuditTime(new Date());
+		auditDto.setAction("login");
+		auditDto.setResult("success");
+		auditDto.setApplication("lemon");
+		auditDto.setClient(getUserIp(authentication));
+		auditDto.setServer(InetAddress.getLocalHost().getHostAddress());
+		auditDto.setTenantId(tenantId);
+		auditConnector.log(auditDto);
 
-    public void logBadCredential(ApplicationEvent event) throws Exception {
-        AuthenticationFailureBadCredentialsEvent authenticationFailureBadCredentialsEvent = (AuthenticationFailureBadCredentialsEvent) event;
-        Authentication authentication = authenticationFailureBadCredentialsEvent
-                .getAuthentication();
-        logger.info("{}", authentication);
+		// 登录成功，再发送一个消息，以后这里的功能都要改成listener，不用直接写接口了。解耦更好一些。
+		ctx.publishEvent(new LoginEvent(authentication, user, this.getSessionId(authentication), "success", "default", tenantId));
+	}
 
-        String tenantId = this.getTenantId(authentication);
-        Object principal = authentication.getPrincipal();
-        String user = null;
+	public void logBadCredential(ApplicationEvent event) throws Exception {
+		AuthenticationFailureBadCredentialsEvent authenticationFailureBadCredentialsEvent = (AuthenticationFailureBadCredentialsEvent) event;
+		Authentication authentication = authenticationFailureBadCredentialsEvent.getAuthentication();
+		logger.info("{}", authentication);
 
-        if (principal instanceof SpringSecurityUserAuth) {
-            user = ((SpringSecurityUserAuth) principal).getId();
-        } else {
-            user = authentication.getName();
-        }
+		String tenantId = this.getTenantId(authentication);
+		Object principal = authentication.getPrincipal();
+		String user = null;
 
-        AuditDTO auditDto = new AuditDTO();
-        auditDto.setUser(user);
-        auditDto.setAuditTime(new Date());
-        auditDto.setAction("login");
-        auditDto.setResult("failure");
-        auditDto.setApplication("lemon");
-        auditDto.setClient(getUserIp(authentication));
-        auditDto.setServer(InetAddress.getLocalHost().getHostAddress());
-        auditDto.setDescription(authenticationFailureBadCredentialsEvent
-                .getException().getMessage());
-        auditDto.setTenantId(tenantId);
-        auditConnector.log(auditDto);
+		if (principal instanceof SpringSecurityUserAuth) {
+			user = ((SpringSecurityUserAuth) principal).getId();
+		} else {
+			user = authentication.getName();
+		}
 
-        ctx.publishEvent(new LoginEvent(authentication, user, this
-                .getSessionId(authentication), "badCredentials", "default",
-                tenantId));
-    }
+		AuditDTO auditDto = new AuditDTO();
+		auditDto.setUser(user);
+		auditDto.setAuditTime(new Date());
+		auditDto.setAction("login");
+		auditDto.setResult("failure");
+		auditDto.setApplication("lemon");
+		auditDto.setClient(getUserIp(authentication));
+		auditDto.setServer(InetAddress.getLocalHost().getHostAddress());
+		auditDto.setDescription(authenticationFailureBadCredentialsEvent.getException().getMessage());
+		auditDto.setTenantId(tenantId);
+		auditConnector.log(auditDto);
 
-    public void logLocked(ApplicationEvent event) throws Exception {
-        AuthenticationFailureLockedEvent authenticationFailureLockedEvent = (AuthenticationFailureLockedEvent) event;
-        Authentication authentication = authenticationFailureLockedEvent
-                .getAuthentication();
-        logger.info("{}", authentication);
+		ctx.publishEvent(new LoginEvent(authentication, user, this.getSessionId(authentication), "badCredentials", "default", tenantId));
+	}
 
-        String tenantId = this.getTenantId(authentication);
+	public void logLocked(ApplicationEvent event) throws Exception {
+		AuthenticationFailureLockedEvent authenticationFailureLockedEvent = (AuthenticationFailureLockedEvent) event;
+		Authentication authentication = authenticationFailureLockedEvent.getAuthentication();
+		logger.info("{}", authentication);
 
-        Object principal = authentication.getPrincipal();
-        String user = null;
+		String tenantId = this.getTenantId(authentication);
 
-        if (principal instanceof SpringSecurityUserAuth) {
-            user = ((SpringSecurityUserAuth) principal).getId();
-        } else {
-            user = authentication.getName();
-        }
+		Object principal = authentication.getPrincipal();
+		String user = null;
 
-        AuditDTO auditDto = new AuditDTO();
-        auditDto.setUser(user);
-        auditDto.setAuditTime(new Date());
-        auditDto.setAction("login");
-        auditDto.setResult("failure");
-        auditDto.setApplication("lemon");
-        auditDto.setClient(getUserIp(authentication));
-        auditDto.setServer(InetAddress.getLocalHost().getHostAddress());
-        auditDto.setDescription(authenticationFailureLockedEvent.getException()
-                .getMessage());
-        auditDto.setTenantId(tenantId);
-        auditConnector.log(auditDto);
+		if (principal instanceof SpringSecurityUserAuth) {
+			user = ((SpringSecurityUserAuth) principal).getId();
+		} else {
+			user = authentication.getName();
+		}
 
-        ctx.publishEvent(new LoginEvent(authentication, user, this
-                .getSessionId(authentication), "locked", "default", tenantId));
-    }
+		AuditDTO auditDto = new AuditDTO();
+		auditDto.setUser(user);
+		auditDto.setAuditTime(new Date());
+		auditDto.setAction("login");
+		auditDto.setResult("failure");
+		auditDto.setApplication("lemon");
+		auditDto.setClient(getUserIp(authentication));
+		auditDto.setServer(InetAddress.getLocalHost().getHostAddress());
+		auditDto.setDescription(authenticationFailureLockedEvent.getException().getMessage());
+		auditDto.setTenantId(tenantId);
+		auditConnector.log(auditDto);
 
-    public void logDisabled(ApplicationEvent event) throws Exception {
-        AuthenticationFailureDisabledEvent authenticationFailureDisabledEvent = (AuthenticationFailureDisabledEvent) event;
-        Authentication authentication = authenticationFailureDisabledEvent
-                .getAuthentication();
-        logger.info("{}", authentication);
+		ctx.publishEvent(new LoginEvent(authentication, user, this.getSessionId(authentication), "locked", "default", tenantId));
+	}
 
-        String tenantId = this.getTenantId(authentication);
+	public void logDisabled(ApplicationEvent event) throws Exception {
+		AuthenticationFailureDisabledEvent authenticationFailureDisabledEvent = (AuthenticationFailureDisabledEvent) event;
+		Authentication authentication = authenticationFailureDisabledEvent.getAuthentication();
+		logger.info("{}", authentication);
 
-        Object principal = authentication.getPrincipal();
-        String user = null;
+		String tenantId = this.getTenantId(authentication);
 
-        if (principal instanceof SpringSecurityUserAuth) {
-            user = ((SpringSecurityUserAuth) principal).getId();
-        } else {
-            user = authentication.getName();
-        }
+		Object principal = authentication.getPrincipal();
+		String user = null;
 
-        AuditDTO auditDto = new AuditDTO();
-        auditDto.setUser(user);
-        auditDto.setAuditTime(new Date());
-        auditDto.setAction("login");
-        auditDto.setResult("failure");
-        auditDto.setApplication("lemon");
-        auditDto.setClient(getUserIp(authentication));
-        auditDto.setServer(InetAddress.getLocalHost().getHostAddress());
-        auditDto.setDescription(authenticationFailureDisabledEvent
-                .getException().getMessage());
-        auditDto.setTenantId(tenantId);
-        auditConnector.log(auditDto);
+		if (principal instanceof SpringSecurityUserAuth) {
+			user = ((SpringSecurityUserAuth) principal).getId();
+		} else {
+			user = authentication.getName();
+		}
 
-        ctx.publishEvent(new LoginEvent(authentication, user, this
-                .getSessionId(authentication), "disabled", "default", tenantId));
-    }
+		AuditDTO auditDto = new AuditDTO();
+		auditDto.setUser(user);
+		auditDto.setAuditTime(new Date());
+		auditDto.setAction("login");
+		auditDto.setResult("failure");
+		auditDto.setApplication("lemon");
+		auditDto.setClient(getUserIp(authentication));
+		auditDto.setServer(InetAddress.getLocalHost().getHostAddress());
+		auditDto.setDescription(authenticationFailureDisabledEvent.getException().getMessage());
+		auditDto.setTenantId(tenantId);
+		auditConnector.log(auditDto);
 
-    public void logCredentialExpired(ApplicationEvent event) throws Exception {
-        AuthenticationFailureCredentialsExpiredEvent authenticationFailureCredentialsExpiredEvent = (AuthenticationFailureCredentialsExpiredEvent) event;
-        Authentication authentication = authenticationFailureCredentialsExpiredEvent
-                .getAuthentication();
-        logger.info("{}", authentication);
+		ctx.publishEvent(new LoginEvent(authentication, user, this.getSessionId(authentication), "disabled", "default", tenantId));
+	}
 
-        String tenantId = this.getTenantId(authentication);
+	public void logCredentialExpired(ApplicationEvent event) throws Exception {
+		AuthenticationFailureCredentialsExpiredEvent authenticationFailureCredentialsExpiredEvent = (AuthenticationFailureCredentialsExpiredEvent) event;
+		Authentication authentication = authenticationFailureCredentialsExpiredEvent.getAuthentication();
+		logger.info("{}", authentication);
 
-        Object principal = authentication.getPrincipal();
-        String user = null;
+		String tenantId = this.getTenantId(authentication);
 
-        if (principal instanceof SpringSecurityUserAuth) {
-            user = ((SpringSecurityUserAuth) principal).getId();
-        } else {
-            user = authentication.getName();
-        }
+		Object principal = authentication.getPrincipal();
+		String user = null;
 
-        AuditDTO auditDto = new AuditDTO();
-        auditDto.setUser(user);
-        auditDto.setAuditTime(new Date());
-        auditDto.setAction("login");
-        auditDto.setResult("failure");
-        auditDto.setApplication("lemon");
-        auditDto.setClient(getUserIp(authentication));
-        auditDto.setServer(InetAddress.getLocalHost().getHostAddress());
-        auditDto.setDescription(authenticationFailureCredentialsExpiredEvent
-                .getException().getMessage());
-        auditDto.setTenantId(tenantId);
-        auditConnector.log(auditDto);
+		if (principal instanceof SpringSecurityUserAuth) {
+			user = ((SpringSecurityUserAuth) principal).getId();
+		} else {
+			user = authentication.getName();
+		}
 
-        ctx.publishEvent(new LoginEvent(authentication, user, this
-                .getSessionId(authentication), "credentialExpired", "default",
-                tenantId));
-    }
+		AuditDTO auditDto = new AuditDTO();
+		auditDto.setUser(user);
+		auditDto.setAuditTime(new Date());
+		auditDto.setAction("login");
+		auditDto.setResult("failure");
+		auditDto.setApplication("lemon");
+		auditDto.setClient(getUserIp(authentication));
+		auditDto.setServer(InetAddress.getLocalHost().getHostAddress());
+		auditDto.setDescription(authenticationFailureCredentialsExpiredEvent.getException().getMessage());
+		auditDto.setTenantId(tenantId);
+		auditConnector.log(auditDto);
 
-    public void logAccountExpired(ApplicationEvent event) throws Exception {
-        AuthenticationFailureExpiredEvent authenticationFailureExpiredEvent = (AuthenticationFailureExpiredEvent) event;
-        Authentication authentication = authenticationFailureExpiredEvent
-                .getAuthentication();
-        logger.info("{}", authentication);
+		ctx.publishEvent(new LoginEvent(authentication, user, this.getSessionId(authentication), "credentialExpired", "default", tenantId));
+	}
 
-        String tenantId = this.getTenantId(authentication);
+	public void logAccountExpired(ApplicationEvent event) throws Exception {
+		AuthenticationFailureExpiredEvent authenticationFailureExpiredEvent = (AuthenticationFailureExpiredEvent) event;
+		Authentication authentication = authenticationFailureExpiredEvent.getAuthentication();
+		logger.info("{}", authentication);
 
-        Object principal = authentication.getPrincipal();
-        String user = null;
+		String tenantId = this.getTenantId(authentication);
 
-        if (principal instanceof SpringSecurityUserAuth) {
-            user = ((SpringSecurityUserAuth) principal).getId();
-        } else {
-            user = authentication.getName();
-        }
+		Object principal = authentication.getPrincipal();
+		String user = null;
 
-        AuditDTO auditDto = new AuditDTO();
-        auditDto.setUser(user);
-        auditDto.setAuditTime(new Date());
-        auditDto.setAction("login");
-        auditDto.setResult("failure");
-        auditDto.setApplication("lemon");
-        auditDto.setClient(getUserIp(authentication));
-        auditDto.setServer(InetAddress.getLocalHost().getHostAddress());
-        auditDto.setDescription(authenticationFailureExpiredEvent
-                .getException().getMessage());
-        auditDto.setTenantId(tenantId);
-        auditConnector.log(auditDto);
+		if (principal instanceof SpringSecurityUserAuth) {
+			user = ((SpringSecurityUserAuth) principal).getId();
+		} else {
+			user = authentication.getName();
+		}
 
-        ctx.publishEvent(new LoginEvent(authentication, user, this
-                .getSessionId(authentication), "accountExpired", "default",
-                tenantId));
-    }
+		AuditDTO auditDto = new AuditDTO();
+		auditDto.setUser(user);
+		auditDto.setAuditTime(new Date());
+		auditDto.setAction("login");
+		auditDto.setResult("failure");
+		auditDto.setApplication("lemon");
+		auditDto.setClient(getUserIp(authentication));
+		auditDto.setServer(InetAddress.getLocalHost().getHostAddress());
+		auditDto.setDescription(authenticationFailureExpiredEvent.getException().getMessage());
+		auditDto.setTenantId(tenantId);
+		auditConnector.log(auditDto);
 
-    // ~
-    public String getUserIp(Authentication authentication) {
-        if (authentication == null) {
-            return "";
-        }
+		ctx.publishEvent(new LoginEvent(authentication, user, this.getSessionId(authentication), "accountExpired", "default", tenantId));
+	}
 
-        Object details = authentication.getDetails();
+	// ~
+	public String getUserIp(Authentication authentication) {
+		if (authentication == null) {
+			return "";
+		}
 
-        if (!(details instanceof WebAuthenticationDetails)) {
-            return "";
-        }
+		Object details = authentication.getDetails();
 
-        WebAuthenticationDetails webDetails = (WebAuthenticationDetails) details;
+		if (!(details instanceof WebAuthenticationDetails)) {
+			return "";
+		}
 
-        return webDetails.getRemoteAddress();
-    }
+		WebAuthenticationDetails webDetails = (WebAuthenticationDetails) details;
 
-    public String getSessionId(Authentication authentication) {
-        if (authentication == null) {
-            return "";
-        }
+		return webDetails.getRemoteAddress();
+	}
 
-        Object details = authentication.getDetails();
+	public String getSessionId(Authentication authentication) {
+		if (authentication == null) {
+			return "";
+		}
 
-        if (!(details instanceof WebAuthenticationDetails)) {
-            return "";
-        }
+		Object details = authentication.getDetails();
 
-        WebAuthenticationDetails webDetails = (WebAuthenticationDetails) details;
+		if (!(details instanceof WebAuthenticationDetails)) {
+			return "";
+		}
 
-        return webDetails.getSessionId();
-    }
+		WebAuthenticationDetails webDetails = (WebAuthenticationDetails) details;
 
-    public String getTenantId(Authentication authentication) {
-        if (authentication == null) {
-            return "";
-        }
+		return webDetails.getSessionId();
+	}
 
-        Object principal = authentication.getPrincipal();
+	public String getTenantId(Authentication authentication) {
+		if (authentication == null) {
+			return "";
+		}
 
-        if (principal instanceof SpringSecurityUserAuth) {
-            return ((SpringSecurityUserAuth) principal).getTenantId();
-        } else {
-            return "";
-        }
-    }
+		Object principal = authentication.getPrincipal();
 
-    @Resource
-    public void setAuditConnector(AuditConnector auditConnector) {
-        this.auditConnector = auditConnector;
-    }
+		if (principal instanceof SpringSecurityUserAuth) {
+			return ((SpringSecurityUserAuth) principal).getTenantId();
+		} else {
+			return "";
+		}
+	}
 
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        this.ctx = applicationContext;
-    }
+	@Resource
+	public void setAuditConnector(AuditConnector auditConnector) {
+		this.auditConnector = auditConnector;
+	}
+
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.ctx = applicationContext;
+	}
 }
