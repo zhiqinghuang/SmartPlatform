@@ -18,104 +18,103 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "SENDMAIL_ATTACHMENT")
 public class SendmailAttachment implements java.io.Serializable {
-    private static final long serialVersionUID = 0L;
+	private static final long serialVersionUID = 0L;
 
-    /** null. */
-    private Long id;
+	/** null. */
+	private Long id;
 
-    /** null. */
-    private SendmailTemplate sendmailTemplate;
+	/** null. */
+	private SendmailTemplate sendmailTemplate;
 
-    /** null. */
-    private String name;
+	/** null. */
+	private String name;
 
-    /** null. */
-    private String path;
+	/** null. */
+	private String path;
 
-    /** null. */
-    private String tenantId;
+	/** null. */
+	private String tenantId;
 
-    public SendmailAttachment() {
-    }
+	public SendmailAttachment() {
+	}
 
-    public SendmailAttachment(SendmailTemplate sendmailTemplate, String name,
-            String path, String tenantId) {
-        this.sendmailTemplate = sendmailTemplate;
-        this.name = name;
-        this.path = path;
-        this.tenantId = tenantId;
-    }
+	public SendmailAttachment(SendmailTemplate sendmailTemplate, String name, String path, String tenantId) {
+		this.sendmailTemplate = sendmailTemplate;
+		this.name = name;
+		this.path = path;
+		this.tenantId = tenantId;
+	}
 
-    /** @return null. */
-    @Id
-    @GeneratedValue
-    @Column(name = "ID", unique = true, nullable = false)
-    public Long getId() {
-        return this.id;
-    }
+	/** @return null. */
+	@Id
+	@GeneratedValue
+	@Column(name = "ID", unique = true, nullable = false)
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * @param id
-     *            null.
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * @param id
+	 *            null.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /** @return null. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TEMPLATE_ID")
-    public SendmailTemplate getSendmailTemplate() {
-        return this.sendmailTemplate;
-    }
+	/** @return null. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "TEMPLATE_ID")
+	public SendmailTemplate getSendmailTemplate() {
+		return this.sendmailTemplate;
+	}
 
-    /**
-     * @param sendmailTemplate
-     *            null.
-     */
-    public void setSendmailTemplate(SendmailTemplate sendmailTemplate) {
-        this.sendmailTemplate = sendmailTemplate;
-    }
+	/**
+	 * @param sendmailTemplate
+	 *            null.
+	 */
+	public void setSendmailTemplate(SendmailTemplate sendmailTemplate) {
+		this.sendmailTemplate = sendmailTemplate;
+	}
 
-    /** @return null. */
-    @Column(name = "NAME", length = 50)
-    public String getName() {
-        return this.name;
-    }
+	/** @return null. */
+	@Column(name = "NAME", length = 50)
+	public String getName() {
+		return this.name;
+	}
 
-    /**
-     * @param name
-     *            null.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+	/**
+	 * @param name
+	 *            null.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    /** @return null. */
-    @Column(name = "PATH", length = 200)
-    public String getPath() {
-        return this.path;
-    }
+	/** @return null. */
+	@Column(name = "PATH", length = 200)
+	public String getPath() {
+		return this.path;
+	}
 
-    /**
-     * @param path
-     *            null.
-     */
-    public void setPath(String path) {
-        this.path = path;
-    }
+	/**
+	 * @param path
+	 *            null.
+	 */
+	public void setPath(String path) {
+		this.path = path;
+	}
 
-    /** @return null. */
-    @Column(name = "TENANT_ID", length = 50)
-    public String getTenantId() {
-        return this.tenantId;
-    }
+	/** @return null. */
+	@Column(name = "TENANT_ID", length = 50)
+	public String getTenantId() {
+		return this.tenantId;
+	}
 
-    /**
-     * @param tenantId
-     *            null.
-     */
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
+	/**
+	 * @param tenantId
+	 *            null.
+	 */
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+	}
 }

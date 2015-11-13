@@ -15,84 +15,84 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "TASK_CONF_USER")
 public class TaskConfUser implements java.io.Serializable {
-    private static final long serialVersionUID = 0L;
+	private static final long serialVersionUID = 0L;
 
-    /** null. */
-    private Long id;
+	/** null. */
+	private Long id;
 
-    /** null. */
-    private String businessKey;
+	/** null. */
+	private String businessKey;
 
-    /** null. */
-    private String code;
+	/** null. */
+	private String code;
 
-    /** null. */
-    private String value;
+	/** null. */
+	private String value;
 
-    public TaskConfUser() {
-    }
+	public TaskConfUser() {
+	}
 
-    public TaskConfUser(String businessKey, String code, String value) {
-        this.businessKey = businessKey;
-        this.code = code;
-        this.value = value;
-    }
+	public TaskConfUser(String businessKey, String code, String value) {
+		this.businessKey = businessKey;
+		this.code = code;
+		this.value = value;
+	}
 
-    /** @return null. */
-    @Id
-    @GeneratedValue
-    @Column(name = "ID", unique = true, nullable = false)
-    public Long getId() {
-        return this.id;
-    }
+	/** @return null. */
+	@Id
+	@GeneratedValue
+	@Column(name = "ID", unique = true, nullable = false)
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * @param id
-     *            null.
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * @param id
+	 *            null.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /** @return null. */
-    @Column(name = "BUSINESS_KEY", length = 200)
-    public String getBusinessKey() {
-        return this.businessKey;
-    }
+	/** @return null. */
+	@Column(name = "BUSINESS_KEY", length = 200)
+	public String getBusinessKey() {
+		return this.businessKey;
+	}
 
-    /**
-     * @param businessKey
-     *            null.
-     */
-    public void setBusinessKey(String businessKey) {
-        this.businessKey = businessKey;
-    }
+	/**
+	 * @param businessKey
+	 *            null.
+	 */
+	public void setBusinessKey(String businessKey) {
+		this.businessKey = businessKey;
+	}
 
-    /** @return null. */
-    @Column(name = "CODE", length = 200)
-    public String getCode() {
-        return this.code;
-    }
+	/** @return null. */
+	@Column(name = "CODE", length = 200)
+	public String getCode() {
+		return this.code;
+	}
 
-    /**
-     * @param code
-     *            null.
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
+	/**
+	 * @param code
+	 *            null.
+	 */
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    /** @return null. */
-    @Column(name = "VALUE", length = 200)
-    public String getValue() {
-        return this.value;
-    }
+	/** @return null. */
+	@Column(name = "VALUE", length = 200)
+	public String getValue() {
+		return this.value;
+	}
 
-    /**
-     * @param value
-     *            null.
-     */
-    public void setValue(String value) {
-        this.value = value;
-    }
+	/**
+	 * @param value
+	 *            null.
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 }

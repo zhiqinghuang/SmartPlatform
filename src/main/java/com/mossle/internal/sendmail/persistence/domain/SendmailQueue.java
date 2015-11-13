@@ -22,289 +22,285 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "SENDMAIL_QUEUE")
 public class SendmailQueue implements java.io.Serializable {
-    private static final long serialVersionUID = 0L;
+	private static final long serialVersionUID = 0L;
 
-    /** null. */
-    private Long id;
+	/** null. */
+	private Long id;
 
-    /** null. */
-    private SendmailTemplate sendmailTemplate;
+	/** null. */
+	private SendmailTemplate sendmailTemplate;
 
-    /** null. */
-    private SendmailConfig sendmailConfig;
+	/** null. */
+	private SendmailConfig sendmailConfig;
 
-    /** null. */
-    private String subject;
+	/** null. */
+	private String subject;
 
-    /** null. */
-    private String sender;
+	/** null. */
+	private String sender;
 
-    /** null. */
-    private String receiver;
+	/** null. */
+	private String receiver;
 
-    /** null. */
-    private String cc;
+	/** null. */
+	private String cc;
 
-    /** null. */
-    private String bcc;
+	/** null. */
+	private String bcc;
 
-    /** null. */
-    private String content;
+	/** null. */
+	private String content;
 
-    /** null. */
-    private String attachment;
+	/** null. */
+	private String attachment;
 
-    /** null. */
-    private String data;
+	/** null. */
+	private String data;
 
-    /** null. */
-    private Date createTime;
+	/** null. */
+	private Date createTime;
 
-    /** null. */
-    private String status;
+	/** null. */
+	private String status;
 
-    /** null. */
-    private String info;
+	/** null. */
+	private String info;
 
-    /** null. */
-    private String tenantId;
+	/** null. */
+	private String tenantId;
 
-    public SendmailQueue() {
-    }
+	public SendmailQueue() {
+	}
 
-    public SendmailQueue(SendmailTemplate sendmailTemplate,
-            SendmailConfig sendmailConfig, String subject, String sender,
-            String receiver, String cc, String bcc, String content,
-            String attachment, String data, Date createTime, String status,
-            String info, String tenantId) {
-        this.sendmailTemplate = sendmailTemplate;
-        this.sendmailConfig = sendmailConfig;
-        this.subject = subject;
-        this.sender = sender;
-        this.receiver = receiver;
-        this.cc = cc;
-        this.bcc = bcc;
-        this.content = content;
-        this.attachment = attachment;
-        this.data = data;
-        this.createTime = createTime;
-        this.status = status;
-        this.info = info;
-        this.tenantId = tenantId;
-    }
+	public SendmailQueue(SendmailTemplate sendmailTemplate, SendmailConfig sendmailConfig, String subject, String sender, String receiver, String cc, String bcc, String content, String attachment, String data, Date createTime, String status, String info, String tenantId) {
+		this.sendmailTemplate = sendmailTemplate;
+		this.sendmailConfig = sendmailConfig;
+		this.subject = subject;
+		this.sender = sender;
+		this.receiver = receiver;
+		this.cc = cc;
+		this.bcc = bcc;
+		this.content = content;
+		this.attachment = attachment;
+		this.data = data;
+		this.createTime = createTime;
+		this.status = status;
+		this.info = info;
+		this.tenantId = tenantId;
+	}
 
-    /** @return null. */
-    @Id
-    @GeneratedValue
-    @Column(name = "ID", unique = true, nullable = false)
-    public Long getId() {
-        return this.id;
-    }
+	/** @return null. */
+	@Id
+	@GeneratedValue
+	@Column(name = "ID", unique = true, nullable = false)
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * @param id
-     *            null.
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * @param id
+	 *            null.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /** @return null. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TEMPLATE_ID")
-    public SendmailTemplate getSendmailTemplate() {
-        return this.sendmailTemplate;
-    }
+	/** @return null. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "TEMPLATE_ID")
+	public SendmailTemplate getSendmailTemplate() {
+		return this.sendmailTemplate;
+	}
 
-    /**
-     * @param sendmailTemplate
-     *            null.
-     */
-    public void setSendmailTemplate(SendmailTemplate sendmailTemplate) {
-        this.sendmailTemplate = sendmailTemplate;
-    }
+	/**
+	 * @param sendmailTemplate
+	 *            null.
+	 */
+	public void setSendmailTemplate(SendmailTemplate sendmailTemplate) {
+		this.sendmailTemplate = sendmailTemplate;
+	}
 
-    /** @return null. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CONFIG_ID")
-    public SendmailConfig getSendmailConfig() {
-        return this.sendmailConfig;
-    }
+	/** @return null. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "CONFIG_ID")
+	public SendmailConfig getSendmailConfig() {
+		return this.sendmailConfig;
+	}
 
-    /**
-     * @param sendmailConfig
-     *            null.
-     */
-    public void setSendmailConfig(SendmailConfig sendmailConfig) {
-        this.sendmailConfig = sendmailConfig;
-    }
+	/**
+	 * @param sendmailConfig
+	 *            null.
+	 */
+	public void setSendmailConfig(SendmailConfig sendmailConfig) {
+		this.sendmailConfig = sendmailConfig;
+	}
 
-    /** @return null. */
-    @Column(name = "SUBJECT", length = 50)
-    public String getSubject() {
-        return this.subject;
-    }
+	/** @return null. */
+	@Column(name = "SUBJECT", length = 50)
+	public String getSubject() {
+		return this.subject;
+	}
 
-    /**
-     * @param subject
-     *            null.
-     */
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
+	/**
+	 * @param subject
+	 *            null.
+	 */
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
 
-    /** @return null. */
-    @Column(name = "SENDER", length = 200)
-    public String getSender() {
-        return this.sender;
-    }
+	/** @return null. */
+	@Column(name = "SENDER", length = 200)
+	public String getSender() {
+		return this.sender;
+	}
 
-    /**
-     * @param sender
-     *            null.
-     */
-    public void setSender(String sender) {
-        this.sender = sender;
-    }
+	/**
+	 * @param sender
+	 *            null.
+	 */
+	public void setSender(String sender) {
+		this.sender = sender;
+	}
 
-    /** @return null. */
-    @Column(name = "RECEIVER", length = 200)
-    public String getReceiver() {
-        return this.receiver;
-    }
+	/** @return null. */
+	@Column(name = "RECEIVER", length = 200)
+	public String getReceiver() {
+		return this.receiver;
+	}
 
-    /**
-     * @param receiver
-     *            null.
-     */
-    public void setReceiver(String receiver) {
-        this.receiver = receiver;
-    }
+	/**
+	 * @param receiver
+	 *            null.
+	 */
+	public void setReceiver(String receiver) {
+		this.receiver = receiver;
+	}
 
-    /** @return null. */
-    @Column(name = "CC", length = 200)
-    public String getCc() {
-        return this.cc;
-    }
+	/** @return null. */
+	@Column(name = "CC", length = 200)
+	public String getCc() {
+		return this.cc;
+	}
 
-    /**
-     * @param cc
-     *            null.
-     */
-    public void setCc(String cc) {
-        this.cc = cc;
-    }
+	/**
+	 * @param cc
+	 *            null.
+	 */
+	public void setCc(String cc) {
+		this.cc = cc;
+	}
 
-    /** @return null. */
-    @Column(name = "BCC", length = 200)
-    public String getBcc() {
-        return this.bcc;
-    }
+	/** @return null. */
+	@Column(name = "BCC", length = 200)
+	public String getBcc() {
+		return this.bcc;
+	}
 
-    /**
-     * @param bcc
-     *            null.
-     */
-    public void setBcc(String bcc) {
-        this.bcc = bcc;
-    }
+	/**
+	 * @param bcc
+	 *            null.
+	 */
+	public void setBcc(String bcc) {
+		this.bcc = bcc;
+	}
 
-    /** @return null. */
-    @Column(name = "CONTENT", length = 65535)
-    public String getContent() {
-        return this.content;
-    }
+	/** @return null. */
+	@Column(name = "CONTENT", length = 65535)
+	public String getContent() {
+		return this.content;
+	}
 
-    /**
-     * @param content
-     *            null.
-     */
-    public void setContent(String content) {
-        this.content = content;
-    }
+	/**
+	 * @param content
+	 *            null.
+	 */
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    /** @return null. */
-    @Column(name = "ATTACHMENT", length = 200)
-    public String getAttachment() {
-        return this.attachment;
-    }
+	/** @return null. */
+	@Column(name = "ATTACHMENT", length = 200)
+	public String getAttachment() {
+		return this.attachment;
+	}
 
-    /**
-     * @param attachment
-     *            null.
-     */
-    public void setAttachment(String attachment) {
-        this.attachment = attachment;
-    }
+	/**
+	 * @param attachment
+	 *            null.
+	 */
+	public void setAttachment(String attachment) {
+		this.attachment = attachment;
+	}
 
-    /** @return null. */
-    @Column(name = "DATA", length = 65535)
-    public String getData() {
-        return this.data;
-    }
+	/** @return null. */
+	@Column(name = "DATA", length = 65535)
+	public String getData() {
+		return this.data;
+	}
 
-    /**
-     * @param data
-     *            null.
-     */
-    public void setData(String data) {
-        this.data = data;
-    }
+	/**
+	 * @param data
+	 *            null.
+	 */
+	public void setData(String data) {
+		this.data = data;
+	}
 
-    /** @return null. */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "CREATE_TIME", length = 26)
-    public Date getCreateTime() {
-        return this.createTime;
-    }
+	/** @return null. */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATE_TIME", length = 26)
+	public Date getCreateTime() {
+		return this.createTime;
+	}
 
-    /**
-     * @param createTime
-     *            null.
-     */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	/**
+	 * @param createTime
+	 *            null.
+	 */
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    /** @return null. */
-    @Column(name = "STATUS", length = 50)
-    public String getStatus() {
-        return this.status;
-    }
+	/** @return null. */
+	@Column(name = "STATUS", length = 50)
+	public String getStatus() {
+		return this.status;
+	}
 
-    /**
-     * @param status
-     *            null.
-     */
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	/**
+	 * @param status
+	 *            null.
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    /** @return null. */
-    @Column(name = "INFO", length = 200)
-    public String getInfo() {
-        return this.info;
-    }
+	/** @return null. */
+	@Column(name = "INFO", length = 200)
+	public String getInfo() {
+		return this.info;
+	}
 
-    /**
-     * @param info
-     *            null.
-     */
-    public void setInfo(String info) {
-        this.info = info;
-    }
+	/**
+	 * @param info
+	 *            null.
+	 */
+	public void setInfo(String info) {
+		this.info = info;
+	}
 
-    /** @return null. */
-    @Column(name = "TENANT_ID", length = 50)
-    public String getTenantId() {
-        return this.tenantId;
-    }
+	/** @return null. */
+	@Column(name = "TENANT_ID", length = 50)
+	public String getTenantId() {
+		return this.tenantId;
+	}
 
-    /**
-     * @param tenantId
-     *            null.
-     */
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
+	/**
+	 * @param tenantId
+	 *            null.
+	 */
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+	}
 }

@@ -1,12 +1,10 @@
 package com.mossle.humantask.persistence.manager;
 
-import com.mossle.core.hibernate.HibernateEntityDao;
-
-import com.mossle.humantask.persistence.domain.TaskDefNotification;
-
 import org.springframework.stereotype.Service;
 
+import com.mossle.core.hibernate.HibernateEntityDao;
+import com.mossle.humantask.persistence.domain.TaskDefNotification;
+
 @Service
-public class TaskDefNotificationManager extends
-        HibernateEntityDao<TaskDefNotification> {
+public class TaskDefNotificationManager extends HibernateEntityDao<TaskDefNotification> {
 }

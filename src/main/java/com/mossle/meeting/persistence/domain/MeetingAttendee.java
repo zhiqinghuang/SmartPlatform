@@ -18,122 +18,121 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "MEETING_ATTENDEE")
 public class MeetingAttendee implements java.io.Serializable {
-    private static final long serialVersionUID = 0L;
+	private static final long serialVersionUID = 0L;
 
-    /** null. */
-    private Long id;
+	/** null. */
+	private Long id;
 
-    /** null. */
-    private MeetingInfo meetingInfo;
+	/** null. */
+	private MeetingInfo meetingInfo;
 
-    /** null. */
-    private String userId;
+	/** null. */
+	private String userId;
 
-    /** null. */
-    private Integer priority;
+	/** null. */
+	private Integer priority;
 
-    /** null. */
-    private String type;
+	/** null. */
+	private String type;
 
-    /** null. */
-    private String tenantId;
+	/** null. */
+	private String tenantId;
 
-    public MeetingAttendee() {
-    }
+	public MeetingAttendee() {
+	}
 
-    public MeetingAttendee(MeetingInfo meetingInfo, String userId,
-            Integer priority, String type, String tenantId) {
-        this.meetingInfo = meetingInfo;
-        this.userId = userId;
-        this.priority = priority;
-        this.type = type;
-        this.tenantId = tenantId;
-    }
+	public MeetingAttendee(MeetingInfo meetingInfo, String userId, Integer priority, String type, String tenantId) {
+		this.meetingInfo = meetingInfo;
+		this.userId = userId;
+		this.priority = priority;
+		this.type = type;
+		this.tenantId = tenantId;
+	}
 
-    /** @return null. */
-    @Id
-    @GeneratedValue
-    @Column(name = "ID", unique = true, nullable = false)
-    public Long getId() {
-        return this.id;
-    }
+	/** @return null. */
+	@Id
+	@GeneratedValue
+	@Column(name = "ID", unique = true, nullable = false)
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * @param id
-     *            null.
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * @param id
+	 *            null.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /** @return null. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "INFO_ID")
-    public MeetingInfo getMeetingInfo() {
-        return this.meetingInfo;
-    }
+	/** @return null. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "INFO_ID")
+	public MeetingInfo getMeetingInfo() {
+		return this.meetingInfo;
+	}
 
-    /**
-     * @param meetingInfo
-     *            null.
-     */
-    public void setMeetingInfo(MeetingInfo meetingInfo) {
-        this.meetingInfo = meetingInfo;
-    }
+	/**
+	 * @param meetingInfo
+	 *            null.
+	 */
+	public void setMeetingInfo(MeetingInfo meetingInfo) {
+		this.meetingInfo = meetingInfo;
+	}
 
-    /** @return null. */
-    @Column(name = "USER_ID", length = 64)
-    public String getUserId() {
-        return this.userId;
-    }
+	/** @return null. */
+	@Column(name = "USER_ID", length = 64)
+	public String getUserId() {
+		return this.userId;
+	}
 
-    /**
-     * @param userId
-     *            null.
-     */
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+	/**
+	 * @param userId
+	 *            null.
+	 */
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 
-    /** @return null. */
-    @Column(name = "PRIORITY")
-    public Integer getPriority() {
-        return this.priority;
-    }
+	/** @return null. */
+	@Column(name = "PRIORITY")
+	public Integer getPriority() {
+		return this.priority;
+	}
 
-    /**
-     * @param priority
-     *            null.
-     */
-    public void setPriority(Integer priority) {
-        this.priority = priority;
-    }
+	/**
+	 * @param priority
+	 *            null.
+	 */
+	public void setPriority(Integer priority) {
+		this.priority = priority;
+	}
 
-    /** @return null. */
-    @Column(name = "TYPE", length = 50)
-    public String getType() {
-        return this.type;
-    }
+	/** @return null. */
+	@Column(name = "TYPE", length = 50)
+	public String getType() {
+		return this.type;
+	}
 
-    /**
-     * @param type
-     *            null.
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
+	/**
+	 * @param type
+	 *            null.
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    /** @return null. */
-    @Column(name = "TENANT_ID", length = 64)
-    public String getTenantId() {
-        return this.tenantId;
-    }
+	/** @return null. */
+	@Column(name = "TENANT_ID", length = 64)
+	public String getTenantId() {
+		return this.tenantId;
+	}
 
-    /**
-     * @param tenantId
-     *            null.
-     */
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
+	/**
+	 * @param tenantId
+	 *            null.
+	 */
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+	}
 }

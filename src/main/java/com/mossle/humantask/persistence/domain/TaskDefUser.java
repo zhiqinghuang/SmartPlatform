@@ -18,104 +18,103 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "TASK_DEF_USER")
 public class TaskDefUser implements java.io.Serializable {
-    private static final long serialVersionUID = 0L;
+	private static final long serialVersionUID = 0L;
 
-    /** null. */
-    private Long id;
+	/** null. */
+	private Long id;
 
-    /** null. */
-    private TaskDefBase taskDefBase;
+	/** null. */
+	private TaskDefBase taskDefBase;
 
-    /** null. */
-    private String value;
+	/** null. */
+	private String value;
 
-    /** null. */
-    private String type;
+	/** null. */
+	private String type;
 
-    /** null. */
-    private String catalog;
+	/** null. */
+	private String catalog;
 
-    public TaskDefUser() {
-    }
+	public TaskDefUser() {
+	}
 
-    public TaskDefUser(TaskDefBase taskDefBase, String value, String type,
-            String catalog) {
-        this.taskDefBase = taskDefBase;
-        this.value = value;
-        this.type = type;
-        this.catalog = catalog;
-    }
+	public TaskDefUser(TaskDefBase taskDefBase, String value, String type, String catalog) {
+		this.taskDefBase = taskDefBase;
+		this.value = value;
+		this.type = type;
+		this.catalog = catalog;
+	}
 
-    /** @return null. */
-    @Id
-    @GeneratedValue
-    @Column(name = "ID", unique = true, nullable = false)
-    public Long getId() {
-        return this.id;
-    }
+	/** @return null. */
+	@Id
+	@GeneratedValue
+	@Column(name = "ID", unique = true, nullable = false)
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * @param id
-     *            null.
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * @param id
+	 *            null.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /** @return null. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "BASE_ID")
-    public TaskDefBase getTaskDefBase() {
-        return this.taskDefBase;
-    }
+	/** @return null. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "BASE_ID")
+	public TaskDefBase getTaskDefBase() {
+		return this.taskDefBase;
+	}
 
-    /**
-     * @param taskDefBase
-     *            null.
-     */
-    public void setTaskDefBase(TaskDefBase taskDefBase) {
-        this.taskDefBase = taskDefBase;
-    }
+	/**
+	 * @param taskDefBase
+	 *            null.
+	 */
+	public void setTaskDefBase(TaskDefBase taskDefBase) {
+		this.taskDefBase = taskDefBase;
+	}
 
-    /** @return null. */
-    @Column(name = "VALUE", length = 200)
-    public String getValue() {
-        return this.value;
-    }
+	/** @return null. */
+	@Column(name = "VALUE", length = 200)
+	public String getValue() {
+		return this.value;
+	}
 
-    /**
-     * @param value
-     *            null.
-     */
-    public void setValue(String value) {
-        this.value = value;
-    }
+	/**
+	 * @param value
+	 *            null.
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    /** @return null. */
-    @Column(name = "TYPE", length = 50)
-    public String getType() {
-        return this.type;
-    }
+	/** @return null. */
+	@Column(name = "TYPE", length = 50)
+	public String getType() {
+		return this.type;
+	}
 
-    /**
-     * @param type
-     *            null.
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
+	/**
+	 * @param type
+	 *            null.
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    /** @return null. */
-    @Column(name = "CATALOG", length = 200)
-    public String getCatalog() {
-        return this.catalog;
-    }
+	/** @return null. */
+	@Column(name = "CATALOG", length = 200)
+	public String getCatalog() {
+		return this.catalog;
+	}
 
-    /**
-     * @param catalog
-     *            null.
-     */
-    public void setCatalog(String catalog) {
-        this.catalog = catalog;
-    }
+	/**
+	 * @param catalog
+	 *            null.
+	 */
+	public void setCatalog(String catalog) {
+		this.catalog = catalog;
+	}
 }
