@@ -22,124 +22,123 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "CMS_FAVORITE")
 public class CmsFavorite implements java.io.Serializable {
-    private static final long serialVersionUID = 0L;
+	private static final long serialVersionUID = 0L;
 
-    /** null. */
-    private Long id;
+	/** null. */
+	private Long id;
 
-    /** null. */
-    private CmsComment cmsComment;
+	/** null. */
+	private CmsComment cmsComment;
 
-    /** null. */
-    private CmsArticle cmsArticle;
+	/** null. */
+	private CmsArticle cmsArticle;
 
-    /** null. */
-    private String subject;
+	/** null. */
+	private String subject;
 
-    /** null. */
-    private Date createTime;
+	/** null. */
+	private Date createTime;
 
-    /** null. */
-    private String userId;
+	/** null. */
+	private String userId;
 
-    public CmsFavorite() {
-    }
+	public CmsFavorite() {
+	}
 
-    public CmsFavorite(CmsComment cmsComment, CmsArticle cmsArticle,
-            String subject, Date createTime, String userId) {
-        this.cmsComment = cmsComment;
-        this.cmsArticle = cmsArticle;
-        this.subject = subject;
-        this.createTime = createTime;
-        this.userId = userId;
-    }
+	public CmsFavorite(CmsComment cmsComment, CmsArticle cmsArticle, String subject, Date createTime, String userId) {
+		this.cmsComment = cmsComment;
+		this.cmsArticle = cmsArticle;
+		this.subject = subject;
+		this.createTime = createTime;
+		this.userId = userId;
+	}
 
-    /** @return null. */
-    @Id
-    @GeneratedValue
-    @Column(name = "ID", unique = true, nullable = false)
-    public Long getId() {
-        return this.id;
-    }
+	/** @return null. */
+	@Id
+	@GeneratedValue
+	@Column(name = "ID", unique = true, nullable = false)
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * @param id
-     *            null.
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * @param id
+	 *            null.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /** @return null. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "COMMENT_ID")
-    public CmsComment getCmsComment() {
-        return this.cmsComment;
-    }
+	/** @return null. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "COMMENT_ID")
+	public CmsComment getCmsComment() {
+		return this.cmsComment;
+	}
 
-    /**
-     * @param cmsComment
-     *            null.
-     */
-    public void setCmsComment(CmsComment cmsComment) {
-        this.cmsComment = cmsComment;
-    }
+	/**
+	 * @param cmsComment
+	 *            null.
+	 */
+	public void setCmsComment(CmsComment cmsComment) {
+		this.cmsComment = cmsComment;
+	}
 
-    /** @return null. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ARTICLE_ID")
-    public CmsArticle getCmsArticle() {
-        return this.cmsArticle;
-    }
+	/** @return null. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ARTICLE_ID")
+	public CmsArticle getCmsArticle() {
+		return this.cmsArticle;
+	}
 
-    /**
-     * @param cmsArticle
-     *            null.
-     */
-    public void setCmsArticle(CmsArticle cmsArticle) {
-        this.cmsArticle = cmsArticle;
-    }
+	/**
+	 * @param cmsArticle
+	 *            null.
+	 */
+	public void setCmsArticle(CmsArticle cmsArticle) {
+		this.cmsArticle = cmsArticle;
+	}
 
-    /** @return null. */
-    @Column(name = "SUBJECT", length = 200)
-    public String getSubject() {
-        return this.subject;
-    }
+	/** @return null. */
+	@Column(name = "SUBJECT", length = 200)
+	public String getSubject() {
+		return this.subject;
+	}
 
-    /**
-     * @param subject
-     *            null.
-     */
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
+	/**
+	 * @param subject
+	 *            null.
+	 */
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
 
-    /** @return null. */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "CREATE_TIME", length = 26)
-    public Date getCreateTime() {
-        return this.createTime;
-    }
+	/** @return null. */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATE_TIME", length = 26)
+	public Date getCreateTime() {
+		return this.createTime;
+	}
 
-    /**
-     * @param createTime
-     *            null.
-     */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	/**
+	 * @param createTime
+	 *            null.
+	 */
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    /** @return null. */
-    @Column(name = "USER_ID", length = 200)
-    public String getUserId() {
-        return this.userId;
-    }
+	/** @return null. */
+	@Column(name = "USER_ID", length = 200)
+	public String getUserId() {
+		return this.userId;
+	}
 
-    /**
-     * @param userId
-     *            null.
-     */
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+	/**
+	 * @param userId
+	 *            null.
+	 */
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 }

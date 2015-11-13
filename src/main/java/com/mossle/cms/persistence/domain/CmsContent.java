@@ -20,121 +20,120 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "CMS_CONTENT")
 public class CmsContent implements java.io.Serializable {
-    private static final long serialVersionUID = 0L;
+	private static final long serialVersionUID = 0L;
 
-    /** null. */
-    private Long id;
+	/** null. */
+	private Long id;
 
-    /** null. */
-    private String name;
+	/** null. */
+	private String name;
 
-    /** null. */
-    private String code;
+	/** null. */
+	private String code;
 
-    /** null. */
-    private String content;
+	/** null. */
+	private String content;
 
-    /** null. */
-    private String tenantId;
+	/** null. */
+	private String tenantId;
 
-    /** . */
-    private Set<CmsVersion> cmsVersions = new HashSet<CmsVersion>(0);
+	/** . */
+	private Set<CmsVersion> cmsVersions = new HashSet<CmsVersion>(0);
 
-    public CmsContent() {
-    }
+	public CmsContent() {
+	}
 
-    public CmsContent(String name, String code, String content,
-            String tenantId, Set<CmsVersion> cmsVersions) {
-        this.name = name;
-        this.code = code;
-        this.content = content;
-        this.tenantId = tenantId;
-        this.cmsVersions = cmsVersions;
-    }
+	public CmsContent(String name, String code, String content, String tenantId, Set<CmsVersion> cmsVersions) {
+		this.name = name;
+		this.code = code;
+		this.content = content;
+		this.tenantId = tenantId;
+		this.cmsVersions = cmsVersions;
+	}
 
-    /** @return null. */
-    @Id
-    @GeneratedValue
-    @Column(name = "ID", unique = true, nullable = false)
-    public Long getId() {
-        return this.id;
-    }
+	/** @return null. */
+	@Id
+	@GeneratedValue
+	@Column(name = "ID", unique = true, nullable = false)
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * @param id
-     *            null.
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * @param id
+	 *            null.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /** @return null. */
-    @Column(name = "NAME", length = 50)
-    public String getName() {
-        return this.name;
-    }
+	/** @return null. */
+	@Column(name = "NAME", length = 50)
+	public String getName() {
+		return this.name;
+	}
 
-    /**
-     * @param name
-     *            null.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+	/**
+	 * @param name
+	 *            null.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    /** @return null. */
-    @Column(name = "CODE", length = 200)
-    public String getCode() {
-        return this.code;
-    }
+	/** @return null. */
+	@Column(name = "CODE", length = 200)
+	public String getCode() {
+		return this.code;
+	}
 
-    /**
-     * @param code
-     *            null.
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
+	/**
+	 * @param code
+	 *            null.
+	 */
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    /** @return null. */
-    @Column(name = "CONTENT", length = 65535)
-    public String getContent() {
-        return this.content;
-    }
+	/** @return null. */
+	@Column(name = "CONTENT", length = 65535)
+	public String getContent() {
+		return this.content;
+	}
 
-    /**
-     * @param content
-     *            null.
-     */
-    public void setContent(String content) {
-        this.content = content;
-    }
+	/**
+	 * @param content
+	 *            null.
+	 */
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    /** @return null. */
-    @Column(name = "TENANT_ID", length = 64)
-    public String getTenantId() {
-        return this.tenantId;
-    }
+	/** @return null. */
+	@Column(name = "TENANT_ID", length = 64)
+	public String getTenantId() {
+		return this.tenantId;
+	}
 
-    /**
-     * @param tenantId
-     *            null.
-     */
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
+	/**
+	 * @param tenantId
+	 *            null.
+	 */
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+	}
 
-    /** @return . */
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "cmsContent")
-    public Set<CmsVersion> getCmsVersions() {
-        return this.cmsVersions;
-    }
+	/** @return . */
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cmsContent")
+	public Set<CmsVersion> getCmsVersions() {
+		return this.cmsVersions;
+	}
 
-    /**
-     * @param cmsVersions
-     *            .
-     */
-    public void setCmsVersions(Set<CmsVersion> cmsVersions) {
-        this.cmsVersions = cmsVersions;
-    }
+	/**
+	 * @param cmsVersions
+	 *            .
+	 */
+	public void setCmsVersions(Set<CmsVersion> cmsVersions) {
+		this.cmsVersions = cmsVersions;
+	}
 }
