@@ -1,7 +1,7 @@
 package com.mossle.core.auth;
 
 public interface CurrentUserHolder {
-    String getUserId();
+	String getUserId();
 
-    String getUsername();
+	String getUsername();
 }

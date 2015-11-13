@@ -9,25 +9,25 @@ import javax.activation.DataSource;
 import org.springframework.web.multipart.MultipartFile;
 
 public class MultipartFileDataSource implements DataSource {
-    private MultipartFile multipartFile;
+	private MultipartFile multipartFile;
 
-    public MultipartFileDataSource(MultipartFile multipartFile) {
-        this.multipartFile = multipartFile;
-    }
+	public MultipartFileDataSource(MultipartFile multipartFile) {
+		this.multipartFile = multipartFile;
+	}
 
-    public String getName() {
-        return multipartFile.getOriginalFilename();
-    }
+	public String getName() {
+		return multipartFile.getOriginalFilename();
+	}
 
-    public InputStream getInputStream() throws IOException {
-        return multipartFile.getInputStream();
-    }
+	public InputStream getInputStream() throws IOException {
+		return multipartFile.getInputStream();
+	}
 
-    public OutputStream getOutputStream() {
-        throw new IllegalStateException("not support");
-    }
+	public OutputStream getOutputStream() {
+		throw new IllegalStateException("not support");
+	}
 
-    public String getContentType() {
-        return multipartFile.getContentType();
-    }
+	public String getContentType() {
+		return multipartFile.getContentType();
+	}
 }

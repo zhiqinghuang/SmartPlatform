@@ -8,13 +8,13 @@ import javax.activation.DataSource;
 import org.springframework.core.io.InputStreamSource;
 
 public class DataSourceInputStreamSource implements InputStreamSource {
-    private DataSource dataSource;
+	private DataSource dataSource;
 
-    public DataSourceInputStreamSource(DataSource dataSource) {
-        this.dataSource = dataSource;
-    }
+	public DataSourceInputStreamSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
 
-    public InputStream getInputStream() throws IOException {
-        return dataSource.getInputStream();
-    }
+	public InputStream getInputStream() throws IOException {
+		return dataSource.getInputStream();
+	}
 }
