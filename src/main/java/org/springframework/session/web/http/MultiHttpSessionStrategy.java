@@ -18,7 +18,6 @@ package org.springframework.session.web.http;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
  * <p>
  * Some {@link HttpSessionStrategy} may also want to further customize

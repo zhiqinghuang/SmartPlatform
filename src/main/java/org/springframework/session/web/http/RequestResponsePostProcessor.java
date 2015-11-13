@@ -39,8 +39,7 @@ public interface RequestResponsePostProcessor {
 	 *            Cannot be null. .
 	 * @return a non-null {@link HttpServletRequest}
 	 */
-	HttpServletRequest wrapRequest(HttpServletRequest request,
-			HttpServletResponse response);
+	HttpServletRequest wrapRequest(HttpServletRequest request, HttpServletResponse response);
 
 	/**
 	 * Allows customizing the {@link HttpServletResponse}.
@@ -54,6 +53,5 @@ public interface RequestResponsePostProcessor {
 	 *            the original {@link HttpServletResponse}. Cannot be null.
 	 * @return a non-null {@link HttpServletResponse}
 	 */
-	HttpServletResponse wrapResponse(HttpServletRequest request,
-			HttpServletResponse response);
+	HttpServletResponse wrapResponse(HttpServletRequest request, HttpServletResponse response);
 }

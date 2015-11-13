@@ -15,24 +15,28 @@
  */
 package org.springframework.session.web.http;
 
-import org.springframework.session.Session;
-import org.springframework.util.Assert;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.session.Session;
+import org.springframework.util.Assert;
+
 /**
- * A {@link HttpSessionStrategy} that uses a header to obtain the session from. Specifically, this implementation will
- * allow specifying a header name using {@link HeaderHttpSessionStrategy#setHeaderName(String)}. The default is "x-auth-token".
+ * A {@link HttpSessionStrategy} that uses a header to obtain the session from.
+ * Specifically, this implementation will allow specifying a header name using
+ * {@link HeaderHttpSessionStrategy#setHeaderName(String)}. The default is
+ * "x-auth-token".
  *
- * When a session is created, the HTTP response will have a response header of the specified name and the value of the session id. For example:
+ * When a session is created, the HTTP response will have a response header of
+ * the specified name and the value of the session id. For example:
  *
  * <pre>
  * HTTP/1.1 200 OK
  * x-auth-token: f81d4fae-7dec-11d0-a765-00a0c91e6bf6
  * </pre>
  *
- * The client should now include the session in each request by specifying the same header in their request. For example:
+ * The client should now include the session in each request by specifying the
+ * same header in their request. For example:
  *
  * <pre>
  * GET /messages/ HTTP/1.1
@@ -40,7 +44,8 @@ import javax.servlet.http.HttpServletResponse;
  * x-auth-token: f81d4fae-7dec-11d0-a765-00a0c91e6bf6
  * </pre>
  *
- * When the session is invalidated, the server will send an HTTP response that has the header name and a blank value. For example:
+ * When the session is invalidated, the server will send an HTTP response that
+ * has the header name and a blank value. For example:
  *
  * <pre>
  * HTTP/1.1 200 OK
@@ -66,9 +71,11 @@ public class HeaderHttpSessionStrategy implements HttpSessionStrategy {
 	}
 
 	/**
-	 * The name of the header to obtain the session id from. Default is "x-auth-token".
+	 * The name of the header to obtain the session id from. Default is
+	 * "x-auth-token".
 	 *
-	 * @param headerName the name of the header to obtain the session id from.
+	 * @param headerName
+	 *            the name of the header to obtain the session id from.
 	 */
 	public void setHeaderName(String headerName) {
 		Assert.notNull(headerName, "headerName cannot be null");

@@ -92,8 +92,8 @@ import org.springframework.session.Session;
  * <p>
  * To use the original session a request without the HTTP parameter u can be
  * made. To use the new session, a request with the HTTP parameter
- * _s=1416195761178 can be used. By default URLs will be rewritten to include the
- * currently selected session.
+ * _s=1416195761178 can be used. By default URLs will be rewritten to include
+ * the currently selected session.
  * </p>
  *
  * <h2>Selecting Sessions</h2>
@@ -109,7 +109,8 @@ import org.springframework.session.Session;
  *      HttpSessionManager sessionManager =
  *              (HttpSessionManager) req.getAttribute(HttpSessionManager.class.getName());
  *      SessionRepository<Session> repo =
- *              (SessionRepository<Session>) req.getAttribute(SessionRepository.class.getName());
+ *              (SessionRepository
+<Session>) req.getAttribute(SessionRepository.class.getName());
  *
  *      String currentSessionAlias = sessionManager.getCurrentSessionAlias(req);
  *      Map<String, String> sessionIds = sessionManager.getSessionIds(req);
@@ -117,36 +118,25 @@ import org.springframework.session.Session;
  *
  *      String contextPath = req.getContextPath();
  *      List<Account> accounts = new ArrayList<>();
- *      Account currentAccount = null;
- *      for(Map.Entry<String, String> entry : sessionIds.entrySet()) {
- *          String alias = entry.getKey();
- *          String sessionId = entry.getValue();
+ *      Account currentAccount = null; for(Map.Entry<String, String> entry :
+ * sessionIds.entrySet()) { String alias = entry.getKey(); String sessionId =
+ * entry.getValue();
  *
- *          Session session = repo.getSession(sessionId);
- *          if(session == null) {
- *              continue;
- *          }
- *
- *          String username = session.getAttribute("username");
- *          if(username == null) {
- *              newSessionAlias = alias;
- *              continue;
- *          }
- *
- *          String logoutUrl = sessionManager.encodeURL("./logout", alias);
- *          String switchAccountUrl = sessionManager.encodeURL("./", alias);
- *          Account account = new Account(username, logoutUrl, switchAccountUrl);
- *          if(currentSessionAlias.equals(alias)) {
- *              currentAccount = account;
- *          } else {
- *              accounts.add(account);
- *          }
- *      }
- *
- *      req.setAttribute("currentAccount", currentAccount);
- *      req.setAttribute("addAccountUrl", sessionManager.encodeURL(contextPath, newSessionAlias));
- *      req.setAttribute("accounts", accounts);
+ * Session session = repo.getSession(sessionId); if(session == null) { continue;
  * }
+ *
+ * String username = session.getAttribute("username"); if(username == null) {
+ * newSessionAlias = alias; continue; }
+ *
+ * String logoutUrl = sessionManager.encodeURL("./logout", alias); String
+ * switchAccountUrl = sessionManager.encodeURL("./", alias); Account account =
+ * new Account(username, logoutUrl, switchAccountUrl);
+ * if(currentSessionAlias.equals(alias)) { currentAccount = account; } else {
+ * accounts.add(account); } }
+ *
+ * req.setAttribute("currentAccount", currentAccount);
+ * req.setAttribute("addAccountUrl", sessionManager.encodeURL(contextPath,
+ * newSessionAlias)); req.setAttribute("accounts", accounts); }
  *
  *
  * @since 1.0
@@ -168,39 +158,38 @@ public final class CookieHttpSessionStrategy implements MultiHttpSessionStrategy
 	private boolean isServlet3Plus = isServlet3();
 
 	public String getRequestedSessionId(HttpServletRequest request) {
-		Map<String,String> sessionIds = getSessionIds(request);
+		Map<String, String> sessionIds = getSessionIds(request);
 		String sessionAlias = getCurrentSessionAlias(request);
 		return sessionIds.get(sessionAlias);
 	}
 
 	public String getCurrentSessionAlias(HttpServletRequest request) {
-		if(sessionParam == null) {
+		if (sessionParam == null) {
 			return DEFAULT_ALIAS;
 		}
 		String u = safeGetParameter(request, sessionParam);
-		if(u == null) {
+		if (u == null) {
 			return DEFAULT_ALIAS;
 		}
-		if(!ALIAS_PATTERN.matcher(u).matches()) {
+		if (!ALIAS_PATTERN.matcher(u).matches()) {
 			return DEFAULT_ALIAS;
 		}
 		return u;
 	}
 
-    public String safeGetParameter(final HttpServletRequest request, final String parameter) {
-        return request.getQueryString() == null || !request.getQueryString().contains(parameter) ? null : request
-                .getParameter(parameter);
-    }
+	public String safeGetParameter(final HttpServletRequest request, final String parameter) {
+		return request.getQueryString() == null || !request.getQueryString().contains(parameter) ? null : request.getParameter(parameter);
+	}
 
 	public String getNewSessionAlias(HttpServletRequest request) {
 		Set<String> sessionAliases = getSessionIds(request).keySet();
-		if(sessionAliases.isEmpty()) {
+		if (sessionAliases.isEmpty()) {
 			return DEFAULT_ALIAS;
 		}
 		long lastAlias = Long.decode(DEFAULT_ALIAS);
-		for(String alias : sessionAliases) {
+		for (String alias : sessionAliases) {
 			long selectedAlias = safeParse(alias);
-			if(selectedAlias > lastAlias) {
+			if (selectedAlias > lastAlias) {
 				lastAlias = selectedAlias;
 			}
 		}
@@ -210,19 +199,19 @@ public final class CookieHttpSessionStrategy implements MultiHttpSessionStrategy
 	private long safeParse(String hex) {
 		try {
 			return Long.decode("0x" + hex);
-		} catch(NumberFormatException notNumber) {
+		} catch (NumberFormatException notNumber) {
 			return 0;
 		}
 	}
 
 	public void onNewSession(Session session, HttpServletRequest request, HttpServletResponse response) {
 		Set<String> sessionIdsWritten = getSessionIdsWritten(request);
-		if(sessionIdsWritten.contains(session.getId())) {
+		if (sessionIdsWritten.contains(session.getId())) {
 			return;
 		}
 		sessionIdsWritten.add(session.getId());
 
-		Map<String,String> sessionIds = getSessionIds(request);
+		Map<String, String> sessionIds = getSessionIds(request);
 		String sessionAlias = getCurrentSessionAlias(request);
 		sessionIds.put(sessionAlias, session.getId());
 		Cookie sessionCookie = createSessionCookie(request, sessionIds);
@@ -232,35 +221,34 @@ public final class CookieHttpSessionStrategy implements MultiHttpSessionStrategy
 	@SuppressWarnings("unchecked")
 	private Set<String> getSessionIdsWritten(HttpServletRequest request) {
 		Set<String> sessionsWritten = (Set<String>) request.getAttribute(SESSION_IDS_WRITTEN_ATTR);
-		if(sessionsWritten == null) {
+		if (sessionsWritten == null) {
 			sessionsWritten = new HashSet<String>();
 			request.setAttribute(SESSION_IDS_WRITTEN_ATTR, sessionsWritten);
 		}
 		return sessionsWritten;
 	}
 
-	private Cookie createSessionCookie(HttpServletRequest request,
-			Map<String, String> sessionIds) {
-		Cookie sessionCookie = new Cookie(cookieName,"");
-		if(isServlet3Plus) {
+	private Cookie createSessionCookie(HttpServletRequest request, Map<String, String> sessionIds) {
+		Cookie sessionCookie = new Cookie(cookieName, "");
+		if (isServlet3Plus) {
 			// sessionCookie.setHttpOnly(true);
 		}
 		sessionCookie.setSecure(request.isSecure());
 		sessionCookie.setPath(cookiePath(request));
 		// TODO set domain?
 
-		if(sessionIds.isEmpty()) {
+		if (sessionIds.isEmpty()) {
 			sessionCookie.setMaxAge(0);
 			return sessionCookie;
 		}
 
-		if(sessionIds.size() == 1) {
+		if (sessionIds.size() == 1) {
 			String cookieValue = sessionIds.values().iterator().next();
 			sessionCookie.setValue(cookieValue);
 			return sessionCookie;
 		}
 		StringBuffer buffer = new StringBuffer();
-		for(Map.Entry<String,String> entry : sessionIds.entrySet()) {
+		for (Map.Entry<String, String> entry : sessionIds.entrySet()) {
 			String alias = entry.getKey();
 			String id = entry.getValue();
 
@@ -269,14 +257,14 @@ public final class CookieHttpSessionStrategy implements MultiHttpSessionStrategy
 			buffer.append(id);
 			buffer.append(" ");
 		}
-		buffer.deleteCharAt(buffer.length()-1);
+		buffer.deleteCharAt(buffer.length() - 1);
 
 		sessionCookie.setValue(buffer.toString());
 		return sessionCookie;
 	}
 
 	public void onInvalidateSession(HttpServletRequest request, HttpServletResponse response) {
-		Map<String,String> sessionIds = getSessionIds(request);
+		Map<String, String> sessionIds = getSessionIds(request);
 		String requestedAlias = getCurrentSessionAlias(request);
 		sessionIds.remove(requestedAlias);
 
@@ -300,24 +288,30 @@ public final class CookieHttpSessionStrategy implements MultiHttpSessionStrategy
 
 	/**
 	 * Sets the name of the cookie to be used
-	 * @param cookieName the name of the cookie to be used
+	 * 
+	 * @param cookieName
+	 *            the name of the cookie to be used
 	 */
 	public void setCookieName(String cookieName) {
-		if(cookieName == null) {
+		if (cookieName == null) {
 			throw new IllegalArgumentException("cookieName cannot be null");
 		}
 		this.cookieName = cookieName;
 	}
 
 	/**
-	 * Retrieve the first cookie with the given name. Note that multiple
-	 * cookies can have the same name but different paths or domains.
-	 * @param request current servlet request
-	 * @param name cookie name
-	 * @return the first cookie with the given name, or {@code null} if none is found
+	 * Retrieve the first cookie with the given name. Note that multiple cookies
+	 * can have the same name but different paths or domains.
+	 * 
+	 * @param request
+	 *            current servlet request
+	 * @param name
+	 *            cookie name
+	 * @return the first cookie with the given name, or {@code null} if none is
+	 *         found
 	 */
 	private static Cookie getCookie(HttpServletRequest request, String name) {
-		if(request == null) {
+		if (request == null) {
 			throw new IllegalArgumentException("request cannot be null");
 		}
 		Cookie cookies[] = request.getCookies();
@@ -335,18 +329,18 @@ public final class CookieHttpSessionStrategy implements MultiHttpSessionStrategy
 		return request.getContextPath() + "/";
 	}
 
-	public Map<String,String> getSessionIds(HttpServletRequest request) {
+	public Map<String, String> getSessionIds(HttpServletRequest request) {
 		Cookie session = getCookie(request, cookieName);
 		String sessionCookieValue = session == null ? "" : session.getValue();
-		Map<String,String> result = new LinkedHashMap<String,String>();
+		Map<String, String> result = new LinkedHashMap<String, String>();
 		StringTokenizer tokens = new StringTokenizer(sessionCookieValue, " ");
-		if(tokens.countTokens() == 1) {
+		if (tokens.countTokens() == 1) {
 			result.put(DEFAULT_ALIAS, tokens.nextToken());
 			return result;
 		}
-		while(tokens.hasMoreTokens()) {
+		while (tokens.hasMoreTokens()) {
 			String alias = tokens.nextToken();
-			if(!tokens.hasMoreTokens()) {
+			if (!tokens.hasMoreTokens()) {
 				break;
 			}
 			String id = tokens.nextToken();
@@ -391,16 +385,16 @@ public final class CookieHttpSessionStrategy implements MultiHttpSessionStrategy
 		String encodedSessionAlias = urlEncode(sessionAlias);
 		int queryStart = url.indexOf("?");
 		boolean isDefaultAlias = DEFAULT_ALIAS.equals(encodedSessionAlias);
-		if(queryStart < 0) {
+		if (queryStart < 0) {
 			return isDefaultAlias ? url : url + "?" + sessionParam + "=" + encodedSessionAlias;
 		}
 		String path = url.substring(0, queryStart);
 		String query = url.substring(queryStart + 1, url.length());
-		String replacement = isDefaultAlias ? "" : "$1"+encodedSessionAlias;
-		query = query.replaceFirst( "((^|&)" + sessionParam + "=)([^&]+)?", replacement);
-		if(!isDefaultAlias && url.endsWith(query)) {
+		String replacement = isDefaultAlias ? "" : "$1" + encodedSessionAlias;
+		query = query.replaceFirst("((^|&)" + sessionParam + "=)([^&]+)?", replacement);
+		if (!isDefaultAlias && url.endsWith(query)) {
 			// no existing alias
-			if(!(query.endsWith("&") || query.length() == 0)) {
+			if (!(query.endsWith("&") || query.length() == 0)) {
 				query += "&";
 			}
 			query += sessionParam + "=" + encodedSessionAlias;
@@ -419,13 +413,15 @@ public final class CookieHttpSessionStrategy implements MultiHttpSessionStrategy
 
 	/**
 	 * Returns true if the Servlet 3 APIs are detected.
+	 * 
 	 * @return
 	 */
 	private boolean isServlet3() {
 		try {
 			ServletRequest.class.getMethod("startAsync");
 			return true;
-		} catch(NoSuchMethodException e) {}
+		} catch (NoSuchMethodException e) {
+		}
 		return false;
 	}
 }
