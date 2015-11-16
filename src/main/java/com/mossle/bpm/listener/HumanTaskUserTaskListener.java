@@ -74,7 +74,7 @@ public class HumanTaskUserTaskListener extends DefaultTaskListener implements Ex
 
 	public List<String> process(List<String> left, List<String> right, String operation) {
 		if ("||".equals(operation)) {
-			Set<String> set = new HashSet();
+			Set<String> set = new HashSet<String>();
 			set.addAll(left);
 			set.addAll(right);
 

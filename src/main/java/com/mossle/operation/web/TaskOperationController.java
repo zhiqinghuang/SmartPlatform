@@ -329,7 +329,7 @@ public class TaskOperationController {
 			return null;
 		}
 
-		Map map = new HashMap();
+		Map<String, String> map = new HashMap<String, String>();
 
 		for (Prop prop : record.getProps().values()) {
 			map.put(prop.getCode(), prop.getValue());
