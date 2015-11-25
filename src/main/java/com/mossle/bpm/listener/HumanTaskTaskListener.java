@@ -5,21 +5,24 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.activiti.engine.delegate.DelegateTask;
-import org.activiti.engine.impl.context.Context;
-import org.activiti.engine.impl.el.ExpressionManager;
-import org.activiti.engine.task.IdentityLink;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.mossle.api.humantask.HumanTaskConnector;
 import com.mossle.api.humantask.HumanTaskDTO;
 import com.mossle.api.humantask.ParticipantDTO;
+
 import com.mossle.bpm.persistence.domain.BpmConfUser;
 import com.mossle.bpm.persistence.manager.BpmConfUserManager;
 import com.mossle.bpm.support.DefaultTaskListener;
 import com.mossle.bpm.support.DelegateTaskHolder;
+
 import com.mossle.core.mapper.BeanMapper;
+
+import org.activiti.engine.delegate.DelegateTask;
+import org.activiti.engine.impl.context.Context;
+import org.activiti.engine.impl.el.ExpressionManager;
+import org.activiti.engine.task.IdentityLink;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HumanTaskTaskListener extends DefaultTaskListener {
 	public static final int TYPE_COPY = 3;
@@ -56,6 +59,17 @@ public class HumanTaskTaskListener extends DefaultTaskListener {
 		humanTaskDto.setStatus("complete");
 		humanTaskDto.setCompleteTime(new Date());
 		humanTaskConnector.saveHumanTask(humanTaskDto);
+	}
+
+	@Override
+	public void onDelete(DelegateTask delegateTask) throws Exception {
+		HumanTaskDTO humanTaskDto = humanTaskConnector.findHumanTaskByTaskId(delegateTask.getId());
+
+		if (!"complete".equals(humanTaskDto.getStatus())) {
+			humanTaskDto.setStatus("delete");
+			humanTaskDto.setCompleteTime(new Date());
+			humanTaskConnector.saveHumanTask(humanTaskDto);
+		}
 	}
 
 	public HumanTaskDTO createHumanTask(DelegateTask delegateTask) throws Exception {

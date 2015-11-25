@@ -9,17 +9,21 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.mossle.api.keyvalue.KeyValueConnector;
 import com.mossle.api.keyvalue.Prop;
 import com.mossle.api.keyvalue.Record;
+
 import com.mossle.core.hibernate.PropertyFilter;
 import com.mossle.core.page.Page;
+
+import org.apache.commons.lang3.StringUtils;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
 public class DatabaseKeyValueConnector implements KeyValueConnector {
@@ -81,7 +85,8 @@ public class DatabaseKeyValueConnector implements KeyValueConnector {
 	 * 根据code删除记录.
 	 */
 	public void removeByCode(String code) {
-		jdbcTemplate.update("DELETE FROM KV_RECORD WHERE ID=", code);
+		jdbcTemplate.update("DELETE FROM KV_PROP WHERE RECORD_ID=?", code);
+		jdbcTemplate.update("DELETE FROM KV_RECORD WHERE ID=?", code);
 	}
 
 	/**

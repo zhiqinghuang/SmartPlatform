@@ -6,15 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartResolver;
+import javax.servlet.http.HttpServletRequest;
 
 import com.mossle.api.form.FormConnector;
 import com.mossle.api.form.FormDTO;
@@ -29,15 +22,30 @@ import com.mossle.api.process.ProcessConnector;
 import com.mossle.api.process.ProcessDTO;
 import com.mossle.api.store.StoreConnector;
 import com.mossle.api.tenant.TenantHolder;
+
 import com.mossle.button.ButtonDTO;
 import com.mossle.button.ButtonHelper;
+
 import com.mossle.core.MultipartHandler;
 import com.mossle.core.auth.CurrentUserHolder;
 import com.mossle.core.mapper.JsonMapper;
 import com.mossle.core.spring.MessageHelper;
+
 import com.mossle.operation.service.OperationService;
+
 import com.mossle.xform.Xform;
 import com.mossle.xform.XformBuilder;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.stereotype.Controller;
+
+import org.springframework.ui.Model;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartResolver;
 
 /**
  * 流程操作.
@@ -85,6 +93,16 @@ public class ProcessOperationController {
 		model.addAttribute("records", records);
 
 		return "operation/process-operation-listDrafts";
+	}
+
+	/**
+	 * 删除草稿.
+	 */
+	@RequestMapping("process-operation-removeDraft")
+	public String removeDraft(@RequestParam("code") String code) {
+		keyValueConnector.removeByCode(code);
+
+		return "redirect:/operation/process-operation-listDrafts.do";
 	}
 
 	/**
