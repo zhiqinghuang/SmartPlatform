@@ -2,7 +2,6 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-
 	<!-- 流程引擎配置 -->
 	<bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration" depends-on="databaseMigrator">
 		<!-- 数据库连接池 -->
@@ -17,7 +16,6 @@
 		<property name="jobExecutorActivate" value="false" />
 		<!-- 历史级别 -->
 		<property name="history" value="audit" />
-
 		<!-- 添加的自定义监听器 -->
  		<property name="customDefaultBpmnParseHandlers">
     	 	<list>
@@ -34,18 +32,14 @@
 				</bean>
     	 	</list>
 		</property>
-
 		<property name="bpmnParser">
 			<bean class="com.mossle.bpm.parser.CustomBpmnParser" />
 		</property>
-
 		<!-- (databaseType 不用修改,即使连接其他类型数据库)  act引擎会自动替换成相应的type,这里加上是因为act不识别hsqldb类型,故直接映射成H2-->
 		<property name="databaseType" value="${application.database.type}"/>
-
 		<!-- 生成流程图的字体 -->
         <property name="activityFontName" value="宋体"/>
         <property name="labelFontName" value="宋体"/>
-
 		<!-- 组织机构适配 -->
         <property name="customSessionFactories">
 			<list>
@@ -56,23 +50,19 @@
                </bean>
            </list>
 		</property>
-
 		<!-- 工作日历 -->
 		<property name="businessCalendarManager" ref="businessCalendarManager"/>
-
 		<!-- //更换id生成策略
 		<property name="idGenerator">
 			<bean class="org.activiti.engine.impl.persistence.StrongUuidGenerator" />
 		</property>
 		-->
 	</bean>
-
 	<!-- 流程引擎 -->
 	<bean id="processEngine" class="com.mossle.bpm.proxy.ProxyProcessEngineFactoryBean">
 		<property name="processEngineConfiguration" ref="processEngineConfiguration"/>
 		<property name="enabled" value="${bpm.enabled}"/>
 	</bean>
-
 	<!-- 自动部署 -->
 	<bean id="autoDeployer" class="com.mossle.bpm.support.AutoDeployer" depends-on="applicationContextHelper">
 		<property name="enable" value="${bpm.auto.deploy}"/>
@@ -85,7 +75,6 @@
             </list>
         </property>
 	</bean>
-
 	<!-- 在记录history之前执行的TaskListener -->
 	<bean id="customTaskListener" class="com.mossle.bpm.listener.ProxyTaskListener">
 		<property name="taskListeners">
@@ -94,7 +83,6 @@
 			</list>
 		</property>
 	</bean>
-
 	<!-- 在记录history之后执行的TaskListener -->
 	<bean id="postTaskListener" class="com.mossle.bpm.listener.ProxyTaskListener">
 		<property name="taskListeners">
@@ -104,10 +92,8 @@
 			</list>
 		</property>
 	</bean>
-
 	<!-- 工作日历 -->
 	<bean id="businessCalendarManager" class="com.mossle.bpm.calendar.AdvancedBusinessCalendarManagerFactoryBean">
 		<property name="workCalendarConnector" ref="workCalendarConnector"/>
 	</bean>
-
 </beans>
