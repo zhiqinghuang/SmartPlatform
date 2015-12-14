@@ -18,15 +18,11 @@ public class ProxyServletListener implements ServletContextListener, HttpSession
 
 	public void contextInitialized(ServletContextEvent sce) {
 		ctx = WebApplicationContextUtils.getWebApplicationContext(sce.getServletContext());
-
 		if (ctx == null) {
 			logger.warn("cannot find applicationContext");
-
 			return;
 		}
-
 		Collection<ServletContextListener> servletContextListeners = ctx.getBeansOfType(ServletContextListener.class).values();
-
 		for (ServletContextListener servletContextListener : servletContextListeners) {
 			servletContextListener.contextInitialized(sce);
 		}
@@ -35,12 +31,9 @@ public class ProxyServletListener implements ServletContextListener, HttpSession
 	public void contextDestroyed(ServletContextEvent sce) {
 		if (ctx == null) {
 			logger.warn("cannot find applicationContext");
-
 			return;
 		}
-
 		Collection<ServletContextListener> servletContextListeners = ctx.getBeansOfType(ServletContextListener.class).values();
-
 		for (ServletContextListener servletContextListener : servletContextListeners) {
 			servletContextListener.contextDestroyed(sce);
 		}
@@ -49,12 +42,9 @@ public class ProxyServletListener implements ServletContextListener, HttpSession
 	public void sessionCreated(HttpSessionEvent se) {
 		if (ctx == null) {
 			logger.warn("cannot find applicationContext");
-
 			return;
 		}
-
 		Collection<HttpSessionListener> httpSessionListeners = ctx.getBeansOfType(HttpSessionListener.class).values();
-
 		for (HttpSessionListener httpSessionListener : httpSessionListeners) {
 			httpSessionListener.sessionCreated(se);
 		}
@@ -63,12 +53,9 @@ public class ProxyServletListener implements ServletContextListener, HttpSession
 	public void sessionDestroyed(HttpSessionEvent se) {
 		if (ctx == null) {
 			logger.warn("cannot find applicationContext");
-
 			return;
 		}
-
 		Collection<HttpSessionListener> httpSessionListeners = ctx.getBeansOfType(HttpSessionListener.class).values();
-
 		for (HttpSessionListener httpSessionListener : httpSessionListeners) {
 			httpSessionListener.sessionDestroyed(se);
 		}
