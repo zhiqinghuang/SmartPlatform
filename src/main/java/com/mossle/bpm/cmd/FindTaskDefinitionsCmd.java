@@ -10,18 +10,20 @@ import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.task.TaskDefinition;
 
 public class FindTaskDefinitionsCmd implements Command<List<TaskDefinition>> {
-	protected String processDefinitionId;
+    protected String processDefinitionId;
 
-	public FindTaskDefinitionsCmd(String processDefinitionId) {
-		this.processDefinitionId = processDefinitionId;
-	}
+    public FindTaskDefinitionsCmd(String processDefinitionId) {
+        this.processDefinitionId = processDefinitionId;
+    }
 
-	public List<TaskDefinition> execute(CommandContext commandContext) {
-		ProcessDefinitionEntity processDefinitionEntity = new GetDeploymentProcessDefinitionCmd(processDefinitionId).execute(commandContext);
+    public List<TaskDefinition> execute(CommandContext commandContext) {
+        ProcessDefinitionEntity processDefinitionEntity = new GetDeploymentProcessDefinitionCmd(
+                processDefinitionId).execute(commandContext);
 
-		List<TaskDefinition> taskDefinitions = new ArrayList<TaskDefinition>();
-		taskDefinitions.addAll(processDefinitionEntity.getTaskDefinitions().values());
+        List<TaskDefinition> taskDefinitions = new ArrayList<TaskDefinition>();
+        taskDefinitions.addAll(processDefinitionEntity.getTaskDefinitions()
+                .values());
 
-		return taskDefinitions;
-	}
+        return taskDefinitions;
+    }
 }

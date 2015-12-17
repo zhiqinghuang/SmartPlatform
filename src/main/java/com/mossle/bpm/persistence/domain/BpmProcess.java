@@ -22,230 +22,235 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "BPM_PROCESS")
 public class BpmProcess implements java.io.Serializable {
-	private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
-	/** null. */
-	private Long id;
+    /** null. */
+    private Long id;
 
-	/** null. */
-	private BpmConfBase bpmConfBase;
+    /** null. */
+    private BpmConfBase bpmConfBase;
 
-	/** null. */
-	private BpmCategory bpmCategory;
+    /** null. */
+    private BpmCategory bpmCategory;
 
-	/** null. */
-	private String name;
+    /** null. */
+    private String name;
 
-	/** null. */
-	private Integer priority;
+    /** null. */
+    private Integer priority;
 
-	/** null. */
-	private String descn;
+    /** null. */
+    private String descn;
 
-	/** null. */
-	private Integer useTaskConf;
+    /** null. */
+    private Integer useTaskConf;
 
-	/** null. */
-	private String code;
+    /** null. */
+    private String code;
 
-	/** null. */
-	private String tenantId;
+    /** null. */
+    private String tenantId;
 
-	/** . */
-	private Set<BpmTaskDef> bpmTaskDefs = new HashSet<BpmTaskDef>(0);
+    /** . */
+    private Set<BpmTaskDef> bpmTaskDefs = new HashSet<BpmTaskDef>(0);
 
-	/** . */
-	private Set<BpmTaskDefNotice> bpmTaskDefNotices = new HashSet<BpmTaskDefNotice>(0);
+    /** . */
+    private Set<BpmTaskDefNotice> bpmTaskDefNotices = new HashSet<BpmTaskDefNotice>(
+            0);
 
-	/** . */
-	private Set<BpmInstance> bpmInstances = new HashSet<BpmInstance>(0);
+    /** . */
+    private Set<BpmInstance> bpmInstances = new HashSet<BpmInstance>(0);
 
-	public BpmProcess() {
-	}
+    public BpmProcess() {
+    }
 
-	public BpmProcess(BpmConfBase bpmConfBase, BpmCategory bpmCategory, String name, Integer priority, String descn, Integer useTaskConf, String code, String tenantId, Set<BpmTaskDef> bpmTaskDefs, Set<BpmTaskDefNotice> bpmTaskDefNotices, Set<BpmInstance> bpmInstances) {
-		this.bpmConfBase = bpmConfBase;
-		this.bpmCategory = bpmCategory;
-		this.name = name;
-		this.priority = priority;
-		this.descn = descn;
-		this.useTaskConf = useTaskConf;
-		this.code = code;
-		this.tenantId = tenantId;
-		this.bpmTaskDefs = bpmTaskDefs;
-		this.bpmTaskDefNotices = bpmTaskDefNotices;
-		this.bpmInstances = bpmInstances;
-	}
+    public BpmProcess(BpmConfBase bpmConfBase, BpmCategory bpmCategory,
+            String name, Integer priority, String descn, Integer useTaskConf,
+            String code, String tenantId, Set<BpmTaskDef> bpmTaskDefs,
+            Set<BpmTaskDefNotice> bpmTaskDefNotices,
+            Set<BpmInstance> bpmInstances) {
+        this.bpmConfBase = bpmConfBase;
+        this.bpmCategory = bpmCategory;
+        this.name = name;
+        this.priority = priority;
+        this.descn = descn;
+        this.useTaskConf = useTaskConf;
+        this.code = code;
+        this.tenantId = tenantId;
+        this.bpmTaskDefs = bpmTaskDefs;
+        this.bpmTaskDefNotices = bpmTaskDefNotices;
+        this.bpmInstances = bpmInstances;
+    }
 
-	/** @return null. */
-	@Id
-	@GeneratedValue
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
-		return this.id;
-	}
+    /** @return null. */
+    @Id
+    @GeneratedValue
+    @Column(name = "ID", unique = true, nullable = false)
+    public Long getId() {
+        return this.id;
+    }
 
-	/**
-	 * @param id
-	 *            null.
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            null.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/** @return null. */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CONF_BASE_ID")
-	public BpmConfBase getBpmConfBase() {
-		return this.bpmConfBase;
-	}
+    /** @return null. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CONF_BASE_ID")
+    public BpmConfBase getBpmConfBase() {
+        return this.bpmConfBase;
+    }
 
-	/**
-	 * @param bpmConfBase
-	 *            null.
-	 */
-	public void setBpmConfBase(BpmConfBase bpmConfBase) {
-		this.bpmConfBase = bpmConfBase;
-	}
+    /**
+     * @param bpmConfBase
+     *            null.
+     */
+    public void setBpmConfBase(BpmConfBase bpmConfBase) {
+        this.bpmConfBase = bpmConfBase;
+    }
 
-	/** @return null. */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CATEGORY_ID")
-	public BpmCategory getBpmCategory() {
-		return this.bpmCategory;
-	}
+    /** @return null. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CATEGORY_ID")
+    public BpmCategory getBpmCategory() {
+        return this.bpmCategory;
+    }
 
-	/**
-	 * @param bpmCategory
-	 *            null.
-	 */
-	public void setBpmCategory(BpmCategory bpmCategory) {
-		this.bpmCategory = bpmCategory;
-	}
+    /**
+     * @param bpmCategory
+     *            null.
+     */
+    public void setBpmCategory(BpmCategory bpmCategory) {
+        this.bpmCategory = bpmCategory;
+    }
 
-	/** @return null. */
-	@Column(name = "NAME", length = 200)
-	public String getName() {
-		return this.name;
-	}
+    /** @return null. */
+    @Column(name = "NAME", length = 200)
+    public String getName() {
+        return this.name;
+    }
 
-	/**
-	 * @param name
-	 *            null.
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * @param name
+     *            null.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/** @return null. */
-	@Column(name = "PRIORITY")
-	public Integer getPriority() {
-		return this.priority;
-	}
+    /** @return null. */
+    @Column(name = "PRIORITY")
+    public Integer getPriority() {
+        return this.priority;
+    }
 
-	/**
-	 * @param priority
-	 *            null.
-	 */
-	public void setPriority(Integer priority) {
-		this.priority = priority;
-	}
+    /**
+     * @param priority
+     *            null.
+     */
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
 
-	/** @return null. */
-	@Column(name = "DESCN", length = 200)
-	public String getDescn() {
-		return this.descn;
-	}
+    /** @return null. */
+    @Column(name = "DESCN", length = 200)
+    public String getDescn() {
+        return this.descn;
+    }
 
-	/**
-	 * @param descn
-	 *            null.
-	 */
-	public void setDescn(String descn) {
-		this.descn = descn;
-	}
+    /**
+     * @param descn
+     *            null.
+     */
+    public void setDescn(String descn) {
+        this.descn = descn;
+    }
 
-	/** @return null. */
-	@Column(name = "USE_TASK_CONF")
-	public Integer getUseTaskConf() {
-		return this.useTaskConf;
-	}
+    /** @return null. */
+    @Column(name = "USE_TASK_CONF")
+    public Integer getUseTaskConf() {
+        return this.useTaskConf;
+    }
 
-	/**
-	 * @param useTaskConf
-	 *            null.
-	 */
-	public void setUseTaskConf(Integer useTaskConf) {
-		this.useTaskConf = useTaskConf;
-	}
+    /**
+     * @param useTaskConf
+     *            null.
+     */
+    public void setUseTaskConf(Integer useTaskConf) {
+        this.useTaskConf = useTaskConf;
+    }
 
-	/** @return null. */
-	@Column(name = "CODE", length = 64)
-	public String getCode() {
-		return this.code;
-	}
+    /** @return null. */
+    @Column(name = "CODE", length = 64)
+    public String getCode() {
+        return this.code;
+    }
 
-	/**
-	 * @param code
-	 *            null.
-	 */
-	public void setCode(String code) {
-		this.code = code;
-	}
+    /**
+     * @param code
+     *            null.
+     */
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	/** @return null. */
-	@Column(name = "TENANT_ID", length = 64)
-	public String getTenantId() {
-		return this.tenantId;
-	}
+    /** @return null. */
+    @Column(name = "TENANT_ID", length = 64)
+    public String getTenantId() {
+        return this.tenantId;
+    }
 
-	/**
-	 * @param tenantId
-	 *            null.
-	 */
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-	}
+    /**
+     * @param tenantId
+     *            null.
+     */
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 
-	/** @return . */
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "bpmProcess")
-	public Set<BpmTaskDef> getBpmTaskDefs() {
-		return this.bpmTaskDefs;
-	}
+    /** @return . */
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bpmProcess")
+    public Set<BpmTaskDef> getBpmTaskDefs() {
+        return this.bpmTaskDefs;
+    }
 
-	/**
-	 * @param bpmTaskDefs
-	 *            .
-	 */
-	public void setBpmTaskDefs(Set<BpmTaskDef> bpmTaskDefs) {
-		this.bpmTaskDefs = bpmTaskDefs;
-	}
+    /**
+     * @param bpmTaskDefs
+     *            .
+     */
+    public void setBpmTaskDefs(Set<BpmTaskDef> bpmTaskDefs) {
+        this.bpmTaskDefs = bpmTaskDefs;
+    }
 
-	/** @return . */
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "bpmProcess")
-	public Set<BpmTaskDefNotice> getBpmTaskDefNotices() {
-		return this.bpmTaskDefNotices;
-	}
+    /** @return . */
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bpmProcess")
+    public Set<BpmTaskDefNotice> getBpmTaskDefNotices() {
+        return this.bpmTaskDefNotices;
+    }
 
-	/**
-	 * @param bpmTaskDefNotices
-	 *            .
-	 */
-	public void setBpmTaskDefNotices(Set<BpmTaskDefNotice> bpmTaskDefNotices) {
-		this.bpmTaskDefNotices = bpmTaskDefNotices;
-	}
+    /**
+     * @param bpmTaskDefNotices
+     *            .
+     */
+    public void setBpmTaskDefNotices(Set<BpmTaskDefNotice> bpmTaskDefNotices) {
+        this.bpmTaskDefNotices = bpmTaskDefNotices;
+    }
 
-	/** @return . */
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "bpmProcess")
-	public Set<BpmInstance> getBpmInstances() {
-		return this.bpmInstances;
-	}
+    /** @return . */
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "bpmProcess")
+    public Set<BpmInstance> getBpmInstances() {
+        return this.bpmInstances;
+    }
 
-	/**
-	 * @param bpmInstances
-	 *            .
-	 */
-	public void setBpmInstances(Set<BpmInstance> bpmInstances) {
-		this.bpmInstances = bpmInstances;
-	}
+    /**
+     * @param bpmInstances
+     *            .
+     */
+    public void setBpmInstances(Set<BpmInstance> bpmInstances) {
+        this.bpmInstances = bpmInstances;
+    }
 }

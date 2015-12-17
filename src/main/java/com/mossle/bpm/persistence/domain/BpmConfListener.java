@@ -18,121 +18,122 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "BPM_CONF_LISTENER")
 public class BpmConfListener implements java.io.Serializable {
-	private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
-	/** null. */
-	private Long id;
+    /** null. */
+    private Long id;
 
-	/** null. */
-	private BpmConfNode bpmConfNode;
+    /** null. */
+    private BpmConfNode bpmConfNode;
 
-	/** null. */
-	private String value;
+    /** null. */
+    private String value;
 
-	/** null. */
-	private Integer type;
+    /** null. */
+    private Integer type;
 
-	/** null. */
-	private Integer status;
+    /** null. */
+    private Integer status;
 
-	/** null. */
-	private Integer priority;
+    /** null. */
+    private Integer priority;
 
-	public BpmConfListener() {
-	}
+    public BpmConfListener() {
+    }
 
-	public BpmConfListener(BpmConfNode bpmConfNode, String value, Integer type, Integer status, Integer priority) {
-		this.bpmConfNode = bpmConfNode;
-		this.value = value;
-		this.type = type;
-		this.status = status;
-		this.priority = priority;
-	}
+    public BpmConfListener(BpmConfNode bpmConfNode, String value, Integer type,
+            Integer status, Integer priority) {
+        this.bpmConfNode = bpmConfNode;
+        this.value = value;
+        this.type = type;
+        this.status = status;
+        this.priority = priority;
+    }
 
-	/** @return null. */
-	@Id
-	@GeneratedValue
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
-		return this.id;
-	}
+    /** @return null. */
+    @Id
+    @GeneratedValue
+    @Column(name = "ID", unique = true, nullable = false)
+    public Long getId() {
+        return this.id;
+    }
 
-	/**
-	 * @param id
-	 *            null.
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            null.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/** @return null. */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "NODE_ID")
-	public BpmConfNode getBpmConfNode() {
-		return this.bpmConfNode;
-	}
+    /** @return null. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "NODE_ID")
+    public BpmConfNode getBpmConfNode() {
+        return this.bpmConfNode;
+    }
 
-	/**
-	 * @param bpmConfNode
-	 *            null.
-	 */
-	public void setBpmConfNode(BpmConfNode bpmConfNode) {
-		this.bpmConfNode = bpmConfNode;
-	}
+    /**
+     * @param bpmConfNode
+     *            null.
+     */
+    public void setBpmConfNode(BpmConfNode bpmConfNode) {
+        this.bpmConfNode = bpmConfNode;
+    }
 
-	/** @return null. */
-	@Column(name = "VALUE", length = 200)
-	public String getValue() {
-		return this.value;
-	}
+    /** @return null. */
+    @Column(name = "VALUE", length = 200)
+    public String getValue() {
+        return this.value;
+    }
 
-	/**
-	 * @param value
-	 *            null.
-	 */
-	public void setValue(String value) {
-		this.value = value;
-	}
+    /**
+     * @param value
+     *            null.
+     */
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-	/** @return null. */
-	@Column(name = "TYPE")
-	public Integer getType() {
-		return this.type;
-	}
+    /** @return null. */
+    @Column(name = "TYPE")
+    public Integer getType() {
+        return this.type;
+    }
 
-	/**
-	 * @param type
-	 *            null.
-	 */
-	public void setType(Integer type) {
-		this.type = type;
-	}
+    /**
+     * @param type
+     *            null.
+     */
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
-	/** @return null. */
-	@Column(name = "STATUS")
-	public Integer getStatus() {
-		return this.status;
-	}
+    /** @return null. */
+    @Column(name = "STATUS")
+    public Integer getStatus() {
+        return this.status;
+    }
 
-	/**
-	 * @param status
-	 *            null.
-	 */
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
+    /**
+     * @param status
+     *            null.
+     */
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
-	/** @return null. */
-	@Column(name = "PRIORITY")
-	public Integer getPriority() {
-		return this.priority;
-	}
+    /** @return null. */
+    @Column(name = "PRIORITY")
+    public Integer getPriority() {
+        return this.priority;
+    }
 
-	/**
-	 * @param priority
-	 *            null.
-	 */
-	public void setPriority(Integer priority) {
-		this.priority = priority;
-	}
+    /**
+     * @param priority
+     *            null.
+     */
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
 }

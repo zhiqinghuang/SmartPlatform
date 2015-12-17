@@ -18,67 +18,67 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "BPM_CONF_RULE")
 public class BpmConfRule implements java.io.Serializable {
-	private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
-	/** null. */
-	private Long id;
+    /** null. */
+    private Long id;
 
-	/** null. */
-	private BpmConfNode bpmConfNode;
+    /** null. */
+    private BpmConfNode bpmConfNode;
 
-	/** null. */
-	private String value;
+    /** null. */
+    private String value;
 
-	public BpmConfRule() {
-	}
+    public BpmConfRule() {
+    }
 
-	public BpmConfRule(BpmConfNode bpmConfNode, String value) {
-		this.bpmConfNode = bpmConfNode;
-		this.value = value;
-	}
+    public BpmConfRule(BpmConfNode bpmConfNode, String value) {
+        this.bpmConfNode = bpmConfNode;
+        this.value = value;
+    }
 
-	/** @return null. */
-	@Id
-	@GeneratedValue
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
-		return this.id;
-	}
+    /** @return null. */
+    @Id
+    @GeneratedValue
+    @Column(name = "ID", unique = true, nullable = false)
+    public Long getId() {
+        return this.id;
+    }
 
-	/**
-	 * @param id
-	 *            null.
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            null.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/** @return null. */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "NODE_ID")
-	public BpmConfNode getBpmConfNode() {
-		return this.bpmConfNode;
-	}
+    /** @return null. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "NODE_ID")
+    public BpmConfNode getBpmConfNode() {
+        return this.bpmConfNode;
+    }
 
-	/**
-	 * @param bpmConfNode
-	 *            null.
-	 */
-	public void setBpmConfNode(BpmConfNode bpmConfNode) {
-		this.bpmConfNode = bpmConfNode;
-	}
+    /**
+     * @param bpmConfNode
+     *            null.
+     */
+    public void setBpmConfNode(BpmConfNode bpmConfNode) {
+        this.bpmConfNode = bpmConfNode;
+    }
 
-	/** @return null. */
-	@Column(name = "VALUE", length = 200)
-	public String getValue() {
-		return this.value;
-	}
+    /** @return null. */
+    @Column(name = "VALUE", length = 200)
+    public String getValue() {
+        return this.value;
+    }
 
-	/**
-	 * @param value
-	 *            null.
-	 */
-	public void setValue(String value) {
-		this.value = value;
-	}
+    /**
+     * @param value
+     *            null.
+     */
+    public void setValue(String value) {
+        this.value = value;
+    }
 }
