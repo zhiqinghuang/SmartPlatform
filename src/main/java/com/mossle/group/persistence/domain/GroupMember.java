@@ -18,85 +18,85 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "GROUP_MEMBER")
 public class GroupMember implements java.io.Serializable {
-	private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
-	/** null. */
-	private Long id;
+    /** null. */
+    private Long id;
 
-	/** null. */
-	private GroupInfo groupInfo;
+    /** null. */
+    private GroupInfo groupInfo;
 
-	/** null. */
-	private String userId;
+    /** null. */
+    private String userId;
 
-	/** null. */
-	private String tenantId;
+    /** null. */
+    private String tenantId;
 
-	public GroupMember() {
-	}
+    public GroupMember() {
+    }
 
-	public GroupMember(GroupInfo groupInfo, String userId, String tenantId) {
-		this.groupInfo = groupInfo;
-		this.userId = userId;
-		this.tenantId = tenantId;
-	}
+    public GroupMember(GroupInfo groupInfo, String userId, String tenantId) {
+        this.groupInfo = groupInfo;
+        this.userId = userId;
+        this.tenantId = tenantId;
+    }
 
-	/** @return null. */
-	@Id
-	@GeneratedValue
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
-		return this.id;
-	}
+    /** @return null. */
+    @Id
+    @GeneratedValue
+    @Column(name = "ID", unique = true, nullable = false)
+    public Long getId() {
+        return this.id;
+    }
 
-	/**
-	 * @param id
-	 *            null.
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            null.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/** @return null. */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "INFO_ID")
-	public GroupInfo getGroupInfo() {
-		return this.groupInfo;
-	}
+    /** @return null. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "INFO_ID")
+    public GroupInfo getGroupInfo() {
+        return this.groupInfo;
+    }
 
-	/**
-	 * @param groupInfo
-	 *            null.
-	 */
-	public void setGroupInfo(GroupInfo groupInfo) {
-		this.groupInfo = groupInfo;
-	}
+    /**
+     * @param groupInfo
+     *            null.
+     */
+    public void setGroupInfo(GroupInfo groupInfo) {
+        this.groupInfo = groupInfo;
+    }
 
-	/** @return null. */
-	@Column(name = "USER_ID", length = 64)
-	public String getUserId() {
-		return this.userId;
-	}
+    /** @return null. */
+    @Column(name = "USER_ID", length = 64)
+    public String getUserId() {
+        return this.userId;
+    }
 
-	/**
-	 * @param userId
-	 *            null.
-	 */
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    /**
+     * @param userId
+     *            null.
+     */
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	/** @return null. */
-	@Column(name = "TENANT_ID", length = 64)
-	public String getTenantId() {
-		return this.tenantId;
-	}
+    /** @return null. */
+    @Column(name = "TENANT_ID", length = 64)
+    public String getTenantId() {
+        return this.tenantId;
+    }
 
-	/**
-	 * @param tenantId
-	 *            null.
-	 */
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-	}
+    /**
+     * @param tenantId
+     *            null.
+     */
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 }

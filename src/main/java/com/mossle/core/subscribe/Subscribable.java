@@ -1,9 +1,9 @@
 package com.mossle.core.subscribe;
 
 public interface Subscribable<T> {
-	void handleMessage(T message);
+    void handleMessage(T message);
 
-	boolean isTopic();
+    boolean isTopic();
 
-	String getName();
+    String getName();
 }

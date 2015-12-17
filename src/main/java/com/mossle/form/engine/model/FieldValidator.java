@@ -1,13 +1,13 @@
 package com.mossle.form.engine.model;
 
 public class FieldValidator {
-	// number
-	// integer
-	// double
-	// min, max
-	// minLength, maxLength
-	// regex
+    // number
+    // integer
+    // double
+    // min, max
+    // minLength, maxLength
+    // regex
 
-	// email
-	// url
+    // email
+    // url
 }

@@ -22,213 +22,216 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "TASK_DEADLINE")
 public class TaskDeadline implements java.io.Serializable {
-	private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
-	/** null. */
-	private Long id;
+    /** null. */
+    private Long id;
 
-	/** null. */
-	private TaskInfo taskInfo;
+    /** null. */
+    private TaskInfo taskInfo;
 
-	/** null. */
-	private String type;
+    /** null. */
+    private String type;
 
-	/** null. */
-	private Date deadlineTime;
+    /** null. */
+    private Date deadlineTime;
 
-	/** null. */
-	private Date triggerTime;
+    /** null. */
+    private Date triggerTime;
 
-	/** null. */
-	private Integer repeatTimes;
+    /** null. */
+    private Integer repeatTimes;
 
-	/** null. */
-	private String notificationType;
+    /** null. */
+    private String notificationType;
 
-	/** null. */
-	private String notificationReceiver;
+    /** null. */
+    private String notificationReceiver;
 
-	/** null. */
-	private String notificationTemplateCode;
+    /** null. */
+    private String notificationTemplateCode;
 
-	/** null. */
-	private String reassignment;
+    /** null. */
+    private String reassignment;
 
-	/** null. */
-	private String operation;
+    /** null. */
+    private String operation;
 
-	public TaskDeadline() {
-	}
+    public TaskDeadline() {
+    }
 
-	public TaskDeadline(TaskInfo taskInfo, String type, Date deadlineTime, Date triggerTime, Integer repeatTimes, String notificationType, String notificationReceiver, String notificationTemplateCode, String reassignment, String operation) {
-		this.taskInfo = taskInfo;
-		this.type = type;
-		this.deadlineTime = deadlineTime;
-		this.triggerTime = triggerTime;
-		this.repeatTimes = repeatTimes;
-		this.notificationType = notificationType;
-		this.notificationReceiver = notificationReceiver;
-		this.notificationTemplateCode = notificationTemplateCode;
-		this.reassignment = reassignment;
-		this.operation = operation;
-	}
+    public TaskDeadline(TaskInfo taskInfo, String type, Date deadlineTime,
+            Date triggerTime, Integer repeatTimes, String notificationType,
+            String notificationReceiver, String notificationTemplateCode,
+            String reassignment, String operation) {
+        this.taskInfo = taskInfo;
+        this.type = type;
+        this.deadlineTime = deadlineTime;
+        this.triggerTime = triggerTime;
+        this.repeatTimes = repeatTimes;
+        this.notificationType = notificationType;
+        this.notificationReceiver = notificationReceiver;
+        this.notificationTemplateCode = notificationTemplateCode;
+        this.reassignment = reassignment;
+        this.operation = operation;
+    }
 
-	/** @return null. */
-	@Id
-	@GeneratedValue
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
-		return this.id;
-	}
+    /** @return null. */
+    @Id
+    @GeneratedValue
+    @Column(name = "ID", unique = true, nullable = false)
+    public Long getId() {
+        return this.id;
+    }
 
-	/**
-	 * @param id
-	 *            null.
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            null.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/** @return null. */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "TASK_ID")
-	public TaskInfo getTaskInfo() {
-		return this.taskInfo;
-	}
+    /** @return null. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "TASK_ID")
+    public TaskInfo getTaskInfo() {
+        return this.taskInfo;
+    }
 
-	/**
-	 * @param taskInfo
-	 *            null.
-	 */
-	public void setTaskInfo(TaskInfo taskInfo) {
-		this.taskInfo = taskInfo;
-	}
+    /**
+     * @param taskInfo
+     *            null.
+     */
+    public void setTaskInfo(TaskInfo taskInfo) {
+        this.taskInfo = taskInfo;
+    }
 
-	/** @return null. */
-	@Column(name = "TYPE", length = 100)
-	public String getType() {
-		return this.type;
-	}
+    /** @return null. */
+    @Column(name = "TYPE", length = 100)
+    public String getType() {
+        return this.type;
+    }
 
-	/**
-	 * @param type
-	 *            null.
-	 */
-	public void setType(String type) {
-		this.type = type;
-	}
+    /**
+     * @param type
+     *            null.
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	/** @return null. */
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "DEADLINE_TIME", length = 26)
-	public Date getDeadlineTime() {
-		return this.deadlineTime;
-	}
+    /** @return null. */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "DEADLINE_TIME", length = 26)
+    public Date getDeadlineTime() {
+        return this.deadlineTime;
+    }
 
-	/**
-	 * @param deadlineTime
-	 *            null.
-	 */
-	public void setDeadlineTime(Date deadlineTime) {
-		this.deadlineTime = deadlineTime;
-	}
+    /**
+     * @param deadlineTime
+     *            null.
+     */
+    public void setDeadlineTime(Date deadlineTime) {
+        this.deadlineTime = deadlineTime;
+    }
 
-	/** @return null. */
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "TRIGGER_TIME", length = 26)
-	public Date getTriggerTime() {
-		return this.triggerTime;
-	}
+    /** @return null. */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "TRIGGER_TIME", length = 26)
+    public Date getTriggerTime() {
+        return this.triggerTime;
+    }
 
-	/**
-	 * @param triggerTime
-	 *            null.
-	 */
-	public void setTriggerTime(Date triggerTime) {
-		this.triggerTime = triggerTime;
-	}
+    /**
+     * @param triggerTime
+     *            null.
+     */
+    public void setTriggerTime(Date triggerTime) {
+        this.triggerTime = triggerTime;
+    }
 
-	/** @return null. */
-	@Column(name = "REPEAT_TIMES")
-	public Integer getRepeatTimes() {
-		return this.repeatTimes;
-	}
+    /** @return null. */
+    @Column(name = "REPEAT_TIMES")
+    public Integer getRepeatTimes() {
+        return this.repeatTimes;
+    }
 
-	/**
-	 * @param repeatTimes
-	 *            null.
-	 */
-	public void setRepeatTimes(Integer repeatTimes) {
-		this.repeatTimes = repeatTimes;
-	}
+    /**
+     * @param repeatTimes
+     *            null.
+     */
+    public void setRepeatTimes(Integer repeatTimes) {
+        this.repeatTimes = repeatTimes;
+    }
 
-	/** @return null. */
-	@Column(name = "NOTIFICATION_TYPE", length = 200)
-	public String getNotificationType() {
-		return this.notificationType;
-	}
+    /** @return null. */
+    @Column(name = "NOTIFICATION_TYPE", length = 200)
+    public String getNotificationType() {
+        return this.notificationType;
+    }
 
-	/**
-	 * @param notificationType
-	 *            null.
-	 */
-	public void setNotificationType(String notificationType) {
-		this.notificationType = notificationType;
-	}
+    /**
+     * @param notificationType
+     *            null.
+     */
+    public void setNotificationType(String notificationType) {
+        this.notificationType = notificationType;
+    }
 
-	/** @return null. */
-	@Column(name = "NOTIFICATION_RECEIVER", length = 200)
-	public String getNotificationReceiver() {
-		return this.notificationReceiver;
-	}
+    /** @return null. */
+    @Column(name = "NOTIFICATION_RECEIVER", length = 200)
+    public String getNotificationReceiver() {
+        return this.notificationReceiver;
+    }
 
-	/**
-	 * @param notificationReceiver
-	 *            null.
-	 */
-	public void setNotificationReceiver(String notificationReceiver) {
-		this.notificationReceiver = notificationReceiver;
-	}
+    /**
+     * @param notificationReceiver
+     *            null.
+     */
+    public void setNotificationReceiver(String notificationReceiver) {
+        this.notificationReceiver = notificationReceiver;
+    }
 
-	/** @return null. */
-	@Column(name = "NOTIFICATION_TEMPLATE_CODE", length = 200)
-	public String getNotificationTemplateCode() {
-		return this.notificationTemplateCode;
-	}
+    /** @return null. */
+    @Column(name = "NOTIFICATION_TEMPLATE_CODE", length = 200)
+    public String getNotificationTemplateCode() {
+        return this.notificationTemplateCode;
+    }
 
-	/**
-	 * @param notificationTemplateCode
-	 *            null.
-	 */
-	public void setNotificationTemplateCode(String notificationTemplateCode) {
-		this.notificationTemplateCode = notificationTemplateCode;
-	}
+    /**
+     * @param notificationTemplateCode
+     *            null.
+     */
+    public void setNotificationTemplateCode(String notificationTemplateCode) {
+        this.notificationTemplateCode = notificationTemplateCode;
+    }
 
-	/** @return null. */
-	@Column(name = "REASSIGNMENT", length = 200)
-	public String getReassignment() {
-		return this.reassignment;
-	}
+    /** @return null. */
+    @Column(name = "REASSIGNMENT", length = 200)
+    public String getReassignment() {
+        return this.reassignment;
+    }
 
-	/**
-	 * @param reassignment
-	 *            null.
-	 */
-	public void setReassignment(String reassignment) {
-		this.reassignment = reassignment;
-	}
+    /**
+     * @param reassignment
+     *            null.
+     */
+    public void setReassignment(String reassignment) {
+        this.reassignment = reassignment;
+    }
 
-	/** @return null. */
-	@Column(name = "OPERATION", length = 200)
-	public String getOperation() {
-		return this.operation;
-	}
+    /** @return null. */
+    @Column(name = "OPERATION", length = 200)
+    public String getOperation() {
+        return this.operation;
+    }
 
-	/**
-	 * @param operation
-	 *            null.
-	 */
-	public void setOperation(String operation) {
-		this.operation = operation;
-	}
+    /**
+     * @param operation
+     *            null.
+     */
+    public void setOperation(String operation) {
+        this.operation = operation;
+    }
 }

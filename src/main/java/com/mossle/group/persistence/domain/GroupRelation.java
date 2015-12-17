@@ -18,86 +18,87 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "GROUP_RELATION")
 public class GroupRelation implements java.io.Serializable {
-	private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
-	/** null. */
-	private Long id;
+    /** null. */
+    private Long id;
 
-	/** null. */
-	private GroupInfo groupInfoByParentId;
+    /** null. */
+    private GroupInfo groupInfoByParentId;
 
-	/** null. */
-	private GroupInfo groupInfoByChildId;
+    /** null. */
+    private GroupInfo groupInfoByChildId;
 
-	/** null. */
-	private String tenantId;
+    /** null. */
+    private String tenantId;
 
-	public GroupRelation() {
-	}
+    public GroupRelation() {
+    }
 
-	public GroupRelation(GroupInfo groupInfoByParentId, GroupInfo groupInfoByChildId, String tenantId) {
-		this.groupInfoByParentId = groupInfoByParentId;
-		this.groupInfoByChildId = groupInfoByChildId;
-		this.tenantId = tenantId;
-	}
+    public GroupRelation(GroupInfo groupInfoByParentId,
+            GroupInfo groupInfoByChildId, String tenantId) {
+        this.groupInfoByParentId = groupInfoByParentId;
+        this.groupInfoByChildId = groupInfoByChildId;
+        this.tenantId = tenantId;
+    }
 
-	/** @return null. */
-	@Id
-	@GeneratedValue
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
-		return this.id;
-	}
+    /** @return null. */
+    @Id
+    @GeneratedValue
+    @Column(name = "ID", unique = true, nullable = false)
+    public Long getId() {
+        return this.id;
+    }
 
-	/**
-	 * @param id
-	 *            null.
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            null.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/** @return null. */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PARENT_ID")
-	public GroupInfo getGroupInfoByParentId() {
-		return this.groupInfoByParentId;
-	}
+    /** @return null. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PARENT_ID")
+    public GroupInfo getGroupInfoByParentId() {
+        return this.groupInfoByParentId;
+    }
 
-	/**
-	 * @param groupInfoByParentId
-	 *            null.
-	 */
-	public void setGroupInfoByParentId(GroupInfo groupInfoByParentId) {
-		this.groupInfoByParentId = groupInfoByParentId;
-	}
+    /**
+     * @param groupInfoByParentId
+     *            null.
+     */
+    public void setGroupInfoByParentId(GroupInfo groupInfoByParentId) {
+        this.groupInfoByParentId = groupInfoByParentId;
+    }
 
-	/** @return null. */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "CHILD_ID")
-	public GroupInfo getGroupInfoByChildId() {
-		return this.groupInfoByChildId;
-	}
+    /** @return null. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CHILD_ID")
+    public GroupInfo getGroupInfoByChildId() {
+        return this.groupInfoByChildId;
+    }
 
-	/**
-	 * @param groupInfoByChildId
-	 *            null.
-	 */
-	public void setGroupInfoByChildId(GroupInfo groupInfoByChildId) {
-		this.groupInfoByChildId = groupInfoByChildId;
-	}
+    /**
+     * @param groupInfoByChildId
+     *            null.
+     */
+    public void setGroupInfoByChildId(GroupInfo groupInfoByChildId) {
+        this.groupInfoByChildId = groupInfoByChildId;
+    }
 
-	/** @return null. */
-	@Column(name = "TENANT_ID", length = 64)
-	public String getTenantId() {
-		return this.tenantId;
-	}
+    /** @return null. */
+    @Column(name = "TENANT_ID", length = 64)
+    public String getTenantId() {
+        return this.tenantId;
+    }
 
-	/**
-	 * @param tenantId
-	 *            null.
-	 */
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-	}
+    /**
+     * @param tenantId
+     *            null.
+     */
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 }

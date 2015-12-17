@@ -1,10 +1,12 @@
 package com.mossle.internal.sendmail.persistence.manager;
 
-import org.springframework.stereotype.Service;
-
 import com.mossle.core.hibernate.HibernateEntityDao;
+
 import com.mossle.internal.sendmail.persistence.domain.SendmailAttachment;
 
+import org.springframework.stereotype.Service;
+
 @Service
-public class SendmailAttachmentManager extends HibernateEntityDao<SendmailAttachment> {
+public class SendmailAttachmentManager extends
+        HibernateEntityDao<SendmailAttachment> {
 }

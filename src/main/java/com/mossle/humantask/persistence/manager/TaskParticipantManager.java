@@ -1,9 +1,10 @@
 package com.mossle.humantask.persistence.manager;
 
-import org.springframework.stereotype.Service;
-
 import com.mossle.core.hibernate.HibernateEntityDao;
+
 import com.mossle.humantask.persistence.domain.TaskParticipant;
+
+import org.springframework.stereotype.Service;
 
 @Service
 public class TaskParticipantManager extends HibernateEntityDao<TaskParticipant> {
