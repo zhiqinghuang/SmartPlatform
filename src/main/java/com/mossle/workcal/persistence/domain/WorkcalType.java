@@ -20,84 +20,85 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "WORKCAL_TYPE")
 public class WorkcalType implements java.io.Serializable {
-	private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
-	/** null. */
-	private Long id;
+    /** null. */
+    private Long id;
 
-	/** null. */
-	private String name;
+    /** null. */
+    private String name;
 
-	/** null. */
-	private String tenantId;
+    /** null. */
+    private String tenantId;
 
-	/** . */
-	private Set<WorkcalRule> workcalRules = new HashSet<WorkcalRule>(0);
+    /** . */
+    private Set<WorkcalRule> workcalRules = new HashSet<WorkcalRule>(0);
 
-	public WorkcalType() {
-	}
+    public WorkcalType() {
+    }
 
-	public WorkcalType(String name, String tenantId, Set<WorkcalRule> workcalRules) {
-		this.name = name;
-		this.tenantId = tenantId;
-		this.workcalRules = workcalRules;
-	}
+    public WorkcalType(String name, String tenantId,
+            Set<WorkcalRule> workcalRules) {
+        this.name = name;
+        this.tenantId = tenantId;
+        this.workcalRules = workcalRules;
+    }
 
-	/** @return null. */
-	@Id
-	@GeneratedValue
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
-		return this.id;
-	}
+    /** @return null. */
+    @Id
+    @GeneratedValue
+    @Column(name = "ID", unique = true, nullable = false)
+    public Long getId() {
+        return this.id;
+    }
 
-	/**
-	 * @param id
-	 *            null.
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            null.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/** @return null. */
-	@Column(name = "NAME", length = 50)
-	public String getName() {
-		return this.name;
-	}
+    /** @return null. */
+    @Column(name = "NAME", length = 50)
+    public String getName() {
+        return this.name;
+    }
 
-	/**
-	 * @param name
-	 *            null.
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * @param name
+     *            null.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/** @return null. */
-	@Column(name = "TENANT_ID", length = 64)
-	public String getTenantId() {
-		return this.tenantId;
-	}
+    /** @return null. */
+    @Column(name = "TENANT_ID", length = 64)
+    public String getTenantId() {
+        return this.tenantId;
+    }
 
-	/**
-	 * @param tenantId
-	 *            null.
-	 */
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-	}
+    /**
+     * @param tenantId
+     *            null.
+     */
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 
-	/** @return . */
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "workcalType")
-	public Set<WorkcalRule> getWorkcalRules() {
-		return this.workcalRules;
-	}
+    /** @return . */
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "workcalType")
+    public Set<WorkcalRule> getWorkcalRules() {
+        return this.workcalRules;
+    }
 
-	/**
-	 * @param workcalRules
-	 *            .
-	 */
-	public void setWorkcalRules(Set<WorkcalRule> workcalRules) {
-		this.workcalRules = workcalRules;
-	}
+    /**
+     * @param workcalRules
+     *            .
+     */
+    public void setWorkcalRules(Set<WorkcalRule> workcalRules) {
+        this.workcalRules = workcalRules;
+    }
 }

@@ -7,40 +7,41 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.core.Authentication;
 
 public class PermissionVoter implements AccessDecisionVoter<Object> {
-	private PermissionChecker permissionChecker;
+    private PermissionChecker permissionChecker;
 
-	public boolean supports(ConfigAttribute attribute) {
-		return attribute.getAttribute() != null;
-	}
+    public boolean supports(ConfigAttribute attribute) {
+        return attribute.getAttribute() != null;
+    }
 
-	public boolean supports(Class<?> clazz) {
-		return true;
-	}
+    public boolean supports(Class<?> clazz) {
+        return true;
+    }
 
-	public int vote(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) {
-		int result = ACCESS_ABSTAIN;
+    public int vote(Authentication authentication, Object object,
+            Collection<ConfigAttribute> configAttributes) {
+        int result = ACCESS_ABSTAIN;
 
-		for (ConfigAttribute configAttribute : configAttributes) {
-			if (this.supports(configAttribute)) {
-				result = ACCESS_DENIED;
+        for (ConfigAttribute configAttribute : configAttributes) {
+            if (this.supports(configAttribute)) {
+                result = ACCESS_DENIED;
 
-				String text = getPermission(configAttribute);
-				boolean authorized = permissionChecker.isAuthorized(text);
+                String text = getPermission(configAttribute);
+                boolean authorized = permissionChecker.isAuthorized(text);
 
-				if (authorized) {
-					return ACCESS_GRANTED;
-				}
-			}
-		}
+                if (authorized) {
+                    return ACCESS_GRANTED;
+                }
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	private String getPermission(ConfigAttribute configAttribute) {
-		return configAttribute.getAttribute();
-	}
+    private String getPermission(ConfigAttribute configAttribute) {
+        return configAttribute.getAttribute();
+    }
 
-	public void setPermissionChecker(PermissionChecker permissionChecker) {
-		this.permissionChecker = permissionChecker;
-	}
+    public void setPermissionChecker(PermissionChecker permissionChecker) {
+        this.permissionChecker = permissionChecker;
+    }
 }

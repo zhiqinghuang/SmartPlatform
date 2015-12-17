@@ -24,20 +24,17 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
- * A {@link Session} implementation that is backed by a {@link java.util.Map}.
- * The defaults for the properties are:
+ * A {@link Session} implementation that is backed by a {@link java.util.Map}. The defaults for the properties are:
  * </p>
  * <ul>
- * <li>id - a secure random generated id</li>
- * <li>creationTime - the moment the {@link MapSession} was instantiated</li>
- * <li>lastAccessedTime - the moment the {@link MapSession} was instantiated
- * </li>
- * <li>maxInactiveInterval - 30 minutes</li>
+ *     <li>id - a secure random generated id</li>
+ *     <li>creationTime - the moment the {@link MapSession} was instantiated</li>
+ *     <li>lastAccessedTime - the moment the {@link MapSession} was instantiated</li>
+ *     <li>maxInactiveInterval - 30 minutes</li>
  * </ul>
  *
  * <p>
- * This implementation has no synchronization, so it is best to use the copy
- * constructor when working on multiple threads.
+ * This implementation has no synchronization, so it is best to use the copy constructor when working on multiple threads.
  * </p>
  *
  * @since 1.0
@@ -68,12 +65,10 @@ public final class MapSession implements ExpiringSession, Serializable {
 	/**
 	 * Creates a new instance from the provided {@link Session}
 	 *
-	 * @param session
-	 *            the {@link Session} to initialize this {@link Session} with.
-	 *            Cannot be null.
+	 * @param session the {@link Session} to initialize this {@link Session} with. Cannot be null.
 	 */
 	public MapSession(ExpiringSession session) {
-		if (session == null) {
+		if(session == null) {
 			throw new IllegalArgumentException("session cannot be null");
 		}
 		this.id = session.getId();
@@ -116,7 +111,7 @@ public final class MapSession implements ExpiringSession, Serializable {
 	}
 
 	boolean isExpired(long now) {
-		if (maxInactiveInterval < 0) {
+		if(maxInactiveInterval < 0) {
 			return false;
 		}
 		return now - TimeUnit.SECONDS.toMillis(maxInactiveInterval) >= lastAccessedTime;
@@ -143,25 +138,17 @@ public final class MapSession implements ExpiringSession, Serializable {
 	}
 
 	/**
-	 * Sets the time that this {@link Session} was created in milliseconds since
-	 * midnight of 1/1/1970 GMT. The default is when the {@link Session} was
-	 * instantiated.
-	 * 
-	 * @param creationTime
-	 *            the time that this {@link Session} was created in milliseconds
-	 *            since midnight of 1/1/1970 GMT.
+	 * Sets the time that this {@link Session} was created in milliseconds since midnight of 1/1/1970 GMT. The default is when the {@link Session} was instantiated.
+	 * @param creationTime the time that this {@link Session} was created in milliseconds since midnight of 1/1/1970 GMT.
 	 */
 	public void setCreationTime(long creationTime) {
 		this.creationTime = creationTime;
 	}
 
 	/**
-	 * Sets the identifier for this {@link Session}. The id should be a secure
-	 * random generated value to prevent malicious users from guessing this
-	 * value. The default is a secure random generated identifier.
+	 * Sets the identifier for this {@link Session}. The id should be a secure random generated value to prevent malicious users from guessing this value.   The default is a secure random generated identifier.
 	 *
-	 * @param id
-	 *            the identifier for this session.
+	 * @param id the identifier for this session.
 	 */
 	public void setId(String id) {
 		this.id = id;

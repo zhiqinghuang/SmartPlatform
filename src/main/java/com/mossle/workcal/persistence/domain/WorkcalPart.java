@@ -18,121 +18,122 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "WORKCAL_PART")
 public class WorkcalPart implements java.io.Serializable {
-	private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
-	/** null. */
-	private Long id;
+    /** null. */
+    private Long id;
 
-	/** null. */
-	private WorkcalRule workcalRule;
+    /** null. */
+    private WorkcalRule workcalRule;
 
-	/** null. */
-	private Integer shift;
+    /** null. */
+    private Integer shift;
 
-	/** null. */
-	private String startTime;
+    /** null. */
+    private String startTime;
 
-	/** null. */
-	private String endTime;
+    /** null. */
+    private String endTime;
 
-	/** null. */
-	private String tenantId;
+    /** null. */
+    private String tenantId;
 
-	public WorkcalPart() {
-	}
+    public WorkcalPart() {
+    }
 
-	public WorkcalPart(WorkcalRule workcalRule, Integer shift, String startTime, String endTime, String tenantId) {
-		this.workcalRule = workcalRule;
-		this.shift = shift;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.tenantId = tenantId;
-	}
+    public WorkcalPart(WorkcalRule workcalRule, Integer shift,
+            String startTime, String endTime, String tenantId) {
+        this.workcalRule = workcalRule;
+        this.shift = shift;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.tenantId = tenantId;
+    }
 
-	/** @return null. */
-	@Id
-	@GeneratedValue
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
-		return this.id;
-	}
+    /** @return null. */
+    @Id
+    @GeneratedValue
+    @Column(name = "ID", unique = true, nullable = false)
+    public Long getId() {
+        return this.id;
+    }
 
-	/**
-	 * @param id
-	 *            null.
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            null.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/** @return null. */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "RULE_ID")
-	public WorkcalRule getWorkcalRule() {
-		return this.workcalRule;
-	}
+    /** @return null. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "RULE_ID")
+    public WorkcalRule getWorkcalRule() {
+        return this.workcalRule;
+    }
 
-	/**
-	 * @param workcalRule
-	 *            null.
-	 */
-	public void setWorkcalRule(WorkcalRule workcalRule) {
-		this.workcalRule = workcalRule;
-	}
+    /**
+     * @param workcalRule
+     *            null.
+     */
+    public void setWorkcalRule(WorkcalRule workcalRule) {
+        this.workcalRule = workcalRule;
+    }
 
-	/** @return null. */
-	@Column(name = "SHIFT")
-	public Integer getShift() {
-		return this.shift;
-	}
+    /** @return null. */
+    @Column(name = "SHIFT")
+    public Integer getShift() {
+        return this.shift;
+    }
 
-	/**
-	 * @param shift
-	 *            null.
-	 */
-	public void setShift(Integer shift) {
-		this.shift = shift;
-	}
+    /**
+     * @param shift
+     *            null.
+     */
+    public void setShift(Integer shift) {
+        this.shift = shift;
+    }
 
-	/** @return null. */
-	@Column(name = "START_TIME", length = 5)
-	public String getStartTime() {
-		return this.startTime;
-	}
+    /** @return null. */
+    @Column(name = "START_TIME", length = 5)
+    public String getStartTime() {
+        return this.startTime;
+    }
 
-	/**
-	 * @param startTime
-	 *            null.
-	 */
-	public void setStartTime(String startTime) {
-		this.startTime = startTime;
-	}
+    /**
+     * @param startTime
+     *            null.
+     */
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
 
-	/** @return null. */
-	@Column(name = "END_TIME", length = 5)
-	public String getEndTime() {
-		return this.endTime;
-	}
+    /** @return null. */
+    @Column(name = "END_TIME", length = 5)
+    public String getEndTime() {
+        return this.endTime;
+    }
 
-	/**
-	 * @param endTime
-	 *            null.
-	 */
-	public void setEndTime(String endTime) {
-		this.endTime = endTime;
-	}
+    /**
+     * @param endTime
+     *            null.
+     */
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
 
-	/** @return null. */
-	@Column(name = "TENANT_ID", length = 64)
-	public String getTenantId() {
-		return this.tenantId;
-	}
+    /** @return null. */
+    @Column(name = "TENANT_ID", length = 64)
+    public String getTenantId() {
+        return this.tenantId;
+    }
 
-	/**
-	 * @param tenantId
-	 *            null.
-	 */
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-	}
+    /**
+     * @param tenantId
+     *            null.
+     */
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 }

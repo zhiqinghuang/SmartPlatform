@@ -7,8 +7,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.mossle.security.impl.SpringSecurityUserAuth;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -16,354 +19,363 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
+
 import org.springframework.util.Assert;
 
-import com.mossle.security.impl.SpringSecurityUserAuth;
-
 public class SpringSecurityUtils {
-	private static Logger logger = LoggerFactory.getLogger(SpringSecurityUtils.class);
-
-	protected SpringSecurityUtils() {
-	}
+    private static Logger logger = LoggerFactory
+            .getLogger(SpringSecurityUtils.class);
+
+    protected SpringSecurityUtils() {
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends UserDetails> T getCurrentUser() {
+        Authentication authentication = getAuthentication();
+
+        if (authentication == null) {
+            return null;
+        }
+
+        Object principal = authentication.getPrincipal();
+
+        if (!(principal instanceof UserDetails)) {
+            return null;
+        }
+
+        return (T) principal;
+    }
+
+    /**
+     * 取得当前用户的登录名, 如果当前用户未登录则返回空字符串.
+     */
+    public static String getCurrentUsername() {
+        Authentication authentication = getAuthentication();
+
+        if ((authentication == null) || (authentication.getPrincipal() == null)) {
+            return "";
+        }
+
+        return authentication.getName();
+    }
+
+    /**
+     * 取得当前用户的id，如果当前用户与未登录，则返回null.
+     */
+    public static String getCurrentUserId() {
+        SpringSecurityUserAuth springSecurityUserAuth = getCurrentUser();
+
+        if (springSecurityUserAuth == null) {
+            return null;
+        }
+
+        return springSecurityUserAuth.getId();
+    }
 
-	@SuppressWarnings("unchecked")
-	public static <T extends UserDetails> T getCurrentUser() {
-		Authentication authentication = getAuthentication();
+    /**
+     * 取得当前用户登录IP, 如果当前用户未登录则返回空字符串.
+     */
+    public static String getCurrentUserIp() {
+        Authentication authentication = getAuthentication();
 
-		if (authentication == null) {
-			return null;
-		}
+        if (authentication == null) {
+            return "";
+        }
 
-		Object principal = authentication.getPrincipal();
+        Object details = authentication.getDetails();
 
-		if (!(principal instanceof UserDetails)) {
-			return null;
-		}
+        if (!(details instanceof WebAuthenticationDetails)) {
+            return "";
+        }
 
-		return (T) principal;
-	}
+        WebAuthenticationDetails webDetails = (WebAuthenticationDetails) details;
 
-	/**
-	 * 取得当前用户的登录名, 如果当前用户未登录则返回空字符串.
-	 */
-	public static String getCurrentUsername() {
-		Authentication authentication = getAuthentication();
+        return webDetails.getRemoteAddress();
+    }
 
-		if ((authentication == null) || (authentication.getPrincipal() == null)) {
-			return "";
-		}
+    /**
+     * 将UserDetails保存到Security Context.
+     * 
+     * @param userDetails
+     *            已初始化好的用户信息.
+     * @param request
+     *            用于获取用户IP地址信息,可为Null.
+     */
+    public static void saveUserDetailsToContext(UserDetails userDetails,
+            HttpServletRequest request) {
+        PreAuthenticatedAuthenticationToken authentication = new PreAuthenticatedAuthenticationToken(
+                userDetails, userDetails.getPassword(),
+                userDetails.getAuthorities());
 
-		return authentication.getName();
-	}
+        if (request != null) {
+            authentication.setDetails(new WebAuthenticationDetails(request));
+        }
 
-	/**
-	 * 取得当前用户的id，如果当前用户与未登录，则返回null.
-	 */
-	public static String getCurrentUserId() {
-		SpringSecurityUserAuth springSecurityUserAuth = getCurrentUser();
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
 
-		if (springSecurityUserAuth == null) {
-			return null;
-		}
+    public static void saveUserDetailsToContext(UserDetails userDetails,
+            HttpServletRequest request, SecurityContext securityContext) {
+        PreAuthenticatedAuthenticationToken authentication = new PreAuthenticatedAuthenticationToken(
+                userDetails, userDetails.getPassword(),
+                userDetails.getAuthorities());
 
-		return springSecurityUserAuth.getId();
-	}
+        if (request != null) {
+            authentication.setDetails(new WebAuthenticationDetails(request));
+        }
 
-	/**
-	 * 取得当前用户登录IP, 如果当前用户未登录则返回空字符串.
-	 */
-	public static String getCurrentUserIp() {
-		Authentication authentication = getAuthentication();
+        securityContext.setAuthentication(authentication);
+    }
 
-		if (authentication == null) {
-			return "";
-		}
+    /**
+     * 取得Authentication, 如当前SecurityContext为空时返回null.
+     */
+    public static Authentication getAuthentication() {
+        SecurityContext context = SecurityContextHolder.getContext();
 
-		Object details = authentication.getDetails();
+        return context.getAuthentication();
+    }
 
-		if (!(details instanceof WebAuthenticationDetails)) {
-			return "";
-		}
+    // ~ ======================================================================
+    public static boolean hasPermission(String... permissions) {
+        if (permissions == null) {
+            logger.warn("permission is null");
 
-		WebAuthenticationDetails webDetails = (WebAuthenticationDetails) details;
+            return false;
+        }
 
-		return webDetails.getRemoteAddress();
-	}
+        Collection<String> attributes = getAuthorities();
 
-	/**
-	 * 将UserDetails保存到Security Context.
-	 * 
-	 * @param userDetails
-	 *            已初始化好的用户信息.
-	 * @param request
-	 *            用于获取用户IP地址信息,可为Null.
-	 */
-	public static void saveUserDetailsToContext(UserDetails userDetails, HttpServletRequest request) {
-		PreAuthenticatedAuthenticationToken authentication = new PreAuthenticatedAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+        for (String permission : permissions) {
+            if (attributes.contains(permission)) {
+                logger.debug("has : {}", permission);
 
-		if (request != null) {
-			authentication.setDetails(new WebAuthenticationDetails(request));
-		}
+                return true;
+            }
+        }
 
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-	}
+        return false;
+    }
 
-	public static void saveUserDetailsToContext(UserDetails userDetails, HttpServletRequest request, SecurityContext securityContext) {
-		PreAuthenticatedAuthenticationToken authentication = new PreAuthenticatedAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+    public static boolean hasAllPermissions(String... permissions) {
+        if (permissions == null) {
+            logger.warn("permissions is null");
 
-		if (request != null) {
-			authentication.setDetails(new WebAuthenticationDetails(request));
-		}
+            return false;
+        }
 
-		securityContext.setAuthentication(authentication);
-	}
+        Collection<String> attributes = getAuthorities();
 
-	/**
-	 * 取得Authentication, 如当前SecurityContext为空时返回null.
-	 */
-	public static Authentication getAuthentication() {
-		SecurityContext context = SecurityContextHolder.getContext();
+        for (String permission : permissions) {
+            if (!attributes.contains(permission)) {
+                logger.debug("lack : {}", permission);
 
-		return context.getAuthentication();
-	}
+                return false;
+            }
+        }
 
-	// ~ ======================================================================
-	public static boolean hasPermission(String... permissions) {
-		if (permissions == null) {
-			logger.warn("permission is null");
+        return true;
+    }
 
-			return false;
-		}
+    public static boolean lackPermission(String... permissions) {
+        if (permissions == null) {
+            logger.warn("permissions is null");
 
-		Collection<String> attributes = getAuthorities();
+            return true;
+        }
 
-		for (String permission : permissions) {
-			if (attributes.contains(permission)) {
-				logger.debug("has : {}", permission);
+        Collection<String> attributes = getAuthorities();
 
-				return true;
-			}
-		}
+        for (String permission : permissions) {
+            if (!attributes.contains(permission)) {
+                logger.debug("lack : {}", permission);
 
-		return false;
-	}
+                return true;
+            }
+        }
 
-	public static boolean hasAllPermissions(String... permissions) {
-		if (permissions == null) {
-			logger.warn("permissions is null");
+        return false;
+    }
 
-			return false;
-		}
+    public static boolean lackAllPermissions(String... permissions) {
+        if (permissions == null) {
+            logger.warn("permissions is null");
 
-		Collection<String> attributes = getAuthorities();
+            return true;
+        }
 
-		for (String permission : permissions) {
-			if (!attributes.contains(permission)) {
-				logger.debug("lack : {}", permission);
+        Collection<String> attributes = getAuthorities();
 
-				return false;
-			}
-		}
+        for (String permission : permissions) {
+            if (attributes.contains(permission)) {
+                logger.debug("has : {}", permission);
 
-		return true;
-	}
+                return false;
+            }
+        }
 
-	public static boolean lackPermission(String... permissions) {
-		if (permissions == null) {
-			logger.warn("permissions is null");
+        return true;
+    }
 
-			return true;
-		}
+    public static List<String> getAuthorities() {
+        Authentication authentication = getAuthentication();
 
-		Collection<String> attributes = getAuthorities();
+        if (authentication == null) {
+            return Collections.EMPTY_LIST;
+        }
 
-		for (String permission : permissions) {
-			if (!attributes.contains(permission)) {
-				logger.debug("lack : {}", permission);
+        Collection<? extends GrantedAuthority> grantedAuthorityList = authentication
+                .getAuthorities();
 
-				return true;
-			}
-		}
+        List<String> authorities = new ArrayList<String>();
 
-		return false;
-	}
+        for (GrantedAuthority grantedAuthority : grantedAuthorityList) {
+            authorities.add(grantedAuthority.getAuthority());
+        }
 
-	public static boolean lackAllPermissions(String... permissions) {
-		if (permissions == null) {
-			logger.warn("permissions is null");
+        return authorities;
+    }
 
-			return true;
-		}
+    // ~ ======================================================================
+    /**
+     * 判断用户是否拥有角色, 如果用户拥有参数中的任意一个角色则返回true.
+     */
+    public static boolean hasRole(String... roles) {
+        if (roles == null) {
+            logger.warn("roles is null");
 
-		Collection<String> attributes = getAuthorities();
+            return false;
+        }
 
-		for (String permission : permissions) {
-			if (attributes.contains(permission)) {
-				logger.debug("has : {}", permission);
+        Collection<String> attributes = getRoles();
 
-				return false;
-			}
-		}
+        for (String role : roles) {
+            if (attributes.contains(role)) {
+                logger.debug("has : {}", role);
 
-		return true;
-	}
+                return true;
+            }
+        }
 
-	public static List<String> getAuthorities() {
-		Authentication authentication = getAuthentication();
+        return false;
+    }
 
-		if (authentication == null) {
-			return Collections.emptyList();
-		}
+    public static boolean hasAllRoles(String... roles) {
+        if (roles == null) {
+            logger.warn("roles is null");
 
-		Collection<? extends GrantedAuthority> grantedAuthorityList = authentication.getAuthorities();
+            return false;
+        }
 
-		List<String> authorities = new ArrayList<String>();
+        Collection<String> attributes = getRoles();
 
-		for (GrantedAuthority grantedAuthority : grantedAuthorityList) {
-			authorities.add(grantedAuthority.getAuthority());
-		}
+        for (String role : roles) {
+            if (!attributes.contains(role)) {
+                logger.debug("lack : {}", role);
 
-		return authorities;
-	}
+                return false;
+            }
+        }
 
-	// ~ ======================================================================
-	/**
-	 * 判断用户是否拥有角色, 如果用户拥有参数中的任意一个角色则返回true.
-	 */
-	public static boolean hasRole(String... roles) {
-		if (roles == null) {
-			logger.warn("roles is null");
+        return true;
+    }
 
-			return false;
-		}
+    public static boolean lackRole(String... roles) {
+        if (roles == null) {
+            logger.warn("roles is null");
 
-		Collection<String> attributes = getRoles();
+            return true;
+        }
 
-		for (String role : roles) {
-			if (attributes.contains(role)) {
-				logger.debug("has : {}", role);
+        Collection<String> attributes = getRoles();
 
-				return true;
-			}
-		}
+        for (String role : roles) {
+            if (!attributes.contains(role)) {
+                logger.debug("lack : {}", role);
 
-		return false;
-	}
+                return true;
+            }
+        }
 
-	public static boolean hasAllRoles(String... roles) {
-		if (roles == null) {
-			logger.warn("roles is null");
+        return false;
+    }
 
-			return false;
-		}
+    public static boolean lackAllRoles(String... roles) {
+        if (roles == null) {
+            logger.warn("roles is null");
 
-		Collection<String> attributes = getRoles();
+            return true;
+        }
 
-		for (String role : roles) {
-			if (!attributes.contains(role)) {
-				logger.debug("lack : {}", role);
+        Collection<String> attributes = getRoles();
 
-				return false;
-			}
-		}
+        for (String role : roles) {
+            if (attributes.contains(role)) {
+                logger.debug("has : {}", role);
 
-		return true;
-	}
+                return false;
+            }
+        }
 
-	public static boolean lackRole(String... roles) {
-		if (roles == null) {
-			logger.warn("roles is null");
+        return true;
+    }
 
-			return true;
-		}
+    public static Collection<String> getRoles() {
+        Authentication authentication = getAuthentication();
 
-		Collection<String> attributes = getRoles();
+        if (authentication == null) {
+            return Collections.EMPTY_LIST;
+        }
 
-		for (String role : roles) {
-			if (!attributes.contains(role)) {
-				logger.debug("lack : {}", role);
+        Object principal = authentication.getPrincipal();
 
-				return true;
-			}
-		}
+        if (!(principal instanceof SpringSecurityUserAuth)) {
+            logger.debug("principal[{}] is not SpringSecurityUserAuth",
+                    principal);
 
-		return false;
-	}
+            return Collections.EMPTY_LIST;
+        }
 
-	public static boolean lackAllRoles(String... roles) {
-		if (roles == null) {
-			logger.warn("roles is null");
+        SpringSecurityUserAuth springSecurityUserAuth = (SpringSecurityUserAuth) principal;
 
-			return true;
-		}
+        List<String> roles = springSecurityUserAuth.getRoles();
 
-		Collection<String> attributes = getRoles();
+        return roles;
+    }
 
-		for (String role : roles) {
-			if (attributes.contains(role)) {
-				logger.debug("has : {}", role);
+    // ~ ==================================================
 
-				return false;
-			}
-		}
+    /**
+     * 取得当前用户的id，如果当前用户与未登录，则返回null.
+     */
+    public static SpringSecurityUserAuth getCurrentUser(
+            SecurityContext securityContext) {
+        Assert.notNull(securityContext, "securityContext cannot be null");
 
-		return true;
-	}
+        Authentication authentication = securityContext.getAuthentication();
 
-	public static Collection<String> getRoles() {
-		Authentication authentication = getAuthentication();
+        if (authentication == null) {
+            logger.debug("authentication is null");
 
-		if (authentication == null) {
-			return Collections.emptyList();
-		}
+            return null;
+        }
 
-		Object principal = authentication.getPrincipal();
+        Object principal = authentication.getPrincipal();
 
-		if (!(principal instanceof SpringSecurityUserAuth)) {
-			logger.debug("principal[{}] is not SpringSecurityUserAuth", principal);
+        if (principal == null) {
+            logger.info("principal is null");
 
-			return Collections.emptyList();
-		}
+            return null;
+        }
 
-		SpringSecurityUserAuth springSecurityUserAuth = (SpringSecurityUserAuth) principal;
+        if (!(principal instanceof SpringSecurityUserAuth)) {
+            logger.info("principal {} is not SpringSecurityUserAuth", principal);
 
-		List<String> roles = springSecurityUserAuth.getRoles();
+            return null;
+        }
 
-		return roles;
-	}
+        SpringSecurityUserAuth springSecurityUserAuth = (SpringSecurityUserAuth) principal;
 
-	// ~ ==================================================
-
-	/**
-	 * 取得当前用户的id，如果当前用户与未登录，则返回null.
-	 */
-	public static SpringSecurityUserAuth getCurrentUser(SecurityContext securityContext) {
-		Assert.notNull(securityContext, "securityContext cannot be null");
-
-		Authentication authentication = securityContext.getAuthentication();
-
-		if (authentication == null) {
-			logger.debug("authentication is null");
-
-			return null;
-		}
-
-		Object principal = authentication.getPrincipal();
-
-		if (principal == null) {
-			logger.info("principal is null");
-
-			return null;
-		}
-
-		if (!(principal instanceof SpringSecurityUserAuth)) {
-			logger.info("principal {} is not SpringSecurityUserAuth", principal);
-
-			return null;
-		}
-
-		SpringSecurityUserAuth springSecurityUserAuth = (SpringSecurityUserAuth) principal;
-
-		return springSecurityUserAuth;
-	}
+        return springSecurityUserAuth;
+    }
 }

@@ -8,49 +8,53 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
+import com.mossle.security.util.SpringSecurityUtils;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import org.springframework.web.filter.GenericFilterBean;
 
-import com.mossle.security.util.SpringSecurityUtils;
-
 public class AutoLoginFilter extends GenericFilterBean {
-	private UserDetailsService userDetailsService;
-	private boolean enabled = false;
-	private String defaultUserName;
+    private UserDetailsService userDetailsService;
+    private boolean enabled = false;
+    private String defaultUserName;
 
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		if (enabled && (SpringSecurityUtils.getCurrentUser() == null)) {
-			UserDetails userDetails = userDetailsService.loadUserByUsername(defaultUserName);
+    public void doFilter(ServletRequest request, ServletResponse response,
+            FilterChain chain) throws IOException, ServletException {
+        if (enabled && (SpringSecurityUtils.getCurrentUser() == null)) {
+            UserDetails userDetails = userDetailsService
+                    .loadUserByUsername(defaultUserName);
 
-			if (userDetails == null) {
-				throw new UsernameNotFoundException(defaultUserName);
-			}
+            if (userDetails == null) {
+                throw new UsernameNotFoundException(defaultUserName);
+            }
 
-			SpringSecurityUtils.saveUserDetailsToContext(userDetails, (HttpServletRequest) request);
-		}
+            SpringSecurityUtils.saveUserDetailsToContext(userDetails,
+                    (HttpServletRequest) request);
+        }
 
-		chain.doFilter(request, response);
-	}
+        chain.doFilter(request, response);
+    }
 
-	public void setUserDetailsService(UserDetailsService userDetailsService) {
-		this.userDetailsService = userDetailsService;
-	}
+    public void setUserDetailsService(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
-	public boolean isEnabled() {
-		return enabled;
-	}
+    public boolean isEnabled() {
+        return enabled;
+    }
 
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
-	public String getDefaultUserName() {
-		return defaultUserName;
-	}
+    public String getDefaultUserName() {
+        return defaultUserName;
+    }
 
-	public void setDefaultUserName(String defaultUserName) {
-		this.defaultUserName = defaultUserName;
-	}
+    public void setDefaultUserName(String defaultUserName) {
+        this.defaultUserName = defaultUserName;
+    }
 }

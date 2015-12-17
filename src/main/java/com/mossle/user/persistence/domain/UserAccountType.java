@@ -20,102 +20,103 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "USER_ACCOUNT_TYPE")
 public class UserAccountType implements java.io.Serializable {
-	private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
-	/** null. */
-	private Long id;
+    /** null. */
+    private Long id;
 
-	/** null. */
-	private String name;
+    /** null. */
+    private String name;
 
-	/** null. */
-	private String description;
+    /** null. */
+    private String description;
 
-	/** null. */
-	private String scopeId;
+    /** null. */
+    private String scopeId;
 
-	/** . */
-	private Set<UserAccount> userAccounts = new HashSet<UserAccount>(0);
+    /** . */
+    private Set<UserAccount> userAccounts = new HashSet<UserAccount>(0);
 
-	public UserAccountType() {
-	}
+    public UserAccountType() {
+    }
 
-	public UserAccountType(String name, String description, String scopeId, Set<UserAccount> userAccounts) {
-		this.name = name;
-		this.description = description;
-		this.scopeId = scopeId;
-		this.userAccounts = userAccounts;
-	}
+    public UserAccountType(String name, String description, String scopeId,
+            Set<UserAccount> userAccounts) {
+        this.name = name;
+        this.description = description;
+        this.scopeId = scopeId;
+        this.userAccounts = userAccounts;
+    }
 
-	/** @return null. */
-	@Id
-	@GeneratedValue
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
-		return this.id;
-	}
+    /** @return null. */
+    @Id
+    @GeneratedValue
+    @Column(name = "ID", unique = true, nullable = false)
+    public Long getId() {
+        return this.id;
+    }
 
-	/**
-	 * @param id
-	 *            null.
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            null.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/** @return null. */
-	@Column(name = "NAME", length = 50)
-	public String getName() {
-		return this.name;
-	}
+    /** @return null. */
+    @Column(name = "NAME", length = 50)
+    public String getName() {
+        return this.name;
+    }
 
-	/**
-	 * @param name
-	 *            null.
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * @param name
+     *            null.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/** @return null. */
-	@Column(name = "DESCRIPTION", length = 200)
-	public String getDescription() {
-		return this.description;
-	}
+    /** @return null. */
+    @Column(name = "DESCRIPTION", length = 200)
+    public String getDescription() {
+        return this.description;
+    }
 
-	/**
-	 * @param description
-	 *            null.
-	 */
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    /**
+     * @param description
+     *            null.
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	/** @return null. */
-	@Column(name = "SCOPE_ID", length = 50)
-	public String getScopeId() {
-		return this.scopeId;
-	}
+    /** @return null. */
+    @Column(name = "SCOPE_ID", length = 50)
+    public String getScopeId() {
+        return this.scopeId;
+    }
 
-	/**
-	 * @param scopeId
-	 *            null.
-	 */
-	public void setScopeId(String scopeId) {
-		this.scopeId = scopeId;
-	}
+    /**
+     * @param scopeId
+     *            null.
+     */
+    public void setScopeId(String scopeId) {
+        this.scopeId = scopeId;
+    }
 
-	/** @return . */
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "userAccountType")
-	public Set<UserAccount> getUserAccounts() {
-		return this.userAccounts;
-	}
+    /** @return . */
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userAccountType")
+    public Set<UserAccount> getUserAccounts() {
+        return this.userAccounts;
+    }
 
-	/**
-	 * @param userAccounts
-	 *            .
-	 */
-	public void setUserAccounts(Set<UserAccount> userAccounts) {
-		this.userAccounts = userAccounts;
-	}
+    /**
+     * @param userAccounts
+     *            .
+     */
+    public void setUserAccounts(Set<UserAccount> userAccounts) {
+        this.userAccounts = userAccounts;
+    }
 }

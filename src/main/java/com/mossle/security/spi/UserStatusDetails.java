@@ -3,11 +3,11 @@ package com.mossle.security.spi;
 import java.util.Collection;
 
 public interface UserStatusDetails {
-	String getId();
+    String getId();
 
-	String getTenantId();
+    String getTenantId();
 
-	Collection<String> getAttributes();
+    Collection<String> getAttributes();
 
-	Collection<String> getAttributes(String type);
+    Collection<String> getAttributes(String type);
 }

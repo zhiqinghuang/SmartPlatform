@@ -38,36 +38,26 @@ import org.springframework.session.Session;
 import org.springframework.session.SessionRepository;
 
 /**
- * Switches the {@link javax.servlet.http.HttpSession} implementation to be
- * backed by a {@link org.springframework.session.Session}.
+ * Switches the {@link javax.servlet.http.HttpSession} implementation to be backed by a {@link org.springframework.session.Session}.
  *
- * The {@link SessionRepositoryFilter} wraps the
- * {@link javax.servlet.http.HttpServletRequest} and overrides the methods to
- * get an {@link javax.servlet.http.HttpSession} to be backed by a
- * {@link org.springframework.session.Session} returned by the
- * {@link org.springframework.session.SessionRepository}.
+ * The {@link SessionRepositoryFilter} wraps the {@link javax.servlet.http.HttpServletRequest} and overrides the methods
+ * to get an {@link javax.servlet.http.HttpSession} to be backed by a {@link org.springframework.session.Session} returned
+ * by the {@link org.springframework.session.SessionRepository}.
  *
- * The {@link SessionRepositoryFilter} uses a {@link HttpSessionStrategy}
- * (default {@link CookieHttpSessionStrategy} to bridge logic between an
- * {@link javax.servlet.http.HttpSession} and the
- * {@link org.springframework.session.Session} abstraction. Specifically:
+ * The {@link SessionRepositoryFilter} uses a {@link HttpSessionStrategy} (default {@link CookieHttpSessionStrategy}  to
+ * bridge logic between an {@link javax.servlet.http.HttpSession} and the {@link org.springframework.session.Session}
+ * abstraction. Specifically:
  *
  * <ul>
- * <li>The session id is looked up using
- * {@link HttpSessionStrategy#getRequestedSessionId(javax.servlet.http.HttpServletRequest)}
- * . The default is to look in a cookie named SESSION.</li>
- * <li>The session id of newly created
- * {@link org.springframework.session.ExpiringSession} is sent to the client
- * using
- * <li>The client is notified that the session id is no longer valid with
- * {@link HttpSessionStrategy#onInvalidateSession(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}
- * </li>
+ *     <li>The session id is looked up using {@link HttpSessionStrategy#getRequestedSessionId(javax.servlet.http.HttpServletRequest)}.
+ *     The default is to look in a cookie named SESSION.</li>
+ *     <li>The session id of newly created {@link org.springframework.session.ExpiringSession} is sent to the client using
+ *     <li>The client is notified that the session id is no longer valid with {@link HttpSessionStrategy#onInvalidateSession(javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)}</li>
  * </ul>
  *
  * <p>
- * The SessionRepositoryFilter must be placed before any Filter that access the
- * HttpSession or that might commit the response to ensure the session is
- * overridden and persisted properly.
+ * The SessionRepositoryFilter must be placed before any Filter that access the HttpSession or that might commit the response
+ * to ensure the session is overridden and persisted properly.
  * </p>
  *
  * @since 1.0
@@ -89,39 +79,34 @@ public class SessionRepositoryFilter<S extends ExpiringSession> extends OncePerR
 	/**
 	 * Creates a new instance
 	 *
-	 * @param sessionRepository
-	 *            the <code>SessionRepository</code> to use. Cannot be null.
+	 * @param sessionRepository the <code>SessionRepository</code> to use. Cannot be null.
 	 */
 	public SessionRepositoryFilter(SessionRepository<S> sessionRepository) {
-		if (sessionRepository == null) {
+		if(sessionRepository == null) {
 			throw new IllegalArgumentException("sessionRepository cannot be null");
 		}
 		this.sessionRepository = sessionRepository;
 	}
 
 	/**
-	 * Sets the {@link HttpSessionStrategy} to be used. The default is a
-	 * {@link CookieHttpSessionStrategy}.
+	 * Sets the {@link HttpSessionStrategy} to be used. The default is a {@link CookieHttpSessionStrategy}.
 	 *
-	 * @param httpSessionStrategy
-	 *            the {@link HttpSessionStrategy} to use. Cannot be null.
+	 * @param httpSessionStrategy the {@link HttpSessionStrategy} to use. Cannot be null.
 	 */
 	public void setHttpSessionStrategy(HttpSessionStrategy httpSessionStrategy) {
-		if (httpSessionStrategy == null) {
+		if(httpSessionStrategy == null) {
 			throw new IllegalArgumentException("httpSessionStrategy cannot be null");
 		}
 		this.httpSessionStrategy = new MultiHttpSessionStrategyAdapter(httpSessionStrategy);
 	}
 
 	/**
-	 * Sets the {@link MultiHttpSessionStrategy} to be used. The default is a
-	 * {@link CookieHttpSessionStrategy}.
+	 * Sets the {@link MultiHttpSessionStrategy} to be used. The default is a {@link CookieHttpSessionStrategy}.
 	 *
-	 * @param httpSessionStrategy
-	 *            the {@link MultiHttpSessionStrategy} to use. Cannot be null.
+	 * @param httpSessionStrategy the {@link MultiHttpSessionStrategy} to use. Cannot be null.
 	 */
 	public void setHttpSessionStrategy(MultiHttpSessionStrategy httpSessionStrategy) {
-		if (httpSessionStrategy == null) {
+		if(httpSessionStrategy == null) {
 			throw new IllegalArgumentException("httpSessionStrategy cannot be null");
 		}
 		this.httpSessionStrategy = httpSessionStrategy;
@@ -131,7 +116,7 @@ public class SessionRepositoryFilter<S extends ExpiringSession> extends OncePerR
 		request.setAttribute(SESSION_REPOSITORY_ATTR, sessionRepository);
 
 		SessionRepositoryRequestWrapper wrappedRequest = new SessionRepositoryRequestWrapper(request, response, servletContext);
-		SessionRepositoryResponseWrapper wrappedResponse = new SessionRepositoryResponseWrapper(wrappedRequest, response);
+		SessionRepositoryResponseWrapper wrappedResponse = new SessionRepositoryResponseWrapper(wrappedRequest,response);
 
 		HttpServletRequest strategyRequest = httpSessionStrategy.wrapRequest(wrappedRequest, wrappedResponse);
 		HttpServletResponse strategyResponse = httpSessionStrategy.wrapResponse(wrappedRequest, wrappedResponse);
@@ -158,12 +143,11 @@ public class SessionRepositoryFilter<S extends ExpiringSession> extends OncePerR
 		private final SessionRepositoryRequestWrapper request;
 
 		/**
-		 * @param response
-		 *            the response to be wrapped
+		 * @param response the response to be wrapped
 		 */
 		public SessionRepositoryResponseWrapper(SessionRepositoryRequestWrapper request, HttpServletResponse response) {
 			super(response);
-			if (request == null) {
+			if(request == null) {
 				throw new IllegalArgumentException("request cannot be null");
 			}
 			this.request = request;
@@ -176,8 +160,7 @@ public class SessionRepositoryFilter<S extends ExpiringSession> extends OncePerR
 	}
 
 	/**
-	 * A {@link javax.servlet.http.HttpServletRequest} that retrieves the
-	 * {@link javax.servlet.http.HttpSession} using a
+	 * A {@link javax.servlet.http.HttpServletRequest} that retrieves the {@link javax.servlet.http.HttpSession} using a
 	 * {@link org.springframework.session.SessionRepository}.
 	 *
 	 * @author Rob Winch
@@ -197,19 +180,18 @@ public class SessionRepositoryFilter<S extends ExpiringSession> extends OncePerR
 		}
 
 		/**
-		 * Uses the HttpSessionStrategy to write the session id tot he response
-		 * and persist the Session.
+		 * Uses the HttpSessionStrategy to write the session id tot he response and persist the Session.
 		 */
 		private void commitSession() {
 			HttpSessionWrapper wrappedSession = getCurrentSession();
-			if (wrappedSession == null) {
-				if (isInvalidateClientSession()) {
+			if(wrappedSession == null) {
+				if(isInvalidateClientSession()) {
 					httpSessionStrategy.onInvalidateSession(this, response);
 				}
 			} else {
 				S session = wrappedSession.session;
 				sessionRepository.save(session);
-				if (!isRequestedSessionIdValid() || !session.getId().equals(getRequestedSessionId())) {
+				if(!isRequestedSessionIdValid() || !session.getId().equals(getRequestedSessionId())) {
 					httpSessionStrategy.onNewSession(session, this, response);
 				}
 			}
@@ -221,7 +203,7 @@ public class SessionRepositoryFilter<S extends ExpiringSession> extends OncePerR
 		}
 
 		private void setCurrentSession(HttpSessionWrapper currentSession) {
-			if (currentSession == null) {
+			if(currentSession == null) {
 				removeAttribute(CURRENT_SESSION_ATTR);
 			} else {
 				setAttribute(CURRENT_SESSION_ATTR, currentSession);
@@ -232,15 +214,14 @@ public class SessionRepositoryFilter<S extends ExpiringSession> extends OncePerR
 		public String changeSessionId() {
 			HttpSession session = getSession(false);
 
-			if (session == null) {
+			if(session == null) {
 				throw new IllegalStateException("Cannot change session ID. There is no session associated with this request.");
 			}
 
-			// eagerly get session attributes in case implementation lazily
-			// loads them
-			Map<String, Object> attrs = new HashMap<String, Object>();
+			// eagerly get session attributes in case implementation lazily loads them
+			Map<String,Object> attrs = new HashMap<String,Object>();
 			Enumeration<String> iAttrNames = session.getAttributeNames();
-			while (iAttrNames.hasMoreElements()) {
+			while(iAttrNames.hasMoreElements()) {
 				String attrName = iAttrNames.nextElement();
 				Object value = session.getAttribute(attrName);
 
@@ -252,10 +233,10 @@ public class SessionRepositoryFilter<S extends ExpiringSession> extends OncePerR
 			setCurrentSession(null);
 
 			HttpSession newSession = getSession();
-			original.session = ((HttpSessionWrapper) newSession).session;
+			original.session = ((HttpSessionWrapper)newSession).session;
 
 			newSession.setMaxInactiveInterval(session.getMaxInactiveInterval());
-			for (Map.Entry<String, Object> attr : attrs.entrySet()) {
+			for(Map.Entry<String, Object> attr : attrs.entrySet()) {
 				String attrName = attr.getKey();
 				Object attrValue = attr.getValue();
 				newSession.setAttribute(attrName, attrValue);
@@ -264,7 +245,7 @@ public class SessionRepositoryFilter<S extends ExpiringSession> extends OncePerR
 		}
 
 		public boolean isRequestedSessionIdValid() {
-			if (requestedSessionIdValid == null) {
+			if(requestedSessionIdValid == null) {
 				String sessionId = getRequestedSessionId();
 				S session = sessionId == null ? null : sessionRepository.getSession(sessionId);
 				return isRequestedSessionIdValid(session);
@@ -274,7 +255,7 @@ public class SessionRepositoryFilter<S extends ExpiringSession> extends OncePerR
 		}
 
 		private boolean isRequestedSessionIdValid(S session) {
-			if (requestedSessionIdValid == null) {
+			if(requestedSessionIdValid == null) {
 				requestedSessionIdValid = session != null;
 			}
 			return requestedSessionIdValid;
@@ -287,13 +268,13 @@ public class SessionRepositoryFilter<S extends ExpiringSession> extends OncePerR
 		@Override
 		public HttpSession getSession(boolean create) {
 			HttpSessionWrapper currentSession = getCurrentSession();
-			if (currentSession != null) {
+			if(currentSession != null) {
 				return currentSession;
 			}
 			String requestedSessionId = getRequestedSessionId();
-			if (requestedSessionId != null) {
+			if(requestedSessionId != null) {
 				S session = sessionRepository.getSession(requestedSessionId);
-				if (session != null) {
+				if(session != null) {
 					this.requestedSessionIdValid = true;
 					currentSession = new HttpSessionWrapper(session, getServletContext());
 					currentSession.setNew(false);
@@ -301,7 +282,7 @@ public class SessionRepositoryFilter<S extends ExpiringSession> extends OncePerR
 					return currentSession;
 				}
 			}
-			if (!create) {
+			if(!create) {
 				return null;
 			}
 			S session = sessionRepository.createSession();
@@ -311,7 +292,7 @@ public class SessionRepositoryFilter<S extends ExpiringSession> extends OncePerR
 		}
 
 		public ServletContext getServletContext() {
-			if (servletContext != null) {
+			if(servletContext != null) {
 				return servletContext;
 			}
 			// Servlet 3.0+
@@ -433,7 +414,7 @@ public class SessionRepositoryFilter<S extends ExpiringSession> extends OncePerR
 			}
 
 			private void checkState() {
-				if (invalidated) {
+				if(invalidated) {
 					throw new IllegalStateException("The HttpSession has already be invalidated.");
 				}
 			}
@@ -472,19 +453,23 @@ public class SessionRepositoryFilter<S extends ExpiringSession> extends OncePerR
 			return delegate.getRequestedSessionId(request);
 		}
 
-		public void onNewSession(Session session, HttpServletRequest request, HttpServletResponse response) {
+		public void onNewSession(Session session, HttpServletRequest request,
+				HttpServletResponse response) {
 			delegate.onNewSession(session, request, response);
 		}
 
-		public void onInvalidateSession(HttpServletRequest request, HttpServletResponse response) {
+		public void onInvalidateSession(HttpServletRequest request,
+				HttpServletResponse response) {
 			delegate.onInvalidateSession(request, response);
 		}
 
-		public HttpServletRequest wrapRequest(HttpServletRequest request, HttpServletResponse response) {
+		public HttpServletRequest wrapRequest(HttpServletRequest request,
+				HttpServletResponse response) {
 			return request;
 		}
 
-		public HttpServletResponse wrapResponse(HttpServletRequest request, HttpServletResponse response) {
+		public HttpServletResponse wrapResponse(HttpServletRequest request,
+				HttpServletResponse response) {
 			return response;
 		}
 	}

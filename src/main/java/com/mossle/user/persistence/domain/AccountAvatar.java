@@ -18,103 +18,104 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "ACCOUNT_AVATAR")
 public class AccountAvatar implements java.io.Serializable {
-	private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
-	/** null. */
-	private Long id;
+    /** null. */
+    private Long id;
 
-	/** null. */
-	private AccountInfo accountInfo;
+    /** null. */
+    private AccountInfo accountInfo;
 
-	/** null. */
-	private String type;
+    /** null. */
+    private String type;
 
-	/** null. */
-	private String code;
+    /** null. */
+    private String code;
 
-	/** null. */
-	private String tenantId;
+    /** null. */
+    private String tenantId;
 
-	public AccountAvatar() {
-	}
+    public AccountAvatar() {
+    }
 
-	public AccountAvatar(AccountInfo accountInfo, String type, String code, String tenantId) {
-		this.accountInfo = accountInfo;
-		this.type = type;
-		this.code = code;
-		this.tenantId = tenantId;
-	}
+    public AccountAvatar(AccountInfo accountInfo, String type, String code,
+            String tenantId) {
+        this.accountInfo = accountInfo;
+        this.type = type;
+        this.code = code;
+        this.tenantId = tenantId;
+    }
 
-	/** @return null. */
-	@Id
-	@GeneratedValue
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
-		return this.id;
-	}
+    /** @return null. */
+    @Id
+    @GeneratedValue
+    @Column(name = "ID", unique = true, nullable = false)
+    public Long getId() {
+        return this.id;
+    }
 
-	/**
-	 * @param id
-	 *            null.
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            null.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/** @return null. */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ACCOUNT_ID")
-	public AccountInfo getAccountInfo() {
-		return this.accountInfo;
-	}
+    /** @return null. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ACCOUNT_ID")
+    public AccountInfo getAccountInfo() {
+        return this.accountInfo;
+    }
 
-	/**
-	 * @param accountInfo
-	 *            null.
-	 */
-	public void setAccountInfo(AccountInfo accountInfo) {
-		this.accountInfo = accountInfo;
-	}
+    /**
+     * @param accountInfo
+     *            null.
+     */
+    public void setAccountInfo(AccountInfo accountInfo) {
+        this.accountInfo = accountInfo;
+    }
 
-	/** @return null. */
-	@Column(name = "TYPE", length = 50)
-	public String getType() {
-		return this.type;
-	}
+    /** @return null. */
+    @Column(name = "TYPE", length = 50)
+    public String getType() {
+        return this.type;
+    }
 
-	/**
-	 * @param type
-	 *            null.
-	 */
-	public void setType(String type) {
-		this.type = type;
-	}
+    /**
+     * @param type
+     *            null.
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	/** @return null. */
-	@Column(name = "CODE", length = 200)
-	public String getCode() {
-		return this.code;
-	}
+    /** @return null. */
+    @Column(name = "CODE", length = 200)
+    public String getCode() {
+        return this.code;
+    }
 
-	/**
-	 * @param code
-	 *            null.
-	 */
-	public void setCode(String code) {
-		this.code = code;
-	}
+    /**
+     * @param code
+     *            null.
+     */
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	/** @return null. */
-	@Column(name = "TENANT_ID", length = 64)
-	public String getTenantId() {
-		return this.tenantId;
-	}
+    /** @return null. */
+    @Column(name = "TENANT_ID", length = 64)
+    public String getTenantId() {
+        return this.tenantId;
+    }
 
-	/**
-	 * @param tenantId
-	 *            null.
-	 */
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-	}
+    /**
+     * @param tenantId
+     *            null.
+     */
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 }

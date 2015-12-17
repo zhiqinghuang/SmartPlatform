@@ -19,103 +19,104 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "ACCOUNT_LOCK_LOG")
 public class AccountLockLog implements java.io.Serializable {
-	private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
-	/** null. */
-	private Long id;
+    /** null. */
+    private Long id;
 
-	/** null. */
-	private String type;
+    /** null. */
+    private String type;
 
-	/** null. */
-	private String username;
+    /** null. */
+    private String username;
 
-	/** null. */
-	private Date lockTime;
+    /** null. */
+    private Date lockTime;
 
-	/** null. */
-	private String tenantId;
+    /** null. */
+    private String tenantId;
 
-	public AccountLockLog() {
-	}
+    public AccountLockLog() {
+    }
 
-	public AccountLockLog(String type, String username, Date lockTime, String tenantId) {
-		this.type = type;
-		this.username = username;
-		this.lockTime = lockTime;
-		this.tenantId = tenantId;
-	}
+    public AccountLockLog(String type, String username, Date lockTime,
+            String tenantId) {
+        this.type = type;
+        this.username = username;
+        this.lockTime = lockTime;
+        this.tenantId = tenantId;
+    }
 
-	/** @return null. */
-	@Id
-	@GeneratedValue
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
-		return this.id;
-	}
+    /** @return null. */
+    @Id
+    @GeneratedValue
+    @Column(name = "ID", unique = true, nullable = false)
+    public Long getId() {
+        return this.id;
+    }
 
-	/**
-	 * @param id
-	 *            null.
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            null.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/** @return null. */
-	@Column(name = "TYPE", length = 200)
-	public String getType() {
-		return this.type;
-	}
+    /** @return null. */
+    @Column(name = "TYPE", length = 200)
+    public String getType() {
+        return this.type;
+    }
 
-	/**
-	 * @param type
-	 *            null.
-	 */
-	public void setType(String type) {
-		this.type = type;
-	}
+    /**
+     * @param type
+     *            null.
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	/** @return null. */
-	@Column(name = "USERNAME", length = 64)
-	public String getUsername() {
-		return this.username;
-	}
+    /** @return null. */
+    @Column(name = "USERNAME", length = 64)
+    public String getUsername() {
+        return this.username;
+    }
 
-	/**
-	 * @param username
-	 *            null.
-	 */
-	public void setUsername(String username) {
-		this.username = username;
-	}
+    /**
+     * @param username
+     *            null.
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-	/** @return null. */
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "LOCK_TIME", length = 26)
-	public Date getLockTime() {
-		return this.lockTime;
-	}
+    /** @return null. */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "LOCK_TIME", length = 26)
+    public Date getLockTime() {
+        return this.lockTime;
+    }
 
-	/**
-	 * @param lockTime
-	 *            null.
-	 */
-	public void setLockTime(Date lockTime) {
-		this.lockTime = lockTime;
-	}
+    /**
+     * @param lockTime
+     *            null.
+     */
+    public void setLockTime(Date lockTime) {
+        this.lockTime = lockTime;
+    }
 
-	/** @return null. */
-	@Column(name = "TENANT_ID", length = 64)
-	public String getTenantId() {
-		return this.tenantId;
-	}
+    /** @return null. */
+    @Column(name = "TENANT_ID", length = 64)
+    public String getTenantId() {
+        return this.tenantId;
+    }
 
-	/**
-	 * @param tenantId
-	 *            null.
-	 */
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-	}
+    /**
+     * @param tenantId
+     *            null.
+     */
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 }

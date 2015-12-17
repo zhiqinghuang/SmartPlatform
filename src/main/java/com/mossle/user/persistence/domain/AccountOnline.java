@@ -19,103 +19,104 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "ACCOUNT_ONLINE")
 public class AccountOnline implements java.io.Serializable {
-	private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
-	/** null. */
-	private Long id;
+    /** null. */
+    private Long id;
 
-	/** null. */
-	private String account;
+    /** null. */
+    private String account;
 
-	/** null. */
-	private String sessionId;
+    /** null. */
+    private String sessionId;
 
-	/** null. */
-	private Date loginTime;
+    /** null. */
+    private Date loginTime;
 
-	/** null. */
-	private String tenantId;
+    /** null. */
+    private String tenantId;
 
-	public AccountOnline() {
-	}
+    public AccountOnline() {
+    }
 
-	public AccountOnline(String account, String sessionId, Date loginTime, String tenantId) {
-		this.account = account;
-		this.sessionId = sessionId;
-		this.loginTime = loginTime;
-		this.tenantId = tenantId;
-	}
+    public AccountOnline(String account, String sessionId, Date loginTime,
+            String tenantId) {
+        this.account = account;
+        this.sessionId = sessionId;
+        this.loginTime = loginTime;
+        this.tenantId = tenantId;
+    }
 
-	/** @return null. */
-	@Id
-	@GeneratedValue
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
-		return this.id;
-	}
+    /** @return null. */
+    @Id
+    @GeneratedValue
+    @Column(name = "ID", unique = true, nullable = false)
+    public Long getId() {
+        return this.id;
+    }
 
-	/**
-	 * @param id
-	 *            null.
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            null.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/** @return null. */
-	@Column(name = "ACCOUNT", length = 200)
-	public String getAccount() {
-		return this.account;
-	}
+    /** @return null. */
+    @Column(name = "ACCOUNT", length = 200)
+    public String getAccount() {
+        return this.account;
+    }
 
-	/**
-	 * @param account
-	 *            null.
-	 */
-	public void setAccount(String account) {
-		this.account = account;
-	}
+    /**
+     * @param account
+     *            null.
+     */
+    public void setAccount(String account) {
+        this.account = account;
+    }
 
-	/** @return null. */
-	@Column(name = "SESSION_ID", length = 200)
-	public String getSessionId() {
-		return this.sessionId;
-	}
+    /** @return null. */
+    @Column(name = "SESSION_ID", length = 200)
+    public String getSessionId() {
+        return this.sessionId;
+    }
 
-	/**
-	 * @param sessionId
-	 *            null.
-	 */
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
-	}
+    /**
+     * @param sessionId
+     *            null.
+     */
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
 
-	/** @return null. */
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "LOGIN_TIME", length = 26)
-	public Date getLoginTime() {
-		return this.loginTime;
-	}
+    /** @return null. */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "LOGIN_TIME", length = 26)
+    public Date getLoginTime() {
+        return this.loginTime;
+    }
 
-	/**
-	 * @param loginTime
-	 *            null.
-	 */
-	public void setLoginTime(Date loginTime) {
-		this.loginTime = loginTime;
-	}
+    /**
+     * @param loginTime
+     *            null.
+     */
+    public void setLoginTime(Date loginTime) {
+        this.loginTime = loginTime;
+    }
 
-	/** @return null. */
-	@Column(name = "TENANT_ID", length = 64)
-	public String getTenantId() {
-		return this.tenantId;
-	}
+    /** @return null. */
+    @Column(name = "TENANT_ID", length = 64)
+    public String getTenantId() {
+        return this.tenantId;
+    }
 
-	/**
-	 * @param tenantId
-	 *            null.
-	 */
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-	}
+    /**
+     * @param tenantId
+     *            null.
+     */
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 }

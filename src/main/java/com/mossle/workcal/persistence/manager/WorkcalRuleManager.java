@@ -1,9 +1,10 @@
 package com.mossle.workcal.persistence.manager;
 
-import org.springframework.stereotype.Service;
-
 import com.mossle.core.hibernate.HibernateEntityDao;
+
 import com.mossle.workcal.persistence.domain.WorkcalRule;
+
+import org.springframework.stereotype.Service;
 
 @Service
 public class WorkcalRuleManager extends HibernateEntityDao<WorkcalRule> {
