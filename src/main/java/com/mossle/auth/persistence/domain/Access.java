@@ -18,139 +18,140 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "AUTH_ACCESS")
 public class Access implements java.io.Serializable {
-	private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
-	/** null. */
-	private Long id;
+    /** null. */
+    private Long id;
 
-	/** null. */
-	private Perm perm;
+    /** null. */
+    private Perm perm;
 
-	/** null. */
-	private String type;
+    /** null. */
+    private String type;
 
-	/** null. */
-	private String value;
+    /** null. */
+    private String value;
 
-	/** null. */
-	private Integer priority;
+    /** null. */
+    private Integer priority;
 
-	/** null. */
-	private String descn;
+    /** null. */
+    private String descn;
 
-	/** null. */
-	private String tenantId;
+    /** null. */
+    private String tenantId;
 
-	public Access() {
-	}
+    public Access() {
+    }
 
-	public Access(Perm perm, String type, String value, Integer priority, String descn, String tenantId) {
-		this.perm = perm;
-		this.type = type;
-		this.value = value;
-		this.priority = priority;
-		this.descn = descn;
-		this.tenantId = tenantId;
-	}
+    public Access(Perm perm, String type, String value, Integer priority,
+            String descn, String tenantId) {
+        this.perm = perm;
+        this.type = type;
+        this.value = value;
+        this.priority = priority;
+        this.descn = descn;
+        this.tenantId = tenantId;
+    }
 
-	/** @return null. */
-	@Id
-	@GeneratedValue
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
-		return this.id;
-	}
+    /** @return null. */
+    @Id
+    @GeneratedValue
+    @Column(name = "ID", unique = true, nullable = false)
+    public Long getId() {
+        return this.id;
+    }
 
-	/**
-	 * @param id
-	 *            null.
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            null.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/** @return null. */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PERM_ID")
-	public Perm getPerm() {
-		return this.perm;
-	}
+    /** @return null. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PERM_ID")
+    public Perm getPerm() {
+        return this.perm;
+    }
 
-	/**
-	 * @param perm
-	 *            null.
-	 */
-	public void setPerm(Perm perm) {
-		this.perm = perm;
-	}
+    /**
+     * @param perm
+     *            null.
+     */
+    public void setPerm(Perm perm) {
+        this.perm = perm;
+    }
 
-	/** @return null. */
-	@Column(name = "TYPE", length = 50)
-	public String getType() {
-		return this.type;
-	}
+    /** @return null. */
+    @Column(name = "TYPE", length = 50)
+    public String getType() {
+        return this.type;
+    }
 
-	/**
-	 * @param type
-	 *            null.
-	 */
-	public void setType(String type) {
-		this.type = type;
-	}
+    /**
+     * @param type
+     *            null.
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
 
-	/** @return null. */
-	@Column(name = "VALUE", length = 200)
-	public String getValue() {
-		return this.value;
-	}
+    /** @return null. */
+    @Column(name = "VALUE", length = 200)
+    public String getValue() {
+        return this.value;
+    }
 
-	/**
-	 * @param value
-	 *            null.
-	 */
-	public void setValue(String value) {
-		this.value = value;
-	}
+    /**
+     * @param value
+     *            null.
+     */
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-	/** @return null. */
-	@Column(name = "PRIORITY")
-	public Integer getPriority() {
-		return this.priority;
-	}
+    /** @return null. */
+    @Column(name = "PRIORITY")
+    public Integer getPriority() {
+        return this.priority;
+    }
 
-	/**
-	 * @param priority
-	 *            null.
-	 */
-	public void setPriority(Integer priority) {
-		this.priority = priority;
-	}
+    /**
+     * @param priority
+     *            null.
+     */
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
 
-	/** @return null. */
-	@Column(name = "DESCN", length = 200)
-	public String getDescn() {
-		return this.descn;
-	}
+    /** @return null. */
+    @Column(name = "DESCN", length = 200)
+    public String getDescn() {
+        return this.descn;
+    }
 
-	/**
-	 * @param descn
-	 *            null.
-	 */
-	public void setDescn(String descn) {
-		this.descn = descn;
-	}
+    /**
+     * @param descn
+     *            null.
+     */
+    public void setDescn(String descn) {
+        this.descn = descn;
+    }
 
-	/** @return null. */
-	@Column(name = "TENANT_ID", length = 50)
-	public String getTenantId() {
-		return this.tenantId;
-	}
+    /** @return null. */
+    @Column(name = "TENANT_ID", length = 50)
+    public String getTenantId() {
+        return this.tenantId;
+    }
 
-	/**
-	 * @param tenantId
-	 *            null.
-	 */
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-	}
+    /**
+     * @param tenantId
+     *            null.
+     */
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 }

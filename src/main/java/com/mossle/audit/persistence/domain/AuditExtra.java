@@ -15,102 +15,103 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "AUDIT_EXTRA")
 public class AuditExtra implements java.io.Serializable {
-	private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
-	/** null. */
-	private Long id;
+    /** null. */
+    private Long id;
 
-	/** null. */
-	private String name;
+    /** null. */
+    private String name;
 
-	/** null. */
-	private String value;
+    /** null. */
+    private String value;
 
-	/** null. */
-	private Long auditBaseId;
+    /** null. */
+    private Long auditBaseId;
 
-	/** null. */
-	private String tenantId;
+    /** null. */
+    private String tenantId;
 
-	public AuditExtra() {
-	}
+    public AuditExtra() {
+    }
 
-	public AuditExtra(String name, String value, Long auditBaseId, String tenantId) {
-		this.name = name;
-		this.value = value;
-		this.auditBaseId = auditBaseId;
-		this.tenantId = tenantId;
-	}
+    public AuditExtra(String name, String value, Long auditBaseId,
+            String tenantId) {
+        this.name = name;
+        this.value = value;
+        this.auditBaseId = auditBaseId;
+        this.tenantId = tenantId;
+    }
 
-	/** @return null. */
-	@Id
-	@GeneratedValue
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
-		return this.id;
-	}
+    /** @return null. */
+    @Id
+    @GeneratedValue
+    @Column(name = "ID", unique = true, nullable = false)
+    public Long getId() {
+        return this.id;
+    }
 
-	/**
-	 * @param id
-	 *            null.
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            null.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/** @return null. */
-	@Column(name = "NAME", length = 200)
-	public String getName() {
-		return this.name;
-	}
+    /** @return null. */
+    @Column(name = "NAME", length = 200)
+    public String getName() {
+        return this.name;
+    }
 
-	/**
-	 * @param name
-	 *            null.
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * @param name
+     *            null.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/** @return null. */
-	@Column(name = "VALUE", length = 200)
-	public String getValue() {
-		return this.value;
-	}
+    /** @return null. */
+    @Column(name = "VALUE", length = 200)
+    public String getValue() {
+        return this.value;
+    }
 
-	/**
-	 * @param value
-	 *            null.
-	 */
-	public void setValue(String value) {
-		this.value = value;
-	}
+    /**
+     * @param value
+     *            null.
+     */
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-	/** @return null. */
-	@Column(name = "AUDIT_BASE_ID")
-	public Long getAuditBaseId() {
-		return this.auditBaseId;
-	}
+    /** @return null. */
+    @Column(name = "AUDIT_BASE_ID")
+    public Long getAuditBaseId() {
+        return this.auditBaseId;
+    }
 
-	/**
-	 * @param auditBaseId
-	 *            null.
-	 */
-	public void setAuditBaseId(Long auditBaseId) {
-		this.auditBaseId = auditBaseId;
-	}
+    /**
+     * @param auditBaseId
+     *            null.
+     */
+    public void setAuditBaseId(Long auditBaseId) {
+        this.auditBaseId = auditBaseId;
+    }
 
-	/** @return null. */
-	@Column(name = "TENANT_ID", length = 64)
-	public String getTenantId() {
-		return this.tenantId;
-	}
+    /** @return null. */
+    @Column(name = "TENANT_ID", length = 64)
+    public String getTenantId() {
+        return this.tenantId;
+    }
 
-	/**
-	 * @param tenantId
-	 *            null.
-	 */
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-	}
+    /**
+     * @param tenantId
+     *            null.
+     */
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 }
