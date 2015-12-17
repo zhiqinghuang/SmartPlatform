@@ -1,9 +1,9 @@
 package com.mossle.core.jdbc;
 
 public interface DataSourceInfo {
-	String getName();
+    String getName();
 
-	void setName(String name);
+    void setName(String name);
 
-	void validate();
+    void validate();
 }

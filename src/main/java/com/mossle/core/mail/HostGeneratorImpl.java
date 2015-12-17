@@ -4,9 +4,10 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 public class HostGeneratorImpl implements HostGenerator {
-	public String generateLocalAddress() throws UnknownHostException {
-		String address = InetAddress.getLocalHost().getHostName() + "/" + InetAddress.getLocalHost().getHostAddress();
+    public String generateLocalAddress() throws UnknownHostException {
+        String address = InetAddress.getLocalHost().getHostName() + "/"
+                + InetAddress.getLocalHost().getHostAddress();
 
-		return address;
-	}
+        return address;
+    }
 }

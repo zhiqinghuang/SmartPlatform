@@ -1,5 +1,5 @@
 package com.mossle.core.cache;
 
 public interface CacheStrategy {
-	Cache getCache(String name);
+    Cache getCache(String name);
 }

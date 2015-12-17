@@ -5,70 +5,74 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.mossle.core.util.PropertiesUtils;
 import com.mossle.core.util.StringUtils;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class DbcpDataSourceInfoBuilder {
-	public static final int VALID_LENGTH = 3;
-	private Logger logger = LoggerFactory.getLogger(DbcpDataSourceInfoBuilder.class);
-	private String defaultPrefix = "db";
-	private Properties properties;
-	private Map<String, DataSourceInfo> map = new HashMap<String, DataSourceInfo>();
+    public static final int VALID_LENGTH = 3;
+    private Logger logger = LoggerFactory
+            .getLogger(DbcpDataSourceInfoBuilder.class);
+    private String defaultPrefix = "db";
+    private Properties properties;
+    private Map<String, DataSourceInfo> map = new HashMap<String, DataSourceInfo>();
 
-	public DbcpDataSourceInfoBuilder(String defaultPrefix, Properties properties) {
-		this.defaultPrefix = defaultPrefix;
-		this.properties = properties;
-	}
+    public DbcpDataSourceInfoBuilder(String defaultPrefix, Properties properties) {
+        this.defaultPrefix = defaultPrefix;
+        this.properties = properties;
+    }
 
-	public Collection<DataSourceInfo> build() {
-		logger.debug("defaultPrefix : {}", defaultPrefix);
+    public Collection<DataSourceInfo> build() {
+        logger.debug("defaultPrefix : {}", defaultPrefix);
 
-		for (Map.Entry<Object, Object> entry : properties.entrySet()) {
-			String key = (String) entry.getKey();
-			String value = (String) entry.getValue();
+        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+            String key = (String) entry.getKey();
+            String value = (String) entry.getValue();
 
-			if (StringUtils.isEmpty(key)) {
-				logger.debug("skip empty key");
+            if (StringUtils.isEmpty(key)) {
+                logger.debug("skip empty key");
 
-				continue;
-			}
+                continue;
+            }
 
-			String[] array = key.split("\\.");
+            String[] array = key.split("\\.");
 
-			if (array.length != VALID_LENGTH) {
-				logger.debug("skip invalid key : length({}), {}", array.length, key);
+            if (array.length != VALID_LENGTH) {
+                logger.debug("skip invalid key : length({}), {}", array.length,
+                        key);
 
-				continue;
-			}
+                continue;
+            }
 
-			String prefix = array[0];
-			String name = array[1];
-			String property = array[2];
+            String prefix = array[0];
+            String name = array[1];
+            String property = array[2];
 
-			if (!defaultPrefix.equals(prefix)) {
-				logger.debug("prefix not match. skip : {}", prefix);
+            if (!defaultPrefix.equals(prefix)) {
+                logger.debug("prefix not match. skip : {}", prefix);
 
-				continue;
-			}
+                continue;
+            }
 
-			this.tryToSetProperty(name, property, value);
-		}
+            this.tryToSetProperty(name, property, value);
+        }
 
-		return map.values();
-	}
+        return map.values();
+    }
 
-	public void tryToSetProperty(String name, String propertyName, String propertyValue) {
-		DataSourceInfo dataSourceInfo = map.get(name);
+    public void tryToSetProperty(String name, String propertyName,
+            String propertyValue) {
+        DataSourceInfo dataSourceInfo = map.get(name);
 
-		if (dataSourceInfo == null) {
-			dataSourceInfo = new DbcpDataSourceInfo();
-			dataSourceInfo.setName(name);
-			map.put(name, dataSourceInfo);
-		}
+        if (dataSourceInfo == null) {
+            dataSourceInfo = new DbcpDataSourceInfo();
+            dataSourceInfo.setName(name);
+            map.put(name, dataSourceInfo);
+        }
 
-		PropertiesUtils.tryToSetProperty(dataSourceInfo, propertyName, propertyValue);
-	}
+        PropertiesUtils.tryToSetProperty(dataSourceInfo, propertyName,
+                propertyValue);
+    }
 }

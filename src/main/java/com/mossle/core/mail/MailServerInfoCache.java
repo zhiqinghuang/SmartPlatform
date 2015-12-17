@@ -1,11 +1,11 @@
 package com.mossle.core.mail;
 
 public interface MailServerInfoCache {
-	MailServerInfo getDefaultMailServerInfo();
+    MailServerInfo getDefaultMailServerInfo();
 
-	void setDefaultMailServerInfo(MailServerInfo mailServerInfo);
+    void setDefaultMailServerInfo(MailServerInfo mailServerInfo);
 
-	MailServerInfo getMailServerInfo(String name);
+    MailServerInfo getMailServerInfo(String name);
 
-	void setMailServerInfo(MailServerInfo mailServerInfo);
+    void setMailServerInfo(MailServerInfo mailServerInfo);
 }
