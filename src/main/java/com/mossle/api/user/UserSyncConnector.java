@@ -1,5 +1,5 @@
 package com.mossle.api.user;
 
 public interface UserSyncConnector {
-	void updateUser(UserDTO userDto);
+    void updateUser(UserDTO userDto);
 }
