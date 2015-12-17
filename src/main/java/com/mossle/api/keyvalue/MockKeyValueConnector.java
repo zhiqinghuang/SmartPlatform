@@ -6,29 +6,30 @@ import java.util.Map;
 import com.mossle.core.page.Page;
 
 public class MockKeyValueConnector implements KeyValueConnector {
-	public Record findByCode(String code) {
-		return null;
-	}
+    public Record findByCode(String code) {
+        return null;
+    }
 
-	public Record findByRef(String ref) {
-		return null;
-	}
+    public Record findByRef(String ref) {
+        return null;
+    }
 
-	public void save(Record record) {
-	}
+    public void save(Record record) {
+    }
 
-	public void removeByCode(String code) {
-	}
+    public void removeByCode(String code) {
+    }
 
-	public List<Record> findByStatus(int status, String userId, String tenantId) {
-		return null;
-	}
+    public List<Record> findByStatus(int status, String userId, String tenantId) {
+        return null;
+    }
 
-	public long findTotalCount(String category, String q, String tenantId) {
-		return 0L;
-	}
+    public long findTotalCount(String category, String q, String tenantId) {
+        return 0L;
+    }
 
-	public List<Map<String, Object>> findResult(Page page, String category, String tenantId, Map<String, String> headers, String q) {
-		return null;
-	}
+    public List<Map<String, Object>> findResult(Page page, String category,
+            String tenantId, Map<String, String> headers, String q) {
+        return null;
+    }
 }

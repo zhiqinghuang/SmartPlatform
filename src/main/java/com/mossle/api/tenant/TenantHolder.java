@@ -1,11 +1,11 @@
 package com.mossle.api.tenant;
 
 public interface TenantHolder {
-	String getTenantId();
+    String getTenantId();
 
-	String getTenantCode();
+    String getTenantCode();
 
-	String getUserRepoRef();
+    String getUserRepoRef();
 
-	TenantDTO getTenantDto();
+    TenantDTO getTenantDto();
 }
