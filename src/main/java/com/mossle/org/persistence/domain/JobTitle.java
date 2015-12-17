@@ -20,84 +20,84 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "JOB_TITLE")
 public class JobTitle implements java.io.Serializable {
-	private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
-	/** null. */
-	private Long id;
+    /** null. */
+    private Long id;
 
-	/** null. */
-	private String name;
+    /** null. */
+    private String name;
 
-	/** null. */
-	private String tenantId;
+    /** null. */
+    private String tenantId;
 
-	/** . */
-	private Set<JobInfo> jobInfos = new HashSet<JobInfo>(0);
+    /** . */
+    private Set<JobInfo> jobInfos = new HashSet<JobInfo>(0);
 
-	public JobTitle() {
-	}
+    public JobTitle() {
+    }
 
-	public JobTitle(String name, String tenantId, Set<JobInfo> jobInfos) {
-		this.name = name;
-		this.tenantId = tenantId;
-		this.jobInfos = jobInfos;
-	}
+    public JobTitle(String name, String tenantId, Set<JobInfo> jobInfos) {
+        this.name = name;
+        this.tenantId = tenantId;
+        this.jobInfos = jobInfos;
+    }
 
-	/** @return null. */
-	@Id
-	@GeneratedValue
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
-		return this.id;
-	}
+    /** @return null. */
+    @Id
+    @GeneratedValue
+    @Column(name = "ID", unique = true, nullable = false)
+    public Long getId() {
+        return this.id;
+    }
 
-	/**
-	 * @param id
-	 *            null.
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            null.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/** @return null. */
-	@Column(name = "NAME", length = 50)
-	public String getName() {
-		return this.name;
-	}
+    /** @return null. */
+    @Column(name = "NAME", length = 50)
+    public String getName() {
+        return this.name;
+    }
 
-	/**
-	 * @param name
-	 *            null.
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * @param name
+     *            null.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/** @return null. */
-	@Column(name = "TENANT_ID", length = 50)
-	public String getTenantId() {
-		return this.tenantId;
-	}
+    /** @return null. */
+    @Column(name = "TENANT_ID", length = 50)
+    public String getTenantId() {
+        return this.tenantId;
+    }
 
-	/**
-	 * @param tenantId
-	 *            null.
-	 */
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-	}
+    /**
+     * @param tenantId
+     *            null.
+     */
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 
-	/** @return . */
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "jobTitle")
-	public Set<JobInfo> getJobInfos() {
-		return this.jobInfos;
-	}
+    /** @return . */
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "jobTitle")
+    public Set<JobInfo> getJobInfos() {
+        return this.jobInfos;
+    }
 
-	/**
-	 * @param jobInfos
-	 *            .
-	 */
-	public void setJobInfos(Set<JobInfo> jobInfos) {
-		this.jobInfos = jobInfos;
-	}
+    /**
+     * @param jobInfos
+     *            .
+     */
+    public void setJobInfos(Set<JobInfo> jobInfos) {
+        this.jobInfos = jobInfos;
+    }
 }

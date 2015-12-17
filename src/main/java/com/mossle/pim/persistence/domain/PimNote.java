@@ -19,103 +19,103 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "PIM_NOTE")
 public class PimNote implements java.io.Serializable {
-	private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
-	/** null. */
-	private Long id;
+    /** null. */
+    private Long id;
 
-	/** null. */
-	private String title;
+    /** null. */
+    private String title;
 
-	/** null. */
-	private String content;
+    /** null. */
+    private String content;
 
-	/** null. */
-	private Date createTime;
+    /** null. */
+    private Date createTime;
 
-	/** null. */
-	private String userId;
+    /** null. */
+    private String userId;
 
-	public PimNote() {
-	}
+    public PimNote() {
+    }
 
-	public PimNote(String title, String content, Date createTime, String userId) {
-		this.title = title;
-		this.content = content;
-		this.createTime = createTime;
-		this.userId = userId;
-	}
+    public PimNote(String title, String content, Date createTime, String userId) {
+        this.title = title;
+        this.content = content;
+        this.createTime = createTime;
+        this.userId = userId;
+    }
 
-	/** @return null. */
-	@Id
-	@GeneratedValue
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
-		return this.id;
-	}
+    /** @return null. */
+    @Id
+    @GeneratedValue
+    @Column(name = "ID", unique = true, nullable = false)
+    public Long getId() {
+        return this.id;
+    }
 
-	/**
-	 * @param id
-	 *            null.
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            null.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/** @return null. */
-	@Column(name = "TITLE", length = 100)
-	public String getTitle() {
-		return this.title;
-	}
+    /** @return null. */
+    @Column(name = "TITLE", length = 100)
+    public String getTitle() {
+        return this.title;
+    }
 
-	/**
-	 * @param title
-	 *            null.
-	 */
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    /**
+     * @param title
+     *            null.
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-	/** @return null. */
-	@Column(name = "CONTENT", length = 200)
-	public String getContent() {
-		return this.content;
-	}
+    /** @return null. */
+    @Column(name = "CONTENT", length = 200)
+    public String getContent() {
+        return this.content;
+    }
 
-	/**
-	 * @param content
-	 *            null.
-	 */
-	public void setContent(String content) {
-		this.content = content;
-	}
+    /**
+     * @param content
+     *            null.
+     */
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-	/** @return null. */
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "CREATE_TIME", length = 26)
-	public Date getCreateTime() {
-		return this.createTime;
-	}
+    /** @return null. */
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "CREATE_TIME", length = 26)
+    public Date getCreateTime() {
+        return this.createTime;
+    }
 
-	/**
-	 * @param createTime
-	 *            null.
-	 */
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    /**
+     * @param createTime
+     *            null.
+     */
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
-	/** @return null. */
-	@Column(name = "USER_ID", length = 64)
-	public String getUserId() {
-		return this.userId;
-	}
+    /** @return null. */
+    @Column(name = "USER_ID", length = 64)
+    public String getUserId() {
+        return this.userId;
+    }
 
-	/**
-	 * @param userId
-	 *            null.
-	 */
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
+    /**
+     * @param userId
+     *            null.
+     */
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 }

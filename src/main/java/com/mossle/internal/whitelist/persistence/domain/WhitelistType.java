@@ -20,102 +20,103 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "WHITELIST_TYPE")
 public class WhitelistType implements java.io.Serializable {
-	private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
-	/** null. */
-	private Long id;
+    /** null. */
+    private Long id;
 
-	/** null. */
-	private String name;
+    /** null. */
+    private String name;
 
-	/** null. */
-	private String code;
+    /** null. */
+    private String code;
 
-	/** null. */
-	private String tenantId;
+    /** null. */
+    private String tenantId;
 
-	/** . */
-	private Set<WhitelistApp> whitelistApps = new HashSet<WhitelistApp>(0);
+    /** . */
+    private Set<WhitelistApp> whitelistApps = new HashSet<WhitelistApp>(0);
 
-	public WhitelistType() {
-	}
+    public WhitelistType() {
+    }
 
-	public WhitelistType(String name, String code, String tenantId, Set<WhitelistApp> whitelistApps) {
-		this.name = name;
-		this.code = code;
-		this.tenantId = tenantId;
-		this.whitelistApps = whitelistApps;
-	}
+    public WhitelistType(String name, String code, String tenantId,
+            Set<WhitelistApp> whitelistApps) {
+        this.name = name;
+        this.code = code;
+        this.tenantId = tenantId;
+        this.whitelistApps = whitelistApps;
+    }
 
-	/** @return null. */
-	@Id
-	@GeneratedValue
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
-		return this.id;
-	}
+    /** @return null. */
+    @Id
+    @GeneratedValue
+    @Column(name = "ID", unique = true, nullable = false)
+    public Long getId() {
+        return this.id;
+    }
 
-	/**
-	 * @param id
-	 *            null.
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            null.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/** @return null. */
-	@Column(name = "NAME", length = 50)
-	public String getName() {
-		return this.name;
-	}
+    /** @return null. */
+    @Column(name = "NAME", length = 50)
+    public String getName() {
+        return this.name;
+    }
 
-	/**
-	 * @param name
-	 *            null.
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * @param name
+     *            null.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/** @return null. */
-	@Column(name = "CODE", length = 50)
-	public String getCode() {
-		return this.code;
-	}
+    /** @return null. */
+    @Column(name = "CODE", length = 50)
+    public String getCode() {
+        return this.code;
+    }
 
-	/**
-	 * @param code
-	 *            null.
-	 */
-	public void setCode(String code) {
-		this.code = code;
-	}
+    /**
+     * @param code
+     *            null.
+     */
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	/** @return null. */
-	@Column(name = "TENANT_ID", length = 64)
-	public String getTenantId() {
-		return this.tenantId;
-	}
+    /** @return null. */
+    @Column(name = "TENANT_ID", length = 64)
+    public String getTenantId() {
+        return this.tenantId;
+    }
 
-	/**
-	 * @param tenantId
-	 *            null.
-	 */
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-	}
+    /**
+     * @param tenantId
+     *            null.
+     */
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 
-	/** @return . */
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "whitelistType")
-	public Set<WhitelistApp> getWhitelistApps() {
-		return this.whitelistApps;
-	}
+    /** @return . */
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "whitelistType")
+    public Set<WhitelistApp> getWhitelistApps() {
+        return this.whitelistApps;
+    }
 
-	/**
-	 * @param whitelistApps
-	 *            .
-	 */
-	public void setWhitelistApps(Set<WhitelistApp> whitelistApps) {
-		this.whitelistApps = whitelistApps;
-	}
+    /**
+     * @param whitelistApps
+     *            .
+     */
+    public void setWhitelistApps(Set<WhitelistApp> whitelistApps) {
+        this.whitelistApps = whitelistApps;
+    }
 }

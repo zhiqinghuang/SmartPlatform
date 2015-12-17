@@ -3,17 +3,17 @@ package com.mossle.security.api;
 import java.util.List;
 
 public interface UserAuth {
-	String getId();
+    String getId();
 
-	String getTenantId();
+    String getTenantId();
 
-	String getUsername();
+    String getUsername();
 
-	String getDisplayName();
+    String getDisplayName();
 
-	String getStatus();
+    String getStatus();
 
-	List<String> getPermissions();
+    List<String> getPermissions();
 
-	List<String> getRoles();
+    List<String> getRoles();
 }

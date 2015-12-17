@@ -18,103 +18,104 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "JAVAMAIL_ATTACHMENT")
 public class JavamailAttachment implements java.io.Serializable {
-	private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
-	/** null. */
-	private Long id;
+    /** null. */
+    private Long id;
 
-	/** null. */
-	private JavamailMessage javamailMessage;
+    /** null. */
+    private JavamailMessage javamailMessage;
 
-	/** null. */
-	private String name;
+    /** null. */
+    private String name;
 
-	/** null. */
-	private String ref;
+    /** null. */
+    private String ref;
 
-	/** null. */
-	private String type;
+    /** null. */
+    private String type;
 
-	public JavamailAttachment() {
-	}
+    public JavamailAttachment() {
+    }
 
-	public JavamailAttachment(JavamailMessage javamailMessage, String name, String ref, String type) {
-		this.javamailMessage = javamailMessage;
-		this.name = name;
-		this.ref = ref;
-		this.type = type;
-	}
+    public JavamailAttachment(JavamailMessage javamailMessage, String name,
+            String ref, String type) {
+        this.javamailMessage = javamailMessage;
+        this.name = name;
+        this.ref = ref;
+        this.type = type;
+    }
 
-	/** @return null. */
-	@Id
-	@GeneratedValue
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
-		return this.id;
-	}
+    /** @return null. */
+    @Id
+    @GeneratedValue
+    @Column(name = "ID", unique = true, nullable = false)
+    public Long getId() {
+        return this.id;
+    }
 
-	/**
-	 * @param id
-	 *            null.
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            null.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/** @return null. */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "MESSAGE_ID")
-	public JavamailMessage getJavamailMessage() {
-		return this.javamailMessage;
-	}
+    /** @return null. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MESSAGE_ID")
+    public JavamailMessage getJavamailMessage() {
+        return this.javamailMessage;
+    }
 
-	/**
-	 * @param javamailMessage
-	 *            null.
-	 */
-	public void setJavamailMessage(JavamailMessage javamailMessage) {
-		this.javamailMessage = javamailMessage;
-	}
+    /**
+     * @param javamailMessage
+     *            null.
+     */
+    public void setJavamailMessage(JavamailMessage javamailMessage) {
+        this.javamailMessage = javamailMessage;
+    }
 
-	/** @return null. */
-	@Column(name = "NAME", length = 200)
-	public String getName() {
-		return this.name;
-	}
+    /** @return null. */
+    @Column(name = "NAME", length = 200)
+    public String getName() {
+        return this.name;
+    }
 
-	/**
-	 * @param name
-	 *            null.
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    /**
+     * @param name
+     *            null.
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	/** @return null. */
-	@Column(name = "REF", length = 200)
-	public String getRef() {
-		return this.ref;
-	}
+    /** @return null. */
+    @Column(name = "REF", length = 200)
+    public String getRef() {
+        return this.ref;
+    }
 
-	/**
-	 * @param ref
-	 *            null.
-	 */
-	public void setRef(String ref) {
-		this.ref = ref;
-	}
+    /**
+     * @param ref
+     *            null.
+     */
+    public void setRef(String ref) {
+        this.ref = ref;
+    }
 
-	/** @return null. */
-	@Column(name = "TYPE", length = 50)
-	public String getType() {
-		return this.type;
-	}
+    /** @return null. */
+    @Column(name = "TYPE", length = 50)
+    public String getType() {
+        return this.type;
+    }
 
-	/**
-	 * @param type
-	 *            null.
-	 */
-	public void setType(String type) {
-		this.type = type;
-	}
+    /**
+     * @param type
+     *            null.
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
 }

@@ -18,103 +18,104 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "WHITELIST_IP")
 public class WhitelistIp implements java.io.Serializable {
-	private static final long serialVersionUID = 0L;
+    private static final long serialVersionUID = 0L;
 
-	/** null. */
-	private Long id;
+    /** null. */
+    private Long id;
 
-	/** null. */
-	private WhitelistApp whitelistApp;
+    /** null. */
+    private WhitelistApp whitelistApp;
 
-	/** null. */
-	private String value;
+    /** null. */
+    private String value;
 
-	/** null. */
-	private Integer priority;
+    /** null. */
+    private Integer priority;
 
-	/** null. */
-	private String tenantId;
+    /** null. */
+    private String tenantId;
 
-	public WhitelistIp() {
-	}
+    public WhitelistIp() {
+    }
 
-	public WhitelistIp(WhitelistApp whitelistApp, String value, Integer priority, String tenantId) {
-		this.whitelistApp = whitelistApp;
-		this.value = value;
-		this.priority = priority;
-		this.tenantId = tenantId;
-	}
+    public WhitelistIp(WhitelistApp whitelistApp, String value,
+            Integer priority, String tenantId) {
+        this.whitelistApp = whitelistApp;
+        this.value = value;
+        this.priority = priority;
+        this.tenantId = tenantId;
+    }
 
-	/** @return null. */
-	@Id
-	@GeneratedValue
-	@Column(name = "ID", unique = true, nullable = false)
-	public Long getId() {
-		return this.id;
-	}
+    /** @return null. */
+    @Id
+    @GeneratedValue
+    @Column(name = "ID", unique = true, nullable = false)
+    public Long getId() {
+        return this.id;
+    }
 
-	/**
-	 * @param id
-	 *            null.
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    /**
+     * @param id
+     *            null.
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	/** @return null. */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "APP_ID")
-	public WhitelistApp getWhitelistApp() {
-		return this.whitelistApp;
-	}
+    /** @return null. */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "APP_ID")
+    public WhitelistApp getWhitelistApp() {
+        return this.whitelistApp;
+    }
 
-	/**
-	 * @param whitelistApp
-	 *            null.
-	 */
-	public void setWhitelistApp(WhitelistApp whitelistApp) {
-		this.whitelistApp = whitelistApp;
-	}
+    /**
+     * @param whitelistApp
+     *            null.
+     */
+    public void setWhitelistApp(WhitelistApp whitelistApp) {
+        this.whitelistApp = whitelistApp;
+    }
 
-	/** @return null. */
-	@Column(name = "VALUE", length = 50)
-	public String getValue() {
-		return this.value;
-	}
+    /** @return null. */
+    @Column(name = "VALUE", length = 50)
+    public String getValue() {
+        return this.value;
+    }
 
-	/**
-	 * @param value
-	 *            null.
-	 */
-	public void setValue(String value) {
-		this.value = value;
-	}
+    /**
+     * @param value
+     *            null.
+     */
+    public void setValue(String value) {
+        this.value = value;
+    }
 
-	/** @return null. */
-	@Column(name = "PRIORITY")
-	public Integer getPriority() {
-		return this.priority;
-	}
+    /** @return null. */
+    @Column(name = "PRIORITY")
+    public Integer getPriority() {
+        return this.priority;
+    }
 
-	/**
-	 * @param priority
-	 *            null.
-	 */
-	public void setPriority(Integer priority) {
-		this.priority = priority;
-	}
+    /**
+     * @param priority
+     *            null.
+     */
+    public void setPriority(Integer priority) {
+        this.priority = priority;
+    }
 
-	/** @return null. */
-	@Column(name = "TENANT_ID", length = 64)
-	public String getTenantId() {
-		return this.tenantId;
-	}
+    /** @return null. */
+    @Column(name = "TENANT_ID", length = 64)
+    public String getTenantId() {
+        return this.tenantId;
+    }
 
-	/**
-	 * @param tenantId
-	 *            null.
-	 */
-	public void setTenantId(String tenantId) {
-		this.tenantId = tenantId;
-	}
+    /**
+     * @param tenantId
+     *            null.
+     */
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 }
