@@ -73,7 +73,6 @@ public class HsqldbServer {
     public void destroy() {
         if (!enabled) {
             logger.info("skip hsqldb server");
-
             return;
         }
 
