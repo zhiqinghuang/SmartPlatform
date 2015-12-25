@@ -4,18 +4,15 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.FactoryBean;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.Assert;
+
 import com.mossle.api.user.UserCache;
 import com.mossle.api.user.UserConnector;
 import com.mossle.api.user.UserSyncConnector;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.beans.factory.FactoryBean;
-
-import org.springframework.jdbc.core.JdbcTemplate;
-
-import org.springframework.util.Assert;
 
 public class UserConnectorFactoryBean implements FactoryBean {
 	private static Logger logger = LoggerFactory.getLogger(UserConnectorFactoryBean.class);

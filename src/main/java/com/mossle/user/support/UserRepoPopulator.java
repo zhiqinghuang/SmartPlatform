@@ -6,13 +6,12 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
-import com.mossle.api.userrepo.UserRepoCache;
-import com.mossle.api.userrepo.UserRepoDTO;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.mossle.api.userrepo.UserRepoCache;
+import com.mossle.api.userrepo.UserRepoDTO;
 
 public class UserRepoPopulator {
 	private static Logger logger = LoggerFactory.getLogger(UserRepoPopulator.class);

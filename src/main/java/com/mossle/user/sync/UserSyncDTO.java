@@ -1,7 +1,7 @@
 package com.mossle.user.sync;
 
 public interface UserSyncDTO {
-    String getId();
+	String getId();
 
-    boolean hasModified(UserSyncDTO userSyncDto);
+	boolean hasModified(UserSyncDTO userSyncDto);
 }

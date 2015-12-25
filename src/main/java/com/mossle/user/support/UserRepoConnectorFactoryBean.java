@@ -2,17 +2,14 @@ package com.mossle.user.support;
 
 import javax.annotation.PostConstruct;
 
-import com.mossle.api.userrepo.UserRepoCache;
-import com.mossle.api.userrepo.UserRepoConnector;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.FactoryBean;
-
 import org.springframework.jdbc.core.JdbcTemplate;
-
 import org.springframework.util.Assert;
+
+import com.mossle.api.userrepo.UserRepoCache;
+import com.mossle.api.userrepo.UserRepoConnector;
 
 public class UserRepoConnectorFactoryBean implements FactoryBean {
 	private static Logger logger = LoggerFactory.getLogger(UserRepoConnectorFactoryBean.class);

@@ -3,13 +3,12 @@ package com.mossle.user.support;
 import java.util.Collections;
 import java.util.Map;
 
-import com.mossle.api.user.UserConnector;
-import com.mossle.api.user.UserDTO;
-
-import com.mossle.core.page.Page;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.mossle.api.user.UserConnector;
+import com.mossle.api.user.UserDTO;
+import com.mossle.core.page.Page;
 
 public class MockUserConnector implements UserConnector {
 	private static Logger logger = LoggerFactory.getLogger(MockUserConnector.class);
