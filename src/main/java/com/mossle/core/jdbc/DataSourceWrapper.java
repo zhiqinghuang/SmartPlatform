@@ -2,14 +2,13 @@ package com.mossle.core.jdbc;
 
 import java.sql.SQLException;
 
+import org.apache.commons.dbcp.BasicDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.mossle.core.mapper.BeanMapper;
 
 import net.sf.log4jdbc.Log4jdbcProxyDataSource;
-
-import org.apache.commons.dbcp.BasicDataSource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class DataSourceWrapper extends DataSourceProxy {
 	private static Logger logger = LoggerFactory.getLogger(DataSourceWrapper.class);

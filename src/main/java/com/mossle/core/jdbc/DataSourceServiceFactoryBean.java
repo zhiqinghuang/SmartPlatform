@@ -1,19 +1,17 @@
 package com.mossle.core.jdbc;
 
 import java.lang.reflect.Method;
-
 import java.util.Collection;
 import java.util.Properties;
 
-import com.mossle.core.util.BeanUtils;
-import com.mossle.core.util.StringUtils;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
+
+import com.mossle.core.util.BeanUtils;
+import com.mossle.core.util.StringUtils;
 
 public class DataSourceServiceFactoryBean implements FactoryBean, InitializingBean, DisposableBean {
 	private static Logger logger = LoggerFactory.getLogger(DataSourceServiceFactoryBean.class);
