@@ -18,111 +18,110 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "PARTY_STRUCT_RULE")
 public class PartyStructRule implements java.io.Serializable {
-    private static final long serialVersionUID = 0L;
+	private static final long serialVersionUID = 0L;
 
-    /** null. */
-    private Long id;
+	/** null. */
+	private Long id;
 
-    /** null. */
-    private PartyType parentType;
+	/** null. */
+	private PartyType parentType;
 
-    /** null. */
-    private PartyType childType;
+	/** null. */
+	private PartyType childType;
 
-    /** null. */
-    private PartyStructType partyStructType;
+	/** null. */
+	private PartyStructType partyStructType;
 
-    /** null. */
-    private String tenantId;
+	/** null. */
+	private String tenantId;
 
-    public PartyStructRule() {
-    }
+	public PartyStructRule() {
+	}
 
-    public PartyStructRule(PartyType childType, PartyStructType partyStructType) {
-        this.childType = childType;
-        this.partyStructType = partyStructType;
-    }
+	public PartyStructRule(PartyType childType, PartyStructType partyStructType) {
+		this.childType = childType;
+		this.partyStructType = partyStructType;
+	}
 
-    public PartyStructRule(PartyType parentType, PartyType childType,
-            PartyStructType partyStructType, String tenantId) {
-        this.parentType = parentType;
-        this.childType = childType;
-        this.partyStructType = partyStructType;
-        this.tenantId = tenantId;
-    }
+	public PartyStructRule(PartyType parentType, PartyType childType, PartyStructType partyStructType, String tenantId) {
+		this.parentType = parentType;
+		this.childType = childType;
+		this.partyStructType = partyStructType;
+		this.tenantId = tenantId;
+	}
 
-    /** @return null. */
-    @Id
-    @GeneratedValue
-    @Column(name = "ID", unique = true, nullable = false)
-    public Long getId() {
-        return this.id;
-    }
+	/** @return null. */
+	@Id
+	@GeneratedValue
+	@Column(name = "ID", unique = true, nullable = false)
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * @param id
-     *            null.
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * @param id
+	 *            null.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /** @return null. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PARENT_TYPE_ID")
-    public PartyType getParentType() {
-        return this.parentType;
-    }
+	/** @return null. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PARENT_TYPE_ID")
+	public PartyType getParentType() {
+		return this.parentType;
+	}
 
-    /**
-     * @param parentType
-     *            null.
-     */
-    public void setParentType(PartyType parentType) {
-        this.parentType = parentType;
-    }
+	/**
+	 * @param parentType
+	 *            null.
+	 */
+	public void setParentType(PartyType parentType) {
+		this.parentType = parentType;
+	}
 
-    /** @return null. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CHILD_TYPE_ID", nullable = false)
-    public PartyType getChildType() {
-        return this.childType;
-    }
+	/** @return null. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "CHILD_TYPE_ID", nullable = false)
+	public PartyType getChildType() {
+		return this.childType;
+	}
 
-    /**
-     * @param childType
-     *            null.
-     */
-    public void setChildType(PartyType childType) {
-        this.childType = childType;
-    }
+	/**
+	 * @param childType
+	 *            null.
+	 */
+	public void setChildType(PartyType childType) {
+		this.childType = childType;
+	}
 
-    /** @return null. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "STRUCT_TYPE_ID", nullable = false)
-    public PartyStructType getPartyStructType() {
-        return this.partyStructType;
-    }
+	/** @return null. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "STRUCT_TYPE_ID", nullable = false)
+	public PartyStructType getPartyStructType() {
+		return this.partyStructType;
+	}
 
-    /**
-     * @param partyStructType
-     *            null.
-     */
-    public void setPartyStructType(PartyStructType partyStructType) {
-        this.partyStructType = partyStructType;
-    }
+	/**
+	 * @param partyStructType
+	 *            null.
+	 */
+	public void setPartyStructType(PartyStructType partyStructType) {
+		this.partyStructType = partyStructType;
+	}
 
-    /** @return null. */
-    @Column(name = "TENANT_ID", length = 50)
-    public String getTenantId() {
-        return this.tenantId;
-    }
+	/** @return null. */
+	@Column(name = "TENANT_ID", length = 50)
+	public String getTenantId() {
+		return this.tenantId;
+	}
 
-    /**
-     * @param tenantId
-     *            null.
-     */
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
+	/**
+	 * @param tenantId
+	 *            null.
+	 */
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+	}
 }

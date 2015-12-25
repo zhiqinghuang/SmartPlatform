@@ -1,10 +1,9 @@
 package com.mossle.org.persistence.manager;
 
-import com.mossle.core.hibernate.HibernateEntityDao;
-
-import com.mossle.org.persistence.domain.OrgCompany;
-
 import org.springframework.stereotype.Service;
+
+import com.mossle.core.hibernate.HibernateEntityDao;
+import com.mossle.org.persistence.domain.OrgCompany;
 
 @Service
 public class OrgCompanyManager extends HibernateEntityDao<OrgCompany> {
