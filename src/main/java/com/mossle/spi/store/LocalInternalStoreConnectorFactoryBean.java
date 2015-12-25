@@ -2,10 +2,10 @@ package com.mossle.spi.store;
 
 import javax.annotation.PostConstruct;
 
-import com.mossle.core.store.FileStoreHelper;
-
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Value;
+
+import com.mossle.core.store.FileStoreHelper;
 
 public class LocalInternalStoreConnectorFactoryBean implements FactoryBean {
 	private String baseDir;

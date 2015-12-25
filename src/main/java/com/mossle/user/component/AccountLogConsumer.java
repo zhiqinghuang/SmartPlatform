@@ -7,14 +7,12 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 
-import com.mossle.api.user.AccountLogDTO;
-
-import com.mossle.user.service.AccountLogService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Component;
+
+import com.mossle.api.user.AccountLogDTO;
+import com.mossle.user.service.AccountLogService;
 
 @Component
 public class AccountLogConsumer implements Runnable {
