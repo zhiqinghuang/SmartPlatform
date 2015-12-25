@@ -8,31 +8,31 @@ import java.io.OutputStream;
 import javax.activation.DataSource;
 
 public class ByteArrayDataSource implements DataSource {
-    private String name;
-    private byte[] bytes;
+	private String name;
+	private byte[] bytes;
 
-    public ByteArrayDataSource(String name, byte[] bytes) {
-        this.name = name;
-        this.bytes = bytes;
-    }
+	public ByteArrayDataSource(String name, byte[] bytes) {
+		this.name = name;
+		this.bytes = bytes;
+	}
 
-    public ByteArrayDataSource(byte[] bytes) {
-        this("bytes", bytes);
-    }
+	public ByteArrayDataSource(byte[] bytes) {
+		this("bytes", bytes);
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public InputStream getInputStream() throws IOException {
-        return new ByteArrayInputStream(bytes);
-    }
+	public InputStream getInputStream() throws IOException {
+		return new ByteArrayInputStream(bytes);
+	}
 
-    public OutputStream getOutputStream() {
-        throw new IllegalStateException("not support");
-    }
+	public OutputStream getOutputStream() {
+		throw new IllegalStateException("not support");
+	}
 
-    public String getContentType() {
-        return "";
-    }
+	public String getContentType() {
+		return "";
+	}
 }

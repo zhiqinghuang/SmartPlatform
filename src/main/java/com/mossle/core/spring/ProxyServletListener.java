@@ -9,9 +9,7 @@ import javax.servlet.http.HttpSessionListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.context.ApplicationContext;
-
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 public class ProxyServletListener implements ServletContextListener, HttpSessionListener {
