@@ -19,158 +19,157 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "PIM_DEVICE")
 public class PimDevice implements java.io.Serializable {
-    private static final long serialVersionUID = 0L;
+	private static final long serialVersionUID = 0L;
 
-    /** null. */
-    private Long id;
+	/** null. */
+	private Long id;
 
-    /** null. */
-    private String code;
+	/** null. */
+	private String code;
 
-    /** null. */
-    private String name;
+	/** null. */
+	private String name;
 
-    /** null. */
-    private String type;
+	/** null. */
+	private String type;
 
-    /** null. */
-    private String sessionId;
+	/** null. */
+	private String sessionId;
 
-    /** null. */
-    private Date createTime;
+	/** null. */
+	private Date createTime;
 
-    /** null. */
-    private String status;
+	/** null. */
+	private String status;
 
-    /** null. */
-    private String userId;
+	/** null. */
+	private String userId;
 
-    public PimDevice() {
-    }
+	public PimDevice() {
+	}
 
-    public PimDevice(String code, String name, String type, String sessionId,
-            Date createTime, String status, String userId) {
-        this.code = code;
-        this.name = name;
-        this.type = type;
-        this.sessionId = sessionId;
-        this.createTime = createTime;
-        this.status = status;
-        this.userId = userId;
-    }
+	public PimDevice(String code, String name, String type, String sessionId, Date createTime, String status, String userId) {
+		this.code = code;
+		this.name = name;
+		this.type = type;
+		this.sessionId = sessionId;
+		this.createTime = createTime;
+		this.status = status;
+		this.userId = userId;
+	}
 
-    /** @return null. */
-    @Id
-    @GeneratedValue
-    @Column(name = "ID", unique = true, nullable = false)
-    public Long getId() {
-        return this.id;
-    }
+	/** @return null. */
+	@Id
+	@GeneratedValue
+	@Column(name = "ID", unique = true, nullable = false)
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * @param id
-     *            null.
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * @param id
+	 *            null.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /** @return null. */
-    @Column(name = "CODE", length = 64)
-    public String getCode() {
-        return this.code;
-    }
+	/** @return null. */
+	@Column(name = "CODE", length = 64)
+	public String getCode() {
+		return this.code;
+	}
 
-    /**
-     * @param code
-     *            null.
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
+	/**
+	 * @param code
+	 *            null.
+	 */
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    /** @return null. */
-    @Column(name = "NAME", length = 64)
-    public String getName() {
-        return this.name;
-    }
+	/** @return null. */
+	@Column(name = "NAME", length = 64)
+	public String getName() {
+		return this.name;
+	}
 
-    /**
-     * @param name
-     *            null.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+	/**
+	 * @param name
+	 *            null.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    /** @return null. */
-    @Column(name = "TYPE", length = 64)
-    public String getType() {
-        return this.type;
-    }
+	/** @return null. */
+	@Column(name = "TYPE", length = 64)
+	public String getType() {
+		return this.type;
+	}
 
-    /**
-     * @param type
-     *            null.
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
+	/**
+	 * @param type
+	 *            null.
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    /** @return null. */
-    @Column(name = "SESSION_ID", length = 64)
-    public String getSessionId() {
-        return this.sessionId;
-    }
+	/** @return null. */
+	@Column(name = "SESSION_ID", length = 64)
+	public String getSessionId() {
+		return this.sessionId;
+	}
 
-    /**
-     * @param sessionId
-     *            null.
-     */
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
+	/**
+	 * @param sessionId
+	 *            null.
+	 */
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
 
-    /** @return null. */
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "CREATE_TIME", length = 26)
-    public Date getCreateTime() {
-        return this.createTime;
-    }
+	/** @return null. */
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "CREATE_TIME", length = 26)
+	public Date getCreateTime() {
+		return this.createTime;
+	}
 
-    /**
-     * @param createTime
-     *            null.
-     */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+	/**
+	 * @param createTime
+	 *            null.
+	 */
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    /** @return null. */
-    @Column(name = "STATUS", length = 50)
-    public String getStatus() {
-        return this.status;
-    }
+	/** @return null. */
+	@Column(name = "STATUS", length = 50)
+	public String getStatus() {
+		return this.status;
+	}
 
-    /**
-     * @param status
-     *            null.
-     */
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	/**
+	 * @param status
+	 *            null.
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
-    /** @return null. */
-    @Column(name = "USER_ID", length = 64)
-    public String getUserId() {
-        return this.userId;
-    }
+	/** @return null. */
+	@Column(name = "USER_ID", length = 64)
+	public String getUserId() {
+		return this.userId;
+	}
 
-    /**
-     * @param userId
-     *            null.
-     */
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
+	/**
+	 * @param userId
+	 *            null.
+	 */
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 }
