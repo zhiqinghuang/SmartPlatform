@@ -13,45 +13,43 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.util.Assert;
 
 public class WorkCalendarConnectorFactoryBean implements FactoryBean {
-    private static Logger logger = LoggerFactory
-            .getLogger(WorkCalendarConnectorFactoryBean.class);
-    private WorkCalendarConnector workCalendarConnector;
-    private String type = "database";
+	private static Logger logger = LoggerFactory.getLogger(WorkCalendarConnectorFactoryBean.class);
+	private WorkCalendarConnector workCalendarConnector;
+	private String type = "database";
 
-    @PostConstruct
-    public void afterPropertiesSet() {
-        Assert.notNull(type, "type cannot be null");
+	@PostConstruct
+	public void afterPropertiesSet() {
+		Assert.notNull(type, "type cannot be null");
+		if ("mock".equals(type)) {
+			this.processMock();
+		} else if ("database".equals(type)) {
+			this.processDatabase();
+		} else {
+			throw new IllegalArgumentException("unsupported type : " + type);
+		}
+	}
 
-        if ("mock".equals(type)) {
-            this.processMock();
-        } else if ("database".equals(type)) {
-            this.processDatabase();
-        } else {
-            throw new IllegalArgumentException("unsupported type : " + type);
-        }
-    }
+	public void processMock() {
+		MockWorkCalendarConnector mockWorkCalendarConnector = new MockWorkCalendarConnector();
+		workCalendarConnector = mockWorkCalendarConnector;
+	}
 
-    public void processMock() {
-        MockWorkCalendarConnector mockWorkCalendarConnector = new MockWorkCalendarConnector();
-        workCalendarConnector = mockWorkCalendarConnector;
-    }
+	public void processDatabase() {
+	}
 
-    public void processDatabase() {
-    }
+	public Object getObject() {
+		return workCalendarConnector;
+	}
 
-    public Object getObject() {
-        return workCalendarConnector;
-    }
+	public Class getObjectType() {
+		return WorkCalendarConnector.class;
+	}
 
-    public Class getObjectType() {
-        return WorkCalendarConnector.class;
-    }
+	public boolean isSingleton() {
+		return true;
+	}
 
-    public boolean isSingleton() {
-        return true;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
+	public void setType(String type) {
+		this.type = type;
+	}
 }

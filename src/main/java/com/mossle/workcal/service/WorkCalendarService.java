@@ -31,168 +31,148 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class WorkCalendarService implements WorkCalendarConnector {
-    private static Logger logger = LoggerFactory
-            .getLogger(WorkCalendarService.class);
-    public static final int STATUS_WEEK = 0;
-    public static final int STATUS_HOLIDAY = 1;
-    public static final int STATUS_HOLIDAY_TO_WORKDAY = 2;
-    public static final int STATUS_WORKDAY_TO_HOLIDAY = 3;
-    private WorkcalRuleManager workcalRuleManager;
-    private WorkcalPartManager workcalPartManager;
-    private String hourFormatText = "HH:mm";
-    private boolean enabled = true;
-    private Map<String, WorkCalendar> map = new HashMap<String, WorkCalendar>();
-    private TenantConnector tenantConnector;
+	private static Logger logger = LoggerFactory.getLogger(WorkCalendarService.class);
+	public static final int STATUS_WEEK = 0;
+	public static final int STATUS_HOLIDAY = 1;
+	public static final int STATUS_HOLIDAY_TO_WORKDAY = 2;
+	public static final int STATUS_WORKDAY_TO_HOLIDAY = 3;
+	private WorkcalRuleManager workcalRuleManager;
+	private WorkcalPartManager workcalPartManager;
+	private String hourFormatText = "HH:mm";
+	private boolean enabled = true;
+	private Map<String, WorkCalendar> map = new HashMap<String, WorkCalendar>();
+	private TenantConnector tenantConnector;
 
-    public Date processDate(Date date, String tenantId) {
-        WorkCalendar workCalendar = map.get(tenantId);
+	public Date processDate(Date date, String tenantId) {
+		WorkCalendar workCalendar = map.get(tenantId);
+		return workCalendar.findWorkDate(date);
+	}
 
-        return workCalendar.findWorkDate(date);
-    }
+	public Date add(Date date, Duration duration, String tenantId) {
+		WorkCalendar workCalendar = map.get(tenantId);
+		return workCalendar.add(date, duration);
+	}
 
-    public Date add(Date date, Duration duration, String tenantId) {
-        WorkCalendar workCalendar = map.get(tenantId);
+	public void processWeek(WorkCalendar workCalendar, String tenantId) throws Exception {
+		List<WorkDay> days = new ArrayList<WorkDay>(8);
+		days.add(new Holiday(workCalendar));
+		days.add(new Holiday(workCalendar));
+		days.add(new Holiday(workCalendar));
+		days.add(new Holiday(workCalendar));
+		days.add(new Holiday(workCalendar));
+		days.add(new Holiday(workCalendar));
+		days.add(new Holiday(workCalendar));
+		days.add(new Holiday(workCalendar));
 
-        return workCalendar.add(date, duration);
-    }
+		// 每周的工作规则
+		List<WorkcalRule> workcalRules = workcalRuleManager.find("from WorkcalRule where status=? and tenantId=?", STATUS_WEEK, tenantId);
 
-    public void processWeek(WorkCalendar workCalendar, String tenantId)
-            throws Exception {
-        List<WorkDay> days = new ArrayList<WorkDay>(8);
-        days.add(new Holiday(workCalendar));
-        days.add(new Holiday(workCalendar));
-        days.add(new Holiday(workCalendar));
-        days.add(new Holiday(workCalendar));
-        days.add(new Holiday(workCalendar));
-        days.add(new Holiday(workCalendar));
-        days.add(new Holiday(workCalendar));
-        days.add(new Holiday(workCalendar));
+		for (WorkcalRule workcalRule : workcalRules) {
+			WorkDay day = new WorkDay(workCalendar);
+			int dayPartIndex = 0;
+			List<DayPart> dayParts = day.getDayParts();
 
-        // 每周的工作规则
-        List<WorkcalRule> workcalRules = workcalRuleManager.find(
-                "from WorkcalRule where status=? and tenantId=?", STATUS_WEEK,
-                tenantId);
+			for (WorkcalPart workcalPart : workcalPartManager.findBy("workcalRule", workcalRule)) {
+				DayPart dayPart = new DayPart();
+				dayPart.setWorkDay(day);
+				dayPart.setIndex(dayPartIndex);
 
-        for (WorkcalRule workcalRule : workcalRules) {
-            WorkDay day = new WorkDay(workCalendar);
-            int dayPartIndex = 0;
-            List<DayPart> dayParts = day.getDayParts();
+				Date startDate = new SimpleDateFormat(hourFormatText).parse(workcalPart.getStartTime());
+				Date endDate = new SimpleDateFormat(hourFormatText).parse(workcalPart.getEndTime());
+				Calendar startCalendar = Calendar.getInstance();
+				startCalendar.setTime(startDate);
 
-            for (WorkcalPart workcalPart : workcalPartManager.findBy(
-                    "workcalRule", workcalRule)) {
-                DayPart dayPart = new DayPart();
-                dayPart.setWorkDay(day);
-                dayPart.setIndex(dayPartIndex);
+				Calendar endCalendar = Calendar.getInstance();
+				endCalendar.setTime(endDate);
+				dayPart.setFromHour(startCalendar.get(Calendar.HOUR));
+				dayPart.setFromMinute(startCalendar.get(Calendar.MINUTE));
+				dayPart.setToHour(endCalendar.get(Calendar.HOUR));
+				dayPart.setToMinute(endCalendar.get(Calendar.MINUTE));
+				dayParts.add(dayPart);
+			}
 
-                Date startDate = new SimpleDateFormat(hourFormatText)
-                        .parse(workcalPart.getStartTime());
-                Date endDate = new SimpleDateFormat(hourFormatText)
-                        .parse(workcalPart.getEndTime());
-                Calendar startCalendar = Calendar.getInstance();
-                startCalendar.setTime(startDate);
+			days.set(workcalRule.getWeek(), day);
+		}
+	}
 
-                Calendar endCalendar = Calendar.getInstance();
-                endCalendar.setTime(endDate);
-                dayPart.setFromHour(startCalendar.get(Calendar.HOUR));
-                dayPart.setFromMinute(startCalendar.get(Calendar.MINUTE));
-                dayPart.setToHour(endCalendar.get(Calendar.HOUR));
-                dayPart.setToMinute(endCalendar.get(Calendar.MINUTE));
-                dayParts.add(dayPart);
-            }
+	public void processHoliday(WorkCalendar workCalendar, WorkcalRule workcalRule) throws Exception {
+		Date date = workcalRule.getWorkDate();
+		Holiday holiday = new Holiday(workCalendar);
+		holiday.setDate(date);
+		workCalendar.addHoliday(holiday);
+	}
 
-            days.set(workcalRule.getWeek(), day);
-        }
-    }
+	public void processWorkDay(WorkCalendar workCalendar, WorkcalRule workcalRule) throws Exception {
+		Date date = workcalRule.getWorkDate();
+		WorkDay workDay = new WorkDay(workCalendar);
+		workDay.setDate(date);
 
-    public void processHoliday(WorkCalendar workCalendar,
-            WorkcalRule workcalRule) throws Exception {
-        Date date = workcalRule.getWorkDate();
-        Holiday holiday = new Holiday(workCalendar);
-        holiday.setDate(date);
-        workCalendar.addHoliday(holiday);
-    }
+		int dayPartIndex = 0;
+		List<DayPart> dayParts = workDay.getDayParts();
 
-    public void processWorkDay(WorkCalendar workCalendar,
-            WorkcalRule workcalRule) throws Exception {
-        Date date = workcalRule.getWorkDate();
-        WorkDay workDay = new WorkDay(workCalendar);
-        workDay.setDate(date);
+		for (WorkcalPart workcalPart : workcalPartManager.findBy("workcalRule", workcalRule)) {
+			DayPart dayPart = new DayPart();
+			dayPart.setWorkDay(workDay);
+			dayPart.setIndex(dayPartIndex);
 
-        int dayPartIndex = 0;
-        List<DayPart> dayParts = workDay.getDayParts();
+			Date startDate = new SimpleDateFormat(hourFormatText).parse(workcalPart.getStartTime());
+			Date endDate = new SimpleDateFormat(hourFormatText).parse(workcalPart.getEndTime());
+			Calendar startCalendar = Calendar.getInstance();
+			startCalendar.setTime(startDate);
 
-        for (WorkcalPart workcalPart : workcalPartManager.findBy("workcalRule",
-                workcalRule)) {
-            DayPart dayPart = new DayPart();
-            dayPart.setWorkDay(workDay);
-            dayPart.setIndex(dayPartIndex);
+			Calendar endCalendar = Calendar.getInstance();
+			endCalendar.setTime(endDate);
+			dayPart.setFromHour(startCalendar.get(Calendar.HOUR));
+			dayPart.setFromMinute(startCalendar.get(Calendar.MINUTE));
+			dayPart.setToHour(endCalendar.get(Calendar.HOUR));
+			dayPart.setToMinute(endCalendar.get(Calendar.MINUTE));
+			dayParts.add(dayPart);
+		}
 
-            Date startDate = new SimpleDateFormat(hourFormatText)
-                    .parse(workcalPart.getStartTime());
-            Date endDate = new SimpleDateFormat(hourFormatText)
-                    .parse(workcalPart.getEndTime());
-            Calendar startCalendar = Calendar.getInstance();
-            startCalendar.setTime(startDate);
+		workCalendar.addWorkDay(workDay);
+	}
 
-            Calendar endCalendar = Calendar.getInstance();
-            endCalendar.setTime(endDate);
-            dayPart.setFromHour(startCalendar.get(Calendar.HOUR));
-            dayPart.setFromMinute(startCalendar.get(Calendar.MINUTE));
-            dayPart.setToHour(endCalendar.get(Calendar.HOUR));
-            dayPart.setToMinute(endCalendar.get(Calendar.MINUTE));
-            dayParts.add(dayPart);
-        }
+	@PostConstruct
+	public void init() throws Exception {
+		if (!enabled) {
+			logger.info("skip work calendar");
+			return;
+		}
+		for (TenantDTO tenantDto : tenantConnector.findAll()) {
+			String tenantId = tenantDto.getId();
+			WorkCalendar workCalendar = new WorkCalendar();
+			map.put(tenantId, workCalendar);
+			this.processWeek(workCalendar, tenantId);
+			// 特殊日期
+			List<WorkcalRule> extraWorkcalRules = workcalRuleManager.find("from WorkcalRule where status<>? and tenantId=?", STATUS_WEEK, tenantId);
+			for (WorkcalRule workcalRule : extraWorkcalRules) {
+				if (workcalRule.getStatus() == STATUS_HOLIDAY) {
+					this.processHoliday(workCalendar, workcalRule);
+				} else if (workcalRule.getStatus() == STATUS_HOLIDAY_TO_WORKDAY) {
+					this.processWorkDay(workCalendar, workcalRule);
+				} else {
+					this.processHoliday(workCalendar, workcalRule);
+				}
+			}
+		}
+	}
 
-        workCalendar.addWorkDay(workDay);
-    }
+	@Resource
+	public void setWorkcalRuleManager(WorkcalRuleManager workcalRuleManager) {
+		this.workcalRuleManager = workcalRuleManager;
+	}
 
-    @PostConstruct
-    public void init() throws Exception {
-        if (!enabled) {
-            logger.info("skip work calendar");
+	@Resource
+	public void setWorkcalPartManager(WorkcalPartManager workcalPartManager) {
+		this.workcalPartManager = workcalPartManager;
+	}
 
-            return;
-        }
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 
-        for (TenantDTO tenantDto : tenantConnector.findAll()) {
-            String tenantId = tenantDto.getId();
-            WorkCalendar workCalendar = new WorkCalendar();
-            map.put(tenantId, workCalendar);
-            this.processWeek(workCalendar, tenantId);
-
-            // 特殊日期
-            List<WorkcalRule> extraWorkcalRules = workcalRuleManager.find(
-                    "from WorkcalRule where status<>? and tenantId=?",
-                    STATUS_WEEK, tenantId);
-
-            for (WorkcalRule workcalRule : extraWorkcalRules) {
-                if (workcalRule.getStatus() == STATUS_HOLIDAY) {
-                    this.processHoliday(workCalendar, workcalRule);
-                } else if (workcalRule.getStatus() == STATUS_HOLIDAY_TO_WORKDAY) {
-                    this.processWorkDay(workCalendar, workcalRule);
-                } else {
-                    this.processHoliday(workCalendar, workcalRule);
-                }
-            }
-        }
-    }
-
-    @Resource
-    public void setWorkcalRuleManager(WorkcalRuleManager workcalRuleManager) {
-        this.workcalRuleManager = workcalRuleManager;
-    }
-
-    @Resource
-    public void setWorkcalPartManager(WorkcalPartManager workcalPartManager) {
-        this.workcalPartManager = workcalPartManager;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    @Resource
-    public void setTenantConnector(TenantConnector tenantConnector) {
-        this.tenantConnector = tenantConnector;
-    }
+	@Resource
+	public void setTenantConnector(TenantConnector tenantConnector) {
+		this.tenantConnector = tenantConnector;
+	}
 }

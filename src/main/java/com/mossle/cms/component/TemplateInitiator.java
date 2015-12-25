@@ -21,49 +21,40 @@ import org.springframework.util.FileCopyUtils;
 
 @Component
 public class TemplateInitiator implements ApplicationContextAware {
-    private static Logger logger = LoggerFactory
-            .getLogger(TemplateInitiator.class);
-    private String baseDir;
-    private ApplicationContext applicationContext;
+	private static Logger logger = LoggerFactory.getLogger(TemplateInitiator.class);
+	private String baseDir;
+	private ApplicationContext applicationContext;
 
-    @PostConstruct
-    public void init() throws Exception {
-        File dir = new File(baseDir + "/cms/template/default");
+	@PostConstruct
+	public void init() throws Exception {
+		File dir = new File(baseDir + "/cms/template/default");
+		if (dir.exists()) {
+			return;
+		}
+		dir.mkdirs();
+		Resource[] resources = applicationContext.getResources("classpath:/cms/template/default/*");
+		if (resources == null) {
+			logger.info("cannot find default template for cms.");
+			return;
+		}
+		for (Resource resource : resources) {
+			File file = new File(dir, resource.getFilename());
+			FileOutputStream fos = new FileOutputStream(file);
+			try {
+				FileCopyUtils.copy(resource.getInputStream(), fos);
+				fos.flush();
+			} finally {
+				fos.close();
+			}
+		}
+	}
 
-        if (dir.exists()) {
-            return;
-        }
+	@Value("${store.baseDir}")
+	public void setBaseDir(String baseDir) {
+		this.baseDir = baseDir;
+	}
 
-        dir.mkdirs();
-
-        Resource[] resources = applicationContext
-                .getResources("classpath:/cms/template/default/*");
-
-        if (resources == null) {
-            logger.info("cannot find default template for cms.");
-
-            return;
-        }
-
-        for (Resource resource : resources) {
-            File file = new File(dir, resource.getFilename());
-            FileOutputStream fos = new FileOutputStream(file);
-
-            try {
-                FileCopyUtils.copy(resource.getInputStream(), fos);
-                fos.flush();
-            } finally {
-                fos.close();
-            }
-        }
-    }
-
-    @Value("${store.baseDir}")
-    public void setBaseDir(String baseDir) {
-        this.baseDir = baseDir;
-    }
-
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
 }

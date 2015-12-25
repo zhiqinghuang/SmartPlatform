@@ -48,17 +48,14 @@ public class HsqldbServer {
     public void init() {
         if (!enabled) {
             logger.info("skip hsqldb server");
-
             return;
         }
 
         try {
             String databasePath = path + "/" + databaseName;
             url = "jdbc:hsqldb:hsql://localhost:" + port + "/" + databaseName;
-
             Server server = new Server();
             server.setDatabaseName(0, databaseName);
-
             server.setDatabasePath(0, databasePath);
             server.setPort(port);
             server.setSilent(true);
@@ -73,16 +70,13 @@ public class HsqldbServer {
     public void destroy() {
         if (!enabled) {
             logger.info("skip hsqldb server");
-
             return;
         }
 
         try {
             Class.forName("org.hsqldb.jdbcDriver");
-
             Connection conn = null;
             Statement state = null;
-
             try {
                 // 向数据库发送shutdown命令，关闭数据库
                 conn = DriverManager.getConnection(url, username, password);
@@ -100,7 +94,6 @@ public class HsqldbServer {
                         logger.error(ex1.getMessage(), ex1);
                     }
                 }
-
                 // 确保关闭Connection
                 if (conn != null) {
                     try {

@@ -21,49 +21,40 @@ import org.springframework.util.FileCopyUtils;
 
 @Component
 public class AvatarInitiator implements ApplicationContextAware {
-    private static Logger logger = LoggerFactory
-            .getLogger(AvatarInitiator.class);
-    private String baseDir;
-    private ApplicationContext applicationContext;
+	private static Logger logger = LoggerFactory.getLogger(AvatarInitiator.class);
+	private String baseDir;
+	private ApplicationContext applicationContext;
 
-    @PostConstruct
-    public void init() throws Exception {
-        File dir = new File(baseDir + "/1/avatar");
+	@PostConstruct
+	public void init() throws Exception {
+		File dir = new File(baseDir + "/1/avatar");
+		if (dir.exists()) {
+			return;
+		}
+		dir.mkdirs();
+		Resource[] resources = applicationContext.getResources("classpath:/avatar/*");
+		if (resources == null) {
+			logger.info("cannot find default avatar for user.");
+			return;
+		}
+		for (Resource resource : resources) {
+			File file = new File(dir, resource.getFilename());
+			FileOutputStream fos = new FileOutputStream(file);
+			try {
+				FileCopyUtils.copy(resource.getInputStream(), fos);
+				fos.flush();
+			} finally {
+				fos.close();
+			}
+		}
+	}
 
-        if (dir.exists()) {
-            return;
-        }
+	@Value("${store.baseDir}")
+	public void setBaseDir(String baseDir) {
+		this.baseDir = baseDir;
+	}
 
-        dir.mkdirs();
-
-        Resource[] resources = applicationContext
-                .getResources("classpath:/avatar/*");
-
-        if (resources == null) {
-            logger.info("cannot find default avatar for user.");
-
-            return;
-        }
-
-        for (Resource resource : resources) {
-            File file = new File(dir, resource.getFilename());
-            FileOutputStream fos = new FileOutputStream(file);
-
-            try {
-                FileCopyUtils.copy(resource.getInputStream(), fos);
-                fos.flush();
-            } finally {
-                fos.close();
-            }
-        }
-    }
-
-    @Value("${store.baseDir}")
-    public void setBaseDir(String baseDir) {
-        this.baseDir = baseDir;
-    }
-
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
 }

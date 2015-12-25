@@ -24,92 +24,82 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.Resource;
 
 public class XFormDeployer implements ApplicationContextAware {
-    private Logger logger = LoggerFactory.getLogger(XFormDeployer.class);
-    private boolean autoDeploy;
-    private String deployPath = "classpath:xform/*.json";
-    private ApplicationContext applicationContext;
-    private JsonMapper jsonMapper = new JsonMapper();
-    private FormTemplateManager formTemplateManager;
-    private TenantConnector tenantConnector;
-    private String defaultTenantCode = "default";
+	private Logger logger = LoggerFactory.getLogger(XFormDeployer.class);
+	private boolean autoDeploy;
+	private String deployPath = "classpath:xform/*.json";
+	private ApplicationContext applicationContext;
+	private JsonMapper jsonMapper = new JsonMapper();
+	private FormTemplateManager formTemplateManager;
+	private TenantConnector tenantConnector;
+	private String defaultTenantCode = "default";
 
-    @PostConstruct
-    public void init() {
-        if (!autoDeploy) {
-            return;
-        }
+	@PostConstruct
+	public void init() {
+		if (!autoDeploy) {
+			return;
+		}
+		TenantDTO tenantDto = tenantConnector.findByCode(defaultTenantCode);
+		String tenantId = tenantDto.getId();
+		try {
+			for (Resource resource : applicationContext.getResources(deployPath)) {
+				String text = readText(resource);
+				Map<String, Object> map = jsonMapper.fromJson(text, Map.class);
+				logger.debug("deploy : {}", map);
+				String code = (String) map.get("code");
+				String name = (String) map.get("name");
+				String hql = "from FormTemplate where code=? and tenantId=?";
+				FormTemplate formTemplate = formTemplateManager.findUnique(hql, code, tenantId);
+				if (formTemplate != null) {
+					continue;
+				}
+				formTemplate = new FormTemplate();
+				formTemplate.setCode(code);
+				formTemplate.setName(name);
+				formTemplate.setContent(text);
+				formTemplate.setType(0);
+				formTemplate.setTenantId(tenantId);
+				formTemplateManager.save(formTemplate);
+			}
+		} catch (Exception ex) {
+			logger.error(ex.getMessage(), ex);
+		}
+	}
 
-        TenantDTO tenantDto = tenantConnector.findByCode(defaultTenantCode);
-        String tenantId = tenantDto.getId();
+	public String readText(Resource resource) throws Exception {
+		InputStream is = resource.getInputStream();
+		int size = -1;
+		byte[] b = new byte[1024];
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		while ((size = is.read(b, 0, 1024)) != -1) {
+			baos.write(b, 0, size);
+		}
+		is.close();
+		return new String(baos.toByteArray(), "utf-8");
+	}
 
-        try {
-            for (Resource resource : applicationContext
-                    .getResources(deployPath)) {
-                String text = readText(resource);
-                Map<String, Object> map = jsonMapper.fromJson(text, Map.class);
-                logger.debug("deploy : {}", map);
+	public void setDeployPath(String deployPath) {
+		this.deployPath = deployPath;
+	}
 
-                String code = (String) map.get("code");
-                String name = (String) map.get("name");
-                String hql = "from FormTemplate where code=? and tenantId=?";
-                FormTemplate formTemplate = formTemplateManager.findUnique(hql,
-                        code, tenantId);
+	public void setAutoDeploy(boolean autoDeploy) {
+		this.autoDeploy = autoDeploy;
+	}
 
-                if (formTemplate != null) {
-                    continue;
-                }
+	public void setApplicationContext(ApplicationContext applicationContext) {
+		this.applicationContext = applicationContext;
+	}
 
-                formTemplate = new FormTemplate();
-                formTemplate.setCode(code);
-                formTemplate.setName(name);
-                formTemplate.setContent(text);
-                formTemplate.setType(0);
-                formTemplate.setTenantId(tenantId);
-                formTemplateManager.save(formTemplate);
-            }
-        } catch (Exception ex) {
-            logger.error(ex.getMessage(), ex);
-        }
-    }
+	@javax.annotation.Resource
+	public void setFormTemplateManager(FormTemplateManager formTemplateManager) {
+		this.formTemplateManager = formTemplateManager;
+	}
 
-    public String readText(Resource resource) throws Exception {
-        InputStream is = resource.getInputStream();
-        int size = -1;
-        byte[] b = new byte[1024];
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	public void setDefaultTenantCode(String defaultTenantCode) {
+		this.defaultTenantCode = defaultTenantCode;
+	}
 
-        while ((size = is.read(b, 0, 1024)) != -1) {
-            baos.write(b, 0, size);
-        }
-
-        is.close();
-
-        return new String(baos.toByteArray(), "utf-8");
-    }
-
-    public void setDeployPath(String deployPath) {
-        this.deployPath = deployPath;
-    }
-
-    public void setAutoDeploy(boolean autoDeploy) {
-        this.autoDeploy = autoDeploy;
-    }
-
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
-
-    @javax.annotation.Resource
-    public void setFormTemplateManager(FormTemplateManager formTemplateManager) {
-        this.formTemplateManager = formTemplateManager;
-    }
-
-    public void setDefaultTenantCode(String defaultTenantCode) {
-        this.defaultTenantCode = defaultTenantCode;
-    }
-
-    @javax.annotation.Resource
-    public void setTenantConnector(TenantConnector tenantConnector) {
-        this.tenantConnector = tenantConnector;
-    }
+	@javax.annotation.Resource
+	public void setTenantConnector(TenantConnector tenantConnector) {
+		this.tenantConnector = tenantConnector;
+	}
 }
