@@ -14,7 +14,6 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
 public class RecoverableSessionFactoryBean implements FactoryBean, DisposableBean, InitializingBean {
-	/** logger. */
 	private static Logger logger = LoggerFactory.getLogger(RecoverableSessionFactoryBean.class);
 	private SessionFactoryWrapper sessionFactoryWrapper;
 	private DataSource dataSource;
@@ -23,18 +22,13 @@ public class RecoverableSessionFactoryBean implements FactoryBean, DisposableBea
 	private LocalSessionFactoryBean localSessionFactoryBean;
 
 	public void afterPropertiesSet() throws IOException {
-		// init SessionFactoryWrapper
 		sessionFactoryWrapper = new SessionFactoryWrapper();
-
 		try {
-			// init LocalSessionFactoryBean
 			localSessionFactoryBean = new LocalSessionFactoryBean();
 			localSessionFactoryBean.setDataSource(dataSource);
 			localSessionFactoryBean.setHibernateProperties(hibernateProperties);
 			localSessionFactoryBean.setPackagesToScan(packagesToScan);
-
 			localSessionFactoryBean.afterPropertiesSet();
-
 			SessionFactory sessionFactory = localSessionFactoryBean.getObject();
 			sessionFactoryWrapper.setSessionFactory(sessionFactory);
 		} catch (Exception ex) {
@@ -44,7 +38,6 @@ public class RecoverableSessionFactoryBean implements FactoryBean, DisposableBea
 
 	public void destroy() {
 		sessionFactoryWrapper = null;
-
 		if (localSessionFactoryBean.getObject() != null) {
 			localSessionFactoryBean.destroy();
 		}
@@ -62,7 +55,6 @@ public class RecoverableSessionFactoryBean implements FactoryBean, DisposableBea
 		return true;
 	}
 
-	// ~ ======================================================================
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
