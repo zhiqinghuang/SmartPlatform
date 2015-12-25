@@ -1,10 +1,10 @@
 package com.mossle.bpm.listener;
 
+import org.activiti.engine.delegate.DelegateTask;
+
 import com.mossle.bpm.notice.ArrivalNotice;
 import com.mossle.bpm.notice.CompleteNotice;
 import com.mossle.bpm.support.DefaultTaskListener;
-
-import org.activiti.engine.delegate.DelegateTask;
 
 /**
  * <p>
@@ -25,16 +25,16 @@ import org.activiti.engine.delegate.DelegateTask;
  * </p>
  */
 public class NoticeTaskListener extends DefaultTaskListener {
-    private ArrivalNotice arrivalNotice = new ArrivalNotice();
-    private CompleteNotice completeNotice = new CompleteNotice();
+	private ArrivalNotice arrivalNotice = new ArrivalNotice();
+	private CompleteNotice completeNotice = new CompleteNotice();
 
-    @Override
-    public void onCreate(DelegateTask delegateTask) throws Exception {
-        arrivalNotice.process(delegateTask);
-    }
+	@Override
+	public void onCreate(DelegateTask delegateTask) throws Exception {
+		arrivalNotice.process(delegateTask);
+	}
 
-    @Override
-    public void onComplete(DelegateTask delegateTask) throws Exception {
-        completeNotice.process(delegateTask);
-    }
+	@Override
+	public void onComplete(DelegateTask delegateTask) throws Exception {
+		completeNotice.process(delegateTask);
+	}
 }

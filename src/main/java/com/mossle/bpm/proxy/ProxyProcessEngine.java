@@ -11,87 +11,87 @@ import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 
 public class ProxyProcessEngine implements ProcessEngine {
-    private ProcessEngine processEngine;
+	private ProcessEngine processEngine;
 
-    public void close() {
-        if (processEngine == null) {
-            return;
-        }
-    }
+	public void close() {
+		if (processEngine == null) {
+			return;
+		}
+	}
 
-    public String getName() {
-        if (processEngine == null) {
-            return null;
-        }
+	public String getName() {
+		if (processEngine == null) {
+			return null;
+		}
 
-        return processEngine.getName();
-    }
+		return processEngine.getName();
+	}
 
-    public FormService getFormService() {
-        if (processEngine == null) {
-            return null;
-        }
+	public FormService getFormService() {
+		if (processEngine == null) {
+			return null;
+		}
 
-        return processEngine.getFormService();
-    }
+		return processEngine.getFormService();
+	}
 
-    public HistoryService getHistoryService() {
-        if (processEngine == null) {
-            return null;
-        }
+	public HistoryService getHistoryService() {
+		if (processEngine == null) {
+			return null;
+		}
 
-        return processEngine.getHistoryService();
-    }
+		return processEngine.getHistoryService();
+	}
 
-    public IdentityService getIdentityService() {
-        if (processEngine == null) {
-            return null;
-        }
+	public IdentityService getIdentityService() {
+		if (processEngine == null) {
+			return null;
+		}
 
-        return processEngine.getIdentityService();
-    }
+		return processEngine.getIdentityService();
+	}
 
-    public ManagementService getManagementService() {
-        if (processEngine == null) {
-            return null;
-        }
+	public ManagementService getManagementService() {
+		if (processEngine == null) {
+			return null;
+		}
 
-        return processEngine.getManagementService();
-    }
+		return processEngine.getManagementService();
+	}
 
-    public ProcessEngineConfiguration getProcessEngineConfiguration() {
-        if (processEngine == null) {
-            return null;
-        }
+	public ProcessEngineConfiguration getProcessEngineConfiguration() {
+		if (processEngine == null) {
+			return null;
+		}
 
-        return processEngine.getProcessEngineConfiguration();
-    }
+		return processEngine.getProcessEngineConfiguration();
+	}
 
-    public RepositoryService getRepositoryService() {
-        if (processEngine == null) {
-            return null;
-        }
+	public RepositoryService getRepositoryService() {
+		if (processEngine == null) {
+			return null;
+		}
 
-        return processEngine.getRepositoryService();
-    }
+		return processEngine.getRepositoryService();
+	}
 
-    public RuntimeService getRuntimeService() {
-        if (processEngine == null) {
-            return null;
-        }
+	public RuntimeService getRuntimeService() {
+		if (processEngine == null) {
+			return null;
+		}
 
-        return processEngine.getRuntimeService();
-    }
+		return processEngine.getRuntimeService();
+	}
 
-    public TaskService getTaskService() {
-        if (processEngine == null) {
-            return null;
-        }
+	public TaskService getTaskService() {
+		if (processEngine == null) {
+			return null;
+		}
 
-        return processEngine.getTaskService();
-    }
+		return processEngine.getTaskService();
+	}
 
-    public void setProcessEngine(ProcessEngine processEngine) {
-        this.processEngine = processEngine;
-    }
+	public void setProcessEngine(ProcessEngine processEngine) {
+		this.processEngine = processEngine;
+	}
 }

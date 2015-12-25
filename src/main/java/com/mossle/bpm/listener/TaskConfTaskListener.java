@@ -8,102 +8,89 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.activiti.engine.delegate.DelegateTask;
+import org.activiti.engine.impl.context.Context;
+import org.activiti.engine.impl.el.ExpressionManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.JdbcTemplate;
+
 import com.mossle.bpm.expr.Expr;
 import com.mossle.bpm.expr.ExprProcessor;
 import com.mossle.bpm.support.DefaultTaskListener;
 
-import org.activiti.engine.delegate.DelegateTask;
-import org.activiti.engine.impl.context.Context;
-import org.activiti.engine.impl.el.ExpressionManager;
+public class TaskConfTaskListener extends DefaultTaskListener implements ExprProcessor {
+	private static Logger logger = LoggerFactory.getLogger(TaskConfTaskListener.class);
+	private JdbcTemplate jdbcTemplate;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+	@Override
+	public void onCreate(DelegateTask delegateTask) throws Exception {
+		String businessKey = delegateTask.getExecution().getProcessBusinessKey();
+		String taskDefinitionKey = delegateTask.getTaskDefinitionKey();
 
-import org.springframework.jdbc.core.JdbcTemplate;
+		ExpressionManager expressionManager = Context.getProcessEngineConfiguration().getExpressionManager();
 
-public class TaskConfTaskListener extends DefaultTaskListener implements
-        ExprProcessor {
-    private static Logger logger = LoggerFactory
-            .getLogger(TaskConfTaskListener.class);
-    private JdbcTemplate jdbcTemplate;
+		try {
+			String sql = "select ASSIGNEE from BPM_TASK_CONF where BUSINESS_KEY=? and TASK_DEFINITION_KEY=?";
+			String assignee = jdbcTemplate.queryForObject(sql, String.class, businessKey, taskDefinitionKey);
 
-    @Override
-    public void onCreate(DelegateTask delegateTask) throws Exception {
-        String businessKey = delegateTask.getExecution()
-                .getProcessBusinessKey();
-        String taskDefinitionKey = delegateTask.getTaskDefinitionKey();
+			if ((assignee == null) || "".equals(assignee)) {
+				return;
+			}
 
-        ExpressionManager expressionManager = Context
-                .getProcessEngineConfiguration().getExpressionManager();
+			if ((assignee.indexOf("&&") != -1) || (assignee.indexOf("||") != -1)) {
+				logger.info("assignee : {}", assignee);
 
-        try {
-            String sql = "select ASSIGNEE from BPM_TASK_CONF where BUSINESS_KEY=? and TASK_DEFINITION_KEY=?";
-            String assignee = jdbcTemplate.queryForObject(sql, String.class,
-                    businessKey, taskDefinitionKey);
+				List<String> candidateUsers = new Expr().evaluate(assignee, this);
+				logger.info("candidateUsers : {}", candidateUsers);
+				delegateTask.addCandidateUsers(candidateUsers);
+			} else {
+				String value = expressionManager.createExpression(assignee).getValue(delegateTask).toString();
+				delegateTask.setAssignee(value);
+			}
+		} catch (Exception ex) {
+			logger.debug(ex.getMessage(), ex);
+		}
+	}
 
-            if ((assignee == null) || "".equals(assignee)) {
-                return;
-            }
+	public List<String> process(List<String> left, List<String> right, String operation) {
+		if ("||".equals(operation)) {
+			Set<String> set = new HashSet();
+			set.addAll(left);
+			set.addAll(right);
 
-            if ((assignee.indexOf("&&") != -1)
-                    || (assignee.indexOf("||") != -1)) {
-                logger.info("assignee : {}", assignee);
+			return new ArrayList<String>(set);
+		} else if ("&&".equals(operation)) {
+			List<String> list = new ArrayList<String>();
 
-                List<String> candidateUsers = new Expr().evaluate(assignee,
-                        this);
-                logger.info("candidateUsers : {}", candidateUsers);
-                delegateTask.addCandidateUsers(candidateUsers);
-            } else {
-                String value = expressionManager.createExpression(assignee)
-                        .getValue(delegateTask).toString();
-                delegateTask.setAssignee(value);
-            }
-        } catch (Exception ex) {
-            logger.debug(ex.getMessage(), ex);
-        }
-    }
+			for (String username : left) {
+				if (right.contains(username)) {
+					list.add(username);
+				}
+			}
 
-    public List<String> process(List<String> left, List<String> right,
-            String operation) {
-        if ("||".equals(operation)) {
-            Set<String> set = new HashSet();
-            set.addAll(left);
-            set.addAll(right);
+			return list;
+		} else {
+			throw new UnsupportedOperationException(operation);
+		}
+	}
 
-            return new ArrayList<String>(set);
-        } else if ("&&".equals(operation)) {
-            List<String> list = new ArrayList<String>();
+	public List<String> process(String text) {
+		String sql = "select child.NAME from PARTY_ENTITY parent,PARTY_STRUCT ps,PARTY_ENTITY child,PARTY_TYPE child_type" + " where parent.ID=ps.PARENT_ENTITY_ID and ps.CHILD_ENTITY_ID=child.ID and child.TYPE_ID=child_type.ID" + " and child_type.PERSON=1 and parent.NAME=?";
+		List<Map<String, Object>> list = jdbcTemplate.queryForList(sql, text);
+		List<String> usernames = new ArrayList<String>();
 
-            for (String username : left) {
-                if (right.contains(username)) {
-                    list.add(username);
-                }
-            }
+		for (Map<String, Object> map : list) {
+			usernames.add(map.get("name").toString().toLowerCase());
+		}
 
-            return list;
-        } else {
-            throw new UnsupportedOperationException(operation);
-        }
-    }
+		logger.info("usernames : {}", usernames);
 
-    public List<String> process(String text) {
-        String sql = "select child.NAME from PARTY_ENTITY parent,PARTY_STRUCT ps,PARTY_ENTITY child,PARTY_TYPE child_type"
-                + " where parent.ID=ps.PARENT_ENTITY_ID and ps.CHILD_ENTITY_ID=child.ID and child.TYPE_ID=child_type.ID"
-                + " and child_type.PERSON=1 and parent.NAME=?";
-        List<Map<String, Object>> list = jdbcTemplate.queryForList(sql, text);
-        List<String> usernames = new ArrayList<String>();
+		return usernames;
+	}
 
-        for (Map<String, Object> map : list) {
-            usernames.add(map.get("name").toString().toLowerCase());
-        }
-
-        logger.info("usernames : {}", usernames);
-
-        return usernames;
-    }
-
-    @Resource
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
+	@Resource
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
 }
