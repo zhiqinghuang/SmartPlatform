@@ -3,19 +3,17 @@ package com.mossle.security.util;
 import java.io.IOException;
 
 import javax.annotation.Resource;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mossle.api.tenant.TenantHolder;
-
-import com.mossle.security.SecurityConstants;
-
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import com.mossle.api.tenant.TenantHolder;
+import com.mossle.security.SecurityConstants;
 
 public class RememberLastUsernameAuthenticationFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 	private TenantHolder tenantHolder;

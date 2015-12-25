@@ -9,7 +9,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 import org.hsqldb.Server;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

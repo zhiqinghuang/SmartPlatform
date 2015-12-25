@@ -3,19 +3,17 @@ package com.mossle.security.util;
 import java.io.IOException;
 
 import javax.annotation.Resource;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mossle.api.tenant.TenantHolder;
-
-import com.mossle.security.SecurityConstants;
-import com.mossle.security.impl.SpringSecurityUserAuth;
-
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+
+import com.mossle.api.tenant.TenantHolder;
+import com.mossle.security.SecurityConstants;
+import com.mossle.security.impl.SpringSecurityUserAuth;
 
 public class RememberLastUsernameAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 	private TenantHolder tenantHolder;
