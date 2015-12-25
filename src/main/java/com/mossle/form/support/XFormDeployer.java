@@ -2,26 +2,21 @@ package com.mossle.form.support;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import com.mossle.api.tenant.TenantConnector;
-import com.mossle.api.tenant.TenantDTO;
-
-import com.mossle.core.mapper.JsonMapper;
-
-import com.mossle.form.persistence.domain.FormTemplate;
-import com.mossle.form.persistence.manager.FormTemplateManager;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-
 import org.springframework.core.io.Resource;
+
+import com.mossle.api.tenant.TenantConnector;
+import com.mossle.api.tenant.TenantDTO;
+import com.mossle.core.mapper.JsonMapper;
+import com.mossle.form.persistence.domain.FormTemplate;
+import com.mossle.form.persistence.manager.FormTemplateManager;
 
 public class XFormDeployer implements ApplicationContextAware {
 	private Logger logger = LoggerFactory.getLogger(XFormDeployer.class);
