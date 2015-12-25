@@ -1,7 +1,6 @@
 package com.mossle.workcal.service;
 
 import java.text.SimpleDateFormat;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -11,13 +10,14 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-
 import javax.xml.datatype.Duration;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.mossle.api.tenant.TenantConnector;
 import com.mossle.api.tenant.TenantDTO;
 import com.mossle.api.workcal.WorkCalendarConnector;
-
 import com.mossle.workcal.persistence.domain.WorkcalPart;
 import com.mossle.workcal.persistence.domain.WorkcalRule;
 import com.mossle.workcal.persistence.manager.WorkcalPartManager;
@@ -26,9 +26,6 @@ import com.mossle.workcal.support.DayPart;
 import com.mossle.workcal.support.Holiday;
 import com.mossle.workcal.support.WorkCalendar;
 import com.mossle.workcal.support.WorkDay;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class WorkCalendarService implements WorkCalendarConnector {
 	private static Logger logger = LoggerFactory.getLogger(WorkCalendarService.class);
