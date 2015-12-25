@@ -4,105 +4,98 @@ import java.util.Collection;
 import java.util.List;
 
 public class PropertyFilterUtils {
-    protected PropertyFilterUtils() {
-    }
+	protected PropertyFilterUtils() {
+	}
 
-    public static void buildConfigurations(
-            Collection<PropertyFilter> propertyFilters, StringBuilder buff,
-            List<Object> params) {
-        buildConfigurations(propertyFilters, buff, params, true);
-    }
+	public static void buildConfigurations(Collection<PropertyFilter> propertyFilters, StringBuilder buff, List<Object> params) {
+		buildConfigurations(propertyFilters, buff, params, true);
+	}
 
-    public static void buildConfigurations(
-            Collection<PropertyFilter> propertyFilters, StringBuilder buff,
-            List<Object> params, boolean checkWhere) {
-        for (PropertyFilter propertyFilter : propertyFilters) {
-            buildConfiguration(propertyFilter, buff, params, checkWhere);
-        }
-    }
+	public static void buildConfigurations(Collection<PropertyFilter> propertyFilters, StringBuilder buff, List<Object> params, boolean checkWhere) {
+		for (PropertyFilter propertyFilter : propertyFilters) {
+			buildConfiguration(propertyFilter, buff, params, checkWhere);
+		}
+	}
 
-    public static void buildConfiguration(PropertyFilter propertyFilter,
-            StringBuilder buff, List<Object> params) {
-        buildConfiguration(propertyFilter, buff, params, true);
-    }
+	public static void buildConfiguration(PropertyFilter propertyFilter, StringBuilder buff, List<Object> params) {
+		buildConfiguration(propertyFilter, buff, params, true);
+	}
 
-    public static void buildConfiguration(PropertyFilter propertyFilter,
-            StringBuilder buff, List<Object> params, boolean checkWhere) {
-        if (checkWhere
-                && (buff.toString().toLowerCase().indexOf("where") == -1)) {
-            buff.append(" where ");
-        } else {
-            buff.append(" and ");
-        }
+	public static void buildConfiguration(PropertyFilter propertyFilter, StringBuilder buff, List<Object> params, boolean checkWhere) {
+		if (checkWhere && (buff.toString().toLowerCase().indexOf("where") == -1)) {
+			buff.append(" where ");
+		} else {
+			buff.append(" and ");
+		}
 
-        String propertyName = propertyFilter.getPropertyName();
-        Object propertyValue = propertyFilter.getMatchValue();
-        MatchType matchType = propertyFilter.getMatchType();
+		String propertyName = propertyFilter.getPropertyName();
+		Object propertyValue = propertyFilter.getMatchValue();
+		MatchType matchType = propertyFilter.getMatchType();
 
-        switch (matchType) {
-        case EQ:
-            buff.append(propertyName).append("=?");
-            params.add(propertyValue);
+		switch (matchType) {
+		case EQ:
+			buff.append(propertyName).append("=?");
+			params.add(propertyValue);
 
-            break;
+			break;
 
-        case NOT:
-            buff.append(propertyName).append("<>?");
-            params.add(propertyValue);
+		case NOT:
+			buff.append(propertyName).append("<>?");
+			params.add(propertyValue);
 
-            break;
+			break;
 
-        case LIKE:
-            buff.append(propertyName).append(" like ?");
-            params.add("%" + propertyValue + "%");
+		case LIKE:
+			buff.append(propertyName).append(" like ?");
+			params.add("%" + propertyValue + "%");
 
-            break;
+			break;
 
-        case LE:
-            buff.append(propertyName).append("<=?");
-            params.add(propertyValue);
+		case LE:
+			buff.append(propertyName).append("<=?");
+			params.add(propertyValue);
 
-            break;
+			break;
 
-        case LT:
-            buff.append(propertyName).append("<?");
-            params.add(propertyValue);
+		case LT:
+			buff.append(propertyName).append("<?");
+			params.add(propertyValue);
 
-            break;
+			break;
 
-        case GE:
-            buff.append(propertyName).append(">=?");
-            params.add(propertyValue);
+		case GE:
+			buff.append(propertyName).append(">=?");
+			params.add(propertyValue);
 
-            break;
+			break;
 
-        case GT:
-            buff.append(propertyName).append(">?");
-            params.add(propertyValue);
+		case GT:
+			buff.append(propertyName).append(">?");
+			params.add(propertyValue);
 
-            break;
+			break;
 
-        case IN:
-            buff.append(propertyName).append("in (?)");
-            params.add(propertyValue);
+		case IN:
+			buff.append(propertyName).append("in (?)");
+			params.add(propertyValue);
 
-            break;
+			break;
 
-        case INL:
-            buff.append(propertyName).append(" is null");
+		case INL:
+			buff.append(propertyName).append(" is null");
 
-            break;
+			break;
 
-        case NNL:
-            buff.append(propertyName).append(" is not null");
+		case NNL:
+			buff.append(propertyName).append(" is not null");
 
-            break;
+			break;
 
-        default:
-            buff.append(propertyName).append("=?");
-            params.add(propertyValue);
+		default:
+			buff.append(propertyName).append("=?");
+			params.add(propertyValue);
 
-            break;
-        }
-    }
+			break;
+		}
+	}
 }
