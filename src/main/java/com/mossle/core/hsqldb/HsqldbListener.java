@@ -12,57 +12,26 @@ import org.hsqldb.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * 控制数据库的周期. context启动的时候，启动hsqldb数据库服务器，context关闭时shutdown数据库服务器
- * 
- * @author Lingo
- * @version 1.0
- * @since 2007-03-13
- * @see javax.servlet.ServletContextListener
- */
 public class HsqldbListener implements ServletContextListener {
 	private static Logger logger = LoggerFactory.getLogger(HsqldbListener.class);
-
-	/**
-	 * 等待数据库停止的最大时间.
-	 */
 	public static final int WAIT_TIME = 1000;
 	private boolean enabled = false;
-
-	/**
-	 * 登陆用户名.
-	 */
 	private String username;
-
-	/**
-	 * 登陆密码.
-	 */
 	private String password;
 	private int port;
 	private String path;
 	private String databaseName;
 	private String url;
-
-	/**
-	 * 处理context初始化事件.
-	 * 
-	 * @param sce
-	 *            ServletContextEvent
-	 */
 	public void contextInitialized(ServletContextEvent sce) {
 		if (!enabled) {
 			logger.info("skip hsqldb server");
-
 			return;
 		}
-
 		try {
 			String databasePath = path + "/" + databaseName;
 			url = "jdbc:hsqldb:hsql://localhost:" + port + "/" + databaseName;
-
 			Server server = new Server();
 			server.setDatabaseName(0, databaseName);
-
 			server.setDatabasePath(0, databasePath);
 			server.setPort(port);
 			server.setSilent(true);
@@ -73,25 +42,15 @@ public class HsqldbListener implements ServletContextListener {
 		}
 	}
 
-	/**
-	 * 处理context销毁事件.
-	 * 
-	 * @param sce
-	 *            ServletContextEvent
-	 */
 	public void contextDestroyed(ServletContextEvent sce) {
 		if (!enabled) {
 			logger.info("skip hsqldb server");
-
 			return;
 		}
-
 		try {
 			Class.forName("org.hsqldb.jdbcDriver");
-
 			Connection conn = null;
 			Statement state = null;
-
 			try {
 				// 向数据库发送shutdown命令，关闭数据库
 				conn = DriverManager.getConnection(url, username, password);
@@ -109,7 +68,6 @@ public class HsqldbListener implements ServletContextListener {
 						logger.error(ex1.getMessage(), ex1);
 					}
 				}
-
 				// 确保关闭Connection
 				if (conn != null) {
 					try {

@@ -13,7 +13,7 @@ import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 
-public class RecoverableSessionFactoryBean implements FactoryBean, DisposableBean, InitializingBean {
+public class RecoverableSessionFactoryBean implements FactoryBean<Object>, DisposableBean, InitializingBean {
 	private static Logger logger = LoggerFactory.getLogger(RecoverableSessionFactoryBean.class);
 	private SessionFactoryWrapper sessionFactoryWrapper;
 	private DataSource dataSource;
@@ -47,7 +47,7 @@ public class RecoverableSessionFactoryBean implements FactoryBean, DisposableBea
 		return sessionFactoryWrapper;
 	}
 
-	public Class getObjectType() {
+	public Class<SessionFactory> getObjectType() {
 		return SessionFactory.class;
 	}
 

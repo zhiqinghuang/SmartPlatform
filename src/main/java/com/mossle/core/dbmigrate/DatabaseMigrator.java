@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 
 import org.flywaydb.core.Flyway;
+import org.flywaydb.core.api.MigrationVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
@@ -47,8 +48,9 @@ public class DatabaseMigrator implements ApplicationContextAware {
 		logger.info("migrate : {}, {}", table, location);
 		Flyway flyway = new Flyway();
 		flyway.setPlaceholderPrefix("$${");
-		flyway.setInitOnMigrate(true);
-		flyway.setInitVersion("0");
+		flyway.setBaselineOnMigrate(true);
+		MigrationVersion baselineVersion = MigrationVersion.fromVersion("0");
+		flyway.setBaselineVersion(baselineVersion);
 		flyway.setDataSource(dataSource);
 		flyway.setTable(table);
 		flyway.setLocations(new String[] { location });

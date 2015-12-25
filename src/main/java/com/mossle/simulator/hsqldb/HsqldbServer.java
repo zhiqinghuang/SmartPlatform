@@ -12,31 +12,11 @@ import org.hsqldb.Server;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * 控制数据库的周期. context启动的时候，启动hsqldb数据库服务器，context关闭时shutdown数据库服务器
- * 
- * @author Lingo
- * @version 1.0
- * @since 2007-03-13
- * @see javax.servlet.ServletContextListener
- */
 public class HsqldbServer {
 	private static Logger logger = LoggerFactory.getLogger(HsqldbServer.class);
-
-	/**
-	 * 等待数据库停止的最大时间.
-	 */
 	public static final int WAIT_TIME = 1000;
 	private boolean enabled = false;
-
-	/**
-	 * 登陆用户名.
-	 */
 	private String username;
-
-	/**
-	 * 登陆密码.
-	 */
 	private String password;
 	private int port;
 	private String path;
