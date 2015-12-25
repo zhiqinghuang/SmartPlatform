@@ -1,16 +1,10 @@
 package com.mossle.bpm.support;
 
 import java.io.IOException;
-
 import java.util.List;
 import java.util.zip.ZipInputStream;
 
 import javax.annotation.PostConstruct;
-
-import com.mossle.api.tenant.TenantConnector;
-import com.mossle.api.tenant.TenantDTO;
-
-import com.mossle.bpm.cmd.SyncProcessCmd;
 
 import org.activiti.engine.ActivitiException;
 import org.activiti.engine.ProcessEngine;
@@ -18,13 +12,15 @@ import org.activiti.engine.RepositoryService;
 import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.DeploymentBuilder;
 import org.activiti.engine.repository.ProcessDefinition;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.ContextResource;
 import org.springframework.core.io.Resource;
+
+import com.mossle.api.tenant.TenantConnector;
+import com.mossle.api.tenant.TenantDTO;
+import com.mossle.bpm.cmd.SyncProcessCmd;
 
 /**
  * 自动部署，并把每个xml都发布成一个Deployment.
