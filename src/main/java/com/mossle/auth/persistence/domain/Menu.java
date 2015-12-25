@@ -22,214 +22,212 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "AUTH_MENU")
 public class Menu implements java.io.Serializable {
-    private static final long serialVersionUID = 0L;
+	private static final long serialVersionUID = 0L;
 
-    /** null. */
-    private Long id;
+	/** null. */
+	private Long id;
 
-    /** null. */
-    private Menu menu;
+	/** null. */
+	private Menu menu;
 
-    /** null. */
-    private Perm perm;
+	/** null. */
+	private Perm perm;
 
-    /** null. */
-    private String type;
+	/** null. */
+	private String type;
 
-    /** null. */
-    private String code;
+	/** null. */
+	private String code;
 
-    /** null. */
-    private String title;
+	/** null. */
+	private String title;
 
-    /** null. */
-    private String url;
+	/** null. */
+	private String url;
 
-    /** null. */
-    private Integer priority;
+	/** null. */
+	private Integer priority;
 
-    /** null. */
-    private String descn;
+	/** null. */
+	private String descn;
 
-    /** null. */
-    private String tenantId;
+	/** null. */
+	private String tenantId;
 
-    /** . */
-    private Set<Menu> menus = new HashSet<Menu>(0);
+	/** . */
+	private Set<Menu> menus = new HashSet<Menu>(0);
 
-    public Menu() {
-    }
+	public Menu() {
+	}
 
-    public Menu(Menu menu, Perm perm, String type, String code, String title,
-            String url, Integer priority, String descn, String tenantId,
-            Set<Menu> menus) {
-        this.menu = menu;
-        this.perm = perm;
-        this.type = type;
-        this.code = code;
-        this.title = title;
-        this.url = url;
-        this.priority = priority;
-        this.descn = descn;
-        this.tenantId = tenantId;
-        this.menus = menus;
-    }
+	public Menu(Menu menu, Perm perm, String type, String code, String title, String url, Integer priority, String descn, String tenantId, Set<Menu> menus) {
+		this.menu = menu;
+		this.perm = perm;
+		this.type = type;
+		this.code = code;
+		this.title = title;
+		this.url = url;
+		this.priority = priority;
+		this.descn = descn;
+		this.tenantId = tenantId;
+		this.menus = menus;
+	}
 
-    /** @return null. */
-    @Id
-    @GeneratedValue
-    @Column(name = "ID", unique = true, nullable = false)
-    public Long getId() {
-        return this.id;
-    }
+	/** @return null. */
+	@Id
+	@GeneratedValue
+	@Column(name = "ID", unique = true, nullable = false)
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * @param id
-     *            null.
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * @param id
+	 *            null.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /** @return null. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PARENT_ID")
-    public Menu getMenu() {
-        return this.menu;
-    }
+	/** @return null. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PARENT_ID")
+	public Menu getMenu() {
+		return this.menu;
+	}
 
-    /**
-     * @param menu
-     *            null.
-     */
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
+	/**
+	 * @param menu
+	 *            null.
+	 */
+	public void setMenu(Menu menu) {
+		this.menu = menu;
+	}
 
-    /** @return null. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PERM_ID")
-    public Perm getPerm() {
-        return this.perm;
-    }
+	/** @return null. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "PERM_ID")
+	public Perm getPerm() {
+		return this.perm;
+	}
 
-    /**
-     * @param perm
-     *            null.
-     */
-    public void setPerm(Perm perm) {
-        this.perm = perm;
-    }
+	/**
+	 * @param perm
+	 *            null.
+	 */
+	public void setPerm(Perm perm) {
+		this.perm = perm;
+	}
 
-    /** @return null. */
-    @Column(name = "TYPE", length = 50)
-    public String getType() {
-        return this.type;
-    }
+	/** @return null. */
+	@Column(name = "TYPE", length = 50)
+	public String getType() {
+		return this.type;
+	}
 
-    /**
-     * @param type
-     *            null.
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
+	/**
+	 * @param type
+	 *            null.
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    /** @return null. */
-    @Column(name = "CODE", length = 50)
-    public String getCode() {
-        return this.code;
-    }
+	/** @return null. */
+	@Column(name = "CODE", length = 50)
+	public String getCode() {
+		return this.code;
+	}
 
-    /**
-     * @param code
-     *            null.
-     */
-    public void setCode(String code) {
-        this.code = code;
-    }
+	/**
+	 * @param code
+	 *            null.
+	 */
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    /** @return null. */
-    @Column(name = "TITLE", length = 50)
-    public String getTitle() {
-        return this.title;
-    }
+	/** @return null. */
+	@Column(name = "TITLE", length = 50)
+	public String getTitle() {
+		return this.title;
+	}
 
-    /**
-     * @param title
-     *            null.
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	/**
+	 * @param title
+	 *            null.
+	 */
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    /** @return null. */
-    @Column(name = "URL", length = 200)
-    public String getUrl() {
-        return this.url;
-    }
+	/** @return null. */
+	@Column(name = "URL", length = 200)
+	public String getUrl() {
+		return this.url;
+	}
 
-    /**
-     * @param url
-     *            null.
-     */
-    public void setUrl(String url) {
-        this.url = url;
-    }
+	/**
+	 * @param url
+	 *            null.
+	 */
+	public void setUrl(String url) {
+		this.url = url;
+	}
 
-    /** @return null. */
-    @Column(name = "PRIORITY")
-    public Integer getPriority() {
-        return this.priority;
-    }
+	/** @return null. */
+	@Column(name = "PRIORITY")
+	public Integer getPriority() {
+		return this.priority;
+	}
 
-    /**
-     * @param priority
-     *            null.
-     */
-    public void setPriority(Integer priority) {
-        this.priority = priority;
-    }
+	/**
+	 * @param priority
+	 *            null.
+	 */
+	public void setPriority(Integer priority) {
+		this.priority = priority;
+	}
 
-    /** @return null. */
-    @Column(name = "DESCN", length = 200)
-    public String getDescn() {
-        return this.descn;
-    }
+	/** @return null. */
+	@Column(name = "DESCN", length = 200)
+	public String getDescn() {
+		return this.descn;
+	}
 
-    /**
-     * @param descn
-     *            null.
-     */
-    public void setDescn(String descn) {
-        this.descn = descn;
-    }
+	/**
+	 * @param descn
+	 *            null.
+	 */
+	public void setDescn(String descn) {
+		this.descn = descn;
+	}
 
-    /** @return null. */
-    @Column(name = "TENANT_ID", length = 64)
-    public String getTenantId() {
-        return this.tenantId;
-    }
+	/** @return null. */
+	@Column(name = "TENANT_ID", length = 64)
+	public String getTenantId() {
+		return this.tenantId;
+	}
 
-    /**
-     * @param tenantId
-     *            null.
-     */
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
+	/**
+	 * @param tenantId
+	 *            null.
+	 */
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+	}
 
-    /** @return . */
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
-    public Set<Menu> getMenus() {
-        return this.menus;
-    }
+	/** @return . */
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "menu")
+	public Set<Menu> getMenus() {
+		return this.menus;
+	}
 
-    /**
-     * @param menus
-     *            .
-     */
-    public void setMenus(Set<Menu> menus) {
-        this.menus = menus;
-    }
+	/**
+	 * @param menus
+	 *            .
+	 */
+	public void setMenus(Set<Menu> menus) {
+		this.menus = menus;
+	}
 }

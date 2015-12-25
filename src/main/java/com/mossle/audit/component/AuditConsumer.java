@@ -7,14 +7,12 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 
-import com.mossle.api.audit.AuditDTO;
-
-import com.mossle.audit.service.AuditService;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Component;
+
+import com.mossle.api.audit.AuditDTO;
+import com.mossle.audit.service.AuditService;
 
 @Component
 public class AuditConsumer implements Runnable {
