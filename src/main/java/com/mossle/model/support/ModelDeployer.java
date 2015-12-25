@@ -1,13 +1,16 @@
 package com.mossle.model.support;
 
 import java.io.IOException;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+
+import org.activiti.engine.repository.ProcessDefinition;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.mossle.api.form.FormConnector;
 import com.mossle.api.form.FormDTO;
@@ -16,21 +19,13 @@ import com.mossle.api.humantask.HumanTaskDefinition;
 import com.mossle.api.process.ProcessConnector;
 import com.mossle.api.tenant.TenantConnector;
 import com.mossle.api.tenant.TenantDTO;
-
 import com.mossle.core.mapper.JsonMapper;
 import com.mossle.core.page.Page;
-
 import com.mossle.model.persistence.domain.ModelField;
 import com.mossle.model.persistence.domain.ModelInfo;
 import com.mossle.model.persistence.manager.ModelFieldManager;
 import com.mossle.model.persistence.manager.ModelInfoManager;
-
 import com.mossle.spi.humantask.TaskDefinitionConnector;
-
-import org.activiti.engine.repository.ProcessDefinition;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ModelDeployer {
 	private Logger logger = LoggerFactory.getLogger(ModelDeployer.class);

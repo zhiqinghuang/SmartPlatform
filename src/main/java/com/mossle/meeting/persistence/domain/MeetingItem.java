@@ -18,85 +18,85 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "MEETING_ITEM")
 public class MeetingItem implements java.io.Serializable {
-    private static final long serialVersionUID = 0L;
+	private static final long serialVersionUID = 0L;
 
-    /** null. */
-    private Long id;
+	/** null. */
+	private Long id;
 
-    /** null. */
-    private MeetingInfo meetingInfo;
+	/** null. */
+	private MeetingInfo meetingInfo;
 
-    /** null. */
-    private String name;
+	/** null. */
+	private String name;
 
-    /** null. */
-    private String tenantId;
+	/** null. */
+	private String tenantId;
 
-    public MeetingItem() {
-    }
+	public MeetingItem() {
+	}
 
-    public MeetingItem(MeetingInfo meetingInfo, String name, String tenantId) {
-        this.meetingInfo = meetingInfo;
-        this.name = name;
-        this.tenantId = tenantId;
-    }
+	public MeetingItem(MeetingInfo meetingInfo, String name, String tenantId) {
+		this.meetingInfo = meetingInfo;
+		this.name = name;
+		this.tenantId = tenantId;
+	}
 
-    /** @return null. */
-    @Id
-    @GeneratedValue
-    @Column(name = "ID", unique = true, nullable = false)
-    public Long getId() {
-        return this.id;
-    }
+	/** @return null. */
+	@Id
+	@GeneratedValue
+	@Column(name = "ID", unique = true, nullable = false)
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * @param id
-     *            null.
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * @param id
+	 *            null.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /** @return null. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "INFO_ID")
-    public MeetingInfo getMeetingInfo() {
-        return this.meetingInfo;
-    }
+	/** @return null. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "INFO_ID")
+	public MeetingInfo getMeetingInfo() {
+		return this.meetingInfo;
+	}
 
-    /**
-     * @param meetingInfo
-     *            null.
-     */
-    public void setMeetingInfo(MeetingInfo meetingInfo) {
-        this.meetingInfo = meetingInfo;
-    }
+	/**
+	 * @param meetingInfo
+	 *            null.
+	 */
+	public void setMeetingInfo(MeetingInfo meetingInfo) {
+		this.meetingInfo = meetingInfo;
+	}
 
-    /** @return null. */
-    @Column(name = "NAME", length = 50)
-    public String getName() {
-        return this.name;
-    }
+	/** @return null. */
+	@Column(name = "NAME", length = 50)
+	public String getName() {
+		return this.name;
+	}
 
-    /**
-     * @param name
-     *            null.
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
+	/**
+	 * @param name
+	 *            null.
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    /** @return null. */
-    @Column(name = "TENANT_ID", length = 64)
-    public String getTenantId() {
-        return this.tenantId;
-    }
+	/** @return null. */
+	@Column(name = "TENANT_ID", length = 64)
+	public String getTenantId() {
+		return this.tenantId;
+	}
 
-    /**
-     * @param tenantId
-     *            null.
-     */
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
+	/**
+	 * @param tenantId
+	 *            null.
+	 */
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+	}
 }
