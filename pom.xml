@@ -7,9 +7,7 @@
 	<name>SmartPlatform</name>
 	<packaging>war</packaging>
 	<description>This is a smart platform.</description>
-
 	<inceptionYear>2015</inceptionYear>
-
 	<prerequisites>
 		<maven>3</maven>
 	</prerequisites>
@@ -35,7 +33,6 @@
 			<artifactId>spring-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -201,7 +198,6 @@
 			<version>${activiti.version}</version>
 		</dependency>
 	</dependencies>
-
 	<dependencyManagement>
 		<dependencies>
 			<!-- 单元测试 start -->
@@ -218,7 +214,6 @@
 				<scope>test</scope>
 			</dependency>
 			<!-- 单元测试 end -->
-
 			<!-- 功能测试 start -->
 			<dependency>
 				<groupId>org.springframework</groupId>
@@ -227,7 +222,6 @@
 				<scope>test</scope>
 			</dependency>
 			<!-- 功能测试 end -->
-
 			<!-- 集成测试 start -->
 			<dependency>
 				<groupId>org.seleniumhq.selenium</groupId>
@@ -259,7 +253,6 @@
 				<version>${selenium2.version}</version>
 				<scope>test</scope>
 			</dependency>
-
 			<dependency>
 				<groupId>org.dbunit</groupId>
 				<artifactId>dbunit</artifactId>
@@ -267,7 +260,6 @@
 				<scope>test</scope>
 			</dependency>
 			<!-- 集成测试 end -->
-
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-lang3</artifactId>
@@ -278,7 +270,6 @@
 				<artifactId>commons-fileupload</artifactId>
 				<version>${commons-fileupload.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>javax.servlet</groupId>
 				<artifactId>javax.servlet-api</artifactId>
@@ -379,7 +370,6 @@
 				<artifactId>spring-session</artifactId>
 				<version>${spring-session.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.springframework.security</groupId>
 				<artifactId>spring-security-taglibs</artifactId>
@@ -390,7 +380,6 @@
 				<artifactId>spring-security-config</artifactId>
 				<version>${spring-security.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.hibernate</groupId>
 				<artifactId>hibernate-core</artifactId>
@@ -433,7 +422,6 @@
 				<artifactId>validation-api</artifactId>
 				<version>${validation.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>commons-dbcp</groupId>
 				<artifactId>commons-dbcp</artifactId>
@@ -449,7 +437,6 @@
 				<artifactId>log4jdbc-remix</artifactId>
 				<version>${log4jdbc-remix.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.slf4j</groupId>
 				<artifactId>slf4j-api</artifactId>
@@ -485,7 +472,6 @@
 				<artifactId>janino</artifactId>
 				<version>${janino.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>commons-beanutils</groupId>
 				<artifactId>commons-beanutils</artifactId>
@@ -507,19 +493,16 @@
 				<artifactId>commons-io</artifactId>
 				<version>${commons-io.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.apache.poi</groupId>
 				<artifactId>poi</artifactId>
 				<version>${poi.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.jolokia</groupId>
 				<artifactId>jolokia-core</artifactId>
 				<version>${jolokia.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.glassfish.jersey.ext</groupId>
 				<artifactId>jersey-spring3</artifactId>
@@ -540,7 +523,6 @@
 				<artifactId>jackson-datatype-hibernate4</artifactId>
 				<version>${jackson-datatype-hibernate4.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>javax.mail</groupId>
 				<artifactId>mail</artifactId>
@@ -552,13 +534,11 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-
 			<dependency>
 				<groupId>com.github.inspektr</groupId>
 				<artifactId>inspektr-support-spring</artifactId>
 				<version>${inspektr.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.quartz-scheduler</groupId>
 				<artifactId>quartz</artifactId>
@@ -570,7 +550,6 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-
 			<dependency>
 				<groupId>com.h2database</groupId>
 				<artifactId>h2</artifactId>
@@ -581,7 +560,6 @@
 				<artifactId>mysql-connector-java</artifactId>
 				<version>${mysql.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.activiti</groupId>
 				<artifactId>activiti-spring</artifactId>
@@ -597,7 +575,6 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-
 			<dependency>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-webapp</artifactId>
@@ -610,7 +587,6 @@
 				<version>${jetty.version}</version>
 				<scope>provided</scope>
 			</dependency>
-
 			<dependency>
 				<groupId>org.apache.cxf</groupId>
 				<artifactId>cxf-rt-frontend-jaxws</artifactId>
@@ -626,13 +602,11 @@
 				<artifactId>cxf-rt-management</artifactId>
 				<version>${cxf.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-core</artifactId>
 				<version>${flyway.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.javasimon</groupId>
 				<artifactId>javasimon-spring</artifactId>
@@ -648,13 +622,11 @@
 				<artifactId>javasimon-javaee</artifactId>
 				<version>${javasimon.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>ma.glasnost.orika</groupId>
 				<artifactId>orika-core</artifactId>
 				<version>${orika.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>com.thimbleware.jmemcached</groupId>
 				<artifactId>jmemcached-core</artifactId>
@@ -670,13 +642,11 @@
 				<artifactId>jedis</artifactId>
 				<version>${jedis.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.freemarker</groupId>
 				<artifactId>freemarker</artifactId>
 				<version>${freemarker.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>net.sf.jasperreports</groupId>
 				<artifactId>jasperreports</artifactId>
@@ -696,7 +666,6 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-
 			<!-- drools start -->
 			<dependency>
 				<groupId>org.drools</groupId>
@@ -731,7 +700,6 @@
 				</exclusions>
 			</dependency>
 			<!-- drools end -->
-
 			<!-- activemq start -->
 			<dependency>
 				<groupId>org.apache.activemq</groupId>
@@ -814,13 +782,11 @@
 				</exclusions>
 			</dependency>
 			<!-- activemq end -->
-
 			<dependency>
 				<groupId>org.codehaus.groovy</groupId>
 				<artifactId>groovy-all</artifactId>
 				<version>${groovy.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.apache.lucene</groupId>
 				<artifactId>lucene-core</artifactId>
@@ -831,19 +797,16 @@
 				<artifactId>lucene-highlighter</artifactId>
 				<version>${lucene.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>com.belerweb</groupId>
 				<artifactId>pinyin4j</artifactId>
 				<version>${pinyin4j.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>org.apache.felix.framework</artifactId>
 				<version>${felix.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.springframework.ldap</groupId>
 				<artifactId>spring-ldap-core</artifactId>
@@ -855,13 +818,11 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-
 			<dependency>
 				<groupId>org.apache.mina</groupId>
 				<artifactId>mina-core</artifactId>
 				<version>${mina.version}</version>
 			</dependency>
-
 			<dependency>
 				<groupId>org.mnode.ical4j</groupId>
 				<artifactId>ical4j</artifactId>
@@ -873,16 +834,13 @@
 					</exclusion>
 				</exclusions>
 			</dependency>
-
 			<dependency>
 				<groupId>javax.cache</groupId>
 				<artifactId>cache-api</artifactId>
 				<version>${jsr107.version}</version>
 			</dependency>
-
 		</dependencies>
 	</dependencyManagement>
-
 	<build>
 		<defaultGoal>jetty:run</defaultGoal>
 		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
@@ -1051,25 +1009,9 @@
 						</execution>
 					</executions>
 				</plugin>
-				<!-- 
-				<plugin>
-					<groupId>org.mortbay.jetty</groupId>
-					<artifactId>maven-jetty-plugin</artifactId>
-					<version>${maven-jetty-plugin.version}</version>
-					<configuration>
-						<connectors>
-							<connector implementation="org.mortbay.jetty.nio.SelectChannelConnector">
-								<port>8080</port>
-								<maxIdleTime>3600000</maxIdleTime>
-							</connector>
-						</connectors>-->
-						<!-- <scanIntervalSeconds>10</scanIntervalSeconds> -->
-						<!-- 
-						<webDefaultXml>webdefault.xml</webDefaultXml>
-						<webAppSourceDirectory>src/main/webapp</webAppSourceDirectory>
-					</configuration>
-				</plugin>
-				 -->
+				<!-- <plugin> <groupId>org.mortbay.jetty</groupId> <artifactId>maven-jetty-plugin</artifactId> <version>${maven-jetty-plugin.version}</version> <configuration> <connectors> <connector implementation="org.mortbay.jetty.nio.SelectChannelConnector"> <port>8080</port> <maxIdleTime>3600000</maxIdleTime> </connector> </connectors> -->
+				<!-- <scanIntervalSeconds>10</scanIntervalSeconds> -->
+				<!-- <webDefaultXml>webdefault.xml</webDefaultXml> <webAppSourceDirectory>src/main/webapp</webAppSourceDirectory> </configuration> </plugin> -->
 				<plugin>
 					<groupId>org.apache.tomcat.maven</groupId>
 					<artifactId>tomcat6-maven-plugin</artifactId>
@@ -1287,7 +1229,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
 	<reporting>
 		<plugins>
 			<plugin>
@@ -1328,14 +1269,12 @@
 			</plugin>
 		</plugins>
 	</reporting>
-
 	<properties>
 		<java.version>1.7</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<tagBase>svn://localhost/mossle/tags</tagBase>
-
 		<junit.version>4.12</junit.version>
 		<mockito.version>1.10.19</mockito.version>
 		<selenium2.version>2.48.2</selenium2.version>
@@ -1343,11 +1282,9 @@
 		<dbunit.version>2.5.1</dbunit.version>
 		<commons-lang.version>3.4</commons-lang.version>
 		<commons-fileupload.version>1.3.1</commons-fileupload.version>
-
 		<servlet.version>3.0.1</servlet.version>
 		<jsp.version>2.1</jsp.version>
 		<jetty.version>9.3.6.v20151106</jetty.version>
-
 		<spring.version>4.0.9.RELEASE</spring.version>
 		<spring-security.version>3.2.8.RELEASE</spring-security.version>
 		<hibernate.version>4.3.11.Final</hibernate.version>
@@ -1401,7 +1338,6 @@
 		<mina.version>2.0.9</mina.version>
 		<ical4j.version>1.0.6</ical4j.version>
 		<jsr107.version>1.0.0</jsr107.version>
-
 		<maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
 		<maven-clean-plugin.version>3.0.0</maven-clean-plugin.version>
 		<maven-compiler-plugin.version>3.3</maven-compiler-plugin.version>
@@ -1425,9 +1361,7 @@
 		<jacoco-maven-plugin.version>0.7.5.201505241946</jacoco-maven-plugin.version>
 		<maven-assembly-plugin.version>2.6</maven-assembly-plugin.version>
 		<maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
-
 	</properties>
-
 	<profiles>
 		<profile>
 			<id>functional</id>
@@ -1581,7 +1515,6 @@
 			</build>
 		</profile>
 	</profiles>
-
 	<repositories>
 		<repository>
 			<id>oschina</id>

@@ -1,15 +1,15 @@
 package com.mossle.core.dbmigrate;
 
 public interface ModuleSpecification {
-    boolean isEnabled();
+	boolean isEnabled();
 
-    String getSchemaTable();
+	String getSchemaTable();
 
-    String getSchemaLocation();
+	String getSchemaLocation();
 
-    boolean isInitData();
+	boolean isInitData();
 
-    String getDataTable();
+	String getDataTable();
 
-    String getDataLocation();
+	String getDataLocation();
 }
