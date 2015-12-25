@@ -4,17 +4,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import com.mossle.api.store.StoreConnector;
-
-import com.mossle.core.MultipartHandler;
-import com.mossle.core.store.MultipartFileDataSource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.util.MultiValueMap;
-
 import org.springframework.web.multipart.MultipartFile;
+
+import com.mossle.api.store.StoreConnector;
+import com.mossle.core.MultipartHandler;
+import com.mossle.core.store.MultipartFileDataSource;
 
 /**
  * 构建Record.
