@@ -2,19 +2,16 @@ package com.mossle.auth.support;
 
 import javax.annotation.PostConstruct;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.FactoryBean;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.Assert;
+
 import com.mossle.api.tenant.TenantConnector;
 import com.mossle.api.user.UserConnector;
 import com.mossle.api.userauth.UserAuthCache;
 import com.mossle.api.userauth.UserAuthConnector;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.beans.factory.FactoryBean;
-
-import org.springframework.jdbc.core.JdbcTemplate;
-
-import org.springframework.util.Assert;
 
 public class UserAuthConnectorFactoryBean implements FactoryBean {
 	private static Logger logger = LoggerFactory.getLogger(UserAuthConnectorFactoryBean.class);
