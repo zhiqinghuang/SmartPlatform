@@ -15,15 +15,17 @@
  */
 package org.springframework.session;
 
-import org.springframework.session.events.SessionDestroyedEvent;
-
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.session.events.SessionDestroyedEvent;
+
 /**
- * A {@link SessionRepository} backed by a {@link java.util.Map} and that uses a {@link MapSession}. By default a
- * {@link java.util.concurrent.ConcurrentHashMap} is used, but a custom {@link java.util.Map} can be injected to use
- * distributed maps provided by NoSQL stores like Redis and Hazelcast.
+ * A {@link SessionRepository} backed by a {@link java.util.Map} and that uses a
+ * {@link MapSession}. By default a
+ * {@link java.util.concurrent.ConcurrentHashMap} is used, but a custom
+ * {@link java.util.Map} can be injected to use distributed maps provided by
+ * NoSQL stores like Redis and Hazelcast.
  *
  * <p>
  * The implementation does NOT support firing {@link SessionDestroyedEvent}.
@@ -34,34 +36,42 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class MapSessionRepository implements SessionRepository<ExpiringSession> {
 	/**
-	 * If non-null, this value is used to override {@link ExpiringSession#setMaxInactiveIntervalInSeconds(int)}.
+	 * If non-null, this value is used to override
+	 * {@link ExpiringSession#setMaxInactiveIntervalInSeconds(int)}.
 	 */
 	private Integer defaultMaxInactiveInterval;
 
-	private final Map<String,ExpiringSession> sessions;
+	private final Map<String, ExpiringSession> sessions;
 
 	/**
-	 * Creates an instance backed by a {@link java.util.concurrent.ConcurrentHashMap}
+	 * Creates an instance backed by a
+	 * {@link java.util.concurrent.ConcurrentHashMap}
 	 */
 	public MapSessionRepository() {
 		this(new ConcurrentHashMap<String, ExpiringSession>());
 	}
 
 	/**
-	 * Creates a new instance backed by the provided {@link java.util.Map}. This allows injecting a distributed {@link java.util.Map}.
+	 * Creates a new instance backed by the provided {@link java.util.Map}. This
+	 * allows injecting a distributed {@link java.util.Map}.
 	 *
-	 * @param sessions the {@link java.util.Map} to use. Cannot be null.
+	 * @param sessions
+	 *            the {@link java.util.Map} to use. Cannot be null.
 	 */
-	public MapSessionRepository(Map<String,ExpiringSession> sessions) {
-		if(sessions == null) {
+	public MapSessionRepository(Map<String, ExpiringSession> sessions) {
+		if (sessions == null) {
 			throw new IllegalArgumentException("sessions cannot be null");
 		}
 		this.sessions = sessions;
 	}
 
 	/**
-	 * If non-null, this value is used to override {@link ExpiringSession#setMaxInactiveIntervalInSeconds(int)}.
-	 * @param defaultMaxInactiveInterval the number of seconds that the {@link Session} should be kept alive between client requests.
+	 * If non-null, this value is used to override
+	 * {@link ExpiringSession#setMaxInactiveIntervalInSeconds(int)}.
+	 * 
+	 * @param defaultMaxInactiveInterval
+	 *            the number of seconds that the {@link Session} should be kept
+	 *            alive between client requests.
 	 */
 	public void setDefaultMaxInactiveInterval(int defaultMaxInactiveInterval) {
 		this.defaultMaxInactiveInterval = Integer.valueOf(defaultMaxInactiveInterval);
@@ -73,10 +83,10 @@ public class MapSessionRepository implements SessionRepository<ExpiringSession> 
 
 	public ExpiringSession getSession(String id) {
 		ExpiringSession saved = sessions.get(id);
-		if(saved == null) {
+		if (saved == null) {
 			return null;
 		}
-		if(saved.isExpired()) {
+		if (saved.isExpired()) {
 			delete(saved.getId());
 			return null;
 		}
@@ -91,7 +101,7 @@ public class MapSessionRepository implements SessionRepository<ExpiringSession> 
 
 	public ExpiringSession createSession() {
 		ExpiringSession result = new MapSession();
-		if(defaultMaxInactiveInterval != null) {
+		if (defaultMaxInactiveInterval != null) {
 			result.setMaxInactiveIntervalInSeconds(defaultMaxInactiveInterval);
 		}
 		return result;

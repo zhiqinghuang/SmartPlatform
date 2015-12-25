@@ -32,7 +32,9 @@ public interface HttpSessionManager {
 	/**
 	 * Gets the current session's alias from the {@link HttpServletRequest}.
 	 *
-	 * @param request the {@link HttpServletRequest} to obtain the current session's alias from.
+	 * @param request
+	 *            the {@link HttpServletRequest} to obtain the current session's
+	 *            alias from.
 	 * @return the current sessions' alias. Cannot be null.
 	 */
 	String getCurrentSessionAlias(HttpServletRequest request);
@@ -41,7 +43,9 @@ public interface HttpSessionManager {
 	 * Gets a mapping of the session alias to the session id from the
 	 * {@link HttpServletRequest}
 	 *
-	 * @param request the {@link HttpServletRequest} to obtain the mapping from. Cannot be null.
+	 * @param request
+	 *            the {@link HttpServletRequest} to obtain the mapping from.
+	 *            Cannot be null.
 	 * @return a mapping of the session alias to the session id from the
 	 *         {@link HttpServletRequest}. Cannot be null.
 	 */
@@ -50,22 +54,26 @@ public interface HttpSessionManager {
 	/**
 	 * Provides the ability to encode the URL for a given session alias.
 	 *
-	 * @param url the url to encode.
-	 * @param sessionAlias the session alias to encode.
+	 * @param url
+	 *            the url to encode.
+	 * @param sessionAlias
+	 *            the session alias to encode.
 	 * @return the encoded URL
 	 */
 	String encodeURL(String url, String sessionAlias);
 
 	/**
-	 * Gets a new and unique Session alias. Typically this will be called to pass into
-	 * {@code HttpSessionManager#encodeURL(java.lang.String)}. For example:
+	 * Gets a new and unique Session alias. Typically this will be called to
+	 * pass into {@code HttpSessionManager#encodeURL(java.lang.String)}. For
+	 * example:
 	 *
 	 * <code>
 	 * String newAlias = httpSessionManager.getNewSessionAlias(request);
 	 * String addAccountUrl = httpSessionManager.encodeURL("./", newAlias);
 	 * </code>
 	 *
-	 * @param request the {@link HttpServletRequest} to get a new alias from
+	 * @param request
+	 *            the {@link HttpServletRequest} to get a new alias from
 	 * @return
 	 */
 	String getNewSessionAlias(HttpServletRequest request);

@@ -2,15 +2,13 @@ package com.mossle.workcal.support;
 
 import javax.annotation.PostConstruct;
 
-import com.mossle.api.workcal.MockWorkCalendarConnector;
-import com.mossle.api.workcal.WorkCalendarConnector;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.FactoryBean;
-
 import org.springframework.util.Assert;
+
+import com.mossle.api.workcal.MockWorkCalendarConnector;
+import com.mossle.api.workcal.WorkCalendarConnector;
 
 public class WorkCalendarConnectorFactoryBean implements FactoryBean {
 	private static Logger logger = LoggerFactory.getLogger(WorkCalendarConnectorFactoryBean.class);
