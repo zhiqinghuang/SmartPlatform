@@ -3,9 +3,9 @@ package com.mossle.security.client;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
-import com.mossle.core.subscribe.Subscribable;
-
 import org.springframework.util.Assert;
+
+import com.mossle.core.subscribe.Subscribable;
 
 public class ResourceSubscriber implements Subscribable<String> {
 	private String tenantId = "1";

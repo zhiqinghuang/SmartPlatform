@@ -1,64 +1,56 @@
 package com.mossle.security.client;
 
-import com.mossle.api.userauth.UserAuthConnector;
-import com.mossle.api.userauth.UserAuthDTO;
-
-import com.mossle.core.mapper.BeanMapper;
-
-import com.mossle.security.impl.SpringSecurityUserAuth;
-import com.mossle.security.util.SpringSecurityUtils;
-
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.web.context.HttpRequestResponseHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 
-public class CachedSecurityContextRepository extends
-        HttpSessionSecurityContextRepository {
-    private UserAuthConnector userAuthConnector;
-    private BeanMapper beanMapper = new BeanMapper();
-    private boolean debug;
+import com.mossle.api.userauth.UserAuthConnector;
+import com.mossle.api.userauth.UserAuthDTO;
+import com.mossle.core.mapper.BeanMapper;
+import com.mossle.security.impl.SpringSecurityUserAuth;
+import com.mossle.security.util.SpringSecurityUtils;
 
-    public SecurityContext loadContext(
-            HttpRequestResponseHolder requestResponseHolder) {
-        SecurityContext securityContext = super
-                .loadContext(requestResponseHolder);
+public class CachedSecurityContextRepository extends HttpSessionSecurityContextRepository {
+	private UserAuthConnector userAuthConnector;
+	private BeanMapper beanMapper = new BeanMapper();
+	private boolean debug;
 
-        if (securityContext == null) {
-            logger.debug("securityContext is null");
+	public SecurityContext loadContext(HttpRequestResponseHolder requestResponseHolder) {
+		SecurityContext securityContext = super.loadContext(requestResponseHolder);
 
-            return null;
-        }
+		if (securityContext == null) {
+			logger.debug("securityContext is null");
 
-        if (debug) {
-            return securityContext;
-        }
+			return null;
+		}
 
-        SpringSecurityUserAuth userAuthInSession = SpringSecurityUtils
-                .getCurrentUser(securityContext);
+		if (debug) {
+			return securityContext;
+		}
 
-        if (userAuthInSession == null) {
-            logger.debug("userAuthInSession is null");
+		SpringSecurityUserAuth userAuthInSession = SpringSecurityUtils.getCurrentUser(securityContext);
 
-            return securityContext;
-        }
+		if (userAuthInSession == null) {
+			logger.debug("userAuthInSession is null");
 
-        UserAuthDTO userAuthInCache = userAuthConnector.findById(
-                userAuthInSession.getId(), userAuthInSession.getTenantId());
+			return securityContext;
+		}
 
-        SpringSecurityUserAuth userAuthResult = new SpringSecurityUserAuth();
-        beanMapper.copy(userAuthInCache, userAuthResult);
+		UserAuthDTO userAuthInCache = userAuthConnector.findById(userAuthInSession.getId(), userAuthInSession.getTenantId());
 
-        SpringSecurityUtils.saveUserDetailsToContext(userAuthResult, null,
-                securityContext);
+		SpringSecurityUserAuth userAuthResult = new SpringSecurityUserAuth();
+		beanMapper.copy(userAuthInCache, userAuthResult);
 
-        return securityContext;
-    }
+		SpringSecurityUtils.saveUserDetailsToContext(userAuthResult, null, securityContext);
 
-    public void setUserAuthConnector(UserAuthConnector userAuthConnector) {
-        this.userAuthConnector = userAuthConnector;
-    }
+		return securityContext;
+	}
 
-    public void setDebug(boolean debug) {
-        this.debug = debug;
-    }
+	public void setUserAuthConnector(UserAuthConnector userAuthConnector) {
+		this.userAuthConnector = userAuthConnector;
+	}
+
+	public void setDebug(boolean debug) {
+		this.debug = debug;
+	}
 }

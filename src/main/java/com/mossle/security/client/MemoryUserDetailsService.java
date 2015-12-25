@@ -8,14 +8,13 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import com.mossle.security.impl.SpringSecurityUserAuth;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import com.mossle.security.impl.SpringSecurityUserAuth;
 
 public class MemoryUserDetailsService implements UserDetailsService {
 	private static Logger logger = LoggerFactory.getLogger(MemoryUserDetailsService.class);

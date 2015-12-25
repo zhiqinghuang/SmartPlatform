@@ -2,14 +2,12 @@ package com.mossle.security.client;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-
 import javax.jms.ConnectionFactory;
 
-import com.mossle.spi.auth.ResourcePublisher;
-
 import org.springframework.jms.core.JmsTemplate;
-
 import org.springframework.util.Assert;
+
+import com.mossle.spi.auth.ResourcePublisher;
 
 public class ResourcePublisherImpl implements ResourcePublisher {
 	private ConnectionFactory connectionFactory;
