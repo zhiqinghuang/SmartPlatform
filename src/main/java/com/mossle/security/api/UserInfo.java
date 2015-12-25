@@ -4,19 +4,19 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserInfo {
-    String getId();
+	String getId();
 
-    String getUsername();
+	String getUsername();
 
-    String getDisplayName();
+	String getDisplayName();
 
-    String getPassword();
+	String getPassword();
 
-    String getTenantId();
+	String getTenantId();
 
-    List<String> getAuthorities();
+	List<String> getAuthorities();
 
-    List<String> getAttributes();
+	List<String> getAttributes();
 
-    Map<String, Object> getExtra();
+	Map<String, Object> getExtra();
 }
