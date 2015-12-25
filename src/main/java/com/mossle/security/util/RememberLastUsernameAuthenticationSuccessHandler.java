@@ -17,45 +17,39 @@ import com.mossle.security.impl.SpringSecurityUserAuth;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
 
-public class RememberLastUsernameAuthenticationSuccessHandler extends
-        SavedRequestAwareAuthenticationSuccessHandler {
-    private TenantHolder tenantHolder;
+public class RememberLastUsernameAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+	private TenantHolder tenantHolder;
 
-    @Override
-    public void onAuthenticationSuccess(HttpServletRequest request,
-            HttpServletResponse response, Authentication authentication)
-            throws ServletException, IOException {
-        String tenantCode = tenantHolder.getTenantCode();
-        String username = this.getUsername(authentication);
-        this.addCookie(response, SecurityConstants.SECURITY_LAST_USERNAME,
-                username);
-        this.addCookie(response, SecurityConstants.SECURITY_LAST_TENANT,
-                tenantCode);
-        super.onAuthenticationSuccess(request, response, authentication);
-    }
+	@Override
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
+		String tenantCode = tenantHolder.getTenantCode();
+		String username = this.getUsername(authentication);
+		this.addCookie(response, SecurityConstants.SECURITY_LAST_USERNAME, username);
+		this.addCookie(response, SecurityConstants.SECURITY_LAST_TENANT, tenantCode);
+		super.onAuthenticationSuccess(request, response, authentication);
+	}
 
-    public void addCookie(HttpServletResponse response, String key, String value) {
-        Cookie cookie = new Cookie(key, value);
-        cookie.setMaxAge(3600 * 24 * 30);
-        response.addCookie(cookie);
-    }
+	public void addCookie(HttpServletResponse response, String key, String value) {
+		Cookie cookie = new Cookie(key, value);
+		cookie.setMaxAge(3600 * 24 * 30);
+		response.addCookie(cookie);
+	}
 
-    public String getUsername(Authentication authentication) {
-        if (authentication == null) {
-            return "";
-        }
+	public String getUsername(Authentication authentication) {
+		if (authentication == null) {
+			return "";
+		}
 
-        Object principal = authentication.getPrincipal();
+		Object principal = authentication.getPrincipal();
+		if (principal instanceof SpringSecurityUserAuth) {
+			return ((SpringSecurityUserAuth) principal).getUsername();
+		} else {
+			return authentication.getName();
+		}
+	}
 
-        if (principal instanceof SpringSecurityUserAuth) {
-            return ((SpringSecurityUserAuth) principal).getUsername();
-        } else {
-            return authentication.getName();
-        }
-    }
-
-    @Resource
-    public void setTenantHolder(TenantHolder tenantHolder) {
-        this.tenantHolder = tenantHolder;
-    }
+	@Resource
+	public void setTenantHolder(TenantHolder tenantHolder) {
+		this.tenantHolder = tenantHolder;
+	}
 }
