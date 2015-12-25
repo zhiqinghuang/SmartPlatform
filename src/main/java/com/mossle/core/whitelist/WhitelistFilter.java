@@ -1,7 +1,6 @@
 package com.mossle.core.whitelist;
 
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -17,10 +16,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mossle.core.servlet.UrlPatternMatcher;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.mossle.core.servlet.UrlPatternMatcher;
 
 public class WhitelistFilter implements Filter {
 	private static Logger logger = LoggerFactory.getLogger(WhitelistFilter.class);
