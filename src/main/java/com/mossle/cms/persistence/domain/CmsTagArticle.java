@@ -18,105 +18,104 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "CMS_TAG_ARTICLE")
 public class CmsTagArticle implements java.io.Serializable {
-    private static final long serialVersionUID = 0L;
+	private static final long serialVersionUID = 0L;
 
-    /** null. */
-    private Long id;
+	/** null. */
+	private Long id;
 
-    /** null. */
-    private CmsTag cmsTag;
+	/** null. */
+	private CmsTag cmsTag;
 
-    /** null. */
-    private CmsArticle cmsArticle;
+	/** null. */
+	private CmsArticle cmsArticle;
 
-    /** null. */
-    private String type;
+	/** null. */
+	private String type;
 
-    /** null. */
-    private String tenantId;
+	/** null. */
+	private String tenantId;
 
-    public CmsTagArticle() {
-    }
+	public CmsTagArticle() {
+	}
 
-    public CmsTagArticle(CmsTag cmsTag, CmsArticle cmsArticle, String type,
-            String tenantId) {
-        this.cmsTag = cmsTag;
-        this.cmsArticle = cmsArticle;
-        this.type = type;
-        this.tenantId = tenantId;
-    }
+	public CmsTagArticle(CmsTag cmsTag, CmsArticle cmsArticle, String type, String tenantId) {
+		this.cmsTag = cmsTag;
+		this.cmsArticle = cmsArticle;
+		this.type = type;
+		this.tenantId = tenantId;
+	}
 
-    /** @return null. */
-    @Id
-    @GeneratedValue
-    @Column(name = "ID", unique = true, nullable = false)
-    public Long getId() {
-        return this.id;
-    }
+	/** @return null. */
+	@Id
+	@GeneratedValue
+	@Column(name = "ID", unique = true, nullable = false)
+	public Long getId() {
+		return this.id;
+	}
 
-    /**
-     * @param id
-     *            null.
-     */
-    public void setId(Long id) {
-        this.id = id;
-    }
+	/**
+	 * @param id
+	 *            null.
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    /** @return null. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TAG_ID")
-    public CmsTag getCmsTag() {
-        return this.cmsTag;
-    }
+	/** @return null. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "TAG_ID")
+	public CmsTag getCmsTag() {
+		return this.cmsTag;
+	}
 
-    /**
-     * @param cmsTag
-     *            null.
-     */
-    public void setCmsTag(CmsTag cmsTag) {
-        this.cmsTag = cmsTag;
-    }
+	/**
+	 * @param cmsTag
+	 *            null.
+	 */
+	public void setCmsTag(CmsTag cmsTag) {
+		this.cmsTag = cmsTag;
+	}
 
-    /** @return null. */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ARTICLE_ID")
-    public CmsArticle getCmsArticle() {
-        return this.cmsArticle;
-    }
+	/** @return null. */
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ARTICLE_ID")
+	public CmsArticle getCmsArticle() {
+		return this.cmsArticle;
+	}
 
-    /**
-     * @param cmsArticle
-     *            null.
-     */
-    public void setCmsArticle(CmsArticle cmsArticle) {
-        this.cmsArticle = cmsArticle;
-    }
+	/**
+	 * @param cmsArticle
+	 *            null.
+	 */
+	public void setCmsArticle(CmsArticle cmsArticle) {
+		this.cmsArticle = cmsArticle;
+	}
 
-    /** @return null. */
-    @Column(name = "TYPE", length = 50)
-    public String getType() {
-        return this.type;
-    }
+	/** @return null. */
+	@Column(name = "TYPE", length = 50)
+	public String getType() {
+		return this.type;
+	}
 
-    /**
-     * @param type
-     *            null.
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
+	/**
+	 * @param type
+	 *            null.
+	 */
+	public void setType(String type) {
+		this.type = type;
+	}
 
-    /** @return null. */
-    @Column(name = "TENANT_ID", length = 64)
-    public String getTenantId() {
-        return this.tenantId;
-    }
+	/** @return null. */
+	@Column(name = "TENANT_ID", length = 64)
+	public String getTenantId() {
+		return this.tenantId;
+	}
 
-    /**
-     * @param tenantId
-     *            null.
-     */
-    public void setTenantId(String tenantId) {
-        this.tenantId = tenantId;
-    }
+	/**
+	 * @param tenantId
+	 *            null.
+	 */
+	public void setTenantId(String tenantId) {
+		this.tenantId = tenantId;
+	}
 }
