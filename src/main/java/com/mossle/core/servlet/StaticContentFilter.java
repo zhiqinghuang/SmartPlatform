@@ -3,11 +3,9 @@ package com.mossle.core.servlet;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
-
 import java.util.zip.GZIPOutputStream;
 
 import javax.activation.MimetypesFileTypeMap;
-
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -17,11 +15,11 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.mossle.core.util.ServletUtils;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+
+import com.mossle.core.util.ServletUtils;
 
 public class StaticContentFilter implements Filter {
 	/** 需要被Gzip压缩的Mime类型. */
