@@ -19,23 +19,19 @@ public class MessageHelper {
 
 	public void addFlashMessage(RedirectAttributes redirectAttributes, String text) {
 		List<String> flashMessages = (List<String>) redirectAttributes.getFlashAttributes().get("flashMessages");
-
 		if (flashMessages == null) {
 			flashMessages = new ArrayList<String>();
 			redirectAttributes.addFlashAttribute("flashMessages", flashMessages);
 		}
-
 		flashMessages.add(text);
 	}
 
 	public void addMessage(Model model, String text) {
 		List<String> flashMessages = (List<String>) model.asMap().get("flashMessages");
-
 		if (flashMessages == null) {
 			flashMessages = new ArrayList<String>();
 			model.addAttribute("flashMessages", flashMessages);
 		}
-
 		flashMessages.add(text);
 	}
 
