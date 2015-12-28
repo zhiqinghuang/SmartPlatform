@@ -44,7 +44,6 @@ public class AuthenticatedVoter implements AccessDecisionVoter<Object> {
 
 	public int vote(Authentication authentication, Object object, Collection<ConfigAttribute> attributes) {
 		int result = ACCESS_ABSTAIN;
-
 		for (ConfigAttribute attribute : attributes) {
 			if (this.supports(attribute)) {
 				result = ACCESS_DENIED;
