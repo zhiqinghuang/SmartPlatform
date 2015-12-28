@@ -23,14 +23,11 @@ public class AutoLoginFilter extends GenericFilterBean {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		if (enabled && (SpringSecurityUtils.getCurrentUser() == null)) {
 			UserDetails userDetails = userDetailsService.loadUserByUsername(defaultUserName);
-
 			if (userDetails == null) {
 				throw new UsernameNotFoundException(defaultUserName);
 			}
-
 			SpringSecurityUtils.saveUserDetailsToContext(userDetails, (HttpServletRequest) request);
 		}
-
 		chain.doFilter(request, response);
 	}
 

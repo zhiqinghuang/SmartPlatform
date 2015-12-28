@@ -6,7 +6,6 @@ public class Permission {
 
 	public Permission(String text) {
 		int index = text.indexOf(':');
-
 		if (index != -1) {
 			String[] array = text.split(":");
 			resource = array[0];

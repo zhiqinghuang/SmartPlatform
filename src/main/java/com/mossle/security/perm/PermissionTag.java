@@ -13,11 +13,9 @@ public class PermissionTag extends BodyTagSupport {
 
 	public int doStartTag() throws JspException {
 		boolean authorized = getPermissionChecker().isAuthorized(permission);
-
 		if (!authorized) {
 			return Tag.SKIP_BODY;
 		}
-
 		return Tag.EVAL_BODY_INCLUDE;
 	}
 
@@ -27,7 +25,6 @@ public class PermissionTag extends BodyTagSupport {
 
 	public PermissionChecker getPermissionChecker() {
 		ApplicationContext ctx = WebApplicationContextUtils.getWebApplicationContext(pageContext.getServletContext());
-
 		return (PermissionChecker) ctx.getBean("permissionChecker");
 	}
 }

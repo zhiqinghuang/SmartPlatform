@@ -16,11 +16,9 @@ public class PermissionMatcher {
 		// if this.operation is *, it will match all of required operation
 		// else this.operation must equal to required operation
 		String haveOperation = readOnly ? "read" : havePermission.getOperation();
-
 		if (checkPart(wantPermission.getOperation(), haveOperation)) {
 			return true;
 		}
-
 		return false;
 	}
 
@@ -28,7 +26,6 @@ public class PermissionMatcher {
 		if ("*".equals(want) || "*".equals(have)) {
 			return true;
 		}
-
 		return want.equals(have);
 	}
 

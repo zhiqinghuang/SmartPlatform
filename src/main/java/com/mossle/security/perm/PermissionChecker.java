@@ -7,13 +7,11 @@ public class PermissionChecker {
 
 	public boolean isAuthorized(String text) {
 		String want = text;
-
 		for (String have : SpringSecurityUtils.getAuthorities()) {
 			if (permissionMatcher.match(want, have)) {
 				return true;
 			}
 		}
-
 		return false;
 	}
 

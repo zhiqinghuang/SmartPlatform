@@ -19,20 +19,16 @@ public class PermissionVoter implements AccessDecisionVoter<Object> {
 
 	public int vote(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) {
 		int result = ACCESS_ABSTAIN;
-
 		for (ConfigAttribute configAttribute : configAttributes) {
 			if (this.supports(configAttribute)) {
 				result = ACCESS_DENIED;
-
 				String text = getPermission(configAttribute);
 				boolean authorized = permissionChecker.isAuthorized(text);
-
 				if (authorized) {
 					return ACCESS_GRANTED;
 				}
 			}
 		}
-
 		return result;
 	}
 
