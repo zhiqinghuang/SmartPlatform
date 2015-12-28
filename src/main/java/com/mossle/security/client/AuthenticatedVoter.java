@@ -48,45 +48,32 @@ public class AuthenticatedVoter implements AccessDecisionVoter<Object> {
 		for (ConfigAttribute attribute : attributes) {
 			if (this.supports(attribute)) {
 				result = ACCESS_DENIED;
-
 				if (isGuest(authentication, attribute.getAttribute())) {
 					logger.trace("isGuest");
-
 					return ACCESS_GRANTED;
 				}
-
 				if (isUser(authentication, attribute.getAttribute())) {
 					logger.trace("isUser");
-
 					return ACCESS_GRANTED;
 				}
-
 				if (isLogined(authentication, attribute.getAttribute())) {
 					logger.trace("isLogined");
-
 					return ACCESS_GRANTED;
 				}
-
 				if (isSwitched(authentication, attribute.getAttribute())) {
 					logger.trace("isSwitched");
-
 					return ACCESS_GRANTED;
 				}
-
 				if (isRemembered(authentication, attribute.getAttribute())) {
 					logger.trace("isRemembered");
-
 					return ACCESS_GRANTED;
 				}
 			}
 		}
-
 		logger.trace("attributes : {}", attributes);
-
 		return result;
 	}
 
-	// ~ ======================================================================
 	public boolean isGuest(Authentication authentication, String attribute) {
 		return IS_GUEST.equals(attribute);
 	}
@@ -95,10 +82,8 @@ public class AuthenticatedVoter implements AccessDecisionVoter<Object> {
 		if (!IS_USER.equals(attribute)) {
 			return false;
 		}
-
 		boolean notGuest = !isOnlyGuest(authentication, IS_GUEST);
 		boolean notRemembered = !isRemembered(authentication, IS_REMEMBERED);
-
 		return notGuest && notRemembered;
 	}
 
@@ -106,26 +91,20 @@ public class AuthenticatedVoter implements AccessDecisionVoter<Object> {
 		if (!IS_LOGINED.equals(attribute)) {
 			return false;
 		}
-
 		boolean notGuest = !isOnlyGuest(authentication, IS_GUEST);
-
 		return notGuest;
 	}
 
-	// ~ ======================================================================
 	public boolean isSwitched(Authentication authentication, String attribute) {
 		if (!IS_SWITCHED.equals(attribute)) {
 			return false;
 		}
-
 		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-
 		for (GrantedAuthority auth : authorities) {
 			if (auth instanceof SwitchUserGrantedAuthority) {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
@@ -133,7 +112,6 @@ public class AuthenticatedVoter implements AccessDecisionVoter<Object> {
 		return IS_REMEMBERED.equals(attribute) && RememberMeAuthenticationToken.class.isAssignableFrom(authentication.getClass());
 	}
 
-	// ~ ======================================================================
 	public boolean isOnlyGuest(Authentication authentication, String attribute) {
 		return IS_GUEST.equals(attribute) && AnonymousAuthenticationToken.class.isAssignableFrom(authentication.getClass());
 	}
