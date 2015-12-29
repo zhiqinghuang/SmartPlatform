@@ -17,32 +17,22 @@ public class CachedSecurityContextRepository extends HttpSessionSecurityContextR
 
 	public SecurityContext loadContext(HttpRequestResponseHolder requestResponseHolder) {
 		SecurityContext securityContext = super.loadContext(requestResponseHolder);
-
 		if (securityContext == null) {
 			logger.debug("securityContext is null");
-
 			return null;
 		}
-
 		if (debug) {
 			return securityContext;
 		}
-
 		SpringSecurityUserAuth userAuthInSession = SpringSecurityUtils.getCurrentUser(securityContext);
-
 		if (userAuthInSession == null) {
 			logger.debug("userAuthInSession is null");
-
 			return securityContext;
 		}
-
 		UserAuthDTO userAuthInCache = userAuthConnector.findById(userAuthInSession.getId(), userAuthInSession.getTenantId());
-
 		SpringSecurityUserAuth userAuthResult = new SpringSecurityUserAuth();
 		beanMapper.copy(userAuthInCache, userAuthResult);
-
 		SpringSecurityUtils.saveUserDetailsToContext(userAuthResult, null, securityContext);
-
 		return securityContext;
 	}
 
