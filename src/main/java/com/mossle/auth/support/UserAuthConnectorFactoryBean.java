@@ -13,7 +13,7 @@ import com.mossle.api.user.UserConnector;
 import com.mossle.api.userauth.UserAuthCache;
 import com.mossle.api.userauth.UserAuthConnector;
 
-public class UserAuthConnectorFactoryBean implements FactoryBean {
+public class UserAuthConnectorFactoryBean implements FactoryBean<UserAuthConnector> {
 	private static Logger logger = LoggerFactory.getLogger(UserAuthConnectorFactoryBean.class);
 	private UserAuthConnector userAuthConnector;
 	private TenantConnector tenantConnector;
@@ -66,11 +66,11 @@ public class UserAuthConnectorFactoryBean implements FactoryBean {
 		}
 	}
 
-	public Object getObject() {
+	public UserAuthConnector getObject() {
 		return userAuthConnector;
 	}
 
-	public Class getObjectType() {
+	public Class<UserAuthConnector> getObjectType() {
 		return UserAuthConnector.class;
 	}
 
