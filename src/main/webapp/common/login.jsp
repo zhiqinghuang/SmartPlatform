@@ -33,7 +33,7 @@
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="${tenantPrefix}">Lemon <sub><small>1.6.0</small></sub></a>
+				<a class="navbar-brand" href="${tenantPrefix}"> Lemon <sub><small>1.6.0</small></sub></a>
 			</div>
 		</div>
 	</div>
@@ -44,7 +44,7 @@
 			<!-- start of main -->
 			<section class="col-md-4">
 				<div class="alert alert-danger" role="alert" ${param.error==true ? '' : 'style="display:none"'}>
-					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> <strong><spring:message code="core.login.failure" text="登陆失败" /></strong> &nbsp;${sessionScope['SPRING_SECURITY_LAST_EXCEPTION'].message}
+					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> <strong><spring:message code="core.login.failure" text="登陆失败" /></strong> &nbsp; ${sessionScope['SPRING_SECURITY_LAST_EXCEPTION'].message}
 				</div>
 				<article class="panel panel-default">
 					<header class="panel-heading">
