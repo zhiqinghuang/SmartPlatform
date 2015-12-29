@@ -33,15 +33,11 @@ public class WhitelistFilter implements Filter {
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain) throws ServletException, IOException {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
-
 		this.checkAndReload();
-
 		if (whitelistDto.notValidIp(request.getRemoteAddr())) {
 			response.sendError(HttpServletResponse.SC_FORBIDDEN);
-
 			return;
 		}
-
 		filterChain.doFilter(req, res);
 	}
 
@@ -49,7 +45,6 @@ public class WhitelistFilter implements Filter {
 		if ((whitelistDto != null) && (System.currentTimeMillis() > timestamp)) {
 			return;
 		}
-
 		TenantDTO tenantDto = tenantConnector.findByCode(defaultTenantCode);
 		whitelistDto = whitelistConnector.getWhitelist(code, tenantDto.getId());
 		timestamp = System.currentTimeMillis() + (1000 * 60 * 2);
