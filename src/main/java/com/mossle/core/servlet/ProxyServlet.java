@@ -22,7 +22,7 @@ public class ProxyServlet implements Servlet {
 	private final boolean enable;
 
 	public ProxyServlet(String name, Servlet servlet) {
-		this(name, servlet, Collections.EMPTY_MAP, true);
+		this(name, servlet, Collections.<String, String> emptyMap(), true);
 	}
 
 	public ProxyServlet(String name, Servlet servlet, Map<String, String> map) {
@@ -30,7 +30,7 @@ public class ProxyServlet implements Servlet {
 	}
 
 	public ProxyServlet(String name, Servlet servlet, boolean enable) {
-		this(name, servlet, Collections.EMPTY_MAP, enable);
+		this(name, servlet, Collections.<String, String> emptyMap(), enable);
 	}
 
 	public ProxyServlet(String name, Servlet servlet, Map<String, String> map, boolean enable) {
@@ -55,7 +55,6 @@ public class ProxyServlet implements Servlet {
 
 	public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
 		logger.trace("{}", name);
-
 		if (enable) {
 			servlet.service(req, res);
 		} else {
@@ -74,7 +73,6 @@ public class ProxyServlet implements Servlet {
 		}
 	}
 
-	// ~ ==================================================
 	public String getName() {
 		return name;
 	}
