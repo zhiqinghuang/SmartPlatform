@@ -9,7 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.mossle.core.auth.CustomPasswordEncoder;
 
-public class PasswordEncoderFactoryBean implements FactoryBean, InitializingBean {
+public class PasswordEncoderFactoryBean implements FactoryBean<PasswordEncoder>, InitializingBean {
 	private static Logger logger = LoggerFactory.getLogger(PasswordEncoderFactoryBean.class);
 	private String type;
 	private PasswordEncoder passwordEncoder;
@@ -21,15 +21,14 @@ public class PasswordEncoderFactoryBean implements FactoryBean, InitializingBean
 		} else {
 			this.passwordEncoder = NoOpPasswordEncoder.getInstance();
 		}
-
 		logger.info("choose {}", passwordEncoder.getClass());
 	}
 
-	public Object getObject() {
+	public PasswordEncoder getObject() {
 		return passwordEncoder;
 	}
 
-	public Class getObjectType() {
+	public Class<PasswordEncoder> getObjectType() {
 		return PasswordEncoder.class;
 	}
 

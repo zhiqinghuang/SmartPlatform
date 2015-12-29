@@ -27,27 +27,21 @@ public class ResourceDetailsMonitor implements InitializingBean {
 		Assert.notNull(methodSourceFetcher);
 		Assert.notNull(filterSecurityInterceptor);
 		Assert.notNull(delegatingMethodSecurityMetadataSource);
-
 		refresh();
 	}
 
 	public void refresh() {
 		if (debug) {
 			logger.info("debug mode, skip refresh");
-
 			return;
 		}
-
 		logger.info("execute refresh");
-
 		Map<String, String> urlResourceMap = urlSourceFetcher.getSource(null);
 		urlResourcePopulator.execute(filterSecurityInterceptor, urlResourceMap);
-
 		Map<String, String> methodResourceMap = methodSourceFetcher.getSource(null);
 		methodResourcePopulator.execute(delegatingMethodSecurityMetadataSource, methodResourceMap);
 	}
 
-	// ~ ======================================================================
 	public void setUrlSourceFetcher(UrlSourceFetcher urlSourceFetcher) {
 		this.urlSourceFetcher = urlSourceFetcher;
 	}

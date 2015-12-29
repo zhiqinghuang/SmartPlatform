@@ -31,9 +31,7 @@ public class DefaultUserDetailsService implements UserDetailsService {
 	 */
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		logger.debug("username : {}", username);
-
 		String tenantId = tenantHolder.getTenantId();
-
 		if (debug) {
 			SpringSecurityUserAuth userAuth = new SpringSecurityUserAuth();
 			userAuth.setId("1");
@@ -41,37 +39,26 @@ public class DefaultUserDetailsService implements UserDetailsService {
 			userAuth.setDisplayName(username);
 			userAuth.setPermissions(Collections.singletonList("*"));
 			userAuth.setTenantId(tenantId);
-
 			return userAuth;
 		}
-
 		if (username == null) {
 			logger.info("username is null");
-
 			return null;
 		}
-
 		username = username.toLowerCase();
-
 		try {
 			UserAuthDTO userAuthDto = userAuthConnector.findByUsername(username, tenantId);
-
 			if (userAuthDto == null) {
 				logger.info("cannot find user : {}, {}", username, tenantId);
-
 				throw new UsernameNotFoundException(username + "," + tenantId);
 			}
-
 			String password = accountCredentialConnector.findPassword(username, tenantId);
-
 			SpringSecurityUserAuth userAuthResult = new SpringSecurityUserAuth();
 			beanMapper.copy(userAuthDto, userAuthResult);
 			userAuthResult.setPassword(password);
-
 			if (defaultPassword != null) {
 				userAuthResult.setPassword(defaultPassword);
 			}
-
 			return userAuthResult;
 		} catch (UsernameNotFoundException ex) {
 			throw ex;

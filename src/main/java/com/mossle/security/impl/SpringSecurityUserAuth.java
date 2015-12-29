@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import com.mossle.api.userauth.UserAuthDTO;
 
 public class SpringSecurityUserAuth extends UserAuthDTO implements UserDetails {
+	private static final long serialVersionUID = 6461403649116690799L;
 	private String password;
 	private Collection<? extends GrantedAuthority> authorities;
 
@@ -45,20 +46,15 @@ public class SpringSecurityUserAuth extends UserAuthDTO implements UserDetails {
 		return !this.isAccountExpired();
 	}
 
-	// ~ ==================================================
 	public void setPermissions(List<String> permissions) {
 		super.setPermissions(permissions);
-
 		if (authorities != null) {
 			return;
 		}
-
 		List<SimpleGrantedAuthority> authorities = new ArrayList<SimpleGrantedAuthority>();
-
 		for (String permission : permissions) {
 			authorities.add(new SimpleGrantedAuthority(permission));
 		}
-
 		this.authorities = authorities;
 	}
 
@@ -79,7 +75,6 @@ public class SpringSecurityUserAuth extends UserAuthDTO implements UserDetails {
 		if (rhs instanceof UserAuthDTO) {
 			return this.getUsername().equals(((UserAuthDTO) rhs).getUsername());
 		}
-
 		return false;
 	}
 
