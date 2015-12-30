@@ -39,45 +39,33 @@ public class AndroidDeviceResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public BaseDTO login(@FormParam("username") String username, @FormParam("password") String password, @FormParam("code") String code, @FormParam("type") String type, @FormParam("name") String name) {
 		logger.info("username : {}, password : {}, code : {}, type : {}, name : {}", username, password, code, type, name);
-
 		if (username == null) {
 			BaseDTO result = new BaseDTO();
 			result.setCode(400);
 			result.setMessage("username is null");
 			logger.info("username is null");
-
 			return result;
 		}
-
 		username = username.toLowerCase();
-
 		try {
 			PimDevice pimDevice = pimDeviceManager.findUniqueBy("code", code);
-
 			if ((pimDevice != null) && (!"active".equals(pimDevice.getStatus()))) {
 				BaseDTO result = new BaseDTO();
 				result.setCode(403);
 				result.setMessage("device is " + pimDevice.getStatus());
 				logger.info("device is " + pimDevice.getStatus());
-
 				return result;
 			}
-
 			String response = authenticationHandler.doAuthenticate(username, password, "normal");
-
 			if (!AccountStatus.SUCCESS.equals(response)) {
 				BaseDTO result = new BaseDTO();
 				result.setCode(401);
 				result.setMessage("authenticate fail, " + response);
-
 				logger.info("authenticate fail, " + response);
-
 				return result;
 			}
-
 			if (pimDevice == null) {
 				UserDTO userDto = userConnector.findByUsername(username, "1");
-
 				pimDevice = new PimDevice();
 				pimDevice.setName(name);
 				pimDevice.setCode(code);
@@ -93,20 +81,15 @@ public class AndroidDeviceResource {
 				pimDevice.setUserId(userDto.getId());
 				pimDeviceManager.save(pimDevice);
 			}
-
 			BaseDTO result = new BaseDTO();
-
 			result.setCode(200);
 			result.setData(pimDevice.getSessionId());
-
 			return result;
 		} catch (Exception ex) {
 			logger.error(ex.getMessage(), ex);
-
 			BaseDTO result = new BaseDTO();
 			result.setCode(500);
 			result.setMessage(ex.getMessage());
-
 			return result;
 		}
 	}
@@ -116,18 +99,13 @@ public class AndroidDeviceResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public BaseDTO checkLogin(@HeaderParam("sessionId") String sessionId) {
 		logger.info("sessionId : {}", sessionId);
-
 		PimDevice pimDevice = pimDeviceManager.findUniqueBy("sessionId", sessionId);
 		logger.info("pimDevice : {}", pimDevice);
-
 		if (pimDevice == null) {
 			return null;
 		}
-
 		BaseDTO result = new BaseDTO();
-
 		result.setCode(200);
-
 		return result;
 	}
 
@@ -136,20 +114,15 @@ public class AndroidDeviceResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public BaseDTO logout(@HeaderParam("sessionId") String sessionId) {
 		PimDevice pimDevice = pimDeviceManager.findUniqueBy("sessionId", sessionId);
-
 		if (pimDevice != null) {
 			pimDevice.setSessionId(null);
 			pimDeviceManager.save(pimDevice);
 		}
-
 		BaseDTO result = new BaseDTO();
-
 		result.setCode(200);
-
 		return result;
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setPimDeviceManager(PimDeviceManager pimDeviceManager) {
 		this.pimDeviceManager = pimDeviceManager;

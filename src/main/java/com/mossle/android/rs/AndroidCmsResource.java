@@ -34,30 +34,24 @@ public class AndroidCmsResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public BaseDTO articles() throws Exception {
 		logger.info("start");
-
 		String tenantId = "1";
 		String hql = "from CmsArticle where tenantId=? order by createTime desc";
 		List<CmsArticle> cmsArticles = cmsArticleManager.find(hql, tenantId);
-
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
 		for (CmsArticle cmsArticle : cmsArticles) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("title", cmsArticle.getTitle());
 			map.put("content", cmsArticle.getContent());
 			list.add(map);
 		}
-
 		String json = jsonMapper.toJson(list);
 		BaseDTO result = new BaseDTO();
 		result.setCode(200);
 		result.setData(json);
 		logger.info("end");
-
 		return result;
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setCmsArticleManager(CmsArticleManager cmsArticleManager) {
 		this.cmsArticleManager = cmsArticleManager;
