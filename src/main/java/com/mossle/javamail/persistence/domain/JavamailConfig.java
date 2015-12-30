@@ -17,31 +17,18 @@ public class JavamailConfig implements java.io.Serializable {
 	private static final long serialVersionUID = 0L;
 
 	private Long id;
-
 	private String username;
-
 	private String password;
-
 	private String receiveType;
-
 	private String receiveHost;
-
 	private String receivePort;
-
 	private String receiveSecure;
-
 	private String sendType;
-
 	private String sendHost;
-
 	private String sendPort;
-
 	private String sendSecure;
-
 	private Integer priority;
-
 	private String userId;
-
 	private Set<JavamailMessage> javamailMessages = new HashSet<JavamailMessage>(0);
 
 	public JavamailConfig() {

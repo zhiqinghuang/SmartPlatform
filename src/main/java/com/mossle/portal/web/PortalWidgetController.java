@@ -96,7 +96,6 @@ public class PortalWidgetController {
 		exportor.export(request, response, tableModel);
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setPortalWidgetManager(PortalWidgetManager portalWidgetManager) {
 		this.portalWidgetManager = portalWidgetManager;

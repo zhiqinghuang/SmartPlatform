@@ -16,21 +16,16 @@ public class DatabaseAccountCredentialConnector implements AccountCredentialConn
 	public String findPassword(String username, String tenantId) {
 		if (username == null) {
 			logger.info("username is null");
-
 			return null;
 		}
-
 		username = username.toLowerCase();
-
 		String password = null;
-
 		try {
 			password = jdbcTemplate.queryForObject(sqlFindPassword, String.class, username, tenantId);
 		} catch (Exception ex) {
 			logger.info(ex.getMessage());
 			logger.info("cannot find password : {}, {}", username, tenantId);
 		}
-
 		return password;
 	}
 

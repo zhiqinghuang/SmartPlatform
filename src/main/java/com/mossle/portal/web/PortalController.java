@@ -45,13 +45,10 @@ public class PortalController {
 	public String index(Model model) {
 		String userId = currentUserHolder.getUserId();
 		PortalRef portalRef = this.createOrGetPortalRef(userId);
-
 		if (portalRef == null) {
 			return "portal/index";
 		}
-
 		PortalInfo portalInfo = portalRef.getPortalInfo();
-
 		List<Integer> columnIndexes = portalItemManager.find("select distinct columnIndex from PortalItem where portalInfo=? order by columnIndex", portalInfo);
 		logger.debug("columnIndexes : {}", columnIndexes);
 		if (!columnIndexes.contains(Integer.valueOf(1))) {
@@ -63,21 +60,15 @@ public class PortalController {
 		if (!columnIndexes.contains(Integer.valueOf(3))) {
 			columnIndexes.add(Integer.valueOf(3));
 		}
-
 		Collections.sort(columnIndexes);
-
 		Map<Integer, List<PortalItem>> map = new LinkedHashMap<Integer, List<PortalItem>>();
-
 		for (Integer columnIndex : columnIndexes) {
 			List<PortalItem> portalItems = portalItemManager.find("from PortalItem where portalInfo=? and columnIndex=? order by rowIndex", portalInfo, columnIndex);
 			map.put(columnIndex, portalItems);
 		}
-
 		model.addAttribute("map", map);
-
 		List<PortalWidget> portalWidgets = portalWidgetManager.getAll();
 		model.addAttribute("portalWidgets", portalWidgets);
-
 		return "portal/index";
 	}
 
@@ -85,13 +76,10 @@ public class PortalController {
 	public String save(@RequestParam(value = "id", required = false) Long id, @RequestParam("portalWidgetId") Long portalWidgetId, @RequestParam("portalItemName") String portalItemName) {
 		String userId = currentUserHolder.getUserId();
 		PortalInfo portalInfo = this.copyOrGetPortalInfo(userId);
-
 		PortalWidget portalWidget = portalWidgetManager.get(portalWidgetId);
 		PortalItem portalItem = null;
-
 		if (id == null) {
 			portalItem = new PortalItem();
-
 			int columnIndex = (Integer) portalItemManager.findUnique("select min(columnIndex) from PortalItem where portalInfo=?", portalInfo);
 			Long rowIndexLong = (Long) portalItemManager.findUnique("select count(*) from PortalItem where portalInfo=? and columnIndex=?", portalInfo, columnIndex);
 			int rowIndex = rowIndexLong.intValue();
@@ -101,11 +89,9 @@ public class PortalController {
 		} else {
 			portalItem = this.createOrGetPortalItem(portalInfo, id);
 		}
-
 		portalItem.setName(portalItemName);
 		portalItem.setPortalWidget(portalWidget);
 		portalItemManager.save(portalItem);
-
 		return "redirect:/portal/index.do";
 	}
 
@@ -115,7 +101,6 @@ public class PortalController {
 		PortalInfo portalInfo = this.copyOrGetPortalInfo(userId);
 		PortalItem portalItem = this.createOrGetPortalItem(portalInfo, id);
 		portalItemManager.remove(portalItem);
-
 		return "redirect:/portal/index.do";
 	}
 
@@ -124,7 +109,6 @@ public class PortalController {
 		String userId = currentUserHolder.getUserId();
 		PortalInfo portalInfo = this.copyOrGetPortalInfo(userId);
 		int index = 0;
-
 		for (Long id : ids) {
 			PortalItem portalItem = this.createOrGetPortalItem(portalInfo, id);
 			String[] array = priorities.get(index).split(":");
@@ -135,70 +119,56 @@ public class PortalController {
 			portalItemManager.save(portalItem);
 			index++;
 		}
-
 		return "redirect:/portal/index.do";
 	}
 
 	public PortalRef createOrGetPortalRef(String userId) {
 		PortalRef portalRef = portalRefManager.findUniqueBy("userId", userId);
-
 		if (portalRef == null) {
 			PortalInfo portalInfo = portalInfoManager.findUniqueBy("globalStatus", "true");
-
 			if (portalInfo == null) {
 				return null;
 			}
-
 			portalRef = new PortalRef();
 			portalRef.setPortalInfo(portalInfo);
 			portalRef.setUserId(userId);
 			portalRefManager.save(portalRef);
 		}
-
 		return portalRef;
 	}
 
 	public PortalInfo copyOrGetPortalInfo(String userId) {
 		PortalRef portalRef = this.createOrGetPortalRef(userId);
 		PortalInfo portalInfo = null;
-
 		if (portalRef != null) {
 			portalInfo = portalRef.getPortalInfo();
-
 			if (userId.equals(portalInfo.getUserId())) {
 				return portalInfo;
 			}
 		}
-
 		PortalInfo targetPortalInfo = new PortalInfo();
-
 		if (portalInfo != null) {
 			beanMapper.copy(portalInfo, targetPortalInfo);
 		}
-
 		targetPortalInfo.setUserId(userId);
 		targetPortalInfo.setId(null);
 		targetPortalInfo.setPortalItems(new HashSet<PortalItem>());
 		targetPortalInfo.setPortalRefs(new HashSet<PortalRef>());
 		portalInfoManager.save(targetPortalInfo);
-
 		PortalRef targetPortalRef = new PortalRef();
 		targetPortalRef.setPortalInfo(targetPortalInfo);
 		targetPortalRef.setUserId(userId);
 		portalRefManager.save(targetPortalRef);
 		portalRefManager.remove(portalRef);
-
 		if (portalInfo != null) {
 			for (PortalItem portalItem : portalInfo.getPortalItems()) {
 				PortalItem targetPortalItem = new PortalItem();
 				beanMapper.copy(portalItem, targetPortalItem);
 				targetPortalItem.setPortalInfo(targetPortalInfo);
 				targetPortalItem.setId(null);
-
 				portalItemManager.save(targetPortalItem);
 			}
 		}
-
 		return targetPortalInfo;
 	}
 
@@ -206,11 +176,9 @@ public class PortalController {
 		PortalItem portalItem = portalItemManager.get(portalItemId);
 		String hql = "from PortalItem where portalInfo=? and columnIndex=? and rowIndex=?";
 		PortalItem targetPortalItem = portalItemManager.findUnique(hql, portalInfo, portalItem.getColumnIndex(), portalItem.getRowIndex());
-
 		return targetPortalItem;
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setPortalWidgetManager(PortalWidgetManager portalWidgetManager) {
 		this.portalWidgetManager = portalWidgetManager;

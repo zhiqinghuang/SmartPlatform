@@ -23,11 +23,9 @@ public class ChartController {
 		String sql = "SELECT PD.NAME_ AS NAME,COUNT(PD.NAME_) AS C" + " FROM ACT_HI_PROCINST PI,ACT_RE_PROCDEF PD" + " WHERE PI.PROC_DEF_ID_ =PD.ID_ AND PD.TENANT_ID_=?" + " GROUP BY PD.NAME_";
 		List list = jdbcTemplate.queryForList(sql, tenantId);
 		model.addAttribute("list", list);
-
 		return "report/chart-mostActiveProcess";
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;

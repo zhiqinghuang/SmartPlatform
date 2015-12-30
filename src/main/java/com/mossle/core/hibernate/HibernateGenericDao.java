@@ -97,7 +97,7 @@ public class HibernateGenericDao extends HibernateBasicDao {
 	 *            条件
 	 * @return Criteria
 	 */
-	public Criteria createCriteria(Class entityClass, Criterion... criterions) {
+	public Criteria createCriteria(Class<?> entityClass, Criterion... criterions) {
 		Criteria criteria = this.getSession().createCriteria(entityClass);
 
 		for (Criterion c : criterions) {
