@@ -44,7 +44,6 @@ public class AccessController {
 		propertyFilters.add(new PropertyFilter("EQS_tenantId", tenantHolder.getTenantId()));
 		page = accessManager.pagedQuery(page, propertyFilters);
 		model.addAttribute("page", page);
-
 		return "auth/access-list";
 	}
 
@@ -54,10 +53,8 @@ public class AccessController {
 			Access access = accessManager.get(id);
 			model.addAttribute("model", access);
 		}
-
 		List<Perm> perms = permManager.findBy("tenantId", tenantHolder.getTenantId());
 		model.addAttribute("perms", perms);
-
 		return "auth/access-input";
 	}
 
@@ -65,30 +62,23 @@ public class AccessController {
 	public String save(@ModelAttribute Access access, @RequestParam("permId") Long permId, RedirectAttributes redirectAttributes) {
 		// copy
 		Access dest = null;
-
 		Long id = access.getId();
-
 		if (id != null) {
 			dest = accessManager.get(id);
 			beanMapper.copy(access, dest);
 		} else {
 			dest = access;
 		}
-
 		// foreign
 		Perm perm = permManager.get(permId);
 		dest.setPerm(perm);
-
 		if (id == null) {
 			dest.setTenantId(tenantHolder.getTenantId());
 		}
-
 		// save
 		accessManager.save(dest);
-
 		messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
 		resourcePublisher.publish();
-
 		return "redirect:/auth/access-list.do";
 	}
 
@@ -97,9 +87,7 @@ public class AccessController {
 		List<Access> accesses = accessManager.findByIds(selectedItem);
 		accessManager.removeAll(accesses);
 		messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
-
 		resourcePublisher.publish();
-
 		return "redirect:/auth/access-list.do";
 	}
 
@@ -107,7 +95,6 @@ public class AccessController {
 	public void export(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
 		page = accessManager.pagedQuery(page, propertyFilters);
-
 		List<Access> accesses = (List<Access>) page.getResult();
 		TableModel tableModel = new TableModel();
 		tableModel.setName("access");
@@ -116,7 +103,6 @@ public class AccessController {
 		exportor.export(request, response, tableModel);
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setAccessManager(AccessManager accessManager) {
 		this.accessManager = accessManager;
