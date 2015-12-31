@@ -16,6 +16,7 @@ public class DateConverter implements Converter<String, Date> {
 	private List<String> patterns = new ArrayList<String>();
 
 	public DateConverter() {
+		patterns.add("yyyy-MM-dd HH:mm:ss");
 		patterns.add("yyyy-MM-dd'T'HH:mm:ss");
 		patterns.add("yyyy-MM-dd HH:mm");
 		patterns.add("yyyy-MM-dd");
@@ -25,28 +26,23 @@ public class DateConverter implements Converter<String, Date> {
 		if (text == null) {
 			return null;
 		}
-
 		for (String pattern : patterns) {
 			Date date = tryConvert(text, pattern);
-
 			if (date != null) {
 				return date;
 			}
 		}
-
 		return null;
 	}
 
 	public Date tryConvert(String text, String pattern) {
 		DateFormat dateFormat = new SimpleDateFormat(pattern);
 		dateFormat.setLenient(false);
-
 		try {
 			return dateFormat.parse(text);
 		} catch (ParseException ex) {
 			logger.debug(ex.getMessage(), ex);
 		}
-
 		return null;
 	}
 
