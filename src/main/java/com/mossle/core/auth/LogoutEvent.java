@@ -3,6 +3,7 @@ package com.mossle.core.auth;
 import org.springframework.context.ApplicationEvent;
 
 public class LogoutEvent extends ApplicationEvent {
+	private static final long serialVersionUID = 5279256536074155586L;
 	private String userId;
 	private String sessionId;
 	private String tenantId;

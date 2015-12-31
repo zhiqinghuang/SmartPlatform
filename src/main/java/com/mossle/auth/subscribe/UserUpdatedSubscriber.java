@@ -31,22 +31,17 @@ public class UserUpdatedSubscriber implements Subscribable<String> {
 	public void handleMessage(String message) {
 		UserDTO userDto = null;
 		String tenantId = null;
-
 		try {
 			userDto = jsonMapper.fromJson(message, UserDTO.class);
-
 			tenantId = userDto.getUserRepoRef();
 			jdbcTemplate.update(updateSql, userDto.getUsername(), userDto.getId(), tenantId);
-
 			logger.info("update user : {}", message);
 		} catch (IOException ex) {
 			logger.error(ex.getMessage(), ex);
 		}
-
 		if (userDto != null) {
 			String hql = "from UserStatus where username=? and tenantId=?";
 			UserStatus userStatus = userStatusManager.findUnique(hql, userDto.getUsername(), tenantId);
-
 			if (userStatus != null) {
 				authCache.evictUserStatus(userStatus);
 				logger.info("refresh cache : {}, {}", userStatus.getUsername(), userStatus.getTenantId());

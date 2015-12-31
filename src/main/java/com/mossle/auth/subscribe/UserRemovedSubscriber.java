@@ -29,17 +29,12 @@ public class UserRemovedSubscriber implements Subscribable<String> {
 		try {
 			UserDTO userDto = jsonMapper.fromJson(message, UserDTO.class);
 			String tenantId = userDto.getUserRepoRef();
-
 			Long entityId = this.getAuthUserStatusId(userDto.getId(), tenantId);
-
 			if (entityId == null) {
 				return;
 			}
-
 			jdbcTemplate.update(removeUserRoleSql, entityId);
-
 			jdbcTemplate.update(removeUserSql, entityId);
-
 			logger.info("update user : {}", message);
 		} catch (IOException ex) {
 			logger.error(ex.getMessage(), ex);
@@ -51,12 +46,10 @@ public class UserRemovedSubscriber implements Subscribable<String> {
 			return jdbcTemplate.queryForObject(selectUserSql, Long.class, ref, tenantId);
 		} catch (Exception ex) {
 			logger.error(ex.getMessage(), ex);
-
 			return null;
 		}
 	}
 
-	// ~
 	public boolean isTopic() {
 		return false;
 	}

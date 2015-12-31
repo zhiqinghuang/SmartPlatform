@@ -29,9 +29,7 @@ public class UserCreatedSubscriber implements Subscribable<String> {
 		try {
 			UserDTO userDto = jsonMapper.fromJson(message, UserDTO.class);
 			String tenantId = userDto.getUserRepoRef();
-
 			jdbcTemplate.update(insertSql, userDto.getUsername(), userDto.getId(), tenantId, tenantId);
-
 			logger.info("create user : {}", message);
 			authCache.evictUser(userDto.getId());
 		} catch (IOException ex) {
