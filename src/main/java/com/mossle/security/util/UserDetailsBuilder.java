@@ -27,17 +27,13 @@ public class UserDetailsBuilder {
 
 	public UserDetails build() {
 		String username = userInfo.getUsername();
-
 		if (username == null) {
 			throw new IllegalArgumentException("username cannot be null");
 		}
-
 		if (password == null) {
 			throw new IllegalArgumentException("password cannot be null");
 		}
-
 		String displayName = userInfo.getDisplayName();
-
 		if (displayName == null) {
 			displayName = username;
 		}
@@ -45,30 +41,24 @@ public class UserDetailsBuilder {
 		// TODO: 以后要强化这里的账号状态判断
 		boolean enabled = true;
 		Collection<GrantedAuthority> authSet = this.loadUserAuthorities(userInfo.getAuthorities());
-
 		List<String> attributes = userInfo.getAttributes();
 		UserStatusDetailsImpl userStatusDetailsImpl = new UserStatusDetailsImpl(username, password, enabled, authSet);
 		userStatusDetailsImpl.setAttributes(attributes);
 		userStatusDetailsImpl.setId(userInfo.getId());
 		userStatusDetailsImpl.setDisplayName(displayName);
 		userStatusDetailsImpl.setTenantId(userInfo.getTenantId());
-
 		return userStatusDetailsImpl;
 	}
 
 	protected Collection<GrantedAuthority> loadUserAuthorities(List<String> list) {
 		if ((list == null) || list.isEmpty()) {
 			logger.debug("no authorities");
-
-			return Collections.EMPTY_LIST;
+			return Collections.emptyList();
 		}
-
 		Set<GrantedAuthority> authsSet = new HashSet<GrantedAuthority>();
-
 		for (String str : list) {
 			authsSet.add(new SimpleGrantedAuthority(str));
 		}
-
 		return authsSet;
 	}
 }

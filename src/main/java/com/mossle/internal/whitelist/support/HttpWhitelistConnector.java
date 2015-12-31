@@ -24,12 +24,10 @@ public class HttpWhitelistConnector implements WhitelistConnector {
 	public WhitelistDTO getWhitelist(String code, String tenantId) {
 		WhitelistDTO result = new WhitelistDTO();
 		List<WhitelistDTO> whitelistDtos = this.getWhitelists(code, tenantId);
-
 		for (WhitelistDTO whitelistDto : whitelistDtos) {
 			result.getHosts().addAll(whitelistDto.getHosts());
 			result.getIps().addAll(whitelistDto.getIps());
 		}
-
 		return result;
 	}
 
@@ -38,15 +36,11 @@ public class HttpWhitelistConnector implements WhitelistConnector {
 			String text = httpHandler.readText(baseUrl + "?code=" + code + "&tenantId=" + tenantId);
 			Map<String, Object> result = jsonMapper.fromJson(text, Map.class);
 			logger.debug("result : {}", result);
-
 			List<Map> list = (List<Map>) result.get("data");
-
 			if (list == null) {
 				return Collections.emptyList();
 			}
-
 			List<WhitelistDTO> whitelistDtos = new ArrayList<WhitelistDTO>();
-
 			for (Map map : list) {
 				WhitelistDTO whitelistDto = new WhitelistDTO();
 				whitelistDtos.add(whitelistDto);
@@ -55,11 +49,9 @@ public class HttpWhitelistConnector implements WhitelistConnector {
 				whitelistDto.setHosts((List<String>) map.get("host"));
 				whitelistDto.setIps((List<String>) map.get("ip"));
 			}
-
 			return whitelistDtos;
 		} catch (Exception ex) {
 			logger.error(ex.getMessage(), ex);
-
 			return Collections.emptyList();
 		}
 	}
