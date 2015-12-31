@@ -17,12 +17,12 @@ import org.springframework.security.web.authentication.switchuser.SwitchUserGran
 
 public class AuthenticatedVoter implements AccessDecisionVoter<Object> {
 	private static Logger logger = LoggerFactory.getLogger(AuthenticatedVoter.class);
-	public static final String IS_GUEST = "IS_GUEST";
-	public static final String IS_USER = "IS_USER";
-	public static final String IS_LOGINED = "IS_LOGINED";
-	public static final String IS_SWITCHED = "IS_SWITCHED";
-	public static final String IS_REMEMBERED = "IS_REMEMBERED";
-	public static final Collection<String> ALLOWED_ATTRIBUTES;
+	private static final String IS_GUEST = "IS_GUEST";
+	private static final String IS_USER = "IS_USER";
+	private static final String IS_LOGINED = "IS_LOGINED";
+	private static final String IS_SWITCHED = "IS_SWITCHED";
+	private static final String IS_REMEMBERED = "IS_REMEMBERED";
+	private static final Collection<String> ALLOWED_ATTRIBUTES;
 
 	static {
 		List<String> list = new ArrayList<String>();
@@ -47,23 +47,24 @@ public class AuthenticatedVoter implements AccessDecisionVoter<Object> {
 		for (ConfigAttribute attribute : attributes) {
 			if (this.supports(attribute)) {
 				result = ACCESS_DENIED;
-				if (isGuest(authentication, attribute.getAttribute())) {
+				String strAttribute = attribute.getAttribute();
+				if (isGuest(strAttribute)) {
 					logger.trace("isGuest");
 					return ACCESS_GRANTED;
 				}
-				if (isUser(authentication, attribute.getAttribute())) {
+				if (isUser(authentication, strAttribute)) {
 					logger.trace("isUser");
 					return ACCESS_GRANTED;
 				}
-				if (isLogined(authentication, attribute.getAttribute())) {
+				if (isLogined(authentication, strAttribute)) {
 					logger.trace("isLogined");
 					return ACCESS_GRANTED;
 				}
-				if (isSwitched(authentication, attribute.getAttribute())) {
+				if (isSwitched(authentication, strAttribute)) {
 					logger.trace("isSwitched");
 					return ACCESS_GRANTED;
 				}
-				if (isRemembered(authentication, attribute.getAttribute())) {
+				if (isRemembered(authentication, strAttribute)) {
 					logger.trace("isRemembered");
 					return ACCESS_GRANTED;
 				}
@@ -73,11 +74,11 @@ public class AuthenticatedVoter implements AccessDecisionVoter<Object> {
 		return result;
 	}
 
-	public boolean isGuest(Authentication authentication, String attribute) {
+	private boolean isGuest(String attribute) {
 		return IS_GUEST.equals(attribute);
 	}
 
-	public boolean isUser(Authentication authentication, String attribute) {
+	private boolean isUser(Authentication authentication, String attribute) {
 		if (!IS_USER.equals(attribute)) {
 			return false;
 		}
@@ -86,7 +87,7 @@ public class AuthenticatedVoter implements AccessDecisionVoter<Object> {
 		return notGuest && notRemembered;
 	}
 
-	public boolean isLogined(Authentication authentication, String attribute) {
+	private boolean isLogined(Authentication authentication, String attribute) {
 		if (!IS_LOGINED.equals(attribute)) {
 			return false;
 		}
@@ -94,7 +95,7 @@ public class AuthenticatedVoter implements AccessDecisionVoter<Object> {
 		return notGuest;
 	}
 
-	public boolean isSwitched(Authentication authentication, String attribute) {
+	private boolean isSwitched(Authentication authentication, String attribute) {
 		if (!IS_SWITCHED.equals(attribute)) {
 			return false;
 		}
@@ -107,11 +108,11 @@ public class AuthenticatedVoter implements AccessDecisionVoter<Object> {
 		return false;
 	}
 
-	public boolean isRemembered(Authentication authentication, String attribute) {
+	private boolean isRemembered(Authentication authentication, String attribute) {
 		return IS_REMEMBERED.equals(attribute) && RememberMeAuthenticationToken.class.isAssignableFrom(authentication.getClass());
 	}
 
-	public boolean isOnlyGuest(Authentication authentication, String attribute) {
+	private boolean isOnlyGuest(Authentication authentication, String attribute) {
 		return IS_GUEST.equals(attribute) && AnonymousAuthenticationToken.class.isAssignableFrom(authentication.getClass());
 	}
 }
