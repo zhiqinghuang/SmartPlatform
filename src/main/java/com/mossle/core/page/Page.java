@@ -59,31 +59,11 @@ public class Page {
 		result = new ArrayList();
 	}
 
-	/**
-	 * 构造方法.
-	 * 
-	 * @param result
-	 *            Object
-	 * @param totalCount
-	 *            int
-	 */
 	public Page(Object result, int totalCount) {
 		this.result = result;
 		this.totalCount = totalCount;
 	}
 
-	/**
-	 * 构造方法.
-	 * 
-	 * @param pageNo
-	 *            int
-	 * @param pageSize
-	 *            int
-	 * @param orderBy
-	 *            String
-	 * @param order
-	 *            String
-	 */
 	public Page(int pageNo, int pageSize, String orderBy, String order) {
 		this.pageNo = pageNo;
 		this.pageSize = pageSize;
@@ -188,131 +168,87 @@ public class Page {
 		}
 	}
 
-	// ==========================================
-	// getter and setter method...
-	/** @return pageNo. */
 	public int getPageNo() {
 		return pageNo;
 	}
 
-	/**
-	 * @param pageNo
-	 *            int.
-	 */
 	public void setPageNo(int pageNo) {
 		this.pageNo = pageNo;
 		this.calculateStart();
 	}
 
-	/** @return pageSize. */
 	public int getPageSize() {
 		return pageSize;
 	}
 
-	/**
-	 * @param pageSize
-	 *            int.
-	 */
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
 		this.calculateStart();
 		this.calculatePageCount();
 	}
 
-	/** @return orderBy. */
 	public String getOrderBy() {
 		if (!this.orderBys.isEmpty()) {
 			return this.orderBys.get(0);
 		}
-
 		return null;
 	}
 
-	/**
-	 * @param orderBy
-	 *            String.
-	 */
 	public void setOrderBy(String orderBy) {
 		if ((orderBy == null) || (orderBy.trim().length() == 0)) {
 			throw new IllegalArgumentException("orderBy should be blank");
 		}
-
 		this.orderBys.clear();
 		this.orderBys.add(orderBy);
-
 		if (this.getOrders().size() != 1) {
 			this.setOrder(ASC);
 		}
 	}
 
-	/** @return order. */
 	public String getOrder() {
 		if (!this.orders.isEmpty()) {
 			return this.orders.get(0);
 		}
-
 		return ASC;
 	}
 
-	/**
-	 * @param order
-	 *            String.
-	 */
 	public void setOrder(String order) {
 		this.checkAndSetOrder(order);
 	}
 
-	/** @return result. */
 	public Object getResult() {
 		return result;
 	}
 
-	/**
-	 * @param result
-	 *            Object.
-	 */
 	public void setResult(Object result) {
 		this.result = result;
 	}
 
-	/** @return totalCount. */
 	public long getTotalCount() {
 		return totalCount;
 	}
 
-	/**
-	 * @param totalCount
-	 *            int.
-	 */
 	public void setTotalCount(long totalCount) {
 		this.totalCount = totalCount;
 		this.calculatePageCount();
 	}
 
-	/** @return autoCount. */
 	public boolean isAutoCount() {
 		return autoCount;
 	}
 
-	/**
-	 * @param autoCount
-	 *            boolean.
-	 */
 	public void setAutoCount(boolean autoCount) {
 		this.autoCount = autoCount;
 	}
 
-	/** @return start. */
 	public long getStart() {
 		return start;
 	}
 
-	/** @return pageCount. */
 	public long getPageCount() {
 		return pageCount;
 	}
 
-	/** @return result size. */
 	public int getResultSize() {
 		if (result instanceof Collection) {
 			return ((Collection) result).size();
@@ -321,12 +257,6 @@ public class Page {
 		}
 	}
 
-	/**
-	 * chck and set order.
-	 * 
-	 * @param text
-	 *            String
-	 */
 	private void checkAndSetOrder(String text) {
 		if (ASC.equalsIgnoreCase(text) || DESC.equalsIgnoreCase(text)) {
 			text = text.toUpperCase(Locale.CHINA);
@@ -349,9 +279,7 @@ public class Page {
 			this.orderBys.clear();
 			this.orders.clear();
 		}
-
 		this.orderBys.add(orderBy);
-
 		if (ASC.equalsIgnoreCase(order) || DESC.equalsIgnoreCase(order)) {
 			order = order.toUpperCase(Locale.CHINA);
 			this.orders.add(order);
