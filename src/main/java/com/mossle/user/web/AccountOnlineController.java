@@ -39,9 +39,7 @@ public class AccountOnlineController {
 		List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
 		propertyFilters.add(new PropertyFilter("EQS_tenantId", tenantId));
 		page = accountOnlineManager.pagedQuery(page, propertyFilters);
-
 		model.addAttribute("page", page);
-
 		return "user/account-online-list";
 	}
 
@@ -51,7 +49,6 @@ public class AccountOnlineController {
 			AccountOnline accountOnline = accountOnlineManager.get(id);
 			model.addAttribute("model", accountOnline);
 		}
-
 		return "user/account-online-input";
 	}
 
@@ -59,9 +56,7 @@ public class AccountOnlineController {
 	public String save(@ModelAttribute AccountOnline accountOnline, @RequestParam Map<String, Object> parameterMap, RedirectAttributes redirectAttributes) {
 		String tenantId = tenantHolder.getTenantId();
 		AccountOnline dest = null;
-
 		Long id = accountOnline.getId();
-
 		if (id != null) {
 			dest = accountOnlineManager.get(id);
 			beanMapper.copy(accountOnline, dest);
@@ -69,22 +64,16 @@ public class AccountOnlineController {
 			dest = accountOnline;
 			dest.setTenantId(tenantId);
 		}
-
 		accountOnlineManager.save(dest);
-
 		messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-
 		return "redirect:/user/account-online-list.do";
 	}
 
 	@RequestMapping("account-online-remove")
 	public String remove(@RequestParam("selectedItem") List<Long> selectedItem, RedirectAttributes redirectAttributes) {
 		List<AccountOnline> accountOnlines = accountOnlineManager.findByIds(selectedItem);
-
 		accountOnlineManager.removeAll(accountOnlines);
-
 		messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
-
 		return "redirect:/user/account-online-list.do";
 	}
 
@@ -94,9 +83,7 @@ public class AccountOnlineController {
 		List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
 		propertyFilters.add(new PropertyFilter("EQS_tenantId", tenantId));
 		page = accountOnlineManager.pagedQuery(page, propertyFilters);
-
 		List<AccountOnline> accountOnlines = (List<AccountOnline>) page.getResult();
-
 		TableModel tableModel = new TableModel();
 		tableModel.setName("account online");
 		tableModel.addHeaders("id", "client", "server", "resource");
@@ -104,7 +91,6 @@ public class AccountOnlineController {
 		exportor.export(request, response, tableModel);
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setAccountOnlineManager(AccountOnlineManager accountOnlineManager) {
 		this.accountOnlineManager = accountOnlineManager;

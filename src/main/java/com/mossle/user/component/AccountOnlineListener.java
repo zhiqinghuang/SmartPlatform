@@ -16,7 +16,7 @@ import com.mossle.user.persistence.domain.AccountOnline;
 import com.mossle.user.persistence.manager.AccountOnlineManager;
 
 @Component
-public class AccountOnlineListener implements ApplicationListener {
+public class AccountOnlineListener implements ApplicationListener<ApplicationEvent> {
 	private static Logger logger = LoggerFactory.getLogger(AccountOnlineListener.class);
 	private AccountOnlineManager accountOnlineManager;
 
@@ -25,7 +25,6 @@ public class AccountOnlineListener implements ApplicationListener {
 			if (event instanceof LoginEvent) {
 				LoginEvent loginEvent = (LoginEvent) event;
 				logger.debug("login : {}", loginEvent);
-
 				AccountOnline accountOnline = new AccountOnline();
 				accountOnline.setAccount(loginEvent.getUserId());
 				accountOnline.setSessionId(loginEvent.getSessionId());
@@ -33,20 +32,15 @@ public class AccountOnlineListener implements ApplicationListener {
 				accountOnline.setTenantId(loginEvent.getTenantId());
 				accountOnlineManager.save(accountOnline);
 			}
-
 			if (event instanceof LogoutEvent) {
 				LogoutEvent logoutEvent = (LogoutEvent) event;
 				logger.debug("logout : {}", logoutEvent);
-
 				AccountOnline accountOnline = accountOnlineManager.findUniqueBy("sessionId", logoutEvent.getSessionId());
-
 				if (accountOnline == null) {
 					accountOnline = accountOnlineManager.findUniqueBy("account", logoutEvent.getUserId());
 				}
-
 				logger.debug("sessionId : {}", logoutEvent.getSessionId());
 				logger.debug("accountOnline : {}", accountOnline);
-
 				if (accountOnline != null) {
 					accountOnlineManager.remove(accountOnline);
 				}
