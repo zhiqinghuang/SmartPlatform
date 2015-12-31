@@ -1,5 +1,6 @@
 package com.mossle.user.persistence.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -12,7 +13,7 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "ACCOUNT_LOCK_LOG")
-public class AccountLockLog implements java.io.Serializable {
+public class AccountLockLog implements Serializable {
 	private static final long serialVersionUID = 0L;
 
 	private Long id;

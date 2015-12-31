@@ -3,6 +3,7 @@ package com.mossle.core.auth;
 import org.springframework.context.ApplicationEvent;
 
 public class LoginEvent extends ApplicationEvent {
+	private static final long serialVersionUID = 5177843232109909535L;
 	private String userId;
 	private String sessionId;
 	private String result;

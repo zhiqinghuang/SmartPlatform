@@ -29,19 +29,15 @@ public class AccountLockListener implements ApplicationListener<LoginEvent> {
 		if (!(event instanceof LoginEvent)) {
 			return;
 		}
-
 		LoginEvent loginEvent = (LoginEvent) event;
 		logger.debug("login : {}", loginEvent);
-
 		try {
 			String username = loginEvent.getUserId();
 			username = username.toLowerCase();
-
 			if ("success".equals(loginEvent.getResult())) {
 				String logHql = "from AccountLockLog where type=? and username=?";
 				List<AccountLockLog> accountLockLogs = accountLockLogManager.find(logHql, loginEvent.getType(), username);
 				accountLockLogManager.removeAll(accountLockLogs);
-
 				String infoHql = "from AccountLockInfo where type=? and username=?";
 				List<AccountLockInfo> accountLockInfos = accountLockInfoManager.find(infoHql, loginEvent.getType(), username);
 				accountLockInfoManager.removeAll(accountLockInfos);
@@ -51,10 +47,8 @@ public class AccountLockListener implements ApplicationListener<LoginEvent> {
 				accountLockLog.setLockTime(new Date());
 				accountLockLog.setUsername(username);
 				accountLockLogManager.save(accountLockLog);
-
 				String logHql = "from AccountLockLog where type=? and username=?";
 				List<AccountLockLog> accountLockLogs = accountLockLogManager.find(logHql, loginEvent.getType(), username);
-
 				if (accountLockLogs.size() > threhold) {
 					AccountLockInfo accountLockInfo = new AccountLockInfo();
 					accountLockInfo.setType(loginEvent.getType());

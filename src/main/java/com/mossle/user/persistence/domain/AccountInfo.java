@@ -1,5 +1,6 @@
 package com.mossle.user.persistence.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,8 +17,8 @@ import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "ACCOUNT_INFO")
-public class AccountInfo implements java.io.Serializable {
-	private static final long serialVersionUID = 0L;
+public class AccountInfo implements Serializable {
+	private static final long serialVersionUID = -4106101233651023142L;
 
 	private Long id;
 	private String code;
