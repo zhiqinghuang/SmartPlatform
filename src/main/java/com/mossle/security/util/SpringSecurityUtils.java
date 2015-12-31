@@ -282,4 +282,15 @@ public class SpringSecurityUtils {
 		SpringSecurityUserAuth springSecurityUserAuth = (SpringSecurityUserAuth) principal;
 		return springSecurityUserAuth;
 	}
+
+	public static String getUser(Authentication authentication) {
+		Object principal = authentication.getPrincipal();
+		String user = null;
+		if (principal instanceof SpringSecurityUserAuth) {
+			user = ((SpringSecurityUserAuth) principal).getId();
+		} else {
+			user = authentication.getName();
+		}
+		return user;
+	}
 }
