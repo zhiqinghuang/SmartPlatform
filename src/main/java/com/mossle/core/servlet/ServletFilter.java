@@ -46,7 +46,6 @@ public class ServletFilter extends ProxyFilter {
 				return;
 			}
 		}
-
 		filterChain.doFilter(request, response);
 	}
 

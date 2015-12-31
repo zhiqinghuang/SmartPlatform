@@ -45,21 +45,16 @@ public class ProxyFilter implements Filter {
 			String contextPath = req.getContextPath();
 			String requestUri = req.getRequestURI();
 			String path = requestUri.substring(contextPath.length());
-
 			// 如果在黑名单中，直接略过
 			if (isExcluded(path)) {
 				chain.doFilter(request, response);
-
 				return;
 			}
-
 			// 如果符合redirect规则，进行跳转
 			if (urlPatternMatcher.shouldRedirect(path)) {
 				res.sendRedirect(contextPath + path + "/");
-
 				return;
 			}
-
 			// 如果都没问题，才会继续进行判断
 			if (urlPatternMatcher.matches(path)) {
 				filter.doFilter(request, response, chain);
@@ -77,11 +72,9 @@ public class ProxyFilter implements Filter {
 				return true;
 			}
 		}
-
 		return false;
 	}
 
-	// ~ ==================================================
 	public String getName() {
 		return name;
 	}
