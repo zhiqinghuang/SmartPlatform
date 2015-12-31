@@ -141,17 +141,6 @@ public class HibernateGenericDao extends HibernateBasicDao {
 	// ============================================================================================
 	// find Criteria
 	// ============================================================================================
-	/**
-	 * find by critrions.
-	 * 
-	 * @param entityClass
-	 *            Class
-	 * @param criterions
-	 *            Criterion...
-	 * @param <T>
-	 *            generic
-	 * @return List
-	 */
 	@Transactional(readOnly = true)
 	public <T> List<T> find(Class<T> entityClass, Criterion... criterions) {
 		return this.createCriteria(entityClass, criterions).list();
@@ -176,15 +165,6 @@ public class HibernateGenericDao extends HibernateBasicDao {
 	// ============================================================================================
 	// find Query
 	// ============================================================================================
-	/**
-	 * find by hql and values.
-	 * 
-	 * @param hql
-	 *            String
-	 * @param values
-	 *            Object
-	 * @return List
-	 */
 	@Transactional(readOnly = true)
 	public List find(String hql, Object... values) {
 		return this.createQuery(hql, values).list();
