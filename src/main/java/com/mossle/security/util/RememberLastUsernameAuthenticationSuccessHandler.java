@@ -13,7 +13,6 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 
 import com.mossle.api.tenant.TenantHolder;
 import com.mossle.security.SecurityConstants;
-import com.mossle.security.impl.SpringSecurityUserAuth;
 
 public class RememberLastUsernameAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 	private TenantHolder tenantHolder;
@@ -37,13 +36,7 @@ public class RememberLastUsernameAuthenticationSuccessHandler extends SavedReque
 		if (authentication == null) {
 			return "";
 		}
-
-		Object principal = authentication.getPrincipal();
-		if (principal instanceof SpringSecurityUserAuth) {
-			return ((SpringSecurityUserAuth) principal).getUsername();
-		} else {
-			return authentication.getName();
-		}
+		return SpringSecurityUtils.getUser(authentication);
 	}
 
 	@Resource

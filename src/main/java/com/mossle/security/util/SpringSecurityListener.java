@@ -25,7 +25,7 @@ import com.mossle.api.audit.AuditDTO;
 import com.mossle.core.auth.LoginEvent;
 import com.mossle.security.impl.SpringSecurityUserAuth;
 
-public class SpringSecurityListener implements ApplicationListener, ApplicationContextAware {
+public class SpringSecurityListener implements ApplicationListener<ApplicationEvent>, ApplicationContextAware {
 	private static Logger logger = LoggerFactory.getLogger(SpringSecurityListener.class);
 	private AuditConnector auditConnector;
 	private ApplicationContext ctx;

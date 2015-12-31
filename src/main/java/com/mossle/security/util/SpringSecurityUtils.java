@@ -283,6 +283,7 @@ public class SpringSecurityUtils {
 		return springSecurityUserAuth;
 	}
 
+	//bill wong
 	public static String getUser(Authentication authentication) {
 		Object principal = authentication.getPrincipal();
 		String user = null;

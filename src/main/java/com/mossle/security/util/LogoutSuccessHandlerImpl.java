@@ -15,7 +15,6 @@ import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuc
 
 import com.mossle.api.tenant.TenantHolder;
 import com.mossle.core.auth.LogoutEvent;
-import com.mossle.security.impl.SpringSecurityUserAuth;
 
 /**
  * 主要为了把logoutEvent发布出去.
@@ -27,9 +26,7 @@ public class LogoutSuccessHandlerImpl extends SimpleUrlLogoutSuccessHandler impl
 	// setDefaultTargetUrl
 	public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 		super.handle(request, response, authentication);
-
 		String tenantId = tenantHolder.getTenantId();
-
 		String userId = this.getUserId(authentication);
 		String sessionId = this.getSessionId(authentication);
 		LogoutEvent logoutEvent = new LogoutEvent(authentication, userId, sessionId, tenantId);
@@ -40,29 +37,18 @@ public class LogoutSuccessHandlerImpl extends SimpleUrlLogoutSuccessHandler impl
 		if (authentication == null) {
 			return "";
 		}
-
-		Object principal = authentication.getPrincipal();
-
-		if (principal instanceof SpringSecurityUserAuth) {
-			return ((SpringSecurityUserAuth) principal).getId();
-		} else {
-			return authentication.getName();
-		}
+		return SpringSecurityUtils.getUser(authentication);
 	}
 
 	public String getSessionId(Authentication authentication) {
 		if (authentication == null) {
 			return "";
 		}
-
 		Object details = authentication.getDetails();
-
 		if (!(details instanceof WebAuthenticationDetails)) {
 			return "";
 		}
-
 		WebAuthenticationDetails webDetails = (WebAuthenticationDetails) details;
-
 		return webDetails.getSessionId();
 	}
 
