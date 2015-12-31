@@ -16,10 +16,10 @@ public class DateConverter implements Converter<String, Date> {
 	private List<String> patterns = new ArrayList<String>();
 
 	public DateConverter() {
-		patterns.add("yyyy-MM-dd HH:mm:ss");
 		patterns.add("yyyy-MM-dd'T'HH:mm:ss");
 		patterns.add("yyyy-MM-dd HH:mm");
 		patterns.add("yyyy-MM-dd");
+		patterns.add("yyyy-MM-dd HH:mm:ss");
 	}
 
 	public Date convert(String text) {

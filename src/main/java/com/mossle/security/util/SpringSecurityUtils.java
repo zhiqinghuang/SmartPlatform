@@ -39,9 +39,6 @@ public class SpringSecurityUtils {
 		return (T) principal;
 	}
 
-	/**
-	 * 取得当前用户的登录名, 如果当前用户未登录则返回空字符串.
-	 */
 	public static String getCurrentUsername() {
 		Authentication authentication = getAuthentication();
 		if ((authentication == null) || (authentication.getPrincipal() == null)) {
@@ -50,9 +47,6 @@ public class SpringSecurityUtils {
 		return authentication.getName();
 	}
 
-	/**
-	 * 取得当前用户的id，如果当前用户与未登录，则返回null.
-	 */
 	public static String getCurrentUserId() {
 		SpringSecurityUserAuth springSecurityUserAuth = getCurrentUser();
 		if (springSecurityUserAuth == null) {
@@ -61,9 +55,6 @@ public class SpringSecurityUtils {
 		return springSecurityUserAuth.getId();
 	}
 
-	/**
-	 * 取得当前用户登录IP, 如果当前用户未登录则返回空字符串.
-	 */
 	public static String getCurrentUserIp() {
 		Authentication authentication = getAuthentication();
 		if (authentication == null) {
@@ -77,14 +68,6 @@ public class SpringSecurityUtils {
 		return webDetails.getRemoteAddress();
 	}
 
-	/**
-	 * 将UserDetails保存到Security Context.
-	 * 
-	 * @param userDetails
-	 *            已初始化好的用户信息.
-	 * @param request
-	 *            用于获取用户IP地址信息,可为Null.
-	 */
 	public static void saveUserDetailsToContext(UserDetails userDetails, HttpServletRequest request) {
 		PreAuthenticatedAuthenticationToken authentication = new PreAuthenticatedAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
 		if (request != null) {
@@ -101,9 +84,6 @@ public class SpringSecurityUtils {
 		securityContext.setAuthentication(authentication);
 	}
 
-	/**
-	 * 取得Authentication, 如当前SecurityContext为空时返回null.
-	 */
 	public static Authentication getAuthentication() {
 		SecurityContext context = SecurityContextHolder.getContext();
 		return context.getAuthentication();
@@ -182,9 +162,6 @@ public class SpringSecurityUtils {
 		return authorities;
 	}
 
-	/**
-	 * 判断用户是否拥有角色, 如果用户拥有参数中的任意一个角色则返回true.
-	 */
 	public static boolean hasRole(String... roles) {
 		if (roles == null) {
 			logger.warn("roles is null");
@@ -260,9 +237,6 @@ public class SpringSecurityUtils {
 		return roles;
 	}
 
-	/**
-	 * 取得当前用户的id，如果当前用户与未登录，则返回null.
-	 */
 	public static SpringSecurityUserAuth getCurrentUser(SecurityContext securityContext) {
 		Assert.notNull(securityContext, "securityContext cannot be null");
 		Authentication authentication = securityContext.getAuthentication();
