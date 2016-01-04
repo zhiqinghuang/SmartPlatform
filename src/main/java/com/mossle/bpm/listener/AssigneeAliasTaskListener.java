@@ -19,6 +19,7 @@ import com.mossle.bpm.rule.SuperiorAssigneeRule;
 import com.mossle.bpm.support.DefaultTaskListener;
 
 public class AssigneeAliasTaskListener extends DefaultTaskListener {
+	private static final long serialVersionUID = 5741577107581684476L;
 	private static Logger logger = LoggerFactory.getLogger(AssigneeAliasTaskListener.class);
 	private JdbcTemplate jdbcTemplate;
 	private Map<RuleMatcher, AssigneeRule> assigneeRuleMap = new HashMap<RuleMatcher, AssigneeRule>();
