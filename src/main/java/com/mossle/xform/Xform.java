@@ -34,21 +34,16 @@ public class Xform {
 
 	public String getJsonData() throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
-
 		for (Map.Entry<String, XformField> entry : fieldMap.entrySet()) {
 			XformField xformField = entry.getValue();
-
 			if (xformField.getName() == null) {
 				continue;
 			}
-
 			if ("fileupload".equals(xformField.getType())) {
 				if (xformField.getValue() == null) {
 					continue;
 				}
-
 				Map<String, Object> data = new HashMap<String, Object>();
-
 				data.put("key", xformField.getValue());
 				data.put("label", xformField.getLabel());
 				map.put(xformField.getName(), data);
@@ -56,34 +51,27 @@ public class Xform {
 				map.put(xformField.getName(), xformField.getValue());
 			}
 		}
-
 		return jsonMapper.toJson(map);
 	}
 
 	public Map<String, Object> getMapData() throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
-
 		for (Map.Entry<String, XformField> entry : fieldMap.entrySet()) {
 			XformField xformField = entry.getValue();
-
 			if (xformField.getName() == null) {
 				continue;
 			}
-
 			if ("userpicker".equals(xformField.getType())) {
 				Object value = xformField.getValue();
 				String text = "";
-
 				if (value != null) {
 					text = value.toString();
 				}
-
 				map.put(xformField.getName(), new ArrayList(Arrays.asList(text.split(","))));
 			} else {
 				map.put(xformField.getName(), xformField.getValue());
 			}
 		}
-
 		return map;
 	}
 }
