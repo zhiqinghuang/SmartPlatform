@@ -39,8 +39,7 @@ public class UserAuthConnectorFactoryBean implements FactoryBean<UserAuthConnect
 	}
 
 	public void processMock() {
-		MockUserAuthConnector mockUserAuthConnector = new MockUserAuthConnector();
-		userAuthConnector = mockUserAuthConnector;
+		userAuthConnector = new MockUserAuthConnector();
 	}
 
 	public void processDatabase() {

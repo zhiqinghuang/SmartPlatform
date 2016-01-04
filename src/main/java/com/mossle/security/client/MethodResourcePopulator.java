@@ -22,24 +22,18 @@ public class MethodResourcePopulator {
 	public void execute(DelegatingMethodSecurityMetadataSource delegatingMethodSecurityMetadataSource, Map<String, String> resourceMap) {
 		Assert.notNull(delegatingMethodSecurityMetadataSource);
 		Assert.notNull(resourceMap);
-
 		logger.info("refresh method resource");
-
 		Map<String, List<ConfigAttribute>> methodMap = null;
 		methodMap = new LinkedHashMap<String, List<ConfigAttribute>>();
-
 		for (Map.Entry<String, String> entry : resourceMap.entrySet()) {
 			methodMap.put(entry.getKey(), SecurityConfig.createListFromCommaDelimitedString(entry.getValue()));
 		}
-
 		MethodSecurityMetadataSource source = new MapBasedMethodSecurityMetadataSource(methodMap);
 		List<MethodSecurityMetadataSource> sources = new ArrayList<MethodSecurityMetadataSource>();
 		sources.add(source);
-
 		List<MethodSecurityMetadataSource> methodSecurityMetadataSources = delegatingMethodSecurityMetadataSource.getMethodSecurityMetadataSources();
 		methodSecurityMetadataSources.clear();
 		methodSecurityMetadataSources.addAll(sources);
-
 		Map attributeCache = (Map) BeanUtils.safeGetFieldValue(delegatingMethodSecurityMetadataSource, "attributeCache");
 		attributeCache.clear();
 	}
