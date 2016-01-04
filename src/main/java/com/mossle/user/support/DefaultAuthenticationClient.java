@@ -4,9 +4,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.mossle.api.user.AccountStatus;
 import com.mossle.api.user.AccountStatusHelper;
 import com.mossle.api.user.AuthenticationClient;
@@ -16,7 +13,6 @@ import com.mossle.user.persistence.manager.AccountCredentialManager;
 import com.mossle.user.persistence.manager.AccountInfoManager;
 
 public class DefaultAuthenticationClient implements AuthenticationClient {
-	private static Logger logger = LoggerFactory.getLogger(DefaultAuthenticationClient.class);
 	private AccountInfoManager accountInfoManager;
 	private AccountCredentialManager accountCredentialManager;
 	private CustomPasswordEncoder customPasswordEncoder;
@@ -25,27 +21,20 @@ public class DefaultAuthenticationClient implements AuthenticationClient {
 
 	public String doAuthenticate(String username, String password, String type, String application) {
 		boolean locked = accountStatusHelper.isLocked(username, application);
-
 		if (locked) {
 			return AccountStatus.LOCKED;
 		}
-
 		String result = AccountStatus.FAILURE;
-
 		for (AuthenticationHandler authenticationHandler : authenticationHandlers) {
 			if (authenticationHandler.support(type)) {
 				result = authenticationHandler.doAuthenticate(username, password, application);
-
 				break;
 			}
 		}
-
 		if (!AccountStatus.SUCCESS.equals(result)) {
 			return result;
 		}
-
 		String status = accountStatusHelper.getAccountStatus(username, application);
-
 		return status;
 	}
 

@@ -25,7 +25,6 @@ public class PartyUserNotification implements UserNotification {
 
 	public void insertUser(UserBase userBase) {
 		Long typeId = 1L;
-
 		jdbcTemplate.update(insertPartyEntitySql, userBase.getUsername(), userBase.getId(), typeId);
 	}
 
@@ -37,14 +36,11 @@ public class PartyUserNotification implements UserNotification {
 	public void removeUser(UserBase userBase) {
 		Long typeId = 1L;
 		Long entityId = this.getPartyEntityId(userBase.getId(), typeId);
-
 		if (entityId == null) {
 			return;
 		}
-
 		Long structTypeId = 1L;
 		jdbcTemplate.update(removePartyStructSql, structTypeId, entityId, entityId);
-
 		jdbcTemplate.update(removePartyEntitySql, entityId);
 	}
 
@@ -53,7 +49,6 @@ public class PartyUserNotification implements UserNotification {
 			return jdbcTemplate.queryForObject(selectPartyEntitySql, Long.class, reference, typeId);
 		} catch (Exception ex) {
 			logger.error(ex.getMessage(), ex);
-
 			return null;
 		}
 	}

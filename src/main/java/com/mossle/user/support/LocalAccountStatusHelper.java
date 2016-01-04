@@ -24,44 +24,35 @@ public class LocalAccountStatusHelper implements AccountStatusHelper {
 
 	public boolean isLocked(String username, String application) {
 		AccountLockInfo accountLockInfo = accountLockInfoManager.findUnique("from AccountLockInfo where username=? and type=?", username, application);
-
 		return accountLockInfo != null;
 	}
 
 	public String getAccountStatus(String username, String application) {
 		AccountInfo accountInfo = accountInfoManager.findUnique("from AccountInfo where username=?", username);
-
 		if (!"1".equals(accountInfo.getStatus())) {
 			return AccountStatus.ACCOUNT_DISABLED;
 		}
-
 		Date now = new Date();
-
 		try {
 			// account expire
 			Date accountExpireDate = accountInfo.getCloseTime();
-
 			if ((accountExpireDate != null) && accountExpireDate.before(now)) {
 				return AccountStatus.ACCOUNT_EXPIRED;
 			}
 		} catch (Exception ex) {
 			logger.debug(ex.getMessage(), ex);
 		}
-
 		// TODO: password must change
 		try {
 			AccountCredential accountCredential = accountCredentialManager.findUnique("from AccountCredential from accountInfo=? and catalog='normal'");
-
 			// password expire
 			Date passwordExpireDate = accountCredential.getExpireTime();
-
 			if ((passwordExpireDate != null) && passwordExpireDate.before(now)) {
 				return AccountStatus.PASSWORD_EXPIRED;
 			}
 		} catch (Exception ex) {
 			logger.debug(ex.getMessage(), ex);
 		}
-
 		return AccountStatus.ENABLED;
 	}
 

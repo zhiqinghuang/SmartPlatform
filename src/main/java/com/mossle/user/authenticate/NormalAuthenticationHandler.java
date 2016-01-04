@@ -27,25 +27,18 @@ public class NormalAuthenticationHandler implements AuthenticationHandler {
 	public String doAuthenticate(String username, String password, String application) {
 		if (username == null) {
 			logger.info("username cannot be null");
-
 			return AccountStatus.ACCOUNT_NOT_EXISTS;
 		}
-
 		username = username.toLowerCase();
-
 		AccountInfo accountInfo = accountInfoManager.findUniqueBy("username", username);
-
 		if (accountInfo == null) {
 			return AccountStatus.ACCOUNT_NOT_EXISTS;
 		}
-
 		String hql = "from AccountCredential where accountInfo=? and catalog='default'";
 		AccountCredential accountCredential = accountCredentialManager.findUnique(hql, accountInfo);
-
 		if (accountCredential == null) {
 			return AccountStatus.PASSWORD_NOT_EXISTS;
 		}
-
 		if (customPasswordEncoder.matches(password, accountCredential.getPassword())) {
 			return AccountStatus.SUCCESS;
 		} else {

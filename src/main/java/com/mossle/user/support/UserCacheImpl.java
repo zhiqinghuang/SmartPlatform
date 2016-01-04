@@ -11,31 +11,26 @@ public class UserCacheImpl implements UserCache {
 
 	public UserDTO findById(String id) {
 		String key = "userId:" + id;
-
 		return cache.get(key);
 	}
 
 	public UserDTO findByUsername(String username, String userRepoRef) {
 		String key = "userUsername:" + username + ":" + userRepoRef;
-
 		return cache.get(key);
 	}
 
 	public UserDTO findByRef(String ref, String userRepoRef) {
 		String key = "userRef:" + ref + ":" + userRepoRef;
-
 		return cache.get(key);
 	}
 
 	public UserDTO findByNickName(String nickName) {
 		String key = "nickName:" + nickName;
-
 		return cache.get(key);
 	}
 
 	public void updateUser(UserDTO userDto) {
 		this.removeUser(userDto);
-
 		// cache.set("userId:" + userDto.getId(), userDto);
 		// cache.set(
 		// "userUsername:" + userDto.getUsername() + ":"

@@ -14,7 +14,7 @@ import com.mossle.api.user.UserCache;
 import com.mossle.api.user.UserConnector;
 import com.mossle.api.user.UserSyncConnector;
 
-public class UserConnectorFactoryBean implements FactoryBean {
+public class UserConnectorFactoryBean implements FactoryBean<UserConnector> {
 	private static Logger logger = LoggerFactory.getLogger(UserConnectorFactoryBean.class);
 	private UserConnector userConnector;
 	private String type = "database";
@@ -79,11 +79,11 @@ public class UserConnectorFactoryBean implements FactoryBean {
 		}
 	}
 
-	public Object getObject() {
+	public UserConnector getObject() {
 		return userConnector;
 	}
 
-	public Class getObjectType() {
+	public Class<UserConnector> getObjectType() {
 		return UserConnector.class;
 	}
 

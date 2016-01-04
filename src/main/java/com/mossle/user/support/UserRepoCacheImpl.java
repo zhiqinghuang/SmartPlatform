@@ -11,13 +11,11 @@ public class UserRepoCacheImpl implements UserRepoCache {
 
 	public UserRepoDTO findById(String id) {
 		String key = "userRepoId:" + id;
-
 		return cache.get(key);
 	}
 
 	public UserRepoDTO findByCode(String code) {
 		String key = "userRepoCode:" + code;
-
 		return cache.get(key);
 	}
 

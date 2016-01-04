@@ -11,7 +11,7 @@ import org.springframework.util.Assert;
 import com.mossle.api.userrepo.UserRepoCache;
 import com.mossle.api.userrepo.UserRepoConnector;
 
-public class UserRepoConnectorFactoryBean implements FactoryBean {
+public class UserRepoConnectorFactoryBean implements FactoryBean<UserRepoConnector> {
 	private static Logger logger = LoggerFactory.getLogger(UserRepoConnectorFactoryBean.class);
 	private UserRepoConnector userRepoConnector;
 	private String type = "database";
@@ -34,8 +34,7 @@ public class UserRepoConnectorFactoryBean implements FactoryBean {
 	}
 
 	public void processMock() {
-		MockUserRepoConnector mockUserRepoConnector = new MockUserRepoConnector();
-		userRepoConnector = mockUserRepoConnector;
+		userRepoConnector = new MockUserRepoConnector();
 	}
 
 	public void processDatabase() {
@@ -62,11 +61,11 @@ public class UserRepoConnectorFactoryBean implements FactoryBean {
 		}
 	}
 
-	public Object getObject() {
+	public UserRepoConnector getObject() {
 		return userRepoConnector;
 	}
 
-	public Class getObjectType() {
+	public Class<UserRepoConnector> getObjectType() {
 		return UserRepoConnector.class;
 	}
 
