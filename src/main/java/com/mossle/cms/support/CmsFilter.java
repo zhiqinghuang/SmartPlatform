@@ -29,24 +29,19 @@ public class CmsFilter implements Filter {
 
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain) throws ServletException, IOException {
 		TenantDTO tenantDto = null;
-
 		try {
 			tenantDto = tenantHolder.getTenantDto();
 		} catch (Exception ex) {
 			filterChain.doFilter(req, res);
-
 			return;
 		}
-
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
 		logger.debug("requestURI : {}", request.getRequestURI());
 		logger.debug("requestURL : {}", request.getRequestURL());
 		logger.debug("servletPath : {}", request.getServletPath());
 		logger.debug("pathInfo : {}", request.getPathInfo());
-
 		String servletPath = request.getServletPath();
-
 		if (tenantDto.getType() != TenantDTO.TYPE_CMS) {
 			if (servletPath.startsWith("/cms/r/")) {
 				String path = baseDir + servletPath.substring("/cms".length());
@@ -55,16 +50,12 @@ public class CmsFilter implements Filter {
 			} else {
 				filterChain.doFilter(req, res);
 			}
-
 			return;
 		}
-
 		if ("/dashboard/dashboard.do".equals(servletPath)) {
 			response.sendRedirect(request.getContextPath() + "/index.html");
-
 			return;
 		}
-
 		IoUtils.copyFileToOutputStream(baseDir + servletPath, response.getOutputStream());
 	}
 
