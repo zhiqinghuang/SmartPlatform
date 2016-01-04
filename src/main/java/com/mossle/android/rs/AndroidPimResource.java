@@ -40,23 +40,17 @@ public class AndroidPimResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public BaseDTO contract(@HeaderParam("sessionId") String sessionId) throws Exception {
 		logger.info("start");
-
 		PimDevice pimDevice = pimDeviceManager.findUniqueBy("sessionId", sessionId);
-
 		if (pimDevice == null) {
 			BaseDTO result = new BaseDTO();
 			result.setCode(401);
 			result.setMessage("auth fail");
-
 			return result;
 		}
-
 		String userId = pimDevice.getUserId();
 		String hql = "from PimInfo";
 		List<PimInfo> pimInfos = pimInfoManager.find(hql);
-
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
 		for (PimInfo pimInfo : pimInfos) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("name", pimInfo.getName());
@@ -64,17 +58,14 @@ public class AndroidPimResource {
 			map.put("email", pimInfo.getEmail());
 			list.add(map);
 		}
-
 		String json = jsonMapper.toJson(list);
 		BaseDTO result = new BaseDTO();
 		result.setCode(200);
 		result.setData(json);
 		logger.info("end");
-
 		return result;
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setPimInfoManager(PimInfoManager pimInfoManager) {
 		this.pimInfoManager = pimInfoManager;

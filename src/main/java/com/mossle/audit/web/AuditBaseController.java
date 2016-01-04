@@ -39,9 +39,7 @@ public class AuditBaseController {
 		List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
 		propertyFilters.add(new PropertyFilter("EQS_tenantId", tenantId));
 		page = auditBaseManager.pagedQuery(page, propertyFilters);
-
 		model.addAttribute("page", page);
-
 		return "audit/audit-base-list";
 	}
 
@@ -51,7 +49,6 @@ public class AuditBaseController {
 			AuditBase auditBase = auditBaseManager.get(id);
 			model.addAttribute("model", auditBase);
 		}
-
 		return "audit/audit-base-input";
 	}
 
@@ -59,9 +56,7 @@ public class AuditBaseController {
 	public String save(@ModelAttribute AuditBase auditBase, @RequestParam Map<String, Object> parameterMap, RedirectAttributes redirectAttributes) {
 		String tenantId = tenantHolder.getTenantId();
 		AuditBase dest = null;
-
 		Long id = auditBase.getId();
-
 		if (id != null) {
 			dest = auditBaseManager.get(id);
 			beanMapper.copy(auditBase, dest);
@@ -69,22 +64,16 @@ public class AuditBaseController {
 			dest = auditBase;
 			dest.setTenantId(tenantId);
 		}
-
 		auditBaseManager.save(dest);
-
 		messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-
 		return "redirect:/audit/audit-base-list.do";
 	}
 
 	@RequestMapping("audit-base-remove")
 	public String remove(@RequestParam("selectedItem") List<Long> selectedItem, RedirectAttributes redirectAttributes) {
 		List<AuditBase> auditBases = auditBaseManager.findByIds(selectedItem);
-
 		auditBaseManager.removeAll(auditBases);
-
 		messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
-
 		return "redirect:/audit/audit-base-list.do";
 	}
 
@@ -94,9 +83,7 @@ public class AuditBaseController {
 		List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
 		propertyFilters.add(new PropertyFilter("EQS_tenantId", tenantId));
 		page = auditBaseManager.pagedQuery(page, propertyFilters);
-
 		List<AuditBase> auditBases = (List<AuditBase>) page.getResult();
-
 		TableModel tableModel = new TableModel();
 		tableModel.setName("audit base");
 		tableModel.addHeaders("id", "client", "server", "resource");
@@ -104,7 +91,6 @@ public class AuditBaseController {
 		exportor.export(request, response, tableModel);
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setAuditBaseManager(AuditBaseManager auditBaseManager) {
 		this.auditBaseManager = auditBaseManager;

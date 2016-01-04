@@ -52,36 +52,27 @@ public class AndroidFormResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String viewStartForm(@FormParam("processDefinitionId") String processDefinitionId) throws Exception {
 		logger.info("start : {}", processDefinitionId);
-
 		FormDTO formDto = processConnector.findStartForm(processDefinitionId);
-
 		if (formDto.isRedirect()) {
 			return "";
 		}
-
 		Map<String, Object> formJson = jsonMapper.fromJson(formDto.getContent(), Map.class);
 		List<Map<String, Object>> sections = (List<Map<String, Object>>) formJson.get("sections");
 		List<FormField> formFields = new ArrayList<FormField>();
-
 		for (Map<String, Object> section : sections) {
 			if (!"grid".equals(section.get("type"))) {
 				continue;
 			}
-
 			List<Map<String, Object>> fields = (List<Map<String, Object>>) section.get("fields");
-
 			for (Map<String, Object> field : fields) {
 				String type = (String) field.get("type");
 				String name = (String) field.get("name");
 				String items = (String) field.get("items");
 				String label = name;
-
 				if ("label".equals(type)) {
 					continue;
 				}
-
 				FormField formField = null;
-
 				formField = new FormField();
 				formField.setName(name);
 				formField.setLabel(label);
@@ -92,9 +83,7 @@ public class AndroidFormResource {
 		}
 
 		StringBuilder buff = new StringBuilder();
-
 		buff.append("<xmlgui>").append("<form id='1' name='form' submitTo='http://192.168.1.106:8080/mossle-app-lemon/rs/android/bpm/startProcess' >");
-
 		// .append("<field name='fname' label='First Name' type='text'
 		// required='Y' options=''/>")
 		// .append("<field name='lname' label='Last Name' type='text'
@@ -106,17 +95,13 @@ public class AndroidFormResource {
 		for (FormField formField : formFields) {
 			String type = "text";
 			String options = "";
-
 			if ("radio".equals(formField.getType()) || "checkbox".equals(formField.getType())) {
 				type = "choice";
 				options = formField.getItems().replaceAll(",", "|");
 			}
-
 			buff.append("<field name='" + formField.getName() + "' label='" + formField.getName() + "' type='" + type + "' required='Y' options='" + options + "'/>");
 		}
-
 		buff.append("</form>").append("</xmlgui>");
-
 		return buff.toString();
 	}
 
@@ -125,42 +110,31 @@ public class AndroidFormResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String viewTaskForm(@FormParam("taskId") String taskId) throws Exception {
 		logger.info("start : {}", taskId);
-
 		HumanTaskDTO humanTaskDto = humanTaskConnector.findHumanTask(taskId);
-
 		if (humanTaskDto == null) {
 			return "";
 		}
-
 		FormDTO formDto = this.findTaskForm(humanTaskDto);
-
 		if (formDto.isRedirect()) {
 			return "";
 		}
-
 		Map<String, Object> formJson = jsonMapper.fromJson(formDto.getContent(), Map.class);
 		List<Map<String, Object>> sections = (List<Map<String, Object>>) formJson.get("sections");
 		List<FormField> formFields = new ArrayList<FormField>();
-
 		for (Map<String, Object> section : sections) {
 			if (!"grid".equals(section.get("type"))) {
 				continue;
 			}
-
 			List<Map<String, Object>> fields = (List<Map<String, Object>>) section.get("fields");
-
 			for (Map<String, Object> field : fields) {
 				String type = (String) field.get("type");
 				String name = (String) field.get("name");
 				String items = (String) field.get("items");
 				String label = name;
-
 				if ("label".equals(type)) {
 					continue;
 				}
-
 				FormField formField = null;
-
 				formField = new FormField();
 				formField.setName(name);
 				formField.setLabel(label);
@@ -169,19 +143,13 @@ public class AndroidFormResource {
 				formFields.add(formField);
 			}
 		}
-
 		// 如果是任务草稿，直接通过processInstanceId获得record，更新数据
 		// TODO: 分支肯定有问题
 		String processInstanceId = humanTaskDto.getProcessInstanceId();
-
 		Record record = keyValueConnector.findByRef(processInstanceId);
-
 		Xform xform = new XformBuilder().setStoreConnector(storeConnector).setContent(formDto.getContent()).setRecord(record).build();
-
 		StringBuilder buff = new StringBuilder();
-
 		buff.append("<xmlgui>").append("<form id='1' name='form' submitTo='http://192.168.1.106:8080/mossle-app-lemon/rs/android/task/completeTask' >");
-
 		// .append("<field name='fname' label='First Name' type='text'
 		// required='Y' options=''/>")
 		// .append("<field name='lname' label='Last Name' type='text'
@@ -195,7 +163,6 @@ public class AndroidFormResource {
 			String type = "text";
 			String options = "";
 			String value = "";
-
 			try {
 				if (xform.findXformField(name).getValue() != null) {
 					value = xform.findXformField(name).getValue().toString();
@@ -203,28 +170,22 @@ public class AndroidFormResource {
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
-
 			if ("radio".equals(formField.getType()) || "checkbox".equals(formField.getType())) {
 				type = "choice";
 				options = formField.getItems().replaceAll(",", "|");
 			}
-
 			buff.append("<field name='" + formField.getName() + "' label='" + formField.getName() + "' type='" + type + "' required='Y' options='" + options + "' value='" + value + "'/>");
 		}
-
 		buff.append("</form>").append("</xmlgui>");
 		logger.info("{}", buff);
-
 		return buff.toString();
 	}
 
 	public FormDTO findTaskForm(HumanTaskDTO humanTaskDto) {
 		FormDTO formDto = humanTaskConnector.findTaskForm(humanTaskDto.getId());
-
 		return formDto;
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setProcessEngine(ProcessEngine processEngine) {
 		this.processEngine = processEngine;

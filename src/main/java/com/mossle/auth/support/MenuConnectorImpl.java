@@ -32,7 +32,6 @@ public class MenuConnectorImpl implements MenuConnector {
 		String hql = "from Menu where menu.type='system' and menu.code=? order by priority";
 		List<Menu> menus = menuManager.find(hql, systemCode);
 		List<String> permissions = userAuthConnector.findById(userId, tenantId).getPermissions();
-
 		return this.convertMenuDtos(menus, permissions, false);
 	}
 
@@ -42,9 +41,7 @@ public class MenuConnectorImpl implements MenuConnector {
 	public List<MenuDTO> findSystemMenus(String userId) {
 		String tenantId = tenantHolder.getTenantId();
 		List<Menu> menus = menuManager.find("from Menu where type='entry'");
-
 		List<String> permissions = userAuthConnector.findById(userId, tenantId).getPermissions();
-
 		return this.convertMenuDtos(menus, permissions, true);
 	}
 
@@ -53,23 +50,18 @@ public class MenuConnectorImpl implements MenuConnector {
 	 */
 	public List<MenuDTO> convertMenuDtos(List<Menu> menus, List<String> permissions, boolean excludeModule) {
 		List<MenuDTO> menuDtos = new ArrayList<MenuDTO>();
-
 		for (Menu menu : menus) {
 			if (excludeModule && "module".equals(menu.getType())) {
 				continue;
 			}
-
 			if ((!permissions.contains("*")) && (!permissions.contains(menu.getPerm().getCode()))) {
 				logger.debug("permissions : {}", permissions);
 				logger.debug("skip : {}", menu.getPerm().getCode());
-
 				continue;
 			}
-
 			MenuDTO menuDto = this.convertMenuDto(menu, permissions, excludeModule);
 			menuDtos.add(menuDto);
 		}
-
 		return menuDtos;
 	}
 
@@ -82,11 +74,9 @@ public class MenuConnectorImpl implements MenuConnector {
 		menuDto.setTitle(menu.getTitle());
 		// 为了jsp里使用方便，要去掉url前面的/
 		menuDto.setUrl(this.processUrl(menu.getUrl()));
-
 		List<Menu> menus = menuManager.find("from Menu where menu=? order by priority", menu);
 		List<MenuDTO> menuDtos = this.convertMenuDtos(menus, permissions, excludeModule);
 		menuDto.setChildren(menuDtos);
-
 		return menuDto;
 	}
 
@@ -97,17 +87,14 @@ public class MenuConnectorImpl implements MenuConnector {
 		if (url == null) {
 			return "";
 		}
-
 		if (url.charAt(0) != '/') {
 			return url;
 		}
-
 		for (int i = 0; i < url.length(); i++) {
 			if (url.charAt(i) != '/') {
 				return url.substring(i);
 			}
 		}
-
 		return "";
 	}
 

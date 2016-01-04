@@ -41,52 +41,40 @@ public class AndroidMsgResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public BaseDTO msg(@HeaderParam("sessionId") String sessionId) throws Exception {
 		logger.info("start");
-
 		PimDevice pimDevice = pimDeviceManager.findUniqueBy("sessionId", sessionId);
-
 		if (pimDevice == null) {
 			BaseDTO result = new BaseDTO();
 			result.setCode(401);
 			result.setMessage("auth fail");
-
 			return result;
 		}
 
 		String userId = pimDevice.getUserId();
 		String hql = "from MsgInfo where receiverId=? order by createTime desc";
 		List<MsgInfo> msgInfos = msgInfoManager.find(hql, userId);
-
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
 		for (MsgInfo msgInfo : msgInfos) {
 			UserDTO userDto = null;
-
 			if ((msgInfo.getSenderId() != null) && (!"".equals(msgInfo.getSenderId()))) {
 				userDto = userConnector.findById(msgInfo.getSenderId());
 			}
-
 			Map<String, Object> map = new HashMap<String, Object>();
-
 			if (userDto != null) {
 				map.put("senderUsername", userDto.getUsername());
 			} else {
 				map.put("senderUsername", "system");
 			}
-
 			map.put("content", msgInfo.getContent());
 			list.add(map);
 		}
-
 		String json = jsonMapper.toJson(list);
 		BaseDTO result = new BaseDTO();
 		result.setCode(200);
 		result.setData(json);
 		logger.info("end");
-
 		return result;
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setMsgInfoManager(MsgInfoManager msgInfoManager) {
 		this.msgInfoManager = msgInfoManager;

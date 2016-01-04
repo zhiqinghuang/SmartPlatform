@@ -12,14 +12,10 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.mossle.api.tenant.TenantConnector;
 import com.mossle.api.tenant.TenantDTO;
 
 public class WhitelistFilter implements Filter {
-	private static Logger logger = LoggerFactory.getLogger(WhitelistFilter.class);
 	private WhitelistConnector whitelistConnector;
 	private String code;
 	private WhitelistDTO whitelistDto;

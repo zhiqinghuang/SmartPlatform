@@ -19,7 +19,6 @@ import com.mossle.api.user.AccountStatus;
 import com.mossle.api.user.AuthenticationHandler;
 import com.mossle.api.user.UserConnector;
 import com.mossle.api.user.UserDTO;
-import com.mossle.core.mapper.JsonMapper;
 import com.mossle.core.util.BaseDTO;
 import com.mossle.pim.persistence.domain.PimDevice;
 import com.mossle.pim.persistence.manager.PimDeviceManager;
@@ -31,7 +30,6 @@ public class AndroidDeviceResource {
 	private PimDeviceManager pimDeviceManager;
 	private AuthenticationHandler authenticationHandler;
 	private UserConnector userConnector;
-	private JsonMapper jsonMapper = new JsonMapper();
 	private UUID uuid = UUID.randomUUID();
 
 	@POST

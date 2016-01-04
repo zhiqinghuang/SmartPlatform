@@ -61,22 +61,17 @@ public class AndroidTaskResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public BaseDTO tasks(@HeaderParam("sessionId") String sessionId) throws Exception {
 		logger.info("start");
-
 		PimDevice pimDevice = pimDeviceManager.findUniqueBy("sessionId", sessionId);
-
 		if (pimDevice == null) {
 			BaseDTO result = new BaseDTO();
 			result.setCode(401);
 			result.setMessage("auth fail");
-
 			return result;
 		}
-
 		String userId = pimDevice.getUserId();
 		Page page = humanTaskConnector.findPersonalTasks(userId, 1, 10);
 		List<HumanTaskDTO> humanTaskDtos = (List<HumanTaskDTO>) page.getResult();
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
 		for (HumanTaskDTO humanTaskDTO : humanTaskDtos) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("id", humanTaskDTO.getId());
@@ -84,13 +79,11 @@ public class AndroidTaskResource {
 			map.put("createTime", humanTaskDTO.getCreateTime());
 			list.add(map);
 		}
-
 		String json = jsonMapper.toJson(list);
 		BaseDTO result = new BaseDTO();
 		result.setCode(200);
 		result.setData(json);
 		logger.info("end");
-
 		return result;
 	}
 
@@ -99,70 +92,49 @@ public class AndroidTaskResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public BaseDTO completeTask(@HeaderParam("sessionId") String sessionId, @FormParam("taskId") String taskId, @FormParam("data") String data) throws Exception {
 		logger.info("start : {} {}", taskId, data);
-
 		String humanTaskId = taskId;
-
 		PimDevice pimDevice = pimDeviceManager.findUniqueBy("sessionId", sessionId);
-
 		if (pimDevice == null) {
 			BaseDTO result = new BaseDTO();
 			result.setCode(401);
 			result.setMessage("auth fail");
-
 			return result;
 		}
-
 		String userId = pimDevice.getUserId();
 		String tenantId = "1";
-
 		Map<String, Object> map = jsonMapper.fromJson(data, Map.class);
 		map.put("taskId", humanTaskId);
-
 		Record record = null;
 		FormParameter formParameter = null;
 		HumanTaskDTO humanTaskDto = null;
 		FormDTO formDto = null;
-
 		formParameter = doSaveRecord(map, userId, tenantId);
-
 		humanTaskId = formParameter.getHumanTaskId();
 		operationService.saveDraft(userId, tenantId, formParameter);
-
 		formDto = humanTaskConnector.findTaskForm(humanTaskId);
-
 		humanTaskDto = humanTaskConnector.findHumanTask(humanTaskId);
-
 		String processInstanceId = humanTaskDto.getProcessInstanceId();
 		record = keyValueConnector.findByRef(processInstanceId);
-
 		record = new RecordBuilder().build(record, formParameter.getMultiValueMap(), tenantId);
-
 		keyValueConnector.save(record);
-
 		Xform xform = new XformBuilder().setStoreConnector(storeConnector).setContent(formDto.getContent()).setRecord(record).build();
 		Map<String, Object> taskParameters = xform.getMapData();
 		logger.info("taskParameters : {}", taskParameters);
-
 		try {
 			humanTaskConnector.completeTask(humanTaskId, userId, taskParameters);
 		} catch (IllegalStateException ex) {
 			logger.error(ex.getMessage(), ex);
-
 			return null;
 		}
-
 		if (record == null) {
 			record = new Record();
 		}
-
 		record = new RecordBuilder().build(record, STATUS_RUNNING, humanTaskDto.getProcessInstanceId());
 		keyValueConnector.save(record);
-
 		BaseDTO result = new BaseDTO();
 		result.setCode(200);
 		result.setData(data);
 		logger.info("end");
-
 		return result;
 	}
 
@@ -172,30 +144,21 @@ public class AndroidTaskResource {
 	public FormParameter doSaveRecord(Map<String, Object> map, String userId, String tenantId) throws Exception {
 		FormParameter formParameter = new FormParameter();
 		MultiValueMap multiValueMap = new LinkedMultiValueMap();
-
 		for (Map.Entry<String, Object> entry : map.entrySet()) {
 			multiValueMap.add(entry.getKey(), entry.getValue());
 		}
-
 		formParameter.setMultiValueMap(multiValueMap);
 		formParameter.setHumanTaskId((String) map.get("taskId"));
-
 		String businessKey = operationService.saveDraft(userId, tenantId, formParameter);
-
 		if ((formParameter.getBusinessKey() == null) || "".equals(formParameter.getBusinessKey().trim())) {
 			formParameter.setBusinessKey(businessKey);
 		}
-
 		Record record = keyValueConnector.findByCode(businessKey);
-
 		record = new RecordBuilder().build(record, multiValueMap, tenantId);
-
 		keyValueConnector.save(record);
-
 		return formParameter;
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setProcessEngine(ProcessEngine processEngine) {
 		this.processEngine = processEngine;

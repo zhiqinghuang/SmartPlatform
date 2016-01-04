@@ -23,9 +23,7 @@ public class UserStatusConverter {
 		userStatusDto.setUsername(userStatus.getUsername());
 		userStatusDto.setEnabled(Integer.valueOf(1).equals(userStatus.getStatus()));
 		userStatusDto.setRef(userStatus.getRef());
-
 		StringBuilder buff = new StringBuilder();
-
 		for (Role role : userStatus.getRoles()) {
 			if (tenantId.equals(role.getTenantId())) {
 				buff.append(role.getName()).append(",");
@@ -34,23 +32,18 @@ public class UserStatusConverter {
 				buff.append(role.getName()).append("(").append(tenantDto.getName()).append("),");
 			}
 		}
-
 		if (buff.length() > 0) {
 			buff.deleteCharAt(buff.length() - 1);
 		}
-
 		userStatusDto.setAuthorities(buff.toString());
-
 		return userStatusDto;
 	}
 
 	public List<UserStatusDTO> createUserStatusDtos(List<UserStatus> userStatuses, String userRepoRef, String tenantId) {
 		List<UserStatusDTO> userStatusDtos = new ArrayList<UserStatusDTO>();
-
 		for (UserStatus userStatus : userStatuses) {
 			userStatusDtos.add(createUserStatusDto(userStatus, userRepoRef, tenantId));
 		}
-
 		return userStatusDtos;
 	}
 

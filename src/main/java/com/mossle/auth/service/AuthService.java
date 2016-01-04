@@ -48,69 +48,51 @@ public class AuthService {
 			userStatus.setStatus(1);
 			userStatusManager.save(userStatus);
 		}
-
 		return userStatus;
 	}
 
 	public void configUserRole(Long userId, List<Long> roleIds, String userRepoRef, String tenantId, boolean clearRoles) {
 		logger.debug("userId: {}, roleIds: {}", userId, roleIds);
-
 		UserStatus userStatus = userStatusManager.get(userId);
-
 		if (userStatus == null) {
 			logger.warn("cannot find UserStatus : {}", userId);
-
 			return;
 		}
-
 		if (clearRoles) {
 			List<Role> roles = new ArrayList<Role>();
-
 			roles.addAll(userStatus.getRoles());
-
 			for (Role role : roles) {
 				userStatus.getRoles().remove(role);
 			}
 		}
-
 		if (roleIds == null) {
 			roleIds = Collections.emptyList();
 		}
-
 		for (Long roleId : roleIds) {
 			Role role = roleManager.get(roleId);
 			boolean skip = false;
-
 			if (role == null) {
 				logger.warn("role is null, roleId : {}", roleId);
-
 				continue;
 			}
-
 			for (Role r : userStatus.getRoles()) {
 				logger.debug("r.getId() : {}, role.getId() : {}", r.getId(), role.getId());
-
 				if (r.getId().equals(role.getId())) {
 					skip = true;
-
 					break;
 				}
 			}
-
 			if (skip) {
 				continue;
 			}
-
 			userStatus.getRoles().add(role);
 		}
-
 		userStatusManager.save(userStatus);
 	}
 
 	public String doExport() {
 		Exporter exporter = new Exporter();
 		exporter.setJdbcTemplate(jdbcTemplate);
-
 		return exporter.execute();
 	}
 
@@ -122,34 +104,26 @@ public class AuthService {
 
 	public void batchSaveAccess(String text, String type, String tenantId) {
 		List<Access> accesses = accessManager.find("from Access where type=? and tenantId=?", type, tenantId);
-
 		for (Access access : accesses) {
 			accessManager.remove(access);
 		}
-
 		int priority = 0;
-
 		for (String line : text.split("\n")) {
 			String[] array = line.split(",");
 			String value = array[0];
 			String permStr = array[1];
 			logger.debug("value : {}, perm : {}", value, permStr);
-
 			value = value.trim();
 			permStr = permStr.trim();
-
 			if (value.length() == 0) {
 				continue;
 			}
-
 			priority += PRIORITY_STEP;
-
 			Access access = new Access();
 			access.setValue(value);
 			access.setTenantId(tenantId);
 			access.setType(type);
 			access.setPriority(priority);
-
 			Perm perm = permManager.findUnique("from Perm where code=? and tenantId=?", permStr, tenantId);
 			Assert.notNull(perm, "cannot find perm");
 			access.setPerm(perm);
