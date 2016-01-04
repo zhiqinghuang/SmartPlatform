@@ -15,6 +15,7 @@ import com.mossle.bpm.persistence.manager.BpmConfUserManager;
 import com.mossle.bpm.support.DefaultTaskListener;
 
 public class ConfUserTaskListener extends DefaultTaskListener {
+	private static final long serialVersionUID = -2971689827300355352L;
 	private static Logger logger = LoggerFactory.getLogger(ConfUserTaskListener.class);
 	private BpmConfUserManager bpmConfUserManager;
 
@@ -22,16 +23,12 @@ public class ConfUserTaskListener extends DefaultTaskListener {
 	public void onCreate(DelegateTask delegateTask) throws Exception {
 		List<BpmConfUser> bpmConfUsers = bpmConfUserManager.find("from BpmConfUser where bpmConfNode.bpmConfBase.processDefinitionId=? and bpmConfNode.code=?", delegateTask.getProcessDefinitionId(), delegateTask.getExecution().getCurrentActivityId());
 		logger.debug("{}", bpmConfUsers);
-
 		ExpressionManager expressionManager = Context.getProcessEngineConfiguration().getExpressionManager();
-
 		try {
 			for (BpmConfUser bpmConfUser : bpmConfUsers) {
 				logger.debug("status : {}, type: {}", bpmConfUser.getStatus(), bpmConfUser.getType());
 				logger.debug("value : {}", bpmConfUser.getValue());
-
 				String value = expressionManager.createExpression(bpmConfUser.getValue()).getValue(delegateTask).toString();
-
 				if (bpmConfUser.getStatus() == 1) {
 					if (bpmConfUser.getType() == 0) {
 						delegateTask.setAssignee(value);

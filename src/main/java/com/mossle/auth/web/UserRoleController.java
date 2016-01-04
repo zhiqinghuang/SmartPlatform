@@ -36,10 +36,8 @@ public class UserRoleController {
 		} catch (CheckUserStatusException ex) {
 			logger.warn(ex.getMessage(), ex);
 			messageHelper.addFlashMessage(redirectAttributes, ex.getMessage());
-
 			return input(id, model);
 		}
-
 		return "redirect:/auth/user-role-input.do?id=" + id;
 	}
 
@@ -52,11 +50,9 @@ public class UserRoleController {
 		model.addAttribute("id", id);
 		model.addAttribute("roles", roles);
 		model.addAttribute("userRoleIds", userRoleIds);
-
 		return "auth/user-role-input";
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setRoleManager(RoleManager roleManager) {
 		this.roleManager = roleManager;

@@ -3,16 +3,14 @@ package com.mossle.bpm.listener;
 import javax.annotation.Resource;
 
 import org.activiti.engine.delegate.DelegateTask;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.mossle.api.humantask.HumanTaskConnector;
 import com.mossle.api.humantask.HumanTaskDTO;
 import com.mossle.bpm.support.DefaultTaskListener;
 
 public class HumanTaskSyncTaskListener extends DefaultTaskListener {
+	private static final long serialVersionUID = 1550610147340801738L;
 	public static final int TYPE_COPY = 3;
-	private static Logger logger = LoggerFactory.getLogger(HumanTaskSyncTaskListener.class);
 	private HumanTaskConnector humanTaskConnector;
 
 	@Override

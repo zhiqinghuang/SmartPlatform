@@ -31,6 +31,5 @@ public class CustomUserTaskActivityBehavior extends UserTaskActivityBehavior {
 		super.execute(execution);
 		log.info("{}:{} after execute", execution.getCurrentActivityId(), execution.getCurrentActivityName());
 	}
-
 	// 自定义行为可以监控到各个元素的各种行为, 只需要覆盖相应方法即可
 }

@@ -35,9 +35,7 @@ public class MenuController {
 	public String list(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, Model model) {
 		List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
 		page = menuManager.pagedQuery(page, propertyFilters);
-
 		model.addAttribute("page", page);
-
 		return "auth/menu-list";
 	}
 
@@ -47,7 +45,6 @@ public class MenuController {
 			Menu menu = menuManager.get(id);
 			model.addAttribute("model", menu);
 		}
-
 		return "auth/menu-input";
 	}
 
@@ -55,18 +52,14 @@ public class MenuController {
 	public String save(@ModelAttribute Menu menu, RedirectAttributes redirectAttributes) {
 		Menu dest = null;
 		Long id = menu.getId();
-
 		if (id != null) {
 			dest = menuManager.get(id);
 			beanMapper.copy(menu, dest);
 		} else {
 			dest = menu;
 		}
-
 		menuManager.save(dest);
-
 		messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-
 		return "redirect:/auth/menu-list.do";
 	}
 
@@ -75,7 +68,6 @@ public class MenuController {
 		List<Menu> menus = menuManager.findByIds(selectedItem);
 		menuManager.removeAll(menus);
 		messageHelper.addFlashMessage(redirectAttributes, "core.delete.save", "删除成功");
-
 		return "redirect:/auth/menu-list.do";
 	}
 
@@ -83,7 +75,6 @@ public class MenuController {
 	public void export(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
 		page = menuManager.pagedQuery(page, propertyFilters);
-
 		List<Menu> menus = (List<Menu>) page.getResult();
 		TableModel tableModel = new TableModel();
 		tableModel.setName("menu");
@@ -92,7 +83,6 @@ public class MenuController {
 		exportor.export(request, response, tableModel);
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setMenuManager(MenuManager menuManager) {
 		this.menuManager = menuManager;

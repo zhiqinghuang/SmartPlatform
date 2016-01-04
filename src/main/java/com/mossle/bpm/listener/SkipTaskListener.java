@@ -20,6 +20,7 @@ import com.mossle.bpm.support.MapVariableScope;
 import com.mossle.core.spring.ApplicationContextHelper;
 
 public class SkipTaskListener extends DefaultTaskListener {
+	private static final long serialVersionUID = 7213884737852200165L;
 	private static Logger logger = LoggerFactory.getLogger(SkipTaskListener.class);
 
 	@Override
@@ -28,31 +29,25 @@ public class SkipTaskListener extends DefaultTaskListener {
 		String processDefinitionId = delegateTask.getProcessDefinitionId();
 		String processInstanceId = delegateTask.getProcessInstanceId();
 		HistoricProcessInstanceEntity historicProcessInstanceEntity = Context.getCommandContext().getHistoricProcessInstanceEntityManager().findHistoricProcessInstance(processInstanceId);
-
 		List<BpmConfRule> bpmConfRules = ApplicationContextHelper.getBean(BpmConfRuleManager.class).find("from BpmConfRule where bpmConfNode.bpmConfBase.processDefinitionId=? and bpmConfNode.code=?", processDefinitionId, taskDefinitionKey);
 		logger.debug("delegateTask.getId : {}", delegateTask.getId());
 		logger.debug("taskDefinitionKey : {}", taskDefinitionKey);
 		logger.debug("processDefinitionId : {}", processDefinitionId);
 		logger.debug("processInstanceId : {}", processInstanceId);
 		logger.debug("bpmConfRules : {}", bpmConfRules);
-
 		UserConnector userConnector = ApplicationContextHelper.getBean(UserConnector.class);
 		OrgConnector orgConnector = (OrgConnector) ApplicationContextHelper.getBean(OrgConnector.class);
 		ExpressionManager expressionManager = Context.getProcessEngineConfiguration().getExpressionManager();
 		MapVariableScope mapVariableScope = new MapVariableScope();
 		String initiator = historicProcessInstanceEntity.getStartUserId();
 		mapVariableScope.setVariable("initiator", userConnector.findById(initiator));
-
 		for (BpmConfRule bpmConfRule : bpmConfRules) {
 			String value = bpmConfRule.getValue();
-
 			if ("职位".equals(value)) {
 				// 获得发起人的职位
 				int initiatorLevel = orgConnector.getJobLevelByUserId(initiator);
-
 				// 获得审批人的职位
 				int assigneeLevel = orgConnector.getJobLevelByUserId(delegateTask.getAssignee());
-
 				// 比较
 				if (initiatorLevel >= assigneeLevel) {
 					logger.info("skip task : {}", delegateTask.getId());
@@ -61,9 +56,7 @@ public class SkipTaskListener extends DefaultTaskListener {
 				}
 			} else {
 				Boolean result = (Boolean) expressionManager.createExpression(value).getValue(mapVariableScope);
-
 				logger.info("value : {}, result : {}", value, result);
-
 				if (result) {
 					logger.info("skip task : {}", delegateTask.getId());
 					new CompleteTaskWithCommentCmd(delegateTask.getId(), Collections.<String, Object> emptyMap(), "跳过").execute(Context.getCommandContext());

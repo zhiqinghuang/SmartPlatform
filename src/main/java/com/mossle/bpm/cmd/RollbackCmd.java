@@ -57,15 +57,12 @@ public class RollbackCmd implements Command<Boolean> {
 	public void initSource() {
 		// source task
 		this.jumpInfo.setSourceTaskId(this.taskId);
-
 		TaskEntity sourceTask = Context.getCommandContext().getTaskEntityManager().findTaskById(this.taskId);
 		this.jumpInfo.setSourceTask(sourceTask);
-
 		ProcessDefinitionEntity processDefinitionEntity = Context.getProcessEngineConfiguration().getDeploymentManager().findDeployedProcessDefinitionById(sourceTask.getProcessDefinitionId());
 		// source activity
 		this.jumpInfo.setSourceActivityId(sourceTask.getTaskDefinitionKey());
 		this.jumpInfo.setSourceActivity(processDefinitionEntity.findActivity(this.jumpInfo.getSourceActivityId()));
-
 		HistoricTaskInstanceEntity sourceHistoryTask = Context.getCommandContext().getHistoricTaskInstanceEntityManager().findHistoricTaskInstanceById(this.jumpInfo.getSourceTaskId());
 	}
 
@@ -77,16 +74,12 @@ public class RollbackCmd implements Command<Boolean> {
 	public Boolean execute(CommandContext commandContext) {
 		// 初始化当前的起点信息
 		this.initSource();
-
 		// 找到回退的目标节点
 		String targetActivityId = this.findTargetActivityId();
-
 		if (targetActivityId == null) {
 			logger.info("cannot find targetActivity for : {}", this.taskId);
-
 			return Boolean.FALSE;
 		}
-
 		/*
 		 * // 尝试查找最近的上游userTask String historyTaskId =
 		 * this.findNearestUserTask(); logger.info(
@@ -97,13 +90,10 @@ public class RollbackCmd implements Command<Boolean> {
 		 * 
 		 * return "activity"; }
 		 */
-
 		// 校验这个节点是否可以回退
 		boolean isValid = this.validateTargetActivity(targetActivityId);
-
 		if (!isValid) {
 			logger.info("cannot rollback for : {} to {}", this.taskId, targetActivityId);
-
 			return Boolean.FALSE;
 		}
 
@@ -111,7 +101,6 @@ public class RollbackCmd implements Command<Boolean> {
 		String historyTaskId = jdbcTemplate.queryForObject("select id_ from ACT_HI_TASKINST where act_id_=? order by END_TIME_ desc", String.class, targetActivityId);
 		HistoricTaskInstanceEntity historicTaskInstanceEntity = Context.getCommandContext().getHistoricTaskInstanceEntityManager().findHistoricTaskInstanceById(historyTaskId);
 		HistoricActivityInstanceEntity historicActivityInstanceEntity = getHistoricActivityInstanceEntity(historyTaskId);
-
 		// 开始回退
 		if (this.isSameBranch(historicTaskInstanceEntity)) {
 			// 如果退回的目标节点的executionId与当前task的executionId一样，说明是同一个分支
@@ -121,21 +110,16 @@ public class RollbackCmd implements Command<Boolean> {
 			// 否则认为是从分支跳回主干
 			// 删除所有活动中的task
 			this.deleteActiveTasks(historicTaskInstanceEntity.getProcessInstanceId());
-
 			// 获得期望退回的节点后面的所有节点历史
 			List<String> historyNodeIds = new ArrayList<String>();
 			Graph graph = new ActivitiHistoryGraphBuilder(historicTaskInstanceEntity.getProcessInstanceId()).build();
-
 			Node node = graph.findById(historicActivityInstanceEntity.getId());
 			this.collectNodes(node, historyNodeIds);
 			this.deleteHistoryActivities(historyNodeIds);
 		}
-
 		// 恢复期望退回的任务和历史
 		this.processHistoryTask(historicTaskInstanceEntity, historicActivityInstanceEntity);
-
 		logger.info("activiti is rollback {}", historicTaskInstanceEntity.getName());
-
 		return Boolean.TRUE;
 	}
 
@@ -146,7 +130,6 @@ public class RollbackCmd implements Command<Boolean> {
 		if (ACTIVITY_PREVIOUS.equals(this.activityId)) {
 			String taskId = this.findNearestUserTask();
 			TaskEntity taskEntity = Context.getCommandContext().getTaskEntityManager().findTaskById(taskId);
-
 			return taskEntity.getTaskDefinitionKey();
 		} else {
 			return this.activityId;
@@ -159,56 +142,40 @@ public class RollbackCmd implements Command<Boolean> {
 	public boolean validateTargetActivity(String targetActivityId) {
 		JdbcTemplate jdbcTemplate = ApplicationContextHelper.getBean(JdbcTemplate.class);
 		String historyTaskId = jdbcTemplate.queryForObject("select id_ from ACT_HI_TASKINST where act_id_=? order by END_TIME_ desc", String.class, targetActivityId);
-
 		// 先找到历史任务
 		HistoricTaskInstanceEntity historicTaskInstanceEntity = Context.getCommandContext().getHistoricTaskInstanceEntityManager().findHistoricTaskInstanceById(historyTaskId);
-
 		// 再反向查找历史任务对应的历史节点
 		HistoricActivityInstanceEntity historicActivityInstanceEntity = getHistoricActivityInstanceEntity(historyTaskId);
-
 		logger.info("historic activity instance is : {}", historicActivityInstanceEntity.getId());
-
 		Graph graph = new ActivitiHistoryGraphBuilder(historicTaskInstanceEntity.getProcessInstanceId()).build();
-
 		Node node = graph.findById(historicActivityInstanceEntity.getId());
-
 		if (!this.checkCouldRollback(node)) {
 			logger.info("cannot rollback {}", taskId);
-
 			return false;
 		}
-
 		return true;
 	}
 
 	public boolean isSameBranch(HistoricTaskInstanceEntity historicTaskInstanceEntity) {
 		TaskEntity taskEntity = Context.getCommandContext().getTaskEntityManager().findTaskById(taskId);
-
 		return taskEntity.getExecutionId().equals(historicTaskInstanceEntity.getExecutionId());
 	}
 
 	public String findNearestUserTask() {
 		TaskEntity taskEntity = Context.getCommandContext().getTaskEntityManager().findTaskById(taskId);
-
 		if (taskEntity == null) {
 			logger.debug("cannot find task : {}", taskId);
-
 			return null;
 		}
-
 		Graph graph = new ActivitiHistoryGraphBuilder(taskEntity.getProcessInstanceId()).build();
 		JdbcTemplate jdbcTemplate = ApplicationContextHelper.getBean(JdbcTemplate.class);
 		String historicActivityInstanceId = jdbcTemplate.queryForObject("select id_ from ACT_HI_ACTINST where task_id_=?", String.class, taskId);
 		Node node = graph.findById(historicActivityInstanceId);
-
 		String previousHistoricActivityInstanceId = this.findIncomingNode(graph, node);
-
 		if (previousHistoricActivityInstanceId == null) {
 			logger.debug("cannot find previous historic activity instance : {}", taskEntity);
-
 			return null;
 		}
-
 		return jdbcTemplate.queryForObject("select task_id_ from ACT_HI_ACTINST where id_=?", String.class, previousHistoricActivityInstanceId);
 	}
 
@@ -217,14 +184,11 @@ public class RollbackCmd implements Command<Boolean> {
 			Node src = edge.getSrc();
 			Node dest = edge.getDest();
 			String srcType = src.getType();
-
 			if (!dest.getId().equals(node.getId())) {
 				continue;
 			}
-
 			if ("userTask".equals(srcType)) {
 				boolean isSkip = isSkipActivity(src.getId());
-
 				if (isSkip) {
 					return this.findIncomingNode(graph, src);
 				} else {
@@ -234,28 +198,21 @@ public class RollbackCmd implements Command<Boolean> {
 				return this.findIncomingNode(graph, src);
 			} else {
 				logger.info("cannot rollback, previous node is not userTask : " + src.getId() + " " + srcType + "(" + src.getName() + ")");
-
 				return null;
 			}
 		}
-
 		logger.info("cannot rollback, this : " + node.getId() + " " + node.getType() + "(" + node.getName() + ")");
-
 		return null;
 	}
 
 	public HistoricActivityInstanceEntity getHistoricActivityInstanceEntity(String historyTaskId) {
 		logger.info("historyTaskId : {}", historyTaskId);
-
 		JdbcTemplate jdbcTemplate = ApplicationContextHelper.getBean(JdbcTemplate.class);
 		String historicActivityInstanceId = jdbcTemplate.queryForObject("select id_ from ACT_HI_ACTINST where task_id_=?", String.class, historyTaskId);
 		logger.info("historicActivityInstanceId : {}", historicActivityInstanceId);
-
 		HistoricActivityInstanceQueryImpl historicActivityInstanceQueryImpl = new HistoricActivityInstanceQueryImpl();
 		historicActivityInstanceQueryImpl.activityInstanceId(historicActivityInstanceId);
-
 		HistoricActivityInstanceEntity historicActivityInstanceEntity = (HistoricActivityInstanceEntity) Context.getCommandContext().getHistoricActivityInstanceEntityManager().findHistoricActivityInstancesByQueryCriteria(historicActivityInstanceQueryImpl, new Page(0, 1)).get(0);
-
 		return historicActivityInstanceEntity;
 	}
 
@@ -264,11 +221,9 @@ public class RollbackCmd implements Command<Boolean> {
 		for (Edge edge : node.getOutgoingEdges()) {
 			Node dest = edge.getDest();
 			String type = dest.getType();
-
 			if ("userTask".equals(type)) {
 				if (!dest.isActive()) {
 					boolean isSkip = isSkipActivity(dest.getId());
-
 					if (isSkip) {
 						return checkCouldRollback(dest);
 					} else {
@@ -282,21 +237,17 @@ public class RollbackCmd implements Command<Boolean> {
 				return checkCouldRollback(dest);
 			} else {
 				logger.info("cannot rollback, " + type + "(" + dest.getName() + ") is complete.");
-
 				return false;
 			}
 		}
-
 		return true;
 	}
 
 	public void deleteActiveTasks(String processInstanceId) {
 		Context.getCommandContext().getTaskEntityManager().deleteTasksByProcessInstanceId(processInstanceId, "退回", false);
-
 		JdbcTemplate jdbcTemplate = ApplicationContextHelper.getBean(JdbcTemplate.class);
 		List<Map<String, Object>> list = jdbcTemplate.queryForList("select * from ACT_HI_ACTINST where proc_inst_id_=? and end_time_ is null", processInstanceId);
 		Date now = new Date();
-
 		for (Map<String, Object> map : list) {
 			Date startTime = (Date) map.get("start_time_");
 			long duration = now.getTime() - startTime.getTime();
@@ -306,10 +257,8 @@ public class RollbackCmd implements Command<Boolean> {
 
 	public void collectNodes(Node node, List<String> historyNodeIds) {
 		logger.info("node : {}, {}, {}", node.getId(), node.getType(), node.getName());
-
 		for (Edge edge : node.getOutgoingEdges()) {
 			logger.info("edge : {}", edge.getName());
-
 			Node dest = edge.getDest();
 			historyNodeIds.add(dest.getId());
 			collectNodes(dest, historyNodeIds);
@@ -337,7 +286,6 @@ public class RollbackCmd implements Command<Boolean> {
 		 * historicActivityInstanceEntity.setEndTime(null);
 		 * historicActivityInstanceEntity.setDurationInMillis(null);
 		 */
-
 		// 创建新任务
 		TaskEntity task = TaskEntity.create(new Date());
 		task.setProcessDefinitionId(historicTaskInstanceEntity.getProcessDefinitionId());
@@ -353,22 +301,17 @@ public class RollbackCmd implements Command<Boolean> {
 		task.setExecutionId(historicTaskInstanceEntity.getExecutionId());
 		task.setDescriptionWithoutCascade(historicTaskInstanceEntity.getDescription());
 		task.setTenantId(historicTaskInstanceEntity.getTenantId());
-
 		Context.getCommandContext().getTaskEntityManager().insert(task);
-
 		// 把流程指向任务对应的节点
 		ExecutionEntity executionEntity = Context.getCommandContext().getExecutionEntityManager().findExecutionById(historicTaskInstanceEntity.getExecutionId());
 		executionEntity.setActivity(getActivity(historicActivityInstanceEntity));
-
 		// 创建HistoricActivityInstance
 		Context.getCommandContext().getHistoryManager().recordActivityStart(executionEntity);
-
 		// 创建HistoricTaskInstance
 		Context.getCommandContext().getHistoryManager().recordTaskCreated(task, executionEntity);
 		Context.getCommandContext().getHistoryManager().recordTaskId(task);
 		// 更新ACT_HI_ACTIVITY里的assignee字段
 		Context.getCommandContext().getHistoryManager().recordTaskAssignment(task);
-
 		try {
 			// humanTask
 			this.createHumanTask(task);
@@ -379,7 +322,6 @@ public class RollbackCmd implements Command<Boolean> {
 
 	public ActivityImpl getActivity(HistoricActivityInstanceEntity historicActivityInstanceEntity) {
 		ProcessDefinitionEntity processDefinitionEntity = new GetDeploymentProcessDefinitionCmd(historicActivityInstanceEntity.getProcessDefinitionId()).execute(Context.getCommandContext());
-
 		return processDefinitionEntity.findActivity(historicActivityInstanceEntity.getActivityId());
 	}
 
@@ -389,17 +331,14 @@ public class RollbackCmd implements Command<Boolean> {
 	public void deleteActiveTask() {
 		TaskEntity taskEntity = Context.getCommandContext().getTaskEntityManager().findTaskById(this.taskId);
 		Context.getCommandContext().getTaskEntityManager().deleteTask(taskEntity, "回退", false);
-
 		JdbcTemplate jdbcTemplate = ApplicationContextHelper.getBean(JdbcTemplate.class);
 		List<Map<String, Object>> list = jdbcTemplate.queryForList("select * from ACT_HI_ACTINST where task_id_=? and end_time_ is null", taskId);
 		Date now = new Date();
-
 		for (Map<String, Object> map : list) {
 			Date startTime = (Date) map.get("start_time_");
 			long duration = now.getTime() - startTime.getTime();
 			jdbcTemplate.update("update ACT_HI_ACTINST set end_time_=?,duration_=? where id_=?", now, duration, map.get("id_"));
 		}
-
 		// 处理humanTask
 		HumanTaskConnector humanTaskConnector = ApplicationContextHelper.getBean(HumanTaskConnector.class);
 		HumanTaskDTO humanTaskDto = humanTaskConnector.findHumanTaskByTaskId(this.taskId);
@@ -414,10 +353,8 @@ public class RollbackCmd implements Command<Boolean> {
 	public boolean isSkipActivity(String historyActivityId) {
 		JdbcTemplate jdbcTemplate = ApplicationContextHelper.getBean(JdbcTemplate.class);
 		String historyTaskId = jdbcTemplate.queryForObject("select task_id_ from ACT_HI_ACTINST where id_=?", String.class, historyActivityId);
-
 		HistoricTaskInstanceEntity historicTaskInstanceEntity = Context.getCommandContext().getHistoricTaskInstanceEntityManager().findHistoricTaskInstanceById(historyTaskId);
 		String deleteReason = historicTaskInstanceEntity.getDeleteReason();
-
 		return "跳过".equals(deleteReason);
 	}
 
@@ -425,7 +362,6 @@ public class RollbackCmd implements Command<Boolean> {
 		HumanTaskConnector humanTaskConnector = ApplicationContextHelper.getBean(HumanTaskConnector.class);
 		HumanTaskDTO humanTaskDto = new HumanTaskBuilder().setDelegateTask(delegateTask).build();
 		humanTaskDto = humanTaskConnector.saveHumanTask(humanTaskDto);
-
 		return humanTaskDto;
 	}
 }

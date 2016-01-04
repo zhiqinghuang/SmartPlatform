@@ -57,7 +57,6 @@ public class CounterSignCmd implements Command<Object> {
 
 	public Object execute(CommandContext commandContext) {
 		this.commandContext = commandContext;
-
 		if (this.taskId != null) {
 			TaskEntity taskEntity = commandContext.getTaskEntityManager().findTaskById(taskId);
 			activityId = taskEntity.getExecution().getActivityId();
@@ -65,13 +64,11 @@ public class CounterSignCmd implements Command<Object> {
 			this.collectionVariableName = "countersignUsers";
 			this.collectionElementVariableName = "countersignUser";
 		}
-
 		if (operateType.equalsIgnoreCase("add")) {
 			addInstance();
 		} else if (operateType.equalsIgnoreCase("remove")) {
 			removeInstance();
 		}
-
 		return null;
 	}
 
@@ -107,7 +104,6 @@ public class CounterSignCmd implements Command<Object> {
 		execution.setActive(true);
 		execution.setConcurrent(true);
 		execution.setScope(false);
-
 		if (getActivity().getProperty("type").equals("subProcess")) {
 			ExecutionEntity extraScopedExecution = execution.createExecution();
 			extraScopedExecution.setActive(true);
@@ -115,7 +111,6 @@ public class CounterSignCmd implements Command<Object> {
 			extraScopedExecution.setScope(true);
 			execution = extraScopedExecution;
 		}
-
 		setLoopVariable(parentExecutionEntity, "nrOfInstances", (Integer) parentExecutionEntity.getVariableLocal("nrOfInstances") + 1);
 		setLoopVariable(parentExecutionEntity, "nrOfActiveInstances", (Integer) parentExecutionEntity.getVariableLocal("nrOfActiveInstances") + 1);
 		setLoopVariable(execution, "loopCounter", parentExecutionEntity.getExecutions().size() + 1);
@@ -134,7 +129,6 @@ public class CounterSignCmd implements Command<Object> {
 				execution.setActive(true);
 			}
 		}
-
 		Collection<String> col = (Collection<String>) execution.getVariable(collectionVariableName);
 		col.add(assignee);
 		execution.setVariable(collectionVariableName, col);
@@ -146,22 +140,16 @@ public class CounterSignCmd implements Command<Object> {
 	 */
 	private void removeParallelInstance() {
 		List<ExecutionEntity> executions = getActivieExecutions();
-
 		for (ExecutionEntity executionEntity : executions) {
 			String executionVariableAssignee = (String) executionEntity.getVariableLocal(collectionElementVariableName);
-
 			if ((executionVariableAssignee != null) && executionVariableAssignee.equals(assignee)) {
 				executionEntity.remove();
-
 				ExecutionEntity parentConcurrentExecution = executionEntity.getParent();
-
 				if (getActivity().getProperty("type").equals("subProcess")) {
 					parentConcurrentExecution = parentConcurrentExecution.getParent();
 				}
-
 				setLoopVariable(parentConcurrentExecution, "nrOfInstances", (Integer) parentConcurrentExecution.getVariableLocal("nrOfInstances") - 1);
 				setLoopVariable(parentConcurrentExecution, "nrOfActiveInstances", (Integer) parentConcurrentExecution.getVariableLocal("nrOfActiveInstances") - 1);
-
 				break;
 			}
 		}
@@ -177,12 +165,10 @@ public class CounterSignCmd implements Command<Object> {
 		col.remove(assignee);
 		executionEntity.setVariable(collectionVariableName, col);
 		setLoopVariable(executionEntity, "nrOfInstances", (Integer) executionEntity.getVariableLocal("nrOfInstances") - 1);
-
 		// 如果串行要删除的人是当前active执行,
 		if (executionEntity.getVariableLocal(collectionElementVariableName).equals(assignee)) {
 			throw new ActivitiException("当前正在执行的实例,无法移除!");
 		}
-
 		log.info("移除后审批列表 : {}", col.toString());
 	}
 
@@ -194,13 +180,11 @@ public class CounterSignCmd implements Command<Object> {
 		List<ExecutionEntity> activeExecutions = new ArrayList<ExecutionEntity>();
 		ActivityImpl activity = getActivity();
 		List<ExecutionEntity> executions = getChildExecutionByProcessInstanceId();
-
 		for (ExecutionEntity execution : executions) {
 			if (execution.isActive() && (execution.getActivityId().equals(activityId) || activity.contains(execution.getActivity()))) {
 				activeExecutions.add(execution);
 			}
 		}
-
 		return activeExecutions;
 	}
 

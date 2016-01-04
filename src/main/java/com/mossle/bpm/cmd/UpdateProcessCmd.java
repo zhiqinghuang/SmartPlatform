@@ -30,9 +30,7 @@ public class UpdateProcessCmd implements Command<Void> {
 		String deploymentId = processDefinitionEntity.getDeploymentId();
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(Context.getProcessEngineConfiguration().getDataSource());
 		jdbcTemplate.update("update ACT_GE_BYTEARRAY set BYTES_=? where NAME_=? and DEPLOYMENT_ID_=?", bytes, resourceName, deploymentId);
-
 		Context.getProcessEngineConfiguration().getProcessDefinitionCache().remove(processDefinitionId);
-
 		try {
 			// update png
 			GetBpmnModelCmd getBpmnModelCmd = new GetBpmnModelCmd(processDefinitionId);
@@ -46,7 +44,6 @@ public class UpdateProcessCmd implements Command<Void> {
 		} catch (Exception ex) {
 			logger.error(ex.getMessage(), ex);
 		}
-
 		return null;
 	}
 }

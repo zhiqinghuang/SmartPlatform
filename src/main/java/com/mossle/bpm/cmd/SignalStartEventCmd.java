@@ -27,7 +27,6 @@ public class SignalStartEventCmd extends NeedsActiveExecutionCmd<Object> {
 		} catch (Exception ex) {
 			logger.error(ex.getMessage(), ex);
 		}
-
 		return null;
 	}
 

@@ -32,14 +32,11 @@ public class PermBatchController {
 	public String list(Model model) {
 		List<Perm> perms = permManager.findBy("tenantId", tenantHolder.getTenantId());
 		StringBuilder buff = new StringBuilder();
-
 		for (Perm perm : perms) {
 			buff.append(perm.getCode()).append(",").append(perm.getName()).append(",").append(perm.getPermType().getName()).append("\n");
 		}
-
 		String text = buff.toString();
 		model.addAttribute("text", text);
-
 		return "auth/perm-batch-list";
 	}
 
@@ -49,21 +46,16 @@ public class PermBatchController {
 			// code,name,type
 			for (String str : text.split("\n")) {
 				str = str.trim();
-
 				String[] array = str.split(",");
-
 				if (array.length < 3) {
 					String msg = str + " is invalid, format should be 'code,name,type'.";
 					redirectAttributes.addFlashAttribute("message", msg);
 				}
-
 				String code = array[0];
 				String name = array[1];
 				String type = array[2];
-
 				Perm perm = permManager.findUnique("from Perm where code=? and tenantId=?", code, tenantHolder.getTenantId());
 				PermType permType = permTypeManager.findUniqueBy("name", type);
-
 				if (permType == null) {
 					permType = new PermType();
 					permType.setName(type);
@@ -71,7 +63,6 @@ public class PermBatchController {
 					permType.setTenantId(tenantHolder.getTenantId());
 					permTypeManager.save(permType);
 				}
-
 				if (perm == null) {
 					perm = new Perm();
 					perm.setCode(code);
@@ -82,11 +73,9 @@ public class PermBatchController {
 				}
 			}
 		}
-
 		return "redirect:/auth/perm-list.do";
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setPermManager(PermManager permManager) {
 		this.permManager = permManager;

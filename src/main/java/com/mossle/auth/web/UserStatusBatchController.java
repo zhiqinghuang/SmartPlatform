@@ -40,16 +40,12 @@ public class UserStatusBatchController {
 	public String input(@RequestParam(value = "userText", required = false) String userText, Model model, RedirectAttributes redirectAttributes) {
 		if (userText != null) {
 			List<UserStatus> userStatuses = new ArrayList<UserStatus>();
-
 			for (String str : userText.split("\n")) {
 				str = str.trim();
-
 				if (str.length() == 0) {
 					continue;
 				}
-
 				UserStatus userStatus = userStatusManager.findUnique("from UserStatus where username=? and userRepoRef=?", str, tenantHolder.getUserRepoRef());
-
 				if (userStatus == null) {
 					messageHelper.addFlashMessage(redirectAttributes, str + " is not exists.");
 				} else {
@@ -62,29 +58,22 @@ public class UserStatusBatchController {
 					}
 				}
 			}
-
 			model.addAttribute("userStatuses", userStatuses);
 		}
-
 		List<Role> roles = roleManager.find("from Role where tenantId=?", tenantHolder.getTenantId());
-
 		model.addAttribute("roles", roles);
-
 		return "auth/user-status-batch-input";
 	}
 
 	@RequestMapping("user-statuc-batch-save")
 	public String save(@RequestParam("userIds") List<Long> userIds, @RequestParam("roleIds") List<Long> roleIds) {
 		logger.debug("userIds: {}, roleIds: {}", userIds, roleIds);
-
 		for (Long userId : userIds) {
 			authService.configUserRole(userId, roleIds, tenantHolder.getUserRepoRef(), tenantHolder.getTenantId(), false);
 		}
-
 		return "redirect:/auth/user-status-batch-input.do";
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setUserStatusManager(UserStatusManager userStatusManager) {
 		this.userStatusManager = userStatusManager;

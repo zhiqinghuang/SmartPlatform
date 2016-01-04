@@ -51,23 +51,18 @@ public class UserConnectorBatchController {
 	public String input(@RequestParam(value = "userText", required = false) String userText, Model model, RedirectAttributes redirectAttributes) {
 		if (userText != null) {
 			List<UserStatus> userStatuses = new ArrayList<UserStatus>();
-
 			for (String str : userText.split("\n")) {
 				str = str.trim();
-
 				if (str.length() == 0) {
 					continue;
 				}
-
 				String username = str;
 				UserDTO userDto = userConnector.findByUsername(username, tenantHolder.getUserRepoRef());
-
 				if (userDto == null) {
 					messageHelper.addMessage(model, str + " is not exists.");
 					logger.info("{} is not exists", str);
 				} else {
 					UserStatus userStatus = authService.createOrGetUserStatus(username, userDto.getId(), tenantHolder.getUserRepoRef(), tenantHolder.getTenantId());
-
 					try {
 						userStatusChecker.check(userStatus);
 						userStatuses.add(userStatus);
@@ -77,20 +72,15 @@ public class UserConnectorBatchController {
 					}
 				}
 			}
-
 			model.addAttribute("userStatuses", userStatuses);
 		}
-
 		List<Role> roles = roleManager.find("from Role where tenantId=?", tenantHolder.getTenantId());
 		List<RoleDTO> roleDtos = new ArrayList<RoleDTO>();
 		roleDtos.addAll(convertRoleDtos(roles, false));
 		model.addAttribute("roleDtos", roleDtos);
-
 		// List<TenantInfo> sharedTenantInfos =
 		// tenantConnector.findSharedTenants();
-
 		// logger.info("{}", sharedTenantInfos);
-
 		// for (TenantInfo tenantInfo : sharedTenantInfos) {
 		// List<Role> sharedRoles = authService.findRoles(tenantInfo.getId());
 		// roleDtos.addAll(convertRoleDtos(sharedRoles, true));
@@ -101,40 +91,32 @@ public class UserConnectorBatchController {
 	@RequestMapping("user-connector-batch-save")
 	public String save(@RequestParam("userIds") List<Long> userIds, @RequestParam("roleIds") List<Long> roleIds) {
 		logger.debug("userIds: {}, roleIds: {}", userIds, roleIds);
-
 		for (Long userId : userIds) {
 			authService.configUserRole(userId, roleIds, tenantHolder.getUserRepoRef(), tenantHolder.getTenantId(), false);
 		}
-
 		return "redirect:/auth/user-connector-list.do";
 	}
 
 	public List<RoleDTO> convertRoleDtos(List<Role> roles, boolean useTenant) {
 		List<RoleDTO> roleDtos = new ArrayList<RoleDTO>();
-
 		for (Role role : roles) {
 			roleDtos.add(convertRoleDto(role, useTenant));
 		}
-
 		return roleDtos;
 	}
 
 	public RoleDTO convertRoleDto(Role role, boolean useTenant) {
 		RoleDTO roleDto = new RoleDTO();
 		roleDto.setId(role.getId());
-
 		if (useTenant) {
 			roleDto.setName(role.getName() + "(" + tenantConnector.findById(role.getTenantId()).getName() + ")");
 		} else {
 			roleDto.setName(role.getName());
 		}
-
 		roleDto.setTenantId(role.getTenantId());
-
 		return roleDto;
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setUserStatusManager(UserStatusManager userStatusManager) {
 		this.userStatusManager = userStatusManager;

@@ -25,6 +25,7 @@ import com.mossle.bpm.support.DefaultTaskListener;
  * </p>
  */
 public class NoticeTaskListener extends DefaultTaskListener {
+	private static final long serialVersionUID = 4625166847367568926L;
 	private ArrivalNotice arrivalNotice = new ArrivalNotice();
 	private CompleteNotice completeNotice = new CompleteNotice();
 

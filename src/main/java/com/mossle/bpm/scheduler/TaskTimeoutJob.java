@@ -26,16 +26,13 @@ public class TaskTimeoutJob {
 	@Scheduled(cron = "0/10 * * * * ?")
 	public void execute() throws Exception {
 		logger.info("start");
-
 		List<Task> tasks = processEngine.getTaskService().createTaskQuery().list();
-
 		for (Task task : tasks) {
 			if (task.getDueDate() != null) {
 				SendNoticeCmd sendNoticeCmd = new SendNoticeCmd(task.getId());
 				processEngine.getManagementService().executeCommand(sendNoticeCmd);
 			}
 		}
-
 		logger.info("end");
 	}
 

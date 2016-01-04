@@ -41,9 +41,7 @@ public class PermController {
 		List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
 		propertyFilters.add(new PropertyFilter("EQS_tenantId", tenantHolder.getTenantId()));
 		page = permManager.pagedQuery(page, propertyFilters);
-
 		model.addAttribute("page", page);
-
 		return "auth/perm-list";
 	}
 
@@ -53,11 +51,8 @@ public class PermController {
 			Perm perm = permManager.get(id);
 			model.addAttribute("model", perm);
 		}
-
 		List<PermType> permTypes = permTypeManager.findBy("tenantId", tenantHolder.getTenantId());
-
 		model.addAttribute("permTypes", permTypes);
-
 		return "auth/perm-input";
 	}
 
@@ -65,23 +60,18 @@ public class PermController {
 	public String save(@ModelAttribute Perm perm, @RequestParam("permTypeId") Long permTypeId, RedirectAttributes redirectAttributes) {
 		Perm dest = null;
 		Long id = perm.getId();
-
 		if (id != null) {
 			dest = permManager.get(id);
 			beanMapper.copy(perm, dest);
 		} else {
 			dest = perm;
 		}
-
 		if (id == null) {
 			dest.setTenantId(tenantHolder.getTenantId());
 		}
-
 		dest.setPermType(permTypeManager.get(permTypeId));
 		permManager.save(dest);
-
 		messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-
 		return "redirect:/auth/perm-list.do";
 	}
 
@@ -90,7 +80,6 @@ public class PermController {
 		List<Perm> perms = permManager.findByIds(selectedItem);
 		permManager.removeAll(perms);
 		messageHelper.addFlashMessage(redirectAttributes, "core.delete.save", "删除成功");
-
 		return "redirect:/auth/perm-list.do";
 	}
 
@@ -98,7 +87,6 @@ public class PermController {
 	public void export(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
 		page = permManager.pagedQuery(page, propertyFilters);
-
 		List<Perm> perms = (List<Perm>) page.getResult();
 		TableModel tableModel = new TableModel();
 		tableModel.setName("perm");
@@ -107,7 +95,6 @@ public class PermController {
 		exportor.export(request, response, tableModel);
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setPermManager(PermManager permManager) {
 		this.permManager = permManager;

@@ -50,12 +50,10 @@ public class UserStatusController {
 		List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
 		propertyFilters.add(new PropertyFilter("EQS_tenantId", tenantHolder.getTenantId()));
 		page = userStatusManager.pagedQuery(page, propertyFilters);
-
 		List<UserStatus> userStatuses = (List<UserStatus>) page.getResult();
 		List<UserStatusDTO> userStatusDtos = userStatusConverter.createUserStatusDtos(userStatuses, tenantHolder.getUserRepoRef(), tenantHolder.getTenantId());
 		page.setResult(userStatusDtos);
 		model.addAttribute("page", page);
-
 		return "auth/user-status-list";
 	}
 
@@ -65,7 +63,6 @@ public class UserStatusController {
 			UserStatus userStatus = userStatusManager.get(id);
 			model.addAttribute("model", userStatus);
 		}
-
 		return "auth/user-status-input";
 	}
 
@@ -73,44 +70,34 @@ public class UserStatusController {
 	public String save(@ModelAttribute UserStatus userStatus, @RequestParam("confirmPassword") String confirmPassword, RedirectAttributes redirectAttributes) {
 		try {
 			userStatusChecker.check(userStatus);
-
 			if (userStatus.getPassword() != null) {
 				if (!userStatus.getPassword().equals(confirmPassword)) {
 					messageHelper.addFlashMessage(redirectAttributes, "user.user.input.passwordnotequals", "两次输入密码不符");
-
 					return "auth/user-status-input";
 				}
-
 				if (customPasswordEncoder != null) {
 					userStatus.setPassword(customPasswordEncoder.encode(userStatus.getPassword()));
 				}
 			}
-
 			UserStatus dest = null;
 			Long id = userStatus.getId();
-
 			if (id != null) {
 				dest = userStatusManager.get(id);
 				beanMapper.copy(userStatus, dest);
 			} else {
 				dest = userStatus;
 			}
-
 			if (id == null) {
 				dest.setUserRepoRef(tenantHolder.getUserRepoRef());
 				dest.setTenantId(tenantHolder.getTenantId());
 			}
-
 			userStatusManager.save(dest);
-
 			messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
 		} catch (CheckUserStatusException ex) {
 			logger.warn(ex.getMessage(), ex);
 			messageHelper.addFlashMessage(redirectAttributes, ex.getMessage());
-
 			return "auth/user-status-input";
 		}
-
 		return "redirect:/auth/user-status-list.do";
 	}
 
@@ -118,18 +105,15 @@ public class UserStatusController {
 	public String remove(@RequestParam("selectedItem") List<Long> selectedItem, RedirectAttributes redirectAttributes) {
 		try {
 			List<UserStatus> userStatuses = userStatusManager.findByIds(selectedItem);
-
 			for (UserStatus userStatus : userStatuses) {
 				userStatusChecker.check(userStatus);
 			}
-
 			userStatusManager.removeAll(userStatuses);
 			messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
 		} catch (CheckUserStatusException ex) {
 			logger.warn(ex.getMessage(), ex);
 			messageHelper.addFlashMessage(redirectAttributes, ex.getMessage());
 		}
-
 		return "redirect:/auth/user-status-list.do";
 	}
 
@@ -137,7 +121,6 @@ public class UserStatusController {
 	public void export(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
 		page = userStatusManager.pagedQuery(page, propertyFilters);
-
 		List<UserStatus> userStatuses = (List<UserStatus>) page.getResult();
 		List<UserStatusDTO> userStatusDtos = userStatusConverter.createUserStatusDtos(userStatuses, tenantHolder.getUserRepoRef(), tenantHolder.getTenantId());
 		TableModel tableModel = new TableModel();
@@ -159,9 +142,7 @@ public class UserStatusController {
 			userStatus.setPassword(newPassword);
 			userStatusManager.save(userStatus);
 		}
-
 		messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "操作成功");
-
 		return "redirect:/auth/user-status-password.do";
 	}
 
@@ -170,20 +151,15 @@ public class UserStatusController {
 	public boolean checkUsername(@RequestParam("username") String username, @RequestParam(value = "id", required = false) Long id) throws Exception {
 		String hql = "from UserStatus where username=?";
 		Object[] params = { username };
-
 		if (id != 0L) {
 			hql = "from UserStatus where username=? and id<>?";
 			params = new Object[] { username, id };
 		}
-
 		UserStatus userStatus = userStatusManager.findUnique(hql, params);
-
 		boolean result = (userStatus == null);
-
 		return result;
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setUserStatusManager(UserStatusManager userStatusManager) {
 		this.userStatusManager = userStatusManager;

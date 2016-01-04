@@ -41,7 +41,6 @@ public abstract class AdvancedBusinessCalendar implements BusinessCalendar {
 		if (!useBusinessTime) {
 			return date;
 		}
-
 		// TODO: tenantId
 		return workCalendarConnector.processDate(date, "1");
 	}
@@ -49,13 +48,10 @@ public abstract class AdvancedBusinessCalendar implements BusinessCalendar {
 	public Date add(Date date, Duration duration, boolean useBusinessTime) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(date);
-
 		if (!useBusinessTime) {
 			duration.addTo(calendar);
-
 			return calendar.getTime();
 		}
-
 		// TODO: tenantId
 		return workCalendarConnector.add(date, duration, "1");
 	}
@@ -64,6 +60,5 @@ public abstract class AdvancedBusinessCalendar implements BusinessCalendar {
 		this.workCalendarConnector = workCalendarConnector;
 	}
 
-	// ~ ======================================================================
 	public abstract String getName();
 }

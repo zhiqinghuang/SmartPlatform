@@ -25,16 +25,12 @@ public class ProxyUserTaskBpmnParseHandler implements BpmnParseHandler {
 		if (!(baseElement instanceof UserTask)) {
 			return;
 		}
-
 		if (useDefaultUserTaskParser) {
 			new UserTaskParseHandler().parse(bpmnParse, baseElement);
 		}
-
 		UserTask userTask = (UserTask) baseElement;
 		logger.debug("bpmnParse : {}, userTask : {}", bpmnParse, userTask);
-
 		TaskDefinition taskDefinition = (TaskDefinition) bpmnParse.getCurrentActivity().getProperty(UserTaskParseHandler.PROPERTY_TASK_DEFINITION);
-
 		this.configEvent(taskDefinition, bpmnParse, TaskListener.EVENTNAME_CREATE);
 		this.configEvent(taskDefinition, bpmnParse, TaskListener.EVENTNAME_ASSIGNMENT);
 		this.configEvent(taskDefinition, bpmnParse, TaskListener.EVENTNAME_COMPLETE);
@@ -51,7 +47,6 @@ public class ProxyUserTaskBpmnParseHandler implements BpmnParseHandler {
 
 	public Collection<Class<? extends BaseElement>> getHandledTypes() {
 		List types = Collections.singletonList(UserTask.class);
-
 		return types;
 	}
 

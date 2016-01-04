@@ -18,48 +18,37 @@ import com.mossle.bpm.support.DefaultTaskListener;
  * 自动完成第一个任务.
  */
 public class AutoCompleteFirstTaskListener extends DefaultTaskListener {
-	/** logger. */
+	private static final long serialVersionUID = -6683143437003663254L;
 	private static Logger logger = LoggerFactory.getLogger(AutoCompleteFirstTaskListener.class);
 
 	@Override
 	public void onCreate(DelegateTask delegateTask) throws Exception {
 		String initiatorId = Authentication.getAuthenticatedUserId();
-
 		if (initiatorId == null) {
 			return;
 		}
-
 		String assignee = delegateTask.getAssignee();
-
 		if (assignee == null) {
 			return;
 		}
-
 		PvmActivity targetActivity = this.findFirstActivity(delegateTask.getProcessDefinitionId());
-
 		if (!targetActivity.getId().equals(delegateTask.getExecution().getCurrentActivityId())) {
 			return;
 		}
-
 		if (!initiatorId.equals(assignee)) {
 			return;
 		}
-
 		logger.debug("auto complete first task : {}", delegateTask);
-
 		for (IdentityLink identityLink : delegateTask.getCandidates()) {
 			String userId = identityLink.getUserId();
 			String groupId = identityLink.getGroupId();
-
 			if (userId != null) {
 				delegateTask.deleteCandidateUser(userId);
 			}
-
 			if (groupId != null) {
 				delegateTask.deleteCandidateGroup(groupId);
 			}
 		}
-
 		// ((TaskEntity) delegateTask).complete();
 		// Context.getCommandContext().getHistoryManager().recordTaskId((TaskEntity)
 		// delegateTask);
@@ -71,22 +60,16 @@ public class AutoCompleteFirstTaskListener extends DefaultTaskListener {
 	 */
 	public PvmActivity findFirstActivity(String processDefinitionId) {
 		ProcessDefinitionEntity processDefinitionEntity = Context.getProcessEngineConfiguration().getProcessDefinitionCache().get(processDefinitionId);
-
 		ActivityImpl startActivity = processDefinitionEntity.getInitial();
-
 		if (startActivity.getOutgoingTransitions().size() != 1) {
 			throw new IllegalStateException("start activity outgoing transitions cannot more than 1, now is : " + startActivity.getOutgoingTransitions().size());
 		}
-
 		PvmTransition pvmTransition = startActivity.getOutgoingTransitions().get(0);
 		PvmActivity targetActivity = pvmTransition.getDestination();
-
 		if (!"userTask".equals(targetActivity.getProperty("type"))) {
 			logger.debug("first activity is not userTask, just skip");
-
 			return null;
 		}
-
 		return targetActivity;
 	}
 }

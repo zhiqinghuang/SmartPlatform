@@ -25,29 +25,23 @@ public class FindPreviousActivitiesCmd implements Command<List<PvmActivity>> {
 
 	public List<PvmActivity> execute(CommandContext commandContext) {
 		ProcessDefinitionEntity processDefinitionEntity = Context.getProcessEngineConfiguration().getDeploymentManager().findDeployedProcessDefinitionById(processDefinitionId);
-
 		if (processDefinitionEntity == null) {
 			throw new IllegalArgumentException("cannot find processDefinition : " + processDefinitionId);
 		}
-
 		ActivityImpl activity = processDefinitionEntity.findActivity(activityId);
-
 		return this.getPreviousActivities(activity);
 	}
 
 	public List<PvmActivity> getPreviousActivities(PvmActivity pvmActivity) {
 		List<PvmActivity> pvmActivities = new ArrayList<PvmActivity>();
-
 		for (PvmTransition pvmTransition : pvmActivity.getIncomingTransitions()) {
 			PvmActivity targetActivity = pvmTransition.getDestination();
-
 			if ("userTask".equals(targetActivity.getProperty("type"))) {
 				pvmActivities.add(targetActivity);
 			} else {
 				pvmActivities.addAll(this.getPreviousActivities(targetActivity));
 			}
 		}
-
 		return pvmActivities;
 	}
 }

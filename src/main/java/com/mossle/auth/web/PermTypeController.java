@@ -41,7 +41,6 @@ public class PermTypeController {
 		propertyFilters.add(new PropertyFilter("EQS_tenantId", tenantHolder.getTenantId()));
 		page = permTypeManager.pagedQuery(page, propertyFilters);
 		model.addAttribute("page", page);
-
 		return "auth/perm-type-list";
 	}
 
@@ -51,7 +50,6 @@ public class PermTypeController {
 			PermType permType = permTypeManager.get(id);
 			model.addAttribute("model", permType);
 		}
-
 		return "auth/perm-type-input";
 	}
 
@@ -60,23 +58,18 @@ public class PermTypeController {
 		// copy
 		PermType dest = null;
 		Long id = permType.getId();
-
 		if (id != null) {
 			dest = permTypeManager.get(id);
 			beanMapper.copy(permType, dest);
 		} else {
 			dest = permType;
 		}
-
 		if (id == null) {
 			dest.setTenantId(tenantHolder.getTenantId());
 		}
-
 		// save
 		permTypeManager.save(dest);
-
 		messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-
 		return "redirect:/auth/perm-type-list.do";
 	}
 
@@ -85,7 +78,6 @@ public class PermTypeController {
 		List<PermType> permTypes = permTypeManager.findByIds(selectedItem);
 		permTypeManager.removeAll(permTypes);
 		messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
-
 		return "redirect:/auth/perm-type-list.do";
 	}
 
@@ -93,7 +85,6 @@ public class PermTypeController {
 	public void export(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
 		page = permTypeManager.pagedQuery(page, propertyFilters);
-
 		List<PermType> permTypees = (List<PermType>) page.getResult();
 		TableModel tableModel = new TableModel();
 		tableModel.setName("permType");
@@ -102,7 +93,6 @@ public class PermTypeController {
 		exportor.export(request, response, tableModel);
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setPermTypeManager(PermTypeManager permTypeManager) {
 		this.permTypeManager = permTypeManager;

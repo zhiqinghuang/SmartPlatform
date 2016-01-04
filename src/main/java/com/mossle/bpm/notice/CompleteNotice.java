@@ -26,9 +26,7 @@ public class CompleteNotice {
 	public void process(DelegateTask delegateTask) {
 		String taskDefinitionKey = delegateTask.getTaskDefinitionKey();
 		String processDefinitionId = delegateTask.getProcessDefinitionId();
-
 		List<BpmConfNotice> bpmConfNotices = ApplicationContextHelper.getBean(BpmConfNoticeManager.class).find("from BpmConfNotice where bpmConfNode.bpmConfBase.processDefinitionId=? and bpmConfNode.code=?", processDefinitionId, taskDefinitionKey);
-
 		for (BpmConfNotice bpmConfNotice : bpmConfNotices) {
 			if (TYPE_COMPLETE == bpmConfNotice.getType()) {
 				processComplete(delegateTask, bpmConfNotice);
@@ -39,28 +37,21 @@ public class CompleteNotice {
 	public void processComplete(DelegateTask delegateTask, BpmConfNotice bpmConfNotice) {
 		UserConnector userConnector = ApplicationContextHelper.getBean(UserConnector.class);
 		NotificationConnector notificationConnector = ApplicationContextHelper.getBean(NotificationConnector.class);
-
-		//
 		Map<String, Object> data = new HashMap<String, Object>();
 		TaskEntity taskEntity = new TaskEntity();
 		taskEntity.setId(delegateTask.getId());
 		taskEntity.setName(delegateTask.getName());
 		taskEntity.setAssigneeWithoutCascade(userConnector.findById(delegateTask.getAssignee()).getDisplayName());
 		taskEntity.setVariableLocal("initiator", getInitiator(userConnector, delegateTask));
-
-		//
 		data.put("task", taskEntity);
 		data.put("initiator", this.getInitiator(userConnector, delegateTask));
-
 		String receiver = bpmConfNotice.getReceiver();
-
 		/*
 		 * BpmMailTemplate bpmMailTemplate = bpmConfNotice.getBpmMailTemplate();
 		 * ExpressionManager expressionManager = Context
 		 * .getProcessEngineConfiguration().getExpressionManager();
 		 */
 		UserDTO userDto = null;
-
 		if ("任务接收人".equals(receiver)) {
 			userDto = userConnector.findById(delegateTask.getAssignee());
 		} else if ("流程发起人".equals(receiver)) {
@@ -69,7 +60,6 @@ public class CompleteNotice {
 			HistoricProcessInstanceEntity historicProcessInstanceEntity = Context.getCommandContext().getHistoricProcessInstanceEntityManager().findHistoricProcessInstance(delegateTask.getProcessInstanceId());
 			userDto = userConnector.findById(historicProcessInstanceEntity.getStartUserId());
 		}
-
 		/*
 		 * String subject = expressionManager
 		 * .createExpression(bpmMailTemplate.getSubject())

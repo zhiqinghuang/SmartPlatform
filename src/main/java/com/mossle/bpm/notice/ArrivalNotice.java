@@ -30,12 +30,9 @@ public class ArrivalNotice {
 		if (delegateTask.getAssignee() == null) {
 			return;
 		}
-
 		String taskDefinitionKey = delegateTask.getTaskDefinitionKey();
 		String processDefinitionId = delegateTask.getProcessDefinitionId();
-
 		List<BpmConfNotice> bpmConfNotices = ApplicationContextHelper.getBean(BpmConfNoticeManager.class).find("from BpmConfNotice where bpmConfNode.bpmConfBase.processDefinitionId=? and bpmConfNode.code=?", processDefinitionId, taskDefinitionKey);
-
 		for (BpmConfNotice bpmConfNotice : bpmConfNotices) {
 			if (TYPE_ARRIVAL == bpmConfNotice.getType()) {
 				processArrival(delegateTask, bpmConfNotice);
@@ -46,10 +43,7 @@ public class ArrivalNotice {
 	public void processArrival(DelegateTask delegateTask, BpmConfNotice bpmConfNotice) {
 		UserConnector userConnector = ApplicationContextHelper.getBean(UserConnector.class);
 		NotificationConnector notificationConnector = ApplicationContextHelper.getBean(NotificationConnector.class);
-
-		//
 		Map<String, Object> data = new HashMap<String, Object>();
-
 		TaskEntity taskEntity = new TaskEntity();
 		taskEntity.setId(delegateTask.getId());
 		taskEntity.setName(delegateTask.getName());
@@ -57,19 +51,15 @@ public class ArrivalNotice {
 		taskEntity.setVariableLocal("initiator", getInitiator(userConnector, delegateTask));
 		logger.debug("initiator : {}", delegateTask.getVariable("initator"));
 		logger.debug("variables : {}", delegateTask.getVariables());
-		//
 		data.put("task", taskEntity);
 		data.put("initiator", this.getInitiator(userConnector, delegateTask));
-
 		String receiver = bpmConfNotice.getReceiver();
-
 		/*
 		 * BpmMailTemplate bpmMailTemplate = bpmConfNotice.getBpmMailTemplate();
 		 * ExpressionManager expressionManager = Context
 		 * .getProcessEngineConfiguration().getExpressionManager();
 		 */
 		UserDTO userDto = null;
-
 		/*
 		 * String subject = expressionManager
 		 * .createExpression(bpmMailTemplate.getSubject())
@@ -87,7 +77,6 @@ public class ArrivalNotice {
 			HistoricProcessInstanceEntity historicProcessInstanceEntity = Context.getCommandContext().getHistoricProcessInstanceEntityManager().findHistoricProcessInstance(delegateTask.getProcessInstanceId());
 			userDto = userConnector.findById(historicProcessInstanceEntity.getStartUserId());
 		}
-
 		// this.sendMail(userDto, subject, content);
 		// this.sendSiteMessage(userDto, subject, content);
 		NotificationDTO notificationDto = new NotificationDTO();

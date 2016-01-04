@@ -2,10 +2,6 @@ package com.mossle.bpm.rule;
 
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.core.JdbcTemplate;
-
 import com.mossle.api.org.OrgConnector;
 import com.mossle.core.spring.ApplicationContextHelper;
 
@@ -14,9 +10,6 @@ import com.mossle.core.spring.ApplicationContextHelper;
  * 
  */
 public class PositionAssigneeRule implements AssigneeRule {
-	private static Logger logger = LoggerFactory.getLogger(PositionAssigneeRule.class);
-	private JdbcTemplate jdbcTemplate;
-	private OrgConnector orgConnector;
 
 	public List<String> process(String value, String initiator) {
 		return ApplicationContextHelper.getBean(OrgConnector.class).getPositionUserIds(initiator, value);

@@ -9,7 +9,6 @@ import com.mossle.bpm.graph.ActivitiGraphBuilder;
 import com.mossle.bpm.graph.Graph;
 
 public class FindGraphCmd implements Command<Graph> {
-	private static Logger logger = LoggerFactory.getLogger(FindGraphCmd.class);
 	private String processDefinitionId;
 
 	public FindGraphCmd(String processDefinitionId) {

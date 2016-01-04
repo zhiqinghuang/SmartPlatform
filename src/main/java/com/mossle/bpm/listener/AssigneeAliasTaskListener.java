@@ -34,23 +34,18 @@ public class AssigneeAliasTaskListener extends DefaultTaskListener {
 	public void onCreate(DelegateTask delegateTask) throws Exception {
 		String assignee = delegateTask.getAssignee();
 		logger.debug("assignee : {}", assignee);
-
 		if (assignee == null) {
 			return;
 		}
-
 		for (Map.Entry<RuleMatcher, AssigneeRule> entry : assigneeRuleMap.entrySet()) {
 			RuleMatcher ruleMatcher = entry.getKey();
-
 			if (!ruleMatcher.matches(assignee)) {
 				continue;
 			}
-
 			String value = ruleMatcher.getValue(assignee);
 			AssigneeRule assigneeRule = entry.getValue();
 			logger.debug("value : {}", value);
 			logger.debug("assigneeRule : {}", assigneeRule);
-
 			if (assigneeRule instanceof SuperiorAssigneeRule) {
 				this.processSuperior(delegateTask, assigneeRule, value);
 			} else if (assigneeRule instanceof PositionAssigneeRule) {
@@ -72,7 +67,6 @@ public class AssigneeAliasTaskListener extends DefaultTaskListener {
 		String startUserId = Context.getCommandContext().getHistoricProcessInstanceEntityManager().findHistoricProcessInstance(processInstanceId).getStartUserId();
 		List<String> userIds = assigneeRule.process(value, startUserId);
 		logger.debug("userIds : {}", userIds);
-
 		if (!userIds.isEmpty()) {
 			delegateTask.setAssignee(userIds.get(0));
 		}

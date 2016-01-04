@@ -44,27 +44,22 @@ public class RolePermController {
 		if (selectedItem == null) {
 			selectedItem = Collections.emptyList();
 		}
-
 		try {
 			Role role = roleManager.get(id);
 			RoleDef roleDef = role.getRoleDef();
 			roleDefChecker.check(roleDef);
 			roleDef.getPerms().clear();
-
 			for (Long permId : selectedItem) {
 				Perm perm = permManager.get(permId);
 				roleDef.getPerms().add(perm);
 			}
-
 			roleDefManager.save(roleDef);
 			messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
 		} catch (CheckRoleException ex) {
 			logger.warn(ex.getMessage(), ex);
 			messageHelper.addFlashMessage(redirectAttributes, ex.getMessage());
-
 			return input(id, model);
 		}
-
 		return "redirect:/auth/role-perm-input.do?id=" + id;
 	}
 
@@ -73,21 +68,17 @@ public class RolePermController {
 		Role role = roleManager.get(id);
 		RoleDef roleDef = role.getRoleDef();
 		List<Long> selectedItem = new ArrayList<Long>();
-
 		for (Perm perm : roleDef.getPerms()) {
 			selectedItem.add(perm.getId());
 		}
-
 		String hql = "from PermType where type=0 and tenantId=?";
 		List<PermType> permTypes = permTypeManager.find(hql, tenantHolder.getTenantId());
 		model.addAttribute("permTypes", permTypes);
 		model.addAttribute("selectedItem", selectedItem);
 		model.addAttribute("id", id);
-
 		return "auth/role-perm-input";
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setPermManager(PermManager permManager) {
 		this.permManager = permManager;

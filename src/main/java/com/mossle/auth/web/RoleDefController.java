@@ -54,7 +54,6 @@ public class RoleDefController {
 		propertyFilters.add(new PropertyFilter("EQS_tenantId", tenantHolder.getTenantId()));
 		page = roleDefManager.pagedQuery(page, propertyFilters);
 		model.addAttribute("page", page);
-
 		return "auth/role-def-list";
 	}
 
@@ -64,7 +63,6 @@ public class RoleDefController {
 			RoleDef roleDef = roleDefManager.get(id);
 			model.addAttribute("model", roleDef);
 		}
-
 		return "auth/role-def-input";
 	}
 
@@ -73,32 +71,25 @@ public class RoleDefController {
 		try {
 			// before check
 			roleDefChecker.check(roleDef);
-
 			// after invoke
 			RoleDef dest = null;
 			Long id = roleDef.getId();
-
 			if (id != null) {
 				dest = roleDefManager.get(id);
 				beanMapper.copy(roleDef, dest);
 			} else {
 				dest = roleDef;
 			}
-
 			if (id == null) {
 				dest.setTenantId(tenantHolder.getTenantId());
 			}
-
 			roleDefManager.save(dest);
-
 			messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
 		} catch (CheckRoleException ex) {
 			logger.warn(ex.getMessage(), ex);
 			redirectAttributes.addFlashAttribute("message", ex.getMessage());
-
 			return "auth/role-def-input";
 		}
-
 		return "redirect:/auth/role-def-list.do";
 	}
 
@@ -106,19 +97,15 @@ public class RoleDefController {
 	public String remove(@RequestParam("selectedItem") List<Long> selectedItem, RedirectAttributes redirectAttributes) {
 		try {
 			List<RoleDef> roleDefs = roleDefManager.findByIds(selectedItem);
-
 			for (RoleDef roleDef : roleDefs) {
 				roleDefChecker.check(roleDef);
 			}
-
 			roleDefManager.removeAll(roleDefs);
 			messageHelper.addFlashMessage(redirectAttributes, "core.success.delete", "删除成功");
 		} catch (CheckRoleException ex) {
 			logger.warn(ex.getMessage(), ex);
-
 			messageHelper.addFlashMessage(redirectAttributes, ex.getMessage());
 		}
-
 		return "redirect:/auth/role-def-list.do";
 	}
 
@@ -126,7 +113,6 @@ public class RoleDefController {
 	public void export(@ModelAttribute Page page, @RequestParam Map<String, Object> parameterMap, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<PropertyFilter> propertyFilters = PropertyFilter.buildFromMap(parameterMap);
 		page = roleDefManager.pagedQuery(page, propertyFilters);
-
 		List<RoleDef> roleDefs = (List<RoleDef>) page.getResult();
 		TableModel tableModel = new TableModel();
 		tableModel.setName("role");
@@ -140,14 +126,11 @@ public class RoleDefController {
 	public boolean checkName(@RequestParam("name") String name, @RequestParam(value = "id", required = false) Long id) throws Exception {
 		String hql = "from RoleDef where tenantId=" + tenantHolder.getTenantId() + " and name=?";
 		Object[] params = { name };
-
 		if (id != null) {
 			hql = "from RoleDef where tenantId=" + tenantHolder.getTenantId() + " and name=? and id<>?";
 			params = new Object[] { name, id };
 		}
-
 		boolean result = roleDefManager.findUnique(hql, params) == null;
-
 		return result;
 	}
 
@@ -155,30 +138,23 @@ public class RoleDefController {
 	public String manage(@RequestParam("id") Long id, Model model) throws Exception {
 		RoleDef roleDef = roleDefManager.get(id);
 		List<Role> roles = roleManager.findBy("roleDef.id", id);
-
 		TenantDTO currentTenant = tenantHolder.getTenantDto();
 		List<TenantDTO> tenantDtos;
-
 		if (currentTenant.isShared()) {
 			tenantDtos = tenantConnector.findAll();
 		} else {
 			tenantDtos = new ArrayList<TenantDTO>();
 			tenantDtos.add(currentTenant);
 		}
-
 		List<RoleDTO> roleDtos = new ArrayList<RoleDTO>();
-
 		for (TenantDTO tenantDto : tenantDtos) {
 			Role existedRole = null;
-
 			for (Role role : roles) {
 				if (role.getTenantId().equals(tenantDto.getId())) {
 					existedRole = role;
-
 					break;
 				}
 			}
-
 			if (existedRole == null) {
 				RoleDTO roleDto = new RoleDTO();
 				roleDto.setName(roleDef.getName());
@@ -194,10 +170,8 @@ public class RoleDefController {
 				roleDtos.add(roleDto);
 			}
 		}
-
 		for (Role role : roles) {
 			boolean existed = false;
-
 			for (TenantDTO tenantDto : tenantDtos) {
 				if (role.getTenantId().equals(tenantDto.getId())) {
 					existed = true;
@@ -205,7 +179,6 @@ public class RoleDefController {
 					break;
 				}
 			}
-
 			if (!existed) {
 				RoleDTO roleDto = new RoleDTO();
 				roleDto.setName(roleDef.getName());
@@ -215,9 +188,7 @@ public class RoleDefController {
 				roleDtos.add(roleDto);
 			}
 		}
-
 		model.addAttribute("roleDts", roleDtos);
-
 		return "auth/role-def-manage";
 	}
 
@@ -225,28 +196,22 @@ public class RoleDefController {
 	public String sync(@RequestParam("id") Long id) throws Exception {
 		RoleDef roleDef = roleDefManager.get(id);
 		List<Role> roles = roleManager.findBy("roleDef.id", id);
-
 		TenantDTO currentTenant = tenantHolder.getTenantDto();
 		List<TenantDTO> tenantDtos;
-
 		if (currentTenant.isShared()) {
 			tenantDtos = tenantConnector.findAll();
 		} else {
 			tenantDtos = new ArrayList<TenantDTO>();
 			tenantDtos.add(currentTenant);
 		}
-
 		for (TenantDTO tenantDto : tenantDtos) {
 			Role existedRole = null;
-
 			for (Role role : roles) {
 				if (role.getTenantId().equals(tenantDto.getId())) {
 					existedRole = role;
-
 					break;
 				}
 			}
-
 			if (existedRole == null) {
 				Role role = new Role();
 				role.setName(roleDef.getName());
@@ -255,10 +220,8 @@ public class RoleDefController {
 				roleManager.save(role);
 			}
 		}
-
 		for (Role role : roles) {
 			boolean existed = false;
-
 			for (TenantDTO tenantDto : tenantDtos) {
 				if (role.getTenantId().equals(tenantDto.getId())) {
 					existed = true;
@@ -266,16 +229,13 @@ public class RoleDefController {
 					break;
 				}
 			}
-
 			if (!existed) {
 				roleManager.remove(role);
 			}
 		}
-
 		return "redirect:/auth/role-def-manage.do?id=" + id;
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setRoleDefManager(RoleDefManager roleDefManager) {
 		this.roleDefManager = roleDefManager;

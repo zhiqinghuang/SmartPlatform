@@ -47,39 +47,28 @@ public class AuthResource {
 	public UserDTO getUserById(@QueryParam("userId") String userId) {
 		if (userId == null) {
 			logger.error("userId cannot be null");
-
 			return null;
 		}
-
 		try {
 			com.mossle.api.user.UserDTO apiUserDto = userConnector.findById(userId);
-
 			UserDTO userDto = new UserDTO();
-
 			if (apiUserDto == null) {
 				logger.error("user is not exists : [{}]", userId);
-
 				userDto.setUsername(userId);
 				userDto.setPassword("NO_PASSWORD");
 				userDto.setAuthorities(Collections.EMPTY_LIST);
 				userDto.setAttributes(Collections.EMPTY_LIST);
-
 				return userDto;
 			}
-
 			String hql = "from UserStatus where username=? and userRepoRef=?";
 			UserStatus userStatus = userStatusManager.findUnique(hql, apiUserDto.getUsername(), tenantHolder.getUserRepoRef());
-
 			if (userStatus == null) {
 				logger.debug("user has no authorities : [{}]", userId);
-
 				logger.debug("find user : [{}]", apiUserDto.getUsername());
 				userDto.setUsername(apiUserDto.getUsername());
-
 				if ((userDto.getUsername() == null) || "".equals(userDto.getUsername())) {
 					userDto.setUsername(apiUserDto.getId());
 				}
-
 				userDto.setPassword("NO_PASSWORD");
 				userDto.setAuthorities(Collections.EMPTY_LIST);
 				userDto.setAttributes(Collections.EMPTY_LIST);
@@ -88,27 +77,20 @@ public class AuthResource {
 			} else {
 				userDto.setUsername(userStatus.getUsername());
 				userDto.setPassword(userStatus.getPassword());
-
 				List<String> authorties = userStatusManager.find(HQL_AUTHORITY, userStatus.getId(), tenantHolder.getTenantId());
 				userDto.setAuthorities(authorties);
-
 				List<String> roles = userStatusManager.find(HQL_ATTRIBUTE, userStatus.getId(), tenantHolder.getTenantId());
 				List<String> attributes = new ArrayList<String>();
-
 				for (String role : roles) {
 					attributes.add("ROLE_" + role);
 				}
-
 				userDto.setAttributes(attributes);
 			}
-
 			return userDto;
 		} catch (Exception ex) {
 			logger.error("", ex);
-
 			UserDTO userDto = new UserDTO();
 			userDto.setUsername(userId);
-
 			return userDto;
 		}
 	}
@@ -119,31 +101,22 @@ public class AuthResource {
 	public UserDTO getUser(@QueryParam("username") String username) {
 		if (username == null) {
 			logger.error("username cannot be null");
-
 			return null;
 		}
-
 		logger.debug("username : {}", username);
-
 		try {
 			com.mossle.api.user.UserDTO apiUserDto = userConnector.findByUsername(username, tenantHolder.getUserRepoRef());
-
 			UserDTO userDto = new UserDTO();
-
 			if (apiUserDto == null) {
 				logger.error("user is not exists : [{}]", username);
-
 				userDto.setUsername(username);
 				userDto.setPassword("NO_PASSWORD");
 				userDto.setAuthorities(Collections.EMPTY_LIST);
 				userDto.setAttributes(Collections.EMPTY_LIST);
-
 				return userDto;
 			}
-
 			String hql = "from UserStatus where username=? and userRepoRef=?";
 			UserStatus userStatus = userStatusManager.findUnique(hql, apiUserDto.getUsername(), tenantHolder.getUserRepoRef());
-
 			if (userStatus == null) {
 				logger.debug("user has no authorities : [{}]", username);
 				userDto.setUsername(username);
@@ -153,30 +126,22 @@ public class AuthResource {
 				userDto.setUsername(userStatus.getUsername());
 				userDto.setPassword(userStatus.getPassword());
 				userDto.setAppId("0");
-
 				List<String> authorties = userStatusManager.find(HQL_AUTHORITY, userStatus.getId(), tenantHolder.getTenantId());
 				logger.debug("authorties : {}", authorties);
 				userDto.setAuthorities(authorties);
-
 				List<String> roles = userStatusManager.find(HQL_ATTRIBUTE, userStatus.getId(), tenantHolder.getTenantId());
 				logger.debug("roles : {}", roles);
-
 				List<String> attributes = new ArrayList<String>();
-
 				for (String role : roles) {
 					attributes.add("ROLE_" + role);
 				}
-
 				userDto.setAttributes(attributes);
 			}
-
 			return userDto;
 		} catch (Exception ex) {
 			logger.error("", ex);
-
 			UserDTO userDto = new UserDTO();
 			userDto.setUsername(username);
-
 			return userDto;
 		}
 	}
@@ -187,18 +152,15 @@ public class AuthResource {
 	public List<AccessDTO> getResource() {
 		List<Access> accesses = accessManager.find(HQL_ACCESS, tenantHolder.getTenantId());
 		List<AccessDTO> accessDtos = new ArrayList<AccessDTO>();
-
 		for (Access access : accesses) {
 			AccessDTO dto = new AccessDTO();
 			dto.setAccess(access.getValue());
 			dto.setPermission(access.getPerm().getCode());
 			accessDtos.add(dto);
 		}
-
 		return accessDtos;
 	}
 
-	// ~ ======================================================================
 	@GET
 	@Path("findUsers")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -207,22 +169,17 @@ public class AuthResource {
 		Long globalId = jdbcTemplate.queryForObject("select global_id from tenant_local where id=?", Long.class, localId);
 		logger.debug("globalId : {}", globalId);
 		logger.debug("localId : {}", localId);
-
 		List<UserStatus> userStatuses = userStatusManager.find("from UserStatus where localId=?", localId);
 		List<UserDTO> userDtos = new ArrayList<UserDTO>();
-
 		for (UserStatus userStatus : userStatuses) {
 			UserDTO userDto = new UserDTO();
 			userDto.setUserId(userStatus.getId());
 			userDto.setUsername(userStatus.getUsername());
-
 			List<String> roles = userStatusManager.find(HQL_ATTRIBUTE, userStatus.getId());
 			logger.debug("roles : {}", roles);
-
 			userDto.setAuthorities(roles);
 			userDtos.add(userDto);
 		}
-
 		return userDtos;
 	}
 
@@ -234,18 +191,14 @@ public class AuthResource {
 		Long globalId = jdbcTemplate.queryForObject("select global_id from tenant_local where id=?", Long.class, localId);
 		logger.debug("globalId : {}", globalId);
 		logger.debug("localId : {}", localId);
-
 		List<Role> roles = roleManager.find("from Role where localId=?", localId);
 		List<RoleDTO> roleDtos = new ArrayList<RoleDTO>();
-
 		for (Role role : roles) {
 			RoleDTO roleDto = new RoleDTO();
 			roleDto.setId(role.getId());
 			roleDto.setName(role.getName());
-
 			roleDtos.add(roleDto);
 		}
-
 		return roleDtos;
 	}
 
@@ -254,22 +207,16 @@ public class AuthResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public UserDTO getUserByUsername(@QueryParam("username") String username, @QueryParam("appId") Long appId) {
 		logger.debug("username : {}", username);
-
 		Long localId = appId;
 		Long globalId = jdbcTemplate.queryForObject("select global_id from tenant_local where id=?", Long.class, localId);
 		logger.debug("globalId : {}", globalId);
 		logger.debug("localId : {}", localId);
-
 		com.mossle.api.user.UserDTO apiUserDto = userConnector.findByUsername(username, Long.toString(globalId));
-
 		if (apiUserDto == null) {
 			return null;
 		}
-
 		String userId = apiUserDto.getId();
-
 		UserStatus userStatus = userStatusManager.findUnique("from UserStatus where ref=? and localId=?", userId, localId);
-
 		if (userStatus == null) {
 			userStatus = new UserStatus();
 			userStatus.setRef(userId);
@@ -279,18 +226,12 @@ public class AuthResource {
 			userStatus.setTenantId(tenantHolder.getTenantId());
 			userStatusManager.save(userStatus);
 		}
-
 		UserDTO userDto = new UserDTO();
-
 		userDto.setUserId(userStatus.getId());
-
 		userDto.setUsername(apiUserDto.getUsername());
-
 		List<String> roles = userStatusManager.find(HQL_ATTRIBUTE, userStatus.getId());
 		logger.debug("roles : {}", roles);
-
 		userDto.setAuthorities(roles);
-
 		return userDto;
 	}
 
@@ -300,9 +241,7 @@ public class AuthResource {
 	public boolean configUserRole(@QueryParam("userId") Long userId, @QueryParam("roleIds") List<Long> roleIds) {
 		logger.info("userId : {}", userId);
 		logger.info("roleIds : {}", roleIds);
-
 		authService.configUserRole(userId, roleIds, tenantHolder.getUserRepoRef(), tenantHolder.getTenantId(), true);
-
 		return true;
 	}
 

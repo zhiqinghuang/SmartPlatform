@@ -26,7 +26,6 @@ public class AccessBatchController {
 	private ResourcePublisher resourcePublisher;
 	private TenantHolder tenantHolder;
 
-	// ~ ======================================================================
 	@RequestMapping("access-batch-list")
 	public String list() {
 		return "auth/access-batch-list";
@@ -37,22 +36,17 @@ public class AccessBatchController {
 		String hql = "from Access where type=? and tenantId=? order by priority";
 		List<Access> accesses = accessManager.find(hql, type, tenantHolder.getTenantId());
 		StringBuilder buff = new StringBuilder();
-
 		for (Access access : accesses) {
 			String value = access.getValue();
 			String permStr = "";
-
 			if (access.getPerm() != null) {
 				permStr = access.getPerm().getCode();
 			}
-
 			buff.append(value).append(",").append(permStr).append("\n");
 		}
-
 		String text = buff.toString();
 		model.addAttribute("text", text);
 		model.addAttribute("type", type);
-
 		return "auth/access-batch-input";
 	}
 
@@ -60,13 +54,10 @@ public class AccessBatchController {
 	public String save(@RequestParam("text") String text, @RequestParam("type") String type, RedirectAttributes redirectAttributes) {
 		authService.batchSaveAccess(text, type, tenantHolder.getTenantId());
 		messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
-
 		resourcePublisher.publish();
-
 		return "redirect:/auth/access-list.do";
 	}
 
-	// ~ ======================================================================
 	@Resource
 	public void setAccessManager(AccessManager accessManager) {
 		this.accessManager = accessManager;

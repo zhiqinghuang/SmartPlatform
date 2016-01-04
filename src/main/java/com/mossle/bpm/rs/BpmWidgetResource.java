@@ -1,7 +1,5 @@
 package com.mossle.bpm.rs;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -34,7 +32,6 @@ public class BpmWidgetResource {
 		String userId = currentUserHolder.getUserId();
 		String tenantId = tenantHolder.getTenantId();
 		List<HistoricProcessInstance> historicProcessInstances = processEngine.getHistoryService().createHistoricProcessInstanceQuery().processInstanceTenantId(tenantId).startedBy(userId).unfinished().list();
-
 		StringBuilder buff = new StringBuilder();
 		buff.append("<table class='table table-hover'>");
 		buff.append("  <thead>");
@@ -45,9 +42,6 @@ public class BpmWidgetResource {
 		buff.append("    </tr>");
 		buff.append("  </thead>");
 		buff.append("  <tbody>");
-
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
 		for (HistoricProcessInstance historicProcessInstance : historicProcessInstances) {
 			buff.append("    <tr>");
 			buff.append("      <td>" + historicProcessInstance.getId() + "</td>");
@@ -57,10 +51,8 @@ public class BpmWidgetResource {
 			buff.append("      </td>");
 			buff.append("    </tr>");
 		}
-
 		buff.append("  </tbody>");
 		buff.append("</table>");
-
 		return buff.toString();
 	}
 
@@ -71,7 +63,6 @@ public class BpmWidgetResource {
 		String tenantId = tenantHolder.getTenantId();
 		String hql = "from BpmProcess where tenantId=? order by priority";
 		List<BpmProcess> bpmProcesses = bpmProcessManager.find(hql, tenantId);
-
 		StringBuilder buff = new StringBuilder();
 		buff.append("<table class='table table-hover'>");
 		buff.append("  <thead>");
@@ -81,9 +72,6 @@ public class BpmWidgetResource {
 		buff.append("    </tr>");
 		buff.append("  </thead>");
 		buff.append("  <tbody>");
-
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
 		for (BpmProcess bpmProcess : bpmProcesses) {
 			buff.append("    <tr>");
 			buff.append("      <td>" + bpmProcess.getName() + "</td>");
@@ -92,10 +80,8 @@ public class BpmWidgetResource {
 			buff.append("      </td>");
 			buff.append("    </tr>");
 		}
-
 		buff.append("  </tbody>");
 		buff.append("</table>");
-
 		return buff.toString();
 	}
 

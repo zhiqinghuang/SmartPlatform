@@ -22,6 +22,7 @@ import com.mossle.bpm.support.DelegateTaskHolder;
 import com.mossle.core.mapper.BeanMapper;
 
 public class HumanTaskTaskListener extends DefaultTaskListener {
+	private static final long serialVersionUID = -3232511774624092264L;
 	public static final int TYPE_COPY = 3;
 	private static Logger logger = LoggerFactory.getLogger(HumanTaskTaskListener.class);
 	private HumanTaskConnector humanTaskConnector;
@@ -31,19 +32,15 @@ public class HumanTaskTaskListener extends DefaultTaskListener {
 	@Override
 	public void onCreate(DelegateTask delegateTask) throws Exception {
 		HumanTaskDTO humanTaskDto = null;
-
 		// 根据delegateTask创建HumanTaskDTO
 		try {
 			DelegateTaskHolder.setDelegateTask(delegateTask);
-
 			humanTaskDto = this.createHumanTask(delegateTask);
-
 			// 任务抄送
 			this.checkCopyHumanTask(delegateTask, humanTaskDto);
 		} finally {
 			DelegateTaskHolder.clear();
 		}
-
 		if (humanTaskDto != null) {
 			delegateTask.setAssignee(humanTaskDto.getAssignee());
 			delegateTask.setOwner(humanTaskDto.getOwner());
@@ -61,7 +58,6 @@ public class HumanTaskTaskListener extends DefaultTaskListener {
 	@Override
 	public void onDelete(DelegateTask delegateTask) throws Exception {
 		HumanTaskDTO humanTaskDto = humanTaskConnector.findHumanTaskByTaskId(delegateTask.getId());
-
 		if (!"complete".equals(humanTaskDto.getStatus())) {
 			humanTaskDto.setStatus("delete");
 			humanTaskDto.setCompleteTime(new Date());
@@ -88,38 +84,30 @@ public class HumanTaskTaskListener extends DefaultTaskListener {
 		humanTaskDto.setTenantId(delegateTask.getTenantId());
 		humanTaskDto = humanTaskConnector.saveHumanTask(humanTaskDto);
 		logger.debug("candidates : {}", delegateTask.getCandidates());
-
 		for (IdentityLink identityLink : delegateTask.getCandidates()) {
 			String type = identityLink.getType();
 			ParticipantDTO participantDto = new ParticipantDTO();
 			participantDto.setType(type);
 			participantDto.setHumanTaskId(humanTaskDto.getId());
-
 			if ("user".equals(type)) {
 				participantDto.setCode(identityLink.getUserId());
 			} else {
 				participantDto.setCode(identityLink.getGroupId());
 			}
-
 			humanTaskConnector.saveParticipant(participantDto);
 		}
-
 		return humanTaskDto;
 	}
 
 	public void checkCopyHumanTask(DelegateTask delegateTask, HumanTaskDTO humanTaskDto) throws Exception {
 		List<BpmConfUser> bpmConfUsers = bpmConfUserManager.find("from BpmConfUser where bpmConfNode.bpmConfBase.processDefinitionId=? and bpmConfNode.code=?", delegateTask.getProcessDefinitionId(), delegateTask.getExecution().getCurrentActivityId());
 		logger.debug("{}", bpmConfUsers);
-
 		ExpressionManager expressionManager = Context.getProcessEngineConfiguration().getExpressionManager();
-
 		try {
 			for (BpmConfUser bpmConfUser : bpmConfUsers) {
 				logger.debug("status : {}, type: {}", bpmConfUser.getStatus(), bpmConfUser.getType());
 				logger.debug("value : {}", bpmConfUser.getValue());
-
 				String value = expressionManager.createExpression(bpmConfUser.getValue()).getValue(delegateTask).toString();
-
 				if (bpmConfUser.getStatus() == 1) {
 					if (bpmConfUser.getType() == TYPE_COPY) {
 						logger.info("copy humantask : {}, {}", humanTaskDto.getId(), value);
@@ -139,7 +127,6 @@ public class HumanTaskTaskListener extends DefaultTaskListener {
 		target.setId(null);
 		target.setCategory("copy");
 		target.setAssignee(userId);
-
 		humanTaskConnector.saveHumanTask(target);
 	}
 

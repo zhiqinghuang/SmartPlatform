@@ -34,9 +34,7 @@ public class TimeoutNotice {
 	public void process(DelegateTask delegateTask) {
 		String taskDefinitionKey = delegateTask.getTaskDefinitionKey();
 		String processDefinitionId = delegateTask.getProcessDefinitionId();
-
 		List<BpmConfNotice> bpmConfNotices = ApplicationContextHelper.getBean(BpmConfNoticeManager.class).find("from BpmConfNotice where bpmConfNode.bpmConfBase.processDefinitionId=? and bpmConfNode.code=?", processDefinitionId, taskDefinitionKey);
-
 		for (BpmConfNotice bpmConfNotice : bpmConfNotices) {
 			if (TYPE_TIMEOUT == bpmConfNotice.getType()) {
 				processTimeout(delegateTask, bpmConfNotice);
@@ -49,31 +47,23 @@ public class TimeoutNotice {
 			Date dueDate = delegateTask.getDueDate();
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(dueDate);
-
 			DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
 			Duration duration = datatypeFactory.newDuration("-" + bpmConfNotice.getDueDate());
 			duration.addTo(calendar);
-
 			Date noticeDate = calendar.getTime();
 			Date now = new Date();
-
 			if ((now.getTime() < noticeDate.getTime()) && ((noticeDate.getTime() - now.getTime()) < (60 * 1000))) {
 				UserConnector userConnector = ApplicationContextHelper.getBean(UserConnector.class);
 				NotificationConnector notificationConnector = ApplicationContextHelper.getBean(NotificationConnector.class);
-
-				//
 				Map<String, Object> data = new HashMap<String, Object>();
 				TaskEntity taskEntity = new TaskEntity();
 				taskEntity.setId(delegateTask.getId());
 				taskEntity.setName(delegateTask.getName());
 				taskEntity.setAssigneeWithoutCascade(userConnector.findById(delegateTask.getAssignee()).getDisplayName());
 				taskEntity.setVariableLocal("initiator", getInitiator(userConnector, delegateTask));
-				//
 				data.put("task", taskEntity);
 				data.put("initiator", this.getInitiator(userConnector, delegateTask));
-
 				String receiver = bpmConfNotice.getReceiver();
-
 				/*
 				 * BpmMailTemplate bpmMailTemplate = bpmConfNotice
 				 * .getBpmMailTemplate(); ExpressionManager expressionManager =
@@ -81,7 +71,6 @@ public class TimeoutNotice {
 				 * .getProcessEngineConfiguration().getExpressionManager();
 				 */
 				UserDTO userDto = null;
-
 				if ("任务接收人".equals(receiver)) {
 					userDto = userConnector.findById(delegateTask.getAssignee());
 				} else if ("流程发起人".equals(receiver)) {
@@ -90,7 +79,6 @@ public class TimeoutNotice {
 					HistoricProcessInstanceEntity historicProcessInstanceEntity = Context.getCommandContext().getHistoricProcessInstanceEntityManager().findHistoricProcessInstance(delegateTask.getProcessInstanceId());
 					userDto = userConnector.findById(historicProcessInstanceEntity.getStartUserId());
 				}
-
 				/*
 				 * String subject = expressionManager
 				 * .createExpression(bpmMailTemplate.getSubject())
@@ -109,7 +97,6 @@ public class TimeoutNotice {
 				notificationDto.setTypes(Arrays.asList(bpmConfNotice.getNotificationType().split(",")));
 				notificationDto.setData(data);
 				notificationDto.setTemplate(bpmConfNotice.getTemplateCode());
-
 				notificationConnector.send(notificationDto, delegateTask.getTenantId());
 			}
 		} catch (Exception ex) {

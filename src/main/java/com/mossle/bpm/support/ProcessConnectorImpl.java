@@ -55,24 +55,19 @@ public class ProcessConnectorImpl implements ProcessConnector {
 		// 先设置登录用户
 		IdentityService identityService = processEngine.getIdentityService();
 		identityService.setAuthenticatedUserId(userId);
-
 		ProcessInstance processInstance = processEngine.getRuntimeService().startProcessInstanceById(processDefinitionId, businessKey, processParameters);
-
 		// {流程标题:title}-{发起人:startUser}-{发起时间:startTime}
 		String processDefinitionName = processEngine.getRepositoryService().createProcessDefinitionQuery().processDefinitionId(processDefinitionId).singleResult().getName();
 		String processInstanceName = processDefinitionName + "-" + userConnector.findById(userId).getDisplayName() + "-" + new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
 		processEngine.getRuntimeService().setProcessInstanceName(processInstance.getId(), processInstanceName);
-
 		return processInstance.getId();
 	}
 
 	public ProcessDTO findProcess(String processId) {
 		if (processId == null) {
 			logger.info("processId is null");
-
 			return null;
 		}
-
 		ProcessDTO processDto = new ProcessDTO();
 		BpmProcess bpmProcess = bpmProcessManager.get(Long.parseLong(processId));
 		String processDefinitionId = bpmProcess.getBpmConfBase().getProcessDefinitionId();
@@ -80,7 +75,6 @@ public class ProcessConnectorImpl implements ProcessConnector {
 		processDto.setProcessDefinitionId(processDefinitionId);
 		processDto.setProcessDefinitionName(processDefinitionName);
 		processDto.setConfigTask(Integer.valueOf(1).equals(bpmProcess.getUseTaskConf()));
-
 		return processDto;
 	}
 
@@ -90,83 +84,58 @@ public class ProcessConnectorImpl implements ProcessConnector {
 	public FormDTO findStartForm(String processDefinitionId) {
 		ProcessDefinition processDefinition = processEngine.getRepositoryService().createProcessDefinitionQuery().processDefinitionId(processDefinitionId).singleResult();
 		FirstTaskForm firstTaskForm = processEngine.getManagementService().executeCommand(new FindFirstTaskFormCmd(processDefinitionId));
-
 		if ((!firstTaskForm.isExists()) && (firstTaskForm.getActivityId() != null)) {
 			// 再从数据库里找一遍配置
 			com.mossle.spi.humantask.FormDTO humantaskFormDto = taskDefinitionConnector.findForm(firstTaskForm.getActivityId(), processDefinitionId);
-
 			if (humantaskFormDto != null) {
 				firstTaskForm.setFormKey(humantaskFormDto.getKey());
 			}
 		}
-
 		if (!firstTaskForm.isExists()) {
 			logger.info("cannot find startForm : {}", processDefinitionId);
-
 			return new FormDTO();
 		}
-
 		if (!firstTaskForm.isTaskForm()) {
 			logger.info("find startEventForm : {}", processDefinitionId);
-
 			return this.findStartEventForm(firstTaskForm);
 		}
-
 		List<TaskUserDTO> taskUserDtos = taskDefinitionConnector.findTaskUsers(firstTaskForm.getActivityId(), firstTaskForm.getProcessDefinitionId());
 		String assignee = firstTaskForm.getAssignee();
 		logger.debug("assignee : {}", assignee);
-
 		for (TaskUserDTO taskUserDto : taskUserDtos) {
 			logger.debug("catalog : {}, user : {}", taskUserDto.getCatalog(), taskUserDto.getValue());
-
 			if ("assignee".equals(taskUserDto.getCatalog())) {
 				assignee = taskUserDto.getValue();
-
 				break;
 			}
 		}
-
 		logger.debug("assignee : {}", assignee);
-
 		boolean exists = assignee != null;
-
 		if ((("${" + firstTaskForm.getInitiatorName() + "}").equals(assignee)) || "流程发起人".equals(assignee) || ((assignee != null) && assignee.equals(Authentication.getAuthenticatedUserId()))) {
 			exists = true;
 		}
-
 		if (!exists) {
 			logger.info("cannot find taskForm : {}, {}", processDefinitionId, firstTaskForm.getActivityId());
-
 			return new FormDTO();
 		}
-
 		com.mossle.spi.humantask.FormDTO taskFormDto = taskDefinitionConnector.findForm(firstTaskForm.getActivityId(), firstTaskForm.getProcessDefinitionId());
-
 		List<BpmConfForm> bpmConfForms = bpmConfFormManager.find("from BpmConfForm where bpmConfNode.bpmConfBase.processDefinitionId=? and bpmConfNode.code=?", firstTaskForm.getProcessDefinitionId(), firstTaskForm.getActivityId());
-
 		if (taskFormDto == null) {
 			logger.info("cannot find bpmConfForm : {}, {}", processDefinitionId, firstTaskForm.getActivityId());
-
 			return new FormDTO();
 		}
-
 		FormDTO formDto = new FormDTO();
 		formDto.setProcessDefinitionId(firstTaskForm.getProcessDefinitionId());
 		formDto.setActivityId(firstTaskForm.getActivityId());
-
 		FormDTO contentFormDto = formConnector.findForm(taskFormDto.getKey(), processDefinition.getTenantId());
-
 		if (contentFormDto == null) {
 			logger.error("cannot find form : {}", formDto.getCode());
-
 			return formDto;
 		}
-
 		formDto.setCode(taskFormDto.getKey());
 		formDto.setRedirect(contentFormDto.isRedirect());
 		formDto.setUrl(contentFormDto.getUrl());
 		formDto.setContent(contentFormDto.getContent());
-
 		return formDto;
 	}
 
@@ -177,10 +146,8 @@ public class ProcessConnectorImpl implements ProcessConnector {
 		formDto.setProcessDefinitionId(firstTaskForm.getProcessDefinitionId());
 		formDto.setActivityId(firstTaskForm.getActivityId());
 		formDto.setCode(firstTaskForm.getFormKey());
-
 		if (!bpmConfForms.isEmpty()) {
 			BpmConfForm bpmConfForm = bpmConfForms.get(0);
-
 			if (!Integer.valueOf(2).equals(bpmConfForm.getStatus())) {
 				if (Integer.valueOf(1).equals(bpmConfForm.getType())) {
 					formDto.setRedirect(true);
@@ -192,19 +159,14 @@ public class ProcessConnectorImpl implements ProcessConnector {
 		} else {
 			logger.info("cannot find bpmConfForm : {}, {}", firstTaskForm.getProcessDefinitionId(), formDto.getActivityId());
 		}
-
 		FormDTO contentFormDto = formConnector.findForm(formDto.getCode(), processDefinition.getTenantId());
-
 		if (contentFormDto == null) {
 			logger.error("cannot find form : {}", formDto.getCode());
-
 			return formDto;
 		}
-
 		formDto.setRedirect(contentFormDto.isRedirect());
 		formDto.setUrl(contentFormDto.getUrl());
 		formDto.setContent(contentFormDto.getContent());
-
 		return formDto;
 	}
 
@@ -213,14 +175,11 @@ public class ProcessConnectorImpl implements ProcessConnector {
 	 */
 	public Page findRunningProcessInstances(String userId, String tenantId, Page page) {
 		HistoryService historyService = processEngine.getHistoryService();
-
 		// TODO: 改成通过runtime表搜索，提高效率
 		long count = historyService.createHistoricProcessInstanceQuery().processInstanceTenantId(tenantId).startedBy(userId).unfinished().count();
 		List<HistoricProcessInstance> historicProcessInstances = historyService.createHistoricProcessInstanceQuery().processInstanceTenantId(tenantId).startedBy(userId).unfinished().listPage((int) page.getStart(), page.getPageSize());
-
 		page.setResult(historicProcessInstances);
 		page.setTotalCount(count);
-
 		return page;
 	}
 
@@ -229,13 +188,10 @@ public class ProcessConnectorImpl implements ProcessConnector {
 	 */
 	public Page findCompletedProcessInstances(String userId, String tenantId, Page page) {
 		HistoryService historyService = processEngine.getHistoryService();
-
 		long count = historyService.createHistoricProcessInstanceQuery().processInstanceTenantId(tenantId).startedBy(userId).finished().count();
 		List<HistoricProcessInstance> historicProcessInstances = historyService.createHistoricProcessInstanceQuery().startedBy(userId).processInstanceTenantId(tenantId).finished().listPage((int) page.getStart(), page.getPageSize());
-
 		page.setResult(historicProcessInstances);
 		page.setTotalCount(count);
-
 		return page;
 	}
 
@@ -244,14 +200,11 @@ public class ProcessConnectorImpl implements ProcessConnector {
 	 */
 	public Page findInvolvedProcessInstances(String userId, String tenantId, Page page) {
 		HistoryService historyService = processEngine.getHistoryService();
-
 		// TODO: finished(), unfinished()
 		long count = historyService.createHistoricProcessInstanceQuery().processInstanceTenantId(tenantId).involvedUser(userId).count();
 		List<HistoricProcessInstance> historicProcessInstances = historyService.createHistoricProcessInstanceQuery().processInstanceTenantId(tenantId).involvedUser(userId).listPage((int) page.getStart(), page.getPageSize());
-
 		page.setResult(historicProcessInstances);
 		page.setTotalCount(count);
-
 		return page;
 	}
 
@@ -260,12 +213,10 @@ public class ProcessConnectorImpl implements ProcessConnector {
 	 */
 	public Page findPersonalTasks(String userId, String tenantId, Page page) {
 		TaskService taskService = processEngine.getTaskService();
-
 		long count = taskService.createTaskQuery().taskTenantId(tenantId).taskAssignee(userId).active().count();
 		List<Task> tasks = taskService.createTaskQuery().taskTenantId(tenantId).taskAssignee(userId).active().listPage((int) page.getStart(), page.getPageSize());
 		page.setResult(tasks);
 		page.setTotalCount(count);
-
 		return page;
 	}
 
@@ -274,12 +225,10 @@ public class ProcessConnectorImpl implements ProcessConnector {
 	 */
 	public Page findGroupTasks(String userId, String tenantId, Page page) {
 		TaskService taskService = processEngine.getTaskService();
-
 		long count = taskService.createTaskQuery().taskTenantId(tenantId).taskCandidateUser(userId).active().count();
 		List<Task> tasks = taskService.createTaskQuery().taskTenantId(tenantId).taskCandidateUser(userId).active().listPage((int) page.getStart(), page.getPageSize());
 		page.setResult(tasks);
 		page.setTotalCount(count);
-
 		return page;
 	}
 
@@ -288,12 +237,10 @@ public class ProcessConnectorImpl implements ProcessConnector {
 	 */
 	public Page findHistoryTasks(String userId, String tenantId, Page page) {
 		HistoryService historyService = processEngine.getHistoryService();
-
 		long count = historyService.createHistoricTaskInstanceQuery().taskTenantId(tenantId).taskAssignee(userId).finished().count();
 		List<HistoricTaskInstance> historicTaskInstances = historyService.createHistoricTaskInstanceQuery().taskTenantId(tenantId).taskAssignee(userId).finished().listPage((int) page.getStart(), page.getPageSize());
 		page.setResult(historicTaskInstances);
 		page.setTotalCount(count);
-
 		return page;
 	}
 
@@ -302,12 +249,10 @@ public class ProcessConnectorImpl implements ProcessConnector {
 	 */
 	public Page findDelegatedTasks(String userId, String tenantId, Page page) {
 		TaskService taskService = processEngine.getTaskService();
-
 		long count = taskService.createTaskQuery().taskTenantId(tenantId).taskOwner(userId).taskDelegationState(DelegationState.PENDING).count();
 		List<Task> tasks = taskService.createTaskQuery().taskTenantId(tenantId).taskOwner(userId).taskDelegationState(DelegationState.PENDING).listPage((int) page.getStart(), page.getPageSize());
 		page.setResult(tasks);
 		page.setTotalCount(count);
-
 		return page;
 	}
 
@@ -320,7 +265,6 @@ public class ProcessConnectorImpl implements ProcessConnector {
 		List<ProcessDefinition> processDefinitions = repositoryService.createProcessDefinitionQuery().processDefinitionTenantId(tenantId).listPage((int) page.getStart(), page.getPageSize());
 		page.setResult(processDefinitions);
 		page.setTotalCount(count);
-
 		return page;
 	}
 
@@ -333,7 +277,6 @@ public class ProcessConnectorImpl implements ProcessConnector {
 		List<ProcessInstance> processInstances = runtimeService.createProcessInstanceQuery().processInstanceTenantId(tenantId).listPage((int) page.getStart(), page.getPageSize());
 		page.setResult(processInstances);
 		page.setTotalCount(count);
-
 		return page;
 	}
 
@@ -346,7 +289,6 @@ public class ProcessConnectorImpl implements ProcessConnector {
 		List<Task> tasks = taskService.createTaskQuery().taskTenantId(tenantId).listPage((int) page.getStart(), page.getPageSize());
 		page.setResult(tasks);
 		page.setTotalCount(count);
-
 		return page;
 	}
 
@@ -359,7 +301,6 @@ public class ProcessConnectorImpl implements ProcessConnector {
 		List<Deployment> deployments = repositoryService.createDeploymentQuery().deploymentTenantId(tenantId).listPage((int) page.getStart(), page.getPageSize());
 		page.setResult(deployments);
 		page.setTotalCount(count);
-
 		return page;
 	}
 
@@ -368,12 +309,10 @@ public class ProcessConnectorImpl implements ProcessConnector {
 	 */
 	public Page findHistoricProcessInstances(String tenantId, Page page) {
 		HistoryService historyService = processEngine.getHistoryService();
-
 		long count = historyService.createHistoricProcessInstanceQuery().processInstanceTenantId(tenantId).count();
 		List<HistoricProcessInstance> historicProcessInstances = historyService.createHistoricProcessInstanceQuery().processInstanceTenantId(tenantId).listPage((int) page.getStart(), page.getPageSize());
 		page.setResult(historicProcessInstances);
 		page.setTotalCount(count);
-
 		return page;
 	}
 
@@ -382,12 +321,10 @@ public class ProcessConnectorImpl implements ProcessConnector {
 	 */
 	public Page findHistoricActivityInstances(String tenantId, Page page) {
 		HistoryService historyService = processEngine.getHistoryService();
-
 		long count = historyService.createHistoricActivityInstanceQuery().activityTenantId(tenantId).count();
 		List<HistoricActivityInstance> historicActivityInstances = historyService.createHistoricActivityInstanceQuery().activityTenantId(tenantId).listPage((int) page.getStart(), page.getPageSize());
 		page.setResult(historicActivityInstances);
 		page.setTotalCount(count);
-
 		return page;
 	}
 
@@ -396,12 +333,10 @@ public class ProcessConnectorImpl implements ProcessConnector {
 	 */
 	public Page findHistoricTaskInstances(String tenantId, Page page) {
 		HistoryService historyService = processEngine.getHistoryService();
-
 		long count = historyService.createHistoricTaskInstanceQuery().taskTenantId(tenantId).count();
 		List<HistoricTaskInstance> historicTaskInstances = historyService.createHistoricTaskInstanceQuery().taskTenantId(tenantId).listPage((int) page.getStart(), page.getPageSize());
 		page.setResult(historicTaskInstances);
 		page.setTotalCount(count);
-
 		return page;
 	}
 
@@ -410,12 +345,10 @@ public class ProcessConnectorImpl implements ProcessConnector {
 	 */
 	public Page findJobs(String tenantId, Page page) {
 		ManagementService managementService = processEngine.getManagementService();
-
 		long count = managementService.createJobQuery().jobTenantId(tenantId).count();
 		List<Job> jobs = managementService.createJobQuery().jobTenantId(tenantId).listPage((int) page.getStart(), page.getPageSize());
 		page.setResult(jobs);
 		page.setTotalCount(count);
-
 		return page;
 	}
 

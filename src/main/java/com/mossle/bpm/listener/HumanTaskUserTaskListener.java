@@ -24,6 +24,7 @@ import com.mossle.spi.process.ParticipantDefinition;
 import com.mossle.spi.process.ProcessTaskDefinition;
 
 public class HumanTaskUserTaskListener extends DefaultTaskListener implements ExprProcessor {
+	private static final long serialVersionUID = 7123054495956134152L;
 	private static Logger logger = LoggerFactory.getLogger(HumanTaskUserTaskListener.class);
 	private InternalProcessConnector internalProcessConnector;
 	private BeanMapper beanMapper = new BeanMapper();
@@ -36,7 +37,6 @@ public class HumanTaskUserTaskListener extends DefaultTaskListener implements Ex
 		String taskDefinitionKey = delegateTask.getExecution().getCurrentActivityId();
 		ProcessTaskDefinition processTaskDefinition = internalProcessConnector.findTaskDefinition(processDefinitionId, businessKey, taskDefinitionKey);
 		ExpressionManager expressionManager = Context.getProcessEngineConfiguration().getExpressionManager();
-
 		for (ParticipantDefinition participantDefinition : processTaskDefinition.getParticipantDefinitions()) {
 			if ("user".equals(participantDefinition.getType())) {
 				if ("add".equals(participantDefinition.getStatus())) {
@@ -52,18 +52,14 @@ public class HumanTaskUserTaskListener extends DefaultTaskListener implements Ex
 				}
 			}
 		}
-
 		String assignee = null;
-
 		if (processTaskDefinition.getAssignee() != null) {
 			assignee = expressionManager.createExpression(processTaskDefinition.getAssignee()).getValue(delegateTask).toString();
 		}
-
 		if (assignee == null) {
 			delegateTask.setAssignee(null);
 		} else if ((assignee.indexOf("&&") != -1) || (assignee.indexOf("||") != -1)) {
 			logger.debug("assignee : {}", assignee);
-
 			List<String> candidateUsers = new Expr().evaluate(assignee, this);
 			logger.debug("candidateUsers : {}", candidateUsers);
 			delegateTask.addCandidateUsers(candidateUsers);
@@ -77,17 +73,14 @@ public class HumanTaskUserTaskListener extends DefaultTaskListener implements Ex
 			Set<String> set = new HashSet();
 			set.addAll(left);
 			set.addAll(right);
-
 			return new ArrayList<String>(set);
 		} else if ("&&".equals(operation)) {
 			List<String> list = new ArrayList<String>();
-
 			for (String username : left) {
 				if (right.contains(username)) {
 					list.add(username);
 				}
 			}
-
 			return list;
 		} else {
 			throw new UnsupportedOperationException(operation);
@@ -98,13 +91,10 @@ public class HumanTaskUserTaskListener extends DefaultTaskListener implements Ex
 		String sql = "select child.NAME from PARTY_ENTITY parent,PARTY_STRUCT ps,PARTY_ENTITY child,PARTY_TYPE child_type" + " where parent.ID=ps.PARENT_ENTITY_ID and ps.CHILD_ENTITY_ID=child.ID and child.TYPE_ID=child_type.ID" + " and child_type.PERSON=1 and parent.NAME=?";
 		List<Map<String, Object>> list = jdbcTemplate.queryForList(sql, text);
 		List<String> usernames = new ArrayList<String>();
-
 		for (Map<String, Object> map : list) {
 			usernames.add(map.get("name").toString().toLowerCase());
 		}
-
 		logger.info("usernames : {}", usernames);
-
 		return usernames;
 	}
 

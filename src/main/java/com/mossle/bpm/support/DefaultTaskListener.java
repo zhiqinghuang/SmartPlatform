@@ -7,13 +7,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DefaultTaskListener implements TaskListener {
+	private static final long serialVersionUID = 4274776696111334255L;
 	private static Logger logger = LoggerFactory.getLogger(DefaultTaskListener.class);
 
 	public void notify(DelegateTask delegateTask) {
 		String eventName = delegateTask.getEventName();
 		logger.debug("{}", this);
 		logger.debug("{} : {}", eventName, delegateTask);
-
 		if ("create".equals(eventName)) {
 			try {
 				this.onCreate(delegateTask);
@@ -21,7 +21,6 @@ public class DefaultTaskListener implements TaskListener {
 				logger.error(ex.getMessage(), ex);
 			}
 		}
-
 		if ("assignment".equals(eventName)) {
 			try {
 				this.onAssignment(delegateTask);
@@ -29,7 +28,6 @@ public class DefaultTaskListener implements TaskListener {
 				logger.error(ex.getMessage(), ex);
 			}
 		}
-
 		if ("complete".equals(eventName)) {
 			try {
 				this.onComplete(delegateTask);
@@ -37,7 +35,6 @@ public class DefaultTaskListener implements TaskListener {
 				logger.error(ex.getMessage(), ex);
 			}
 		}
-
 		if ("delete".equals(eventName)) {
 			try {
 				this.onDelete(delegateTask);
@@ -45,7 +42,6 @@ public class DefaultTaskListener implements TaskListener {
 				logger.error(ex.getMessage(), ex);
 			}
 		}
-
 		((TaskEntity) delegateTask).setEventName(eventName);
 	}
 

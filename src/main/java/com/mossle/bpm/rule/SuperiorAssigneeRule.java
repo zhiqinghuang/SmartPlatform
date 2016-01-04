@@ -3,9 +3,6 @@ package com.mossle.bpm.rule;
 import java.util.Collections;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.mossle.api.org.OrgConnector;
 import com.mossle.core.spring.ApplicationContextHelper;
 
@@ -14,7 +11,6 @@ import com.mossle.core.spring.ApplicationContextHelper;
  * 
  */
 public class SuperiorAssigneeRule implements AssigneeRule {
-	private static Logger logger = LoggerFactory.getLogger(SuperiorAssigneeRule.class);
 	private OrgConnector orgConnector;
 
 	public List<String> process(String value, String initiator) {
@@ -28,7 +24,6 @@ public class SuperiorAssigneeRule implements AssigneeRule {
 		if (orgConnector == null) {
 			orgConnector = ApplicationContextHelper.getBean(OrgConnector.class);
 		}
-
 		return orgConnector.getSuperiorId(initiator);
 	}
 }
