@@ -13,7 +13,7 @@ import org.springframework.beans.factory.InitializingBean;
 import com.mossle.core.util.BeanUtils;
 import com.mossle.core.util.StringUtils;
 
-public class DataSourceServiceFactoryBean implements FactoryBean, InitializingBean, DisposableBean {
+public class DataSourceServiceFactoryBean implements FactoryBean<DataSourceService>, InitializingBean, DisposableBean {
 	private static Logger logger = LoggerFactory.getLogger(DataSourceServiceFactoryBean.class);
 	private Properties properties;
 	private String defaultPrefix = "db";
@@ -45,11 +45,11 @@ public class DataSourceServiceFactoryBean implements FactoryBean, InitializingBe
 		}
 	}
 
-	public Object getObject() {
+	public DataSourceService getObject() {
 		return dataSourceService;
 	}
 
-	public Class getObjectType() {
+	public Class<DataSourceService> getObjectType() {
 		return DataSourceService.class;
 	}
 
@@ -79,7 +79,6 @@ public class DataSourceServiceFactoryBean implements FactoryBean, InitializingBe
 			String prefix = defaultPrefix + "." + dataSourceInfo.getName() + ".";
 			for (Method method : dataSourceInfo.getClass().getDeclaredMethods()) {
 				String methodName = method.getName();
-
 				if (methodName.startsWith("get") || methodName.startsWith("is")) {
 					String fieldName = BeanUtils.getFieldName(methodName);
 					Object fieldValue = BeanUtils.safeInvokeMethod(dataSourceInfo, method);

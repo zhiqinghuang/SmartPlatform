@@ -25,9 +25,7 @@ public class IoUtils {
 	public static String readString(InputStream is, String encoding) throws IOException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		copyStream(is, baos);
-
 		String text = new String(baos.toByteArray(), encoding);
-
 		return text;
 	}
 
@@ -40,14 +38,11 @@ public class IoUtils {
 		if (is == null) {
 			throw new IllegalArgumentException("InputStream is null");
 		}
-
 		if (os == null) {
 			throw new IllegalArgumentException("OutputStream is null");
 		}
-
 		byte[] b = new byte[DEFAULT_BUFFER_SIZE];
 		int len = 0;
-
 		try {
 			while ((len = is.read(b, 0, DEFAULT_BUFFER_SIZE)) != -1) {
 				os.write(b, 0, len);

@@ -54,23 +54,18 @@ public class RestFilter implements Filter {
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
-
 		ApplicationContext ctx = ApplicationContextHelper.getApplicationContext();
 		Map<String, Object> map = ctx.getBeansWithAnnotation(Path.class);
-
 		for (Object object : map.values()) {
 			Class clz = object.getClass();
-
 			for (Method method : clz.getDeclaredMethods()) {
 				if (this.matches(request, method)) {
 					Map<String, String> parameters = parseBody(request.getInputStream());
 					this.invokeMethod(request, response, object, method, parameters);
-
 					return;
 				}
 			}
 		}
-
 		filterChain.doFilter(req, res);
 	}
 
@@ -78,98 +73,77 @@ public class RestFilter implements Filter {
 		String body = IoUtils.readString(inputStream);
 		body = URLDecoder.decode(body, "UTF-8");
 		logger.debug("body : {}", body);
-
 		Map<String, String> parameters = new HashMap<String, String>();
-
 		for (String text : body.split("&")) {
 			logger.debug("text : {}", text);
-
 			if (text.indexOf("=") == -1) {
 				continue;
 			}
-
 			int index = text.indexOf("=");
 			String key = text.substring(0, index);
 			String value = text.substring(index + 1);
-
 			parameters.put(key, value);
 		}
-
 		return parameters;
 	}
 
 	public Map<String, String> getMetaData(Annotation[] annotations) {
 		Map<String, String> metaData = new HashMap<String, String>();
-
 		for (Annotation annotation : annotations) {
 			String name = null;
 			String type = null;
 			String value = null;
 			String defaultValue = null;
-
 			if (annotation instanceof PathParam) {
 				name = ((PathParam) annotation).value();
 				type = "path";
 				metaData.put("name", name);
 				metaData.put("type", type);
-
 				// value = this.getPathParam(request, name, method);
 			} else if (annotation instanceof QueryParam) {
 				name = ((QueryParam) annotation).value();
 				type = "query";
 				metaData.put("name", name);
 				metaData.put("type", type);
-
 				// value = request.getParameter(name);
 			} else if (annotation instanceof FormParam) {
 				name = ((FormParam) annotation).value();
 				type = "form";
 				metaData.put("name", name);
 				metaData.put("type", type);
-
 				// value = parameters.get(name);
 			} else if (annotation instanceof HeaderParam) {
 				name = ((HeaderParam) annotation).value();
 				type = "header";
 				metaData.put("name", name);
 				metaData.put("type", type);
-
 				// value = request.getHeader(name);
 			} else if (annotation instanceof DefaultValue) {
 				defaultValue = ((DefaultValue) annotation).value();
 				metaData.put("defaultValue", defaultValue);
 			}
 		}
-
 		return metaData;
 	}
 
 	public void invokeMethod(HttpServletRequest request, HttpServletResponse response, Object object, Method method, Map<String, String> parameters) {
 		try {
 			List arguments = new ArrayList();
-
 			Annotation[][] annotationArray = method.getParameterAnnotations();
 			Class[] parameterTypeArray = method.getParameterTypes();
-
 			for (int i = 0; i < annotationArray.length; i++) {
 				if (parameterTypeArray[i].isAssignableFrom(HttpServletRequest.class)) {
 					arguments.add(request);
-
 					continue;
 				}
-
 				if (parameterTypeArray[i].isAssignableFrom(HttpServletResponse.class)) {
 					arguments.add(response);
-
 					continue;
 				}
-
 				Annotation[] annotations = annotationArray[i];
 				Map<String, String> metaData = this.getMetaData(annotations);
-
 				String name = metaData.get("name");
 				String value = null;
-
 				if ("path".equals(metaData.get("type"))) {
 					value = this.getPathParam(request, name, method);
 				} else if ("query".equals(metaData.get("type"))) {
@@ -179,11 +153,9 @@ public class RestFilter implements Filter {
 				} else if ("header".equals(metaData.get("type"))) {
 					value = request.getHeader(name);
 				}
-
 				if ((value == null) && metaData.containsKey("defaultValue")) {
 					value = metaData.get("defaultValue");
 				}
-
 				if (value != null) {
 					if (parameterTypeArray[i] == String.class) {
 						arguments.add(value);
@@ -225,11 +197,8 @@ public class RestFilter implements Filter {
 					}
 				}
 			}
-
 			logger.debug("{}, {}, {}", object, method, arguments);
-
 			Object result = method.invoke(object, arguments.toArray());
-
 			if (result instanceof String) {
 				response.setContentType(MediaType.TEXT_HTML);
 				response.getOutputStream().write(((String) result).getBytes("UTF-8"));
@@ -249,50 +218,37 @@ public class RestFilter implements Filter {
 		if ("GET".equalsIgnoreCase(request.getMethod()) && (method.getAnnotation(GET.class) == null)) {
 			return false;
 		}
-
 		if ("POST".equalsIgnoreCase(request.getMethod()) && (method.getAnnotation(POST.class) == null)) {
 			return false;
 		}
-
 		if ("PUT".equalsIgnoreCase(request.getMethod()) && (method.getAnnotation(PUT.class) == null)) {
 			return false;
 		}
-
 		if ("DELETE".equalsIgnoreCase(request.getMethod()) && (method.getAnnotation(DELETE.class) == null)) {
 			return false;
 		}
-
 		logger.debug("{}", request.getRequestURI());
-
 		String prefix = request.getContextPath() + "/rs";
 		String requestPath = request.getRequestURI().substring(prefix.length());
 		logger.debug("{}", requestPath);
-
 		String path = "/";
-
 		if (method.getDeclaringClass().getAnnotation(Path.class) != null) {
 			path += method.getDeclaringClass().getAnnotation(Path.class).value();
 		}
-
 		if (method.getAnnotation(Path.class) != null) {
 			path += ("/" + method.getAnnotation(Path.class).value());
 		}
-
 		logger.debug("{}, {}", method, path);
-
 		String[] src = requestPath.split("/");
 		String[] dest = path.split("/");
-
 		if (src.length != dest.length) {
 			return false;
 		}
-
 		for (int i = 0; i < src.length; i++) {
 			if (!this.matchPath(src[i], dest[i])) {
 				return false;
 			}
 		}
-
 		return true;
 	}
 
@@ -300,37 +256,29 @@ public class RestFilter implements Filter {
 		if (src.equals(dest)) {
 			return true;
 		}
-
 		if (dest.startsWith("{") && dest.endsWith("}")) {
 			return true;
 		}
-
 		return false;
 	}
 
 	public String getPathParam(HttpServletRequest request, String name, Method method) {
 		String prefix = request.getContextPath() + "/rs";
 		String requestPath = request.getRequestURI().substring(prefix.length());
-
 		String path = "/";
-
 		if (method.getDeclaringClass().getAnnotation(Path.class) != null) {
 			path += method.getDeclaringClass().getAnnotation(Path.class).value();
 		}
-
 		if (method.getAnnotation(Path.class) != null) {
 			path += ("/" + method.getAnnotation(Path.class).value());
 		}
-
 		String[] src = requestPath.split("/");
 		String[] dest = path.split("/");
-
 		for (int i = 0; i < dest.length; i++) {
 			if (dest[i].equals("{" + name + "}")) {
 				return src[i];
 			}
 		}
-
 		return null;
 	}
 }

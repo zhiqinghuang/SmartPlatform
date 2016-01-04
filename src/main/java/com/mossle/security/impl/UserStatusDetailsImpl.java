@@ -32,18 +32,15 @@ public class UserStatusDetailsImpl extends User implements UserStatusDetails {
 
 	public void setAttributes(List<String> attributes) {
 		this.attributes = attributes;
-
 		for (String attribute : attributes) {
 			String[] array = attribute.split("_");
 			String type = array[0];
 			String value = array[1];
 			Collection<String> collection = attributeMap.get(type);
-
 			if (collection == null) {
 				collection = new ArrayList<String>();
 				attributeMap.put(type, collection);
 			}
-
 			collection.add(value);
 		}
 	}
