@@ -26,7 +26,6 @@ public class ReadOnlyTransactionManager implements PlatformTransactionManager {
 	public TransactionStatus getTransaction(TransactionDefinition definition) throws TransactionException {
 		if (readOnly) {
 			TransactionDefinition readOnlyTransactionDefinition = new ReadOnlyTransactionDefinition(definition);
-
 			return platformTransactionManager.getTransaction(readOnlyTransactionDefinition);
 		} else {
 			return platformTransactionManager.getTransaction(definition);

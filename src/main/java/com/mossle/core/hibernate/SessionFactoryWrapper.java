@@ -54,8 +54,8 @@ import org.hibernate.stat.spi.StatisticsImplementor;
 import org.hibernate.type.Type;
 import org.hibernate.type.TypeResolver;
 
-@SuppressWarnings("deprecation")
 public class SessionFactoryWrapper implements SessionFactoryImplementor {
+	private static final long serialVersionUID = 7908449771775915928L;
 	private SessionFactoryImplementor sessionFactoryImplementor;
 	private SpringSessionContext springSessionContext;
 
@@ -71,7 +71,6 @@ public class SessionFactoryWrapper implements SessionFactoryImplementor {
 		}
 	}
 
-	// ~ ======================================================================
 	public SessionFactoryOptions getSessionFactoryOptions() {
 		return sessionFactoryImplementor.getSessionFactoryOptions();
 	}
@@ -188,12 +187,10 @@ public class SessionFactoryWrapper implements SessionFactoryImplementor {
 		return sessionFactoryImplementor.getTypeHelper();
 	}
 
-	// ~ ======================================================================
 	public Reference getReference() throws NamingException {
 		return sessionFactoryImplementor.getReference();
 	}
 
-	// ~ ======================================================================
 	public SessionBuilderImplementor withOptions() {
 		return sessionFactoryImplementor.withOptions();
 	}
@@ -350,7 +347,6 @@ public class SessionFactoryWrapper implements SessionFactoryImplementor {
 		return sessionFactoryImplementor.getCurrentTenantIdentifierResolver();
 	}
 
-	// ~ ======================================================================
 	public IdentifierGeneratorFactory getIdentifierGeneratorFactory() {
 		return sessionFactoryImplementor.getIdentifierGeneratorFactory();
 	}
