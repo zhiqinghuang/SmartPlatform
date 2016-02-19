@@ -8,7 +8,7 @@
 			    <ref bean="staticContentFilter"/>
 			    <ref bean="whitelistFilter"/>
 				<ref bean="characterEncodingFilter"/>
-				<ref bean="acceptLanguageHeaderFilter"/>
+				<ref bean="i18nFilter"/>
 				<ref bean="javasimonFilter"/>
 			    <ref bean="springSessionFilter"/>
 				<ref bean="cmsFilter"/>
@@ -56,10 +56,10 @@
 			</bean>
 		</property>
 	</bean>
-	<bean id="acceptLanguageHeaderFilter" class="com.mossle.core.servlet.ProxyFilter">
+	<bean id="i18nFilter" class="com.mossle.core.servlet.ProxyFilter">
 		<property name="name" value="i18n"/>
 		<property name="filter">
-			<bean class="com.mossle.core.i18n.AcceptLanguageHeaderFilter"/>
+			<bean class="com.mossle.core.i18n.I18nFilter"/>
 		</property>
 	</bean>
 	<bean id="javasimonFilter" class="com.mossle.core.servlet.ProxyFilter">
@@ -109,6 +109,7 @@
 		</property>
 		<property name="urlPattern" value="/rs/*"/>
 	</bean>
+	<!-- ====================================================================== -->
 	<bean id="servletFilter" class="com.mossle.core.servlet.ServletFilter">
 		<property name="name" value="servlet"/>
 		<property name="servletMap">
