@@ -7,18 +7,16 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.core.JdbcTemplate;
-
 import com.mossle.api.form.FormConnector;
 import com.mossle.api.form.FormDTO;
 import com.mossle.api.humantask.HumanTaskConnector;
 import com.mossle.api.humantask.HumanTaskDTO;
 import com.mossle.api.humantask.HumanTaskDefinition;
 import com.mossle.api.humantask.ParticipantDTO;
+
 import com.mossle.core.mapper.BeanMapper;
 import com.mossle.core.page.Page;
+
 import com.mossle.humantask.listener.HumanTaskListener;
 import com.mossle.humantask.persistence.domain.TaskConfUser;
 import com.mossle.humantask.persistence.domain.TaskDeadline;
@@ -28,8 +26,15 @@ import com.mossle.humantask.persistence.manager.TaskConfUserManager;
 import com.mossle.humantask.persistence.manager.TaskDeadlineManager;
 import com.mossle.humantask.persistence.manager.TaskInfoManager;
 import com.mossle.humantask.persistence.manager.TaskParticipantManager;
+
+import com.mossle.spi.humantask.TaskDefinitionConnector;
 import com.mossle.spi.process.InternalProcessConnector;
 import com.mossle.spi.process.ProcessTaskDefinition;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.jdbc.core.JdbcTemplate;
 
 public class HumanTaskConnectorImpl implements HumanTaskConnector {
 	private Logger logger = LoggerFactory.getLogger(HumanTaskConnectorImpl.class);
@@ -39,6 +44,7 @@ public class HumanTaskConnectorImpl implements HumanTaskConnector {
 	private TaskConfUserManager taskConfUserManager;
 	private TaskDeadlineManager taskDeadlineManager;
 	private InternalProcessConnector internalProcessConnector;
+	private TaskDefinitionConnector taskDefinitionConnector;
 	private FormConnector formConnector;
 	private BeanMapper beanMapper = new BeanMapper();
 	private List<HumanTaskListener> humanTaskListeners;
@@ -166,10 +172,17 @@ public class HumanTaskConnectorImpl implements HumanTaskConnector {
 		FormDTO formDto = null;
 
 		if (humanTaskDto.getTaskId() != null) {
-			formDto = internalProcessConnector.findTaskForm(humanTaskDto.getTaskId());
+			//formDto = internalProcessConnector.findTaskForm(humanTaskDto.getTaskId());
+			com.mossle.spi.humantask.FormDTO taskFormDto = taskDefinitionConnector.findForm(humanTaskDto.getCode(), humanTaskDto.getProcessDefinitionId());
+			formDto = new FormDTO();
+			formDto.setCode(taskFormDto.getKey());
+			formDto.setActivityId(humanTaskDto.getCode());
+			formDto.setProcessDefinitionId(humanTaskDto.getProcessDefinitionId());
 		} else {
 			formDto = new FormDTO();
 			formDto.setCode(humanTaskDto.getForm());
+			formDto.setActivityId(humanTaskDto.getCode());
+			formDto.setProcessDefinitionId(humanTaskDto.getProcessDefinitionId());
 		}
 
 		formDto.setTaskId(humanTaskId);
@@ -604,6 +617,11 @@ public class HumanTaskConnectorImpl implements HumanTaskConnector {
 	@Resource
 	public void setInternalProcessConnector(InternalProcessConnector internalProcessConnector) {
 		this.internalProcessConnector = internalProcessConnector;
+	}
+
+	@Resource
+	public void setTaskDefinitionConnector(TaskDefinitionConnector taskDefinitionConnector) {
+		this.taskDefinitionConnector = taskDefinitionConnector;
 	}
 
 	@Resource
