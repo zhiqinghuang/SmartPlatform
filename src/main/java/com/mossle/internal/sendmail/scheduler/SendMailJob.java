@@ -36,7 +36,6 @@ public class SendMailJob {
 		if (!enabled) {
 			return;
 		}
-
 		try {
 			for (TenantDTO tenantDto : tenantConnector.findAll()) {
 				this.doExecute(tenantDto.getId());
@@ -50,17 +49,13 @@ public class SendMailJob {
 		if (running) {
 			return;
 		}
-
 		running = true;
 		logger.debug("send mail job start");
-
 		List<SendmailQueue> sendmailQueues = sendmailDataService.findTopSendmailQueues(threshold, tenantId);
 		logger.debug("sendmailQueues : {}", sendmailQueues.size());
-
 		for (SendmailQueue sendmailQueue : sendmailQueues) {
 			sendmailDataService.processSendmailQueue(sendmailQueue);
 		}
-
 		logger.debug("send mail job end");
 		running = false;
 	}

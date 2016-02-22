@@ -13,7 +13,7 @@
     <script type='text/javascript' src='${tenantPrefix}/widgets/gef/container-layout.js'></script>
     <script type='text/javascript' src='${tenantPrefix}/widgets/gef/adaptor.js'></script>
     <script type="text/javascript">
-Gef.IMAGE_ROOT = '${tenantPrefix}/widgets/gef/images/activities/48/';
+		Gef.IMAGE_ROOT = '${tenantPrefix}/widgets/gef/images/activities/48/';
     </script>
   </head>
 

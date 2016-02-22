@@ -29,11 +29,9 @@ public class ProxyTaskScheduler implements TaskScheduler, InitializingBean, Disp
 			for (Map.Entry<Object, Object> entry : properties.entrySet()) {
 				String key = (String) entry.getKey();
 				String value = (String) entry.getValue();
-
 				if ("scheduler.enabled".equals(key)) {
 					continue;
 				}
-
 				if (key.startsWith(prefix)) {
 					String name = key.substring(prefix.length());
 					skipMap.put(name, Boolean.valueOf(value));
@@ -41,7 +39,6 @@ public class ProxyTaskScheduler implements TaskScheduler, InitializingBean, Disp
 				}
 			}
 		}
-
 		if (enabled) {
 			instance = new ThreadPoolTaskScheduler();
 			instance.afterPropertiesSet();
@@ -57,113 +54,87 @@ public class ProxyTaskScheduler implements TaskScheduler, InitializingBean, Disp
 	public ScheduledFuture<?> schedule(Runnable task, Trigger trigger) {
 		if (!enabled) {
 			logger.debug("skip : {}", task);
-
 			return null;
 		}
-
 		ScheduledFuture<?> future = instance.schedule(task, trigger);
 		String runnableKey = findRunnableKey(task);
-
 		if (Boolean.FALSE.equals(skipMap.get(runnableKey))) {
 			future.cancel(true);
 		}
-
 		return future;
 	}
 
 	public ScheduledFuture<?> schedule(Runnable task, Date startTime) {
 		if (!enabled) {
 			logger.debug("skip : {}", task);
-
 			return null;
 		}
-
 		ScheduledFuture<?> future = instance.schedule(task, startTime);
 		String runnableKey = findRunnableKey(task);
-
 		if (Boolean.FALSE.equals(skipMap.get(runnableKey))) {
 			future.cancel(true);
 		}
-
 		return future;
 	}
 
 	public ScheduledFuture<?> scheduleAtFixedRate(Runnable task, Date startTime, long period) {
 		if (!enabled) {
 			logger.debug("skip : {}", task);
-
 			return null;
 		}
-
 		ScheduledFuture<?> future = instance.scheduleAtFixedRate(task, startTime, period);
 		String runnableKey = findRunnableKey(task);
-
 		if (Boolean.FALSE.equals(skipMap.get(runnableKey))) {
 			future.cancel(true);
 		}
-
 		return future;
 	}
 
 	public ScheduledFuture<?> scheduleAtFixedRate(Runnable task, long period) {
 		if (!enabled) {
 			logger.debug("skip : {}", task);
-
 			return null;
 		}
-
 		ScheduledFuture<?> future = instance.scheduleAtFixedRate(task, period);
 		String runnableKey = findRunnableKey(task);
-
 		if (Boolean.FALSE.equals(skipMap.get(runnableKey))) {
 			future.cancel(true);
 		}
-
 		return future;
 	}
 
 	public ScheduledFuture<?> scheduleWithFixedDelay(Runnable task, Date startTime, long delay) {
 		if (!enabled) {
 			logger.debug("skip : {}", task);
-
 			return null;
 		}
-
 		ScheduledFuture<?> future = instance.scheduleWithFixedDelay(task, startTime, delay);
 		String runnableKey = findRunnableKey(task);
-
 		if (Boolean.FALSE.equals(skipMap.get(runnableKey))) {
 			future.cancel(true);
 		}
-
 		return future;
 	}
 
 	public ScheduledFuture<?> scheduleWithFixedDelay(Runnable task, long delay) {
 		if (!enabled) {
 			logger.debug("skip : {}", task);
-
 			return null;
 		}
-
 		ScheduledFuture<?> future = instance.scheduleWithFixedDelay(task, delay);
 		String runnableKey = findRunnableKey(task);
-
 		if (Boolean.FALSE.equals(skipMap.get(runnableKey))) {
 			future.cancel(true);
 		}
-
 		return future;
 	}
 
 	public String findRunnableKey(Runnable runnable) {
 		logger.info("{}", runnable);
-
 		if (runnable instanceof ScheduledMethodRunnable) {
 			ScheduledMethodRunnable scheduledMethodRunnable = (ScheduledMethodRunnable) runnable;
 			Method method = scheduledMethodRunnable.getMethod();
 			Class clz = method.getDeclaringClass();
-
 			// logger.info(clz.getCanonicalName() + "." + method.getName());
 			return clz.getCanonicalName() + "." + method.getName();
 		} else {

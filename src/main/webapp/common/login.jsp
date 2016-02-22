@@ -33,12 +33,10 @@
 	<div class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="${tenantPrefix}"> Lemon <sub><small>1.6.1</small></sub>
+				<a class="navbar-brand" href="${tenantPrefix}"> Smart Platform <sub><small>0.0.1</small></sub>
 				</a>
 			</div>
-
 			<div class="navbar-collapse collapse">
-
 				<ul class="nav navbar-nav navbar-right">
 					<li><a href="?locale=zh_CN">zh_CN</a></li>
 					<li><a href="?locale=en_US">en_US</a></li>
@@ -72,7 +70,7 @@
 							<div class="form-group">
 								<label class="col-md-2 control-label" for="username"><spring:message code="core.login.username" text="账号" /></label>
 								<div class="col-md-10">
-									<input type='text' id="username" name='j_username' class="form-control" value="${empty sessionScope['SECURITY_LAST_USERNAME'] ? cookie['SECURITY_LAST_USERNAME'].value : sessionScope['SECURITY_LAST_USERNAME']}" aria-describedby="inputSuccess3Status"> <span id="usernameText" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" style="right: 15px; cursor: pointer; pointer-events: auto;" onclick="$('#username').val('');$('#usernameText').hide();"></span>
+									<input type='text' id="username" name='j_username' class="form-control" value="${empty sessionScope['SECURITY_LAST_USERNAME'] ? cookie['SECURITY_LAST_USERNAME'].value : sessionScope['SECURITY_LAST_USERNAME']}" aria-describedby="inputSuccess3Status"><span id="usernameText" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" style="right: 15px; cursor: pointer; pointer-events: auto;" onclick="$('#username').val('');$('#usernameText').hide();"></span>
 								</div>
 							</div>
 							<div class="form-group">
