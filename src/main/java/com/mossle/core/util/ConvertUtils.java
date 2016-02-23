@@ -8,11 +8,6 @@ import java.util.List;
 
 import org.apache.commons.beanutils.converters.DateConverter;
 
-/**
- * convert utils.
- * 
- * @author Lingo
- */
 public class ConvertUtils {
 	static {
 		registerDateConverter();
@@ -22,19 +17,9 @@ public class ConvertUtils {
 	protected ConvertUtils() {
 	}
 
-	/**
-	 * convert element property to list.
-	 * 
-	 * @param collection
-	 *            Collection
-	 * @param propertyName
-	 *            String
-	 * @return List
-	 */
 	@SuppressWarnings("unchecked")
 	public static List convertElementPropertyToList(final Collection collection, final String propertyName) {
 		List list = new ArrayList();
-
 		try {
 			for (Object obj : collection) {
 				String methodName = ReflectUtils.getGetterMethodName(obj, propertyName);
@@ -51,40 +36,15 @@ public class ConvertUtils {
 		return list;
 	}
 
-	/**
-	 * convert element property to String.
-	 * 
-	 * @param collection
-	 *            Collection
-	 * @param propertyName
-	 *            String
-	 * @param separator
-	 *            String
-	 * @return String
-	 */
-	@SuppressWarnings("unchecked")
 	public static String convertElementPropertyToString(final Collection collection, final String propertyName, final String separator) {
 		List list = convertElementPropertyToList(collection, propertyName);
-
 		return StringUtils.join(list, separator);
 	}
 
-	/**
-	 * convert element String to Object.
-	 * 
-	 * @param value
-	 *            String
-	 * @param toType
-	 *            Class
-	 * @return Object
-	 */
 	public static Object convertStringToObject(String value, Class<?> toType) {
 		return org.apache.commons.beanutils.ConvertUtils.convert(value, toType);
 	}
 
-	/**
-	 * register date converter.
-	 */
 	private static void registerDateConverter() {
 		DateConverter dc = new DateConverter();
 		dc.setUseLocaleFormat(true);
