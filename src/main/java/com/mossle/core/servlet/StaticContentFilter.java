@@ -60,18 +60,14 @@ public class StaticContentFilter implements Filter {
 		ServletUtils.setExpiresHeader(response, ServletUtils.ONE_YEAR_SECONDS);
 		ServletUtils.setLastModifiedHeader(response, contentInfo.getLastModified());
 		ServletUtils.setEtag(response, contentInfo.getEtag());
-
 		// 设置MIME类型
 		response.setContentType(contentInfo.getMimeType());
-
 		// 设置弹出下载文件请求窗口的Header
 		if (request.getParameter("download") != null) {
 			ServletUtils.setFileDownloadHeader(request, response, contentInfo.getFileName());
 		}
-
 		// 构造OutputStream
 		OutputStream output;
-
 		// if (checkAccetptGzip(request) && contentInfo.isNeedGzip()) {
 		// 使用压缩传输的outputstream, 使用http1.1 chunked编码不设置content-length.
 		// output = buildGzipOutputStream(response);
@@ -80,7 +76,6 @@ public class StaticContentFilter implements Filter {
 		response.setContentLength(contentInfo.length);
 		output = response.getOutputStream();
 		// }
-
 		// 高效读取文件内容并输出,然后关闭input file
 		FileUtils.copyFile(contentInfo.getFile(), output);
 		output.flush();
@@ -92,7 +87,6 @@ public class StaticContentFilter implements Filter {
 	private static boolean checkAccetptGzip(HttpServletRequest request) {
 		// Http1.1 header
 		String acceptEncoding = request.getHeader("Accept-Encoding");
-
 		return StringUtils.contains(acceptEncoding, "gzip");
 	}
 
@@ -102,7 +96,6 @@ public class StaticContentFilter implements Filter {
 	private OutputStream buildGzipOutputStream(HttpServletResponse response) throws IOException {
 		response.setHeader("Content-Encoding", "gzip");
 		response.setHeader("Vary", "Accept-Encoding");
-
 		return new GZIPOutputStream(response.getOutputStream());
 	}
 
@@ -117,18 +110,14 @@ public class StaticContentFilter implements Filter {
 		contentInfo.setContentPath(contentPath);
 		contentInfo.setFileName(file.getName());
 		contentInfo.setLength((int) file.length());
-
 		contentInfo.setLastModified(file.lastModified());
 		contentInfo.setEtag("W/\"" + contentInfo.lastModified + "\"");
-
 		contentInfo.setMimeType(mimetypesFileTypeMap.getContentType(contentInfo.fileName));
-
 		if ((contentInfo.length >= GZIP_MINI_LENGTH) && ArrayUtils.contains(GZIP_MIME_TYPES, contentInfo.getMimeType())) {
 			contentInfo.setNeedGzip(true);
 		} else {
 			contentInfo.setNeedGzip(false);
 		}
-
 		return contentInfo;
 	}
 
