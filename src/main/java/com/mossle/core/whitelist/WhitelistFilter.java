@@ -56,7 +56,6 @@ public class WhitelistFilter implements Filter {
 				if (!ips.contains(req.getRemoteAddr())) {
 					logger.info(req.getRemoteAddr() + " access denied");
 					res.sendError(HttpServletResponse.SC_FORBIDDEN);
-
 					return;
 				} else {
 					logger.info(req.getRemoteAddr() + " access " + urlPatternMatcher);
