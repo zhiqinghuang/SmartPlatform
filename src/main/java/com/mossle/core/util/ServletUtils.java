@@ -10,6 +10,7 @@ import java.util.TreeMap;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.core.HttpHeaders;
 
 import org.springframework.util.Assert;
 
@@ -109,28 +110,12 @@ public class ServletUtils {
 		response.setHeader("ETag", etag);
 	}
 
-	/**
-	 * 根据浏览器If-Modified-Since Header, 计算文件是否已被修改.
-	 * 
-	 * 如果无修改, checkIfModify返回false ,设置304 not modify status.
-	 * 
-	 * @param request
-	 *            HttpServletRequest
-	 * @param response
-	 *            HttpServletResponse
-	 * @param lastModified
-	 *            内容的最后修改时间.
-	 * @return boolean
-	 */
 	public static boolean checkIfModifiedSince(HttpServletRequest request, HttpServletResponse response, long lastModified) {
-		long ifModifiedSince = request.getDateHeader("If-Modified-Since");
-
+		long ifModifiedSince = request.getDateHeader(HttpHeaders.IF_MODIFIED_SINCE);
 		if ((ifModifiedSince != -1) && (lastModified < (ifModifiedSince + MILL_SECONDS))) {
 			response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
-
 			return false;
 		}
-
 		return true;
 	}
 
@@ -189,16 +174,13 @@ public class ServletUtils {
 		String encodedFileName = null;
 		// 替换空格，否则firefox下有空格文件名会被截断,其他浏览器会将空格替换成+号
 		encodedFileName = fileName.trim().replaceAll(" ", "_");
-
 		String agent = request.getHeader("User-Agent");
 		boolean isMSIE = ((agent != null) && (agent.toUpperCase().indexOf("MSIE") != -1));
-
 		if (isMSIE) {
 			encodedFileName = URLEncoder.encode(encodedFileName, "UTF-8");
 		} else {
 			encodedFileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
 		}
-
 		response.setHeader("Content-Disposition", "attachment; filename=\"" + encodedFileName + "\"");
 	}
 
@@ -211,27 +193,20 @@ public class ServletUtils {
 	 *            String
 	 * @return Map
 	 */
-	@SuppressWarnings("unchecked")
 	public static Map<String, Object> getParametersStartingWith(ServletRequest request, String prefix) {
 		Assert.notNull(request, "Request must not be null");
-
-		Enumeration paramNames = request.getParameterNames();
+		Enumeration<?> paramNames = request.getParameterNames();
 		Map<String, Object> params = new TreeMap<String, Object>();
-
 		String thePrefix = (prefix == null) ? "" : prefix;
-
 		while (paramNames.hasMoreElements()) {
 			String paramName = (String) paramNames.nextElement();
-
 			if ("".equals(thePrefix) || paramName.startsWith(thePrefix)) {
 				String unprefixed = paramName.substring(thePrefix.length());
 				String[] values = request.getParameterValues(paramName);
-
 				if ((values == null) || (values.length == 0)) {
 					// Do nothing, no values found at all.
 					continue;
 				}
-
 				if (values.length > 1) {
 					params.put(unprefixed, values);
 				} else {
@@ -239,46 +214,29 @@ public class ServletUtils {
 				}
 			}
 		}
-
 		return params;
 	}
 
 	public static Map<String, Object> getParametersStartingWith(Map<String, Object> parameterMap, String prefix) {
 		Map<String, Object> params = new TreeMap<String, Object>();
-
 		String thePrefix = (prefix == null) ? "" : prefix;
-
 		for (Map.Entry<String, Object> entry : parameterMap.entrySet()) {
 			String paramName = entry.getKey();
 			Object paramValue = entry.getValue();
-
 			if ("".equals(thePrefix) || paramName.startsWith(thePrefix)) {
 				String unprefixed = paramName.substring(thePrefix.length());
-
 				if (paramValue == null) {
 					// Do nothing, no values found at all.
 					continue;
 				}
-
 				params.put(unprefixed, paramValue);
 			}
 		}
-
 		return params;
 	}
 
-	/**
-	 * 对Http Basic验证的 Header进行编码.
-	 * 
-	 * @param userName
-	 *            String
-	 * @param password
-	 *            String
-	 * @return String
-	 */
 	public static String encodeHttpBasic(String userName, String password) throws UnsupportedEncodingException {
 		String encode = userName + ":" + password;
-
 		return "Basic " + EncodeUtils.base64Encode(encode.getBytes("UTF-8"));
 	}
 }

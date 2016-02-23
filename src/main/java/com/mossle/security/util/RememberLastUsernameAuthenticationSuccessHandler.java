@@ -15,6 +15,7 @@ import com.mossle.api.tenant.TenantHolder;
 import com.mossle.security.SecurityConstants;
 
 public class RememberLastUsernameAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+	@Resource
 	private TenantHolder tenantHolder;
 
 	@Override
@@ -37,10 +38,5 @@ public class RememberLastUsernameAuthenticationSuccessHandler extends SavedReque
 			return "";
 		}
 		return SpringSecurityUtils.getUser(authentication);
-	}
-
-	@Resource
-	public void setTenantHolder(TenantHolder tenantHolder) {
-		this.tenantHolder = tenantHolder;
 	}
 }
