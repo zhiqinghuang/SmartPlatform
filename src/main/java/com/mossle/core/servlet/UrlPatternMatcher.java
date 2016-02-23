@@ -6,23 +6,18 @@ public abstract class UrlPatternMatcher {
 
 	public static UrlPatternMatcher create(String urlPattern) {
 		UrlPatternMatcher urlPatternMatcher;
-
 		if (urlPattern.equals("/*")) {
 			urlPatternMatcher = DEFAULT_MATCHER;
 		} else if (urlPattern.startsWith("*")) {
 			String suffix = urlPattern.substring(1);
-
 			urlPatternMatcher = new SuffixUrlPatternMatcher(suffix);
 		} else if (urlPattern.endsWith("*")) {
 			String prefix = urlPattern.substring(0, urlPattern.length() - 1);
-
 			urlPatternMatcher = new PrefixUrlPatternMatcher(prefix);
 		} else {
 			urlPatternMatcher = new EqualsUrlPatternMatcher(urlPattern);
 		}
-
 		urlPatternMatcher.setUrlPattern(urlPattern);
-
 		return urlPatternMatcher;
 	}
 
@@ -58,7 +53,6 @@ public abstract class UrlPatternMatcher {
 
 		public PrefixUrlPatternMatcher(String prefix) {
 			this.prefix = prefix;
-
 			if (prefix.endsWith("/")) {
 				withoutSlash = prefix.substring(0, prefix.length() - 1);
 			} else {
