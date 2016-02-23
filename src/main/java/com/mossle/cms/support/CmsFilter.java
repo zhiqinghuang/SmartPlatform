@@ -22,6 +22,7 @@ import com.mossle.core.util.IoUtils;
 public class CmsFilter implements Filter {
 	private static Logger logger = LoggerFactory.getLogger(CmsFilter.class);
 	private String baseDir;
+	@Resource
 	private TenantHolder tenantHolder;
 
 	public void init(FilterConfig filterConfig) {
@@ -64,10 +65,5 @@ public class CmsFilter implements Filter {
 
 	public void setBaseDir(String baseDir) {
 		this.baseDir = baseDir;
-	}
-
-	@Resource
-	public void setTenantHolder(TenantHolder tenantHolder) {
-		this.tenantHolder = tenantHolder;
 	}
 }
