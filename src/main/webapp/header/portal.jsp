@@ -2,7 +2,7 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container-fluid">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="${tenantPrefix}"> Lemon <sub><small>1.6.1-SNAPSHOT</small></sub>
+			<a class="navbar-brand" href="${tenantPrefix}"> Smart Platform <sub><small>0.0.1</small></sub>
 			</a>
 		</div>
 		<div class="navbar-collapse collapse">
