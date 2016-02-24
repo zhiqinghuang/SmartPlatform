@@ -131,3 +131,4 @@ public class UserConnectorFactoryBean implements FactoryBean<UserConnector> {
 		this.sqlPagedQueryCount = sqlPagedQueryCount;
 	}
 }
+//need to confirm

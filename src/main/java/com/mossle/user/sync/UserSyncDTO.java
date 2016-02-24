@@ -5,3 +5,5 @@ public interface UserSyncDTO {
 
 	boolean hasModified(UserSyncDTO userSyncDto);
 }
+
+//need to confirm

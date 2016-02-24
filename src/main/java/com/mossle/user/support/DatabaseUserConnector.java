@@ -259,3 +259,5 @@ public class DatabaseUserConnector implements UserConnector {
 		this.sqlPagedQueryCount = sqlPagedQueryCount;
 	}
 }
+
+//need to confirm

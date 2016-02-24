@@ -54,3 +54,5 @@ public class UserAvatarConnectorImpl implements UserAvatarConnector {
 		this.userAvatarService = userAvatarService;
 	}
 }
+
+//need to confirm
