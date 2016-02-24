@@ -51,3 +51,4 @@ public class WorkCalendarConnectorFactoryBean implements FactoryBean {
 		this.type = type;
 	}
 }
+//need to confirm

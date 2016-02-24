@@ -22,3 +22,5 @@ public class DayPartResult {
 		this.dayPart = dayPart;
 	}
 }
+
+//need to confirm

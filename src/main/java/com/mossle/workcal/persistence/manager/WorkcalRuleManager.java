@@ -8,3 +8,5 @@ import com.mossle.workcal.persistence.domain.WorkcalRule;
 @Service
 public class WorkcalRuleManager extends HibernateEntityDao<WorkcalRule> {
 }
+
+//need to confirm

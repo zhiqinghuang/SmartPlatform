@@ -81,3 +81,5 @@ public class WorkDay {
 		return (dayParts == null) || dayParts.isEmpty();
 	}
 }
+
+//need to confirm

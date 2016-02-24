@@ -8,3 +8,5 @@ import com.mossle.workcal.persistence.domain.WorkcalPart;
 @Service
 public class WorkcalPartManager extends HibernateEntityDao<WorkcalPart> {
 }
+
+//need to confirm

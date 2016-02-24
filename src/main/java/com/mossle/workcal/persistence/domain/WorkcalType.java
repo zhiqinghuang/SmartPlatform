@@ -68,3 +68,4 @@ public class WorkcalType implements java.io.Serializable {
 		this.workcalRules = workcalRules;
 	}
 }
+//need to confirm
