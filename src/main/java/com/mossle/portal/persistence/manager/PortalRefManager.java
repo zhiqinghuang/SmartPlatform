@@ -8,3 +8,5 @@ import com.mossle.portal.persistence.domain.PortalRef;
 @Service
 public class PortalRefManager extends HibernateEntityDao<PortalRef> {
 }
+
+//need to confirm

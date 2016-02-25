@@ -112,3 +112,4 @@ public class PortalItem implements java.io.Serializable {
 		this.tenantId = tenantId;
 	}
 }
+//need to confirm

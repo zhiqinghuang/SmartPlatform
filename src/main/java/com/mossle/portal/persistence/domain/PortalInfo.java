@@ -149,3 +149,4 @@ public class PortalInfo implements java.io.Serializable {
 		this.portalRefs = portalRefs;
 	}
 }
+//need to confirm

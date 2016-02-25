@@ -8,3 +8,5 @@ import com.mossle.pim.persistence.domain.PimNote;
 @Service
 public class PimNoteManager extends HibernateEntityDao<PimNote> {
 }
+
+//need to confirm

@@ -88,3 +88,4 @@ public class PortalWidget implements java.io.Serializable {
 		this.portalItems = portalItems;
 	}
 }
+//need to confirm

@@ -8,3 +8,5 @@ import com.mossle.pim.persistence.domain.PimDevice;
 @Service
 public class PimDeviceManager extends HibernateEntityDao<PimDevice> {
 }
+
+//need to confirm

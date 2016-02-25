@@ -8,3 +8,5 @@ import com.mossle.portal.persistence.domain.PortalWidget;
 @Service
 public class PortalWidgetManager extends HibernateEntityDao<PortalWidget> {
 }
+
+//need to confirm

@@ -8,3 +8,5 @@ import com.mossle.pim.persistence.domain.PimFavorite;
 @Service
 public class PimFavoriteManager extends HibernateEntityDao<PimFavorite> {
 }
+
+//need to confirm

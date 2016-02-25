@@ -8,3 +8,5 @@ import com.mossle.pim.persistence.domain.PimSchedule;
 @Service
 public class PimScheduleManager extends HibernateEntityDao<PimSchedule> {
 }
+
+//need to confirm

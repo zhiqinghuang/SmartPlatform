@@ -8,3 +8,5 @@ import com.mossle.pim.persistence.domain.WorkReportInfo;
 @Service
 public class WorkReportInfoManager extends HibernateEntityDao<WorkReportInfo> {
 }
+
+//need to confirm

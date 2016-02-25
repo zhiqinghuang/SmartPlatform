@@ -8,3 +8,5 @@ import com.mossle.pim.persistence.domain.WorkReportAcl;
 @Service
 public class WorkReportAclManager extends HibernateEntityDao<WorkReportAcl> {
 }
+
+//need to confirm
