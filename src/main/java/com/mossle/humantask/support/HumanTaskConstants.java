@@ -22,3 +22,5 @@ public class HumanTaskConstants {
 	/** 指定分配人. */
 	public static final String TYPE_ASSIGNEE = "assignee";
 }
+
+//need to confirm

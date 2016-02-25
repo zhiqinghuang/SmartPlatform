@@ -8,3 +8,5 @@ import com.mossle.internal.delegate.persistence.domain.DelegateHistory;
 @Service
 public class DelegateHistoryManager extends HibernateEntityDao<DelegateHistory> {
 }
+
+//need to confirm

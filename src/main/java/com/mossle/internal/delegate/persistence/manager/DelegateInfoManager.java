@@ -8,3 +8,5 @@ import com.mossle.internal.delegate.persistence.domain.DelegateInfo;
 @Service
 public class DelegateInfoManager extends HibernateEntityDao<DelegateInfo> {
 }
+
+//need to confirm

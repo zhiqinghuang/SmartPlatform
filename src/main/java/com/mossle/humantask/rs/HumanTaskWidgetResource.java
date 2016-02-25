@@ -72,3 +72,5 @@ public class HumanTaskWidgetResource {
 		this.currentUserHolder = currentUserHolder;
 	}
 }
+
+//need to confirm

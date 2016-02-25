@@ -8,3 +8,5 @@ public interface AssigneeRule {
 
 	List<String> process(String value, String initiator);
 }
+
+//need to confirm
