@@ -59,3 +59,5 @@ public class Node extends GraphElement {
 		this.outgoingEdges = outgoingEdges;
 	}
 }
+
+//need to confirm

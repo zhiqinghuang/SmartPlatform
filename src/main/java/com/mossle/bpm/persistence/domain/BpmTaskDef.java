@@ -78,3 +78,4 @@ public class BpmTaskDef implements java.io.Serializable {
 		this.candidate = candidate;
 	}
 }
+//need to confirm

@@ -19,3 +19,5 @@ public class DurationBusinessCalendar extends AdvancedBusinessCalendar {
 		return "duration";
 	}
 }
+
+//need to confirm

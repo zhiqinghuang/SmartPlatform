@@ -81,3 +81,4 @@ public class BpmCategory implements java.io.Serializable {
 		this.bpmProcesses = bpmProcesses;
 	}
 }
+//need to confirm

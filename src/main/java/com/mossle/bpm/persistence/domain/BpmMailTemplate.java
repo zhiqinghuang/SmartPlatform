@@ -90,3 +90,4 @@ public class BpmMailTemplate implements java.io.Serializable {
 		this.bpmConfNotices = bpmConfNotices;
 	}
 }
+//need to confirm

@@ -63,3 +63,4 @@ public class BpmTaskConf implements java.io.Serializable {
 		this.assignee = assignee;
 	}
 }
+//need to confirm

@@ -37,3 +37,5 @@ public class AdvancedBusinessCalendarManagerFactoryBean implements InitializingB
 		this.workCalendarConnector = workCalendarConnector;
 	}
 }
+
+//need to confirm

@@ -89,3 +89,4 @@ public class BpmConfCountersign implements java.io.Serializable {
 		this.rate = rate;
 	}
 }
+//need to confirm

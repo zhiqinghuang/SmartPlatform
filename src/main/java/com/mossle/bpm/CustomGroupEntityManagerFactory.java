@@ -20,3 +20,5 @@ public class CustomGroupEntityManagerFactory implements SessionFactory {
 		return groupEntityManager;
 	}
 }
+
+//need to confirm

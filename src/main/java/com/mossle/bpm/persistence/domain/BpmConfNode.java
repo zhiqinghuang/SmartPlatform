@@ -247,3 +247,4 @@ public class BpmConfNode implements java.io.Serializable {
 		this.bpmConfOperations = bpmConfOperations;
 	}
 }
+//need to confirm

@@ -101,3 +101,4 @@ public class BpmTaskDefNotice implements java.io.Serializable {
 		this.dueDate = dueDate;
 	}
 }
+//need to confirm

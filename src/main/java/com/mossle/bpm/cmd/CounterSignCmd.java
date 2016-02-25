@@ -230,3 +230,4 @@ public class CounterSignCmd implements Command<Object> {
 		execution.setVariableLocal(variableName, value);
 	}
 }
+//need to confirm

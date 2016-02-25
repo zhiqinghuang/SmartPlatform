@@ -100,3 +100,4 @@ public class BpmConfForm implements java.io.Serializable {
 		this.status = status;
 	}
 }
+//need to confirm

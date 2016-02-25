@@ -8,3 +8,5 @@ import com.mossle.core.hibernate.HibernateEntityDao;
 @Service
 public class RoleManager extends HibernateEntityDao<Role> {
 }
+
+//need to confirm

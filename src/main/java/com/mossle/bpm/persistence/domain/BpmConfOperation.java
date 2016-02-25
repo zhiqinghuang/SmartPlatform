@@ -67,3 +67,4 @@ public class BpmConfOperation implements java.io.Serializable {
 		this.priority = priority;
 	}
 }
+//need to confirm

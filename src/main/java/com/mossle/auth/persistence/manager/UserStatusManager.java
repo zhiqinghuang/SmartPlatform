@@ -8,3 +8,5 @@ import com.mossle.core.hibernate.HibernateEntityDao;
 @Service
 public class UserStatusManager extends HibernateEntityDao<UserStatus> {
 }
+
+//need to confirm

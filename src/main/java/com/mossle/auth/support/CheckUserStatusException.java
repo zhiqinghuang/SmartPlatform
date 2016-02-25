@@ -7,3 +7,4 @@ public class CheckUserStatusException extends RuntimeException {
 		super(message);
 	}
 }
+//need to confirm

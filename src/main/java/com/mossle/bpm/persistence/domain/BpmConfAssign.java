@@ -56,3 +56,4 @@ public class BpmConfAssign implements java.io.Serializable {
 		this.name = name;
 	}
 }
+//need to confirm

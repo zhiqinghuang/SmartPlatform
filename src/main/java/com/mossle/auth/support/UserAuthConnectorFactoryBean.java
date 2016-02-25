@@ -105,3 +105,4 @@ public class UserAuthConnectorFactoryBean implements FactoryBean<UserAuthConnect
 		this.sqlFindRoles = sqlFindRoles;
 	}
 }
+//need to confirm

@@ -31,3 +31,5 @@ public class CustomActivityBehaviorFactory extends DefaultActivityBehaviorFactor
 	// 同样可以覆盖别的方法,加入其他元素的自定义行为,参考 @see ActivityBehaviorFactory
 	// 该类控制执行到某一元素时触发
 }
+
+//need to confirm

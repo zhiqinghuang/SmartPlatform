@@ -90,3 +90,4 @@ public class BpmConfBase implements java.io.Serializable {
 		this.bpmProcesses = bpmProcesses;
 	}
 }
+//need to confirm

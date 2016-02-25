@@ -89,3 +89,4 @@ public class BpmConfListener implements java.io.Serializable {
 		this.priority = priority;
 	}
 }
+//need to confirm

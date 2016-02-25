@@ -8,3 +8,5 @@ import com.mossle.core.hibernate.HibernateEntityDao;
 @Service
 public class MenuManager extends HibernateEntityDao<Menu> {
 }
+
+//need to confirm

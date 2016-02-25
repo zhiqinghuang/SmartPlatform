@@ -8,3 +8,5 @@ import com.mossle.core.hibernate.HibernateEntityDao;
 @Service
 public class PermManager extends HibernateEntityDao<Perm> {
 }
+
+//need to confirm

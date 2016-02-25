@@ -160,3 +160,4 @@ public class BpmProcess implements java.io.Serializable {
 		this.bpmInstances = bpmInstances;
 	}
 }
+//need to confirm

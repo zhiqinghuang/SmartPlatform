@@ -56,3 +56,4 @@ public class BpmConfRule implements java.io.Serializable {
 		this.value = value;
 	}
 }
+//need to confirm

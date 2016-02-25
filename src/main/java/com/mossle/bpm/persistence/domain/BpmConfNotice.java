@@ -112,3 +112,4 @@ public class BpmConfNotice implements java.io.Serializable {
 		this.notificationType = notificationType;
 	}
 }
+//need to confirm

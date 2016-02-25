@@ -47,3 +47,5 @@ public class UserStatusDTO {
 		this.authorities = authorities;
 	}
 }
+
+//need to confirm
