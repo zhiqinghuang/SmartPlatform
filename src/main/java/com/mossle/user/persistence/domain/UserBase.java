@@ -339,3 +339,4 @@ public class UserBase implements java.io.Serializable {
 		this.userAccounts = userAccounts;
 	}
 }
+//need to confirm

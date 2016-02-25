@@ -128,3 +128,4 @@ public class UserAttr implements java.io.Serializable {
 		this.scopeId = scopeId;
 	}
 }
+//need to confirm

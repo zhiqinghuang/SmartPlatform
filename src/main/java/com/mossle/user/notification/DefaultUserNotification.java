@@ -12,3 +12,5 @@ public class DefaultUserNotification implements UserNotification {
 	public void removeUser(UserBase userBase) {
 	}
 }
+
+//need to confirm

@@ -58,3 +58,4 @@ public class PartyUserNotification implements UserNotification {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 }
+//need to confirm

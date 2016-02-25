@@ -20,3 +20,5 @@ public class AccountLogQueue {
 		return blockingQueue.poll(1, TimeUnit.SECONDS);
 	}
 }
+
+//need to confirm

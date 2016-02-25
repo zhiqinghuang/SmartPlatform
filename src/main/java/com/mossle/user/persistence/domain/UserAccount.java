@@ -90,3 +90,4 @@ public class UserAccount implements java.io.Serializable {
 		this.scopeId = scopeId;
 	}
 }
+//need to confirm

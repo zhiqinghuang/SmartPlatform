@@ -80,3 +80,4 @@ public class AccountLogConsumer implements Runnable {
 		this.batchSize = batchSize;
 	}
 }
+//need to confirm

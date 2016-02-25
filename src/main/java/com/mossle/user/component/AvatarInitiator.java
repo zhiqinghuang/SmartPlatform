@@ -53,3 +53,4 @@ public class AvatarInitiator implements ApplicationContextAware {
 		this.applicationContext = applicationContext;
 	}
 }
+//need to confirm
