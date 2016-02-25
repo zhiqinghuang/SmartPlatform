@@ -68,3 +68,4 @@ public class GroupRelation implements java.io.Serializable {
 		this.tenantId = tenantId;
 	}
 }
+//need to confirm

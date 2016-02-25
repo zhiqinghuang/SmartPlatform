@@ -8,3 +8,5 @@ import com.mossle.group.persistence.domain.GroupAlias;
 @Service
 public class GroupAliasManager extends HibernateEntityDao<GroupAlias> {
 }
+
+//need to confirm

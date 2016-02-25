@@ -8,3 +8,5 @@ import com.mossle.group.persistence.domain.GroupInfo;
 @Service
 public class GroupInfoManager extends HibernateEntityDao<GroupInfo> {
 }
+
+//need to confirm

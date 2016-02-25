@@ -8,3 +8,5 @@ import com.mossle.form.persistence.domain.FormTemplate;
 @Service
 public class FormTemplateManager extends HibernateEntityDao<FormTemplate> {
 }
+
+//need to confirm

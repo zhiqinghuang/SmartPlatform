@@ -8,3 +8,5 @@ import com.mossle.group.persistence.domain.GroupRelation;
 @Service
 public class GroupRelationManager extends HibernateEntityDao<GroupRelation> {
 }
+
+//need to confirm

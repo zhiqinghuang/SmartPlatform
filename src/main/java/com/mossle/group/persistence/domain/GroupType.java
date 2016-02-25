@@ -68,3 +68,4 @@ public class GroupType implements java.io.Serializable {
 		this.groupInfos = groupInfos;
 	}
 }
+//need to confirm

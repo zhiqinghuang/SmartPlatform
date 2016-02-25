@@ -11,3 +11,5 @@ public class HumanTaskConstants {
 	public static final String STATUS_EXITED = "exited";
 	public static final String STATUS_OBSOLETE = "obsolete";
 }
+
+//need to confirm

@@ -44,3 +44,5 @@ public class RegisterController {
 		this.accountInfoManager = accountInfoManager;
 	}
 }
+
+//need to confirm
