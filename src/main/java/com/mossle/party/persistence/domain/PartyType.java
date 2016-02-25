@@ -112,3 +112,4 @@ public class PartyType implements java.io.Serializable {
 		this.partyEntities = partyEntities;
 	}
 }
+//need to confirm

@@ -85,3 +85,4 @@ public class PartyStructRule implements java.io.Serializable {
 		this.tenantId = tenantId;
 	}
 }
+//need to confirm

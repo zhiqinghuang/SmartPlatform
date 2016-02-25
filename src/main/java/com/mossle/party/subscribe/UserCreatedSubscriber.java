@@ -64,3 +64,5 @@ public class UserCreatedSubscriber implements Subscribable<String> {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 }
+
+//need to confirm

@@ -38,3 +38,5 @@ public class PartyEntityDTO {
 		this.name = name;
 	}
 }
+
+//need to confirm

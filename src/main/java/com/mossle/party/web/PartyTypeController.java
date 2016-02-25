@@ -94,3 +94,5 @@ public class PartyTypeController {
 		this.tenantHolder = tenantHolder;
 	}
 }
+
+//need to confirm

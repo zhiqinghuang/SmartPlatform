@@ -138,3 +138,5 @@ public class PartyService {
 		this.partyStructTypeManager = partyStructTypeManager;
 	}
 }
+
+//need to confirm

@@ -115,3 +115,4 @@ public class PartyEntity implements java.io.Serializable {
 		this.childStructs = childStructs;
 	}
 }
+//need to confirm

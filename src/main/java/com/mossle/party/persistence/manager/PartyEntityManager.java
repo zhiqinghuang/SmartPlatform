@@ -8,3 +8,5 @@ import com.mossle.party.persistence.domain.PartyEntity;
 @Service
 public class PartyEntityManager extends HibernateEntityDao<PartyEntity> {
 }
+
+//need to confirm

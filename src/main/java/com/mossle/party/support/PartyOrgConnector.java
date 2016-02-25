@@ -257,3 +257,5 @@ public class PartyOrgConnector implements OrgConnector {
 		this.partyEntityManager = partyEntityManager;
 	}
 }
+
+//need to confirm

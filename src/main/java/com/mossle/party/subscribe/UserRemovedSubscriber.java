@@ -84,3 +84,5 @@ public class UserRemovedSubscriber implements Subscribable<String> {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 }
+
+//need to confirm

@@ -112,3 +112,4 @@ public class PimDevice implements java.io.Serializable {
 		this.userId = userId;
 	}
 }
+//need to confirm

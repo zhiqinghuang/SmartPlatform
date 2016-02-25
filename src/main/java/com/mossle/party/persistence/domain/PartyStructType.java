@@ -101,3 +101,4 @@ public class PartyStructType implements java.io.Serializable {
 		this.partyStructs = partyStructs;
 	}
 }
+//need to confirm

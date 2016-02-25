@@ -112,3 +112,4 @@ public class PimFavorite implements java.io.Serializable {
 		this.userId = userId;
 	}
 }
+//need to confirm

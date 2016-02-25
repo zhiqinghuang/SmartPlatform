@@ -129,3 +129,4 @@ public class PartyStruct implements java.io.Serializable {
 		this.admin = admin;
 	}
 }
+//need to confirm

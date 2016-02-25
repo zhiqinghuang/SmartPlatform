@@ -172,3 +172,5 @@ public class PimSchedule implements java.io.Serializable {
 		this.pimScheduleParticipants = pimScheduleParticipants;
 	}
 }
+
+//need to confirm
