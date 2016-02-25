@@ -85,3 +85,4 @@ public class OrgGroup implements java.io.Serializable {
 		this.scopeId = scopeId;
 	}
 }
+//need to confirm

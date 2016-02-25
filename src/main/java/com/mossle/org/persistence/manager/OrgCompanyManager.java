@@ -8,3 +8,5 @@ import com.mossle.org.persistence.domain.OrgCompany;
 @Service
 public class OrgCompanyManager extends HibernateEntityDao<OrgCompany> {
 }
+
+//need to confirm

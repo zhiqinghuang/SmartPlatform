@@ -46,3 +46,5 @@ public class MsgResource {
 		this.currentUserHolder = currentUserHolder;
 	}
 }
+
+//need to confirm

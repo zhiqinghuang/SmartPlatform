@@ -8,3 +8,5 @@ import com.mossle.org.persistence.domain.JobGrade;
 @Service
 public class JobGradeManager extends HibernateEntityDao<JobGrade> {
 }
+
+//need to confirm

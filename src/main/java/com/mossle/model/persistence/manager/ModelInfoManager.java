@@ -8,3 +8,5 @@ import com.mossle.model.persistence.domain.ModelInfo;
 @Service
 public class ModelInfoManager extends HibernateEntityDao<ModelInfo> {
 }
+
+//need to confirm

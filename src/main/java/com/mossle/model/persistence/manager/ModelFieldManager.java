@@ -8,3 +8,5 @@ import com.mossle.model.persistence.domain.ModelField;
 @Service
 public class ModelFieldManager extends HibernateEntityDao<ModelField> {
 }
+
+//need to confirm

@@ -52,3 +52,5 @@ public class MeetingModuleSpecification implements ModuleSpecification {
 		this.initData = initData;
 	}
 }
+
+//need to confirm

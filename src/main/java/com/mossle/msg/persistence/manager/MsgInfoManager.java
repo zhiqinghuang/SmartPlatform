@@ -8,3 +8,5 @@ import com.mossle.msg.persistence.domain.MsgInfo;
 @Service
 public class MsgInfoManager extends HibernateEntityDao<MsgInfo> {
 }
+
+//need to confirm

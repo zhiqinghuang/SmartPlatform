@@ -5,3 +5,5 @@ public class PartyConstants {
 	public static final int TYPE_USER = 1;
 	public static final int TYPE_POSITION = 2;
 }
+
+//need to confirm

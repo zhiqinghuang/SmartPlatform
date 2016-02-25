@@ -93,3 +93,4 @@ public class JobLevel implements java.io.Serializable {
 		this.jobInfos = jobInfos;
 	}
 }
+//need to confirm

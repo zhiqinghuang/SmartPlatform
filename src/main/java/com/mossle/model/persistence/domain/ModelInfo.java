@@ -90,3 +90,4 @@ public class ModelInfo implements java.io.Serializable {
 		this.modelFields = modelFields;
 	}
 }
+//need to confirm

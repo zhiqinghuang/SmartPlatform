@@ -8,3 +8,5 @@ import com.mossle.meeting.persistence.domain.MeetingRoom;
 @Service
 public class MeetingRoomManager extends HibernateEntityDao<MeetingRoom> {
 }
+
+//need to confirm

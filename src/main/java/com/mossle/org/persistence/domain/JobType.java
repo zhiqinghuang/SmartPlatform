@@ -93,3 +93,4 @@ public class JobType implements java.io.Serializable {
 		this.jobTypes = jobTypes;
 	}
 }
+//need to confirm

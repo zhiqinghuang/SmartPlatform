@@ -68,3 +68,4 @@ public class OrgPositionType implements java.io.Serializable {
 		this.orgPositions = orgPositions;
 	}
 }
+//need to confirm

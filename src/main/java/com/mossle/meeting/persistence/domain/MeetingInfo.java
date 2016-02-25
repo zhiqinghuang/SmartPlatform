@@ -198,3 +198,4 @@ public class MeetingInfo implements java.io.Serializable {
 		this.meetingAttendees = meetingAttendees;
 	}
 }
+//need to confirm

@@ -197,3 +197,5 @@ public class MsgInfoController {
 		this.currentUserHolder = currentUserHolder;
 	}
 }
+
+//need to confirm

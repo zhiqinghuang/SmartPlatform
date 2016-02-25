@@ -161,3 +161,4 @@ public class MeetingRoom implements java.io.Serializable {
 		this.meetingInfos = meetingInfos;
 	}
 }
+//need to confirm

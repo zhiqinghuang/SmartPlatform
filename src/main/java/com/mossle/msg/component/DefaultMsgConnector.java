@@ -30,3 +30,5 @@ public class DefaultMsgConnector implements MsgConnector {
 		this.msgInfoManager = msgInfoManager;
 	}
 }
+
+//need to confirm

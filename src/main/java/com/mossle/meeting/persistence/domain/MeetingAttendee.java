@@ -89,3 +89,4 @@ public class MeetingAttendee implements java.io.Serializable {
 		this.tenantId = tenantId;
 	}
 }
+//need to confirm

@@ -78,3 +78,4 @@ public class OrgPosition implements java.io.Serializable {
 		this.scopeId = scopeId;
 	}
 }
+//need to confirm

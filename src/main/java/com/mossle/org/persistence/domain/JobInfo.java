@@ -106,3 +106,4 @@ public class JobInfo implements java.io.Serializable {
 		this.jobUsers = jobUsers;
 	}
 }
+//need to confirm

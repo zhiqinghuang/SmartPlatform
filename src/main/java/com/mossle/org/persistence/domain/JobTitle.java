@@ -68,3 +68,4 @@ public class JobTitle implements java.io.Serializable {
 		this.jobInfos = jobInfos;
 	}
 }
+//need to confirm

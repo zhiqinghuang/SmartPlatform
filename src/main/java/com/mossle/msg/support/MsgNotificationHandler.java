@@ -37,3 +37,5 @@ public class MsgNotificationHandler implements NotificationHandler {
 		this.msgInfoManager = msgInfoManager;
 	}
 }
+
+//need to confirm

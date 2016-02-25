@@ -68,3 +68,5 @@ public class GroupResource {
 		this.orgCompanyManager = orgCompanyManager;
 	}
 }
+
+//need to confirm
