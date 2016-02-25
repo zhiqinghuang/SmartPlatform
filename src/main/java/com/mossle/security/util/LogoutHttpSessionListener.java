@@ -42,3 +42,5 @@ public class LogoutHttpSessionListener implements HttpSessionListener {
 		this.internalUserAuthConnector = internalUserAuthConnector;
 	}
 }
+
+//need to confirm

@@ -79,3 +79,5 @@ public class ProxyMessageConsumer implements MessageConsumer {
 		return this.proxySession.getMessage(this);
 	}
 }
+
+//need to confirm

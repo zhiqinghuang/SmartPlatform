@@ -100,3 +100,5 @@ public class ProxyConnectionFactory implements ConnectionFactory {
 		messageHandler.onConsumerDisconnect(messageContext);
 	}
 }
+
+//need to confirm

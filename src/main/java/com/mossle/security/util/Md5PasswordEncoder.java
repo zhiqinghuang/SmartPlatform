@@ -21,3 +21,5 @@ public class Md5PasswordEncoder implements PasswordEncoder {
 		return md5PasswordEncoder.isPasswordValid(encodedPassword, rawPassword.toString(), salt);
 	}
 }
+
+//need to confirm

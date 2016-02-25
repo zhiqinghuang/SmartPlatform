@@ -164,3 +164,5 @@ public class ProxyMessage implements Message {
 	public void clearBody() throws JMSException {
 	}
 }
+
+//need to confirm

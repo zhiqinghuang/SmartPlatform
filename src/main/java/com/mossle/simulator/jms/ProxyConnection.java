@@ -135,3 +135,5 @@ public class ProxyConnection implements Connection {
 		this.proxyConnectionFactory.onProducerDisconnect(messageContext);
 	}
 }
+
+//need to confirm

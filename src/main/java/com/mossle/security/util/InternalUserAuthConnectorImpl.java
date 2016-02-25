@@ -25,3 +25,4 @@ public class InternalUserAuthConnectorImpl implements InternalUserAuthConnector 
 		return ((UserAuthDTO) principal);
 	}
 }
+//need to confirm

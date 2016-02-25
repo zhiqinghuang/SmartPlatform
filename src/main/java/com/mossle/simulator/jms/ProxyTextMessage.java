@@ -13,3 +13,5 @@ public class ProxyTextMessage extends ProxyMessage implements TextMessage {
 		this.text = text;
 	}
 }
+
+//need to confirm

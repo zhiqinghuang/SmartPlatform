@@ -78,3 +78,5 @@ public class ProxyMessageProducer implements MessageProducer {
 		this.defaultDestination = destination;
 	}
 }
+
+//need to confirm
