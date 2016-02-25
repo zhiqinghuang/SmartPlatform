@@ -42,7 +42,7 @@ public class UserAuthConnectorFactoryBean implements FactoryBean<UserAuthConnect
 		userAuthConnector = new MockUserAuthConnector();
 	}
 
-	public void processDatabase() {
+	private void processDatabase() {
 		Assert.notNull(jdbcTemplate, "jdbcTemplate cannot be null");
 		DatabaseUserAuthConnector databaseUserAuthConnector = new DatabaseUserAuthConnector();
 		databaseUserAuthConnector.setJdbcTemplate(jdbcTemplate);

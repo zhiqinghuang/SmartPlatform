@@ -20,7 +20,6 @@ public class UserAuthCacheImpl implements UserAuthCache {
 		}
 
 		String key = "userAuthUsername:" + username + ":" + tenantId;
-
 		return cache.get(key);
 	}
 
@@ -29,9 +28,7 @@ public class UserAuthCacheImpl implements UserAuthCache {
 			// TODO: skip cache
 			return null;
 		}
-
 		String key = "userAuthRef:" + ref + ":" + tenantId;
-
 		return cache.get(key);
 	}
 
@@ -40,9 +37,7 @@ public class UserAuthCacheImpl implements UserAuthCache {
 			// TODO: skip cache
 			return null;
 		}
-
 		String key = "userAuthId:" + id + ":" + tenantId;
-
 		return cache.get(key);
 	}
 
@@ -58,10 +53,8 @@ public class UserAuthCacheImpl implements UserAuthCache {
 	public void removeUserAuth(UserAuthDTO userAuthDto) {
 		if (userAuthDto == null) {
 			logger.info("userAuthDto is null");
-
 			return;
 		}
-
 		logger.debug("remove userAuthUsername:{}:{}", userAuthDto.getUsername(), userAuthDto.getTenantId());
 		logger.debug("remove userAuthRef:{}:{}", userAuthDto.getRef(), userAuthDto.getTenantId());
 		logger.debug("remove userAuthId:{}:{}", userAuthDto.getId(), userAuthDto.getTenantId());
@@ -75,5 +68,4 @@ public class UserAuthCacheImpl implements UserAuthCache {
 		this.cache = cacheStrategy.getCache("userauth");
 	}
 }
-
 //need to confirm

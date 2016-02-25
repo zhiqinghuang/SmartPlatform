@@ -20,8 +20,11 @@ import com.mossle.auth.persistence.manager.MenuManager;
  */
 public class MenuConnectorImpl implements MenuConnector {
 	private static Logger logger = LoggerFactory.getLogger(MenuConnectorImpl.class);
+	@Resource
 	private MenuManager menuManager;
+	@Resource
 	private UserAuthConnector userAuthConnector;
+	@Resource
 	private TenantHolder tenantHolder;
 
 	/**
@@ -48,7 +51,7 @@ public class MenuConnectorImpl implements MenuConnector {
 	/**
 	 * 按个人权限过滤菜单.
 	 */
-	public List<MenuDTO> convertMenuDtos(List<Menu> menus, List<String> permissions, boolean excludeModule) {
+	private List<MenuDTO> convertMenuDtos(List<Menu> menus, List<String> permissions, boolean excludeModule) {
 		List<MenuDTO> menuDtos = new ArrayList<MenuDTO>();
 		for (Menu menu : menus) {
 			if (excludeModule && "module".equals(menu.getType())) {
@@ -68,7 +71,7 @@ public class MenuConnectorImpl implements MenuConnector {
 	/**
 	 * 把menu数据复制给dto.
 	 */
-	public MenuDTO convertMenuDto(Menu menu, List<String> permissions, boolean excludeModule) {
+	private MenuDTO convertMenuDto(Menu menu, List<String> permissions, boolean excludeModule) {
 		MenuDTO menuDto = new MenuDTO();
 		menuDto.setCode(menu.getCode());
 		menuDto.setTitle(menu.getTitle());
@@ -96,21 +99,6 @@ public class MenuConnectorImpl implements MenuConnector {
 			}
 		}
 		return "";
-	}
-
-	@Resource
-	public void setMenuManager(MenuManager menuManager) {
-		this.menuManager = menuManager;
-	}
-
-	@Resource
-	public void setUserAuthConnector(UserAuthConnector userAuthConnector) {
-		this.userAuthConnector = userAuthConnector;
-	}
-
-	@Resource
-	public void setTenantHolder(TenantHolder tenantHolder) {
-		this.tenantHolder = tenantHolder;
 	}
 }
 //need to confirm
