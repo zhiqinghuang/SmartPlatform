@@ -79,3 +79,5 @@ public class HttpUserFetcher implements UserFetcher {
 		this.httpHandler = httpHandler;
 	}
 }
+
+//need to confirm

@@ -12,3 +12,5 @@ public class SpringSecurityCurrentUserHolder implements CurrentUserHolder {
 		return SpringSecurityUtils.getCurrentUsername();
 	}
 }
+
+//need to confirm

@@ -53,3 +53,5 @@ public class DatabaseUserStatusUpdater implements UserStatusUpdater {
 		this.removeSql = removeSql;
 	}
 }
+
+//need to confirm

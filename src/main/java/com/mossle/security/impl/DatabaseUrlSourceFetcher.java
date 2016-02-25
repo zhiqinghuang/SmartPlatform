@@ -13,3 +13,4 @@ public class DatabaseUrlSourceFetcher extends AbstractDatabaseSourceFetcher impl
 		this.setQuery(sql);
 	}
 }
+//need to confirm

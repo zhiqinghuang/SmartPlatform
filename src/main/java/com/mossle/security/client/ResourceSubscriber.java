@@ -39,3 +39,4 @@ public class ResourceSubscriber implements Subscribable<String> {
 		this.resourceDetailsMonitor = resourceDetailsMonitor;
 	}
 }
+//need to confirm

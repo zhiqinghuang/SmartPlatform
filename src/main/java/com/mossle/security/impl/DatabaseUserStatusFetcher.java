@@ -30,3 +30,5 @@ public class DatabaseUserStatusFetcher implements UserStatusFetcher {
 		this.sql = sql;
 	}
 }
+
+//need to confirm

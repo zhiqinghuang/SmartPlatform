@@ -28,3 +28,5 @@ public class DatabaseUserRealm implements UserRealm {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 }
+
+//need to confirm

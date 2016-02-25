@@ -116,3 +116,4 @@ public class AuthenticatedVoter implements AccessDecisionVoter<Object> {
 		return IS_GUEST.equals(attribute) && AnonymousAuthenticationToken.class.isAssignableFrom(authentication.getClass());
 	}
 }
+//need to confirm

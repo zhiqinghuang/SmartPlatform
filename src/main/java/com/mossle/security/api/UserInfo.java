@@ -20,3 +20,5 @@ public interface UserInfo {
 
 	Map<String, Object> getExtra();
 }
+
+//need to confirm

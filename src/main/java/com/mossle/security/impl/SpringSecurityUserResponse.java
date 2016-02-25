@@ -36,3 +36,5 @@ public class SpringSecurityUserResponse extends UserResponseImpl implements User
 		return true;
 	}
 }
+
+//need to confirm

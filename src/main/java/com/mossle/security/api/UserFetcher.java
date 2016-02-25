@@ -15,3 +15,5 @@ public interface UserFetcher {
 
 	UserInfo getUserInfo(String username, String userRepoRef, String tenantId);
 }
+
+//need to confirm

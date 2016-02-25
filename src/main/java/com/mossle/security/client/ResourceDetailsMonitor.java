@@ -62,3 +62,4 @@ public class ResourceDetailsMonitor implements InitializingBean {
 		this.debug = debug;
 	}
 }
+//need to confirm

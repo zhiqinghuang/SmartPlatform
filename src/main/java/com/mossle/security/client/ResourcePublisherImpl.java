@@ -43,3 +43,5 @@ public class ResourcePublisherImpl implements ResourcePublisher {
 		this.tenantId = tenantId;
 	}
 }
+
+//need to confirm

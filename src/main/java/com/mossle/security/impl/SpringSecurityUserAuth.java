@@ -83,3 +83,4 @@ public class SpringSecurityUserAuth extends UserAuthDTO implements UserDetails {
 		return this.getUsername().hashCode();
 	}
 }
+//need to confirm
