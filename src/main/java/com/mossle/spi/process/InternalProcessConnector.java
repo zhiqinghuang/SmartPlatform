@@ -84,3 +84,5 @@ public interface InternalProcessConnector {
 	 */
 	void signalExecution(String executionId);
 }
+
+//need to confirm

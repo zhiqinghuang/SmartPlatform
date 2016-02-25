@@ -5,3 +5,5 @@ public interface ResourcePublisher {
 
 	void publish(String message);
 }
+
+//need to confirm
