@@ -167,3 +167,4 @@ public class SendmailTemplate implements java.io.Serializable {
 		this.sendmailQueues = sendmailQueues;
 	}
 }
+//need to confirm

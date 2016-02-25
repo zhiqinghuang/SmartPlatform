@@ -57,3 +57,5 @@ public class JavamailResource {
 		map.put("name", "已删除邮件");
 	}
 }
+
+//need to confirm

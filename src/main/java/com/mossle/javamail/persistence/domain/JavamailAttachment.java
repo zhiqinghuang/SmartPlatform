@@ -78,3 +78,4 @@ public class JavamailAttachment implements java.io.Serializable {
 		this.type = type;
 	}
 }
+//need to confirm

@@ -8,3 +8,5 @@ import com.mossle.internal.template.persistence.domain.TemplateField;
 @Service
 public class TemplateFieldManager extends HibernateEntityDao<TemplateField> {
 }
+
+//need to confirm

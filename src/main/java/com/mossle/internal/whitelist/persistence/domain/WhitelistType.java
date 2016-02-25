@@ -79,3 +79,4 @@ public class WhitelistType implements java.io.Serializable {
 		this.whitelistApps = whitelistApps;
 	}
 }
+//need to confirm

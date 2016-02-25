@@ -189,3 +189,4 @@ public class SendmailConfig implements java.io.Serializable {
 		this.sendmailHistories = sendmailHistories;
 	}
 }
+//need to confirm

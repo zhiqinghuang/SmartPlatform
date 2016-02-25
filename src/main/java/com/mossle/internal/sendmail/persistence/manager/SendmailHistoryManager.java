@@ -8,3 +8,5 @@ import com.mossle.internal.sendmail.persistence.domain.SendmailHistory;
 @Service
 public class SendmailHistoryManager extends HibernateEntityDao<SendmailHistory> {
 }
+
+//need to confirm

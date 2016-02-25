@@ -9,3 +9,5 @@ public interface StoreClient {
 
 	StoreDTO getStore(String key, String tenantId) throws Exception;
 }
+
+//need to confirm

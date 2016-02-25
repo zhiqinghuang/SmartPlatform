@@ -8,3 +8,5 @@ import com.mossle.internal.sendmail.persistence.domain.SendmailAttachment;
 @Service
 public class SendmailAttachmentManager extends HibernateEntityDao<SendmailAttachment> {
 }
+
+//need to confirm

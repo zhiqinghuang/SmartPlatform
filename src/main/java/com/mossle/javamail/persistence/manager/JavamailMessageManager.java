@@ -8,3 +8,5 @@ import com.mossle.javamail.persistence.domain.JavamailMessage;
 @Service
 public class JavamailMessageManager extends HibernateEntityDao<JavamailMessage> {
 }
+
+//need to confirm

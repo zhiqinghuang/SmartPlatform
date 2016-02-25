@@ -178,3 +178,4 @@ public class JavamailConfig implements java.io.Serializable {
 		this.javamailMessages = javamailMessages;
 	}
 }
+//need to confirm

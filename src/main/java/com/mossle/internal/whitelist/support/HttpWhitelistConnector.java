@@ -60,3 +60,4 @@ public class HttpWhitelistConnector implements WhitelistConnector {
 		this.baseUrl = baseUrl;
 	}
 }
+//need to confirm

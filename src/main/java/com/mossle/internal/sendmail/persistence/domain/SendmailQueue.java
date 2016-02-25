@@ -194,3 +194,4 @@ public class SendmailQueue implements java.io.Serializable {
 		this.tenantId = tenantId;
 	}
 }
+//need to confirm

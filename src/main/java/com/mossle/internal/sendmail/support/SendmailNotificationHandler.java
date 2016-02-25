@@ -47,3 +47,5 @@ public class SendmailNotificationHandler implements NotificationHandler {
 		this.userConnector = userConnector;
 	}
 }
+
+//need to confirm

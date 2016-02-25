@@ -64,3 +64,5 @@ public class StoreConnectorImpl implements StoreConnector {
 		this.internalStoreConnector = internalStoreConnector;
 	}
 }
+
+//need to confirm

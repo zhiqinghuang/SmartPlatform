@@ -8,3 +8,5 @@ import com.mossle.javamail.persistence.domain.JavamailAttachment;
 @Service
 public class JavamailAttachmentManager extends HibernateEntityDao<JavamailAttachment> {
 }
+
+//need to confirm

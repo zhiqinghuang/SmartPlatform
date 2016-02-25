@@ -8,3 +8,5 @@ import com.mossle.internal.store.persistence.domain.StoreInfo;
 @Service
 public class StoreInfoManager extends HibernateEntityDao<StoreInfo> {
 }
+
+//need to confirm

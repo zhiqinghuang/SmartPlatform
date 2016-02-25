@@ -79,3 +79,4 @@ public class TemplateInfo implements java.io.Serializable {
 		this.templateFields = templateFields;
 	}
 }
+//need to confirm

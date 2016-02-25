@@ -79,3 +79,4 @@ public class JavamailQueue implements Runnable {
 		this.javamailService = javamailService;
 	}
 }
+//need to confirm

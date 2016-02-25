@@ -8,3 +8,5 @@ import com.mossle.internal.sendmail.persistence.domain.SendmailQueue;
 @Service
 public class SendmailQueueManager extends HibernateEntityDao<SendmailQueue> {
 }
+
+//need to confirm

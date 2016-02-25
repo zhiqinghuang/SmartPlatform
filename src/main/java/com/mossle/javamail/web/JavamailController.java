@@ -118,3 +118,5 @@ public class JavamailController {
 		this.javamailQueue = javamailQueue;
 	}
 }
+
+//need to confirm

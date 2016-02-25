@@ -197,3 +197,4 @@ public class JavamailMessage implements java.io.Serializable {
 		this.javamailAttachments = javamailAttachments;
 	}
 }
+//need to confirm

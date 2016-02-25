@@ -22,3 +22,5 @@ public class SmtpAuthenticator extends Authenticator {
 		return new PasswordAuthentication(username, password);
 	}
 }
+
+//need to confirm

@@ -8,3 +8,5 @@ import com.mossle.internal.template.persistence.domain.TemplateInfo;
 @Service
 public class TemplateInfoManager extends HibernateEntityDao<TemplateInfo> {
 }
+
+//need to confirm

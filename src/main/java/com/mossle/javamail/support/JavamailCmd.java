@@ -47,3 +47,5 @@ public class JavamailCmd {
 		this.content = content;
 	}
 }
+
+//need to confirm

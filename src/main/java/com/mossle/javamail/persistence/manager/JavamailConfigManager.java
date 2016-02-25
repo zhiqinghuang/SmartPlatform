@@ -8,3 +8,5 @@ import com.mossle.javamail.persistence.domain.JavamailConfig;
 @Service
 public class JavamailConfigManager extends HibernateEntityDao<JavamailConfig> {
 }
+
+//need to confirm

@@ -8,3 +8,5 @@ import com.mossle.internal.whitelist.persistence.domain.WhitelistHost;
 @Service
 public class WhitelistHostManager extends HibernateEntityDao<WhitelistHost> {
 }
+
+//need to confirm
