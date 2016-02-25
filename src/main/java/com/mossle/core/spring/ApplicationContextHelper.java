@@ -49,3 +49,5 @@ public class ApplicationContextHelper implements ApplicationContextAware {
 		return (T) ApplicationContextHolder.getInstance().getApplicationContext().getBean(id);
 	}
 }
+
+//need to confirm

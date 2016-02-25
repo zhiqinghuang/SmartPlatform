@@ -292,3 +292,5 @@ public class HibernatePagingDao extends HibernateGenericDao {
 		return resultPage;
 	}
 }
+
+//need to confirm

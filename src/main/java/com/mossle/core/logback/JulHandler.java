@@ -14,3 +14,5 @@ public class JulHandler implements InitializingBean, DisposableBean {
 		SLF4JBridgeHandler.uninstall();
 	}
 }
+
+//need to confirm

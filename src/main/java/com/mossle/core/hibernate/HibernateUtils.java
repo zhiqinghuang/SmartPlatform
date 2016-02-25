@@ -336,3 +336,5 @@ public class HibernateUtils {
 		buff.append(propertyFilter.getPropertyName().replaceAll("\\.", "_"));
 	}
 }
+
+//need to confirm

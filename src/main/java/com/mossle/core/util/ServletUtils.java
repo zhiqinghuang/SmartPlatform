@@ -240,3 +240,4 @@ public class ServletUtils {
 		return "Basic " + EncodeUtils.base64Encode(encode.getBytes("UTF-8"));
 	}
 }
+//need to confirm

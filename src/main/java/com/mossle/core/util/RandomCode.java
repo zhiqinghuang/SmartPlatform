@@ -5,3 +5,5 @@ public class RandomCode {
 		return (int) (((Math.random() * 9) + 1) * 100000);
 	}
 }
+
+//need to confirm

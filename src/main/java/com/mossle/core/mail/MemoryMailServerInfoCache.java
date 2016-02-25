@@ -24,3 +24,5 @@ public class MemoryMailServerInfoCache implements MailServerInfoCache {
 		mailServerInfoMap.put(mailServerInfo.getName(), mailServerInfo);
 	}
 }
+
+//need to confirm

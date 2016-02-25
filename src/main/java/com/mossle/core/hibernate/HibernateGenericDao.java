@@ -437,3 +437,5 @@ public class HibernateGenericDao extends HibernateBasicDao {
 		return this.createQuery(hql, map).executeUpdate();
 	}
 }
+
+//need to confirm

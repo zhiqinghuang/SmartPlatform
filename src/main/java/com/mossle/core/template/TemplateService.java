@@ -10,3 +10,5 @@ public interface TemplateService {
 
 	void renderTo(String templatePath, Map<String, Object> data, File targetFile);
 }
+
+//need to confirm

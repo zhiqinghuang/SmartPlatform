@@ -26,3 +26,5 @@ public class SpellDTO {
 		return this.list.get(0);
 	}
 }
+
+//need to confirm

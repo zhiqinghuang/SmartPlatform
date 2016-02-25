@@ -10,3 +10,5 @@ public interface HttpHandler {
 
 	String readText(String url, String encoding, Map<String, Object> params) throws IOException;
 }
+
+//need to confirm

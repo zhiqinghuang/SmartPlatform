@@ -404,3 +404,5 @@ public class HibernateEntityDao<T> extends HibernatePagingDao {
 		return pagedQuery(buff.toString(), pageNo, pageSize, map);
 	}
 }
+
+//need to confirm

@@ -67,3 +67,4 @@ public class RecoverableSessionFactoryBean implements FactoryBean<Object>, Dispo
 		this.packagesToScan = packagesToScan;
 	}
 }
+//need to confirm

@@ -372,3 +372,5 @@ public class HibernateBasicDao implements ApplicationContextAware {
 		}
 	}
 }
+
+//need to confirm

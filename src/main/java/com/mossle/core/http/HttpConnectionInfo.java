@@ -117,3 +117,5 @@ public class HttpConnectionInfo {
 		return process(processedMethod, processedQueryParams, processedFormParams, processedHeadParams).isSuccess();
 	}
 }
+
+//need to confirm

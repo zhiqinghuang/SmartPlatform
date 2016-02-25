@@ -47,3 +47,5 @@ public class SpringSessionContext implements CurrentSessionContext {
 		}
 	}
 }
+
+//need to confirm

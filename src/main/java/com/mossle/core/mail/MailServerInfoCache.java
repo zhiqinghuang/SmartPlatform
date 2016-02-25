@@ -9,3 +9,5 @@ public interface MailServerInfoCache {
 
 	void setMailServerInfo(MailServerInfo mailServerInfo);
 }
+
+//need to confirm

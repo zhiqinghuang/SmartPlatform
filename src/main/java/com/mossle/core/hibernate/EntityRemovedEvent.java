@@ -11,3 +11,5 @@ public class EntityRemovedEvent extends EntityEvent {
 		return true;
 	}
 }
+
+//need to confirm

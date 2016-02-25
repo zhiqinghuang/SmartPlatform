@@ -26,3 +26,5 @@ public class ResourceExistsPropertyDefiner extends PropertyDefinerBase {
 		return (resourceURL != null) ? "true" : "false";
 	}
 }
+
+//need to confirm

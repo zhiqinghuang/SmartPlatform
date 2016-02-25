@@ -187,3 +187,5 @@ public class MailServerInfo {
 		return MODE_TEST.equals(mode);
 	}
 }
+
+//need to confirm

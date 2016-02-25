@@ -379,3 +379,4 @@ public class SessionFactoryWrapper implements SessionFactoryImplementor {
 		sessionFactoryImplementor.registerNamedQueryDefinition(name, definition);
 	}
 }
+//need to confirm

@@ -95,3 +95,5 @@ public class SpellHelper {
 		return this.candidates;
 	}
 }
+
+//need to confirm

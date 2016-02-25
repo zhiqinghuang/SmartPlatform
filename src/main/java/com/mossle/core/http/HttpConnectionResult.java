@@ -17,3 +17,5 @@ public class HttpConnectionResult {
 		return content;
 	}
 }
+
+//need to confirm
