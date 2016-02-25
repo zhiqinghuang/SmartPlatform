@@ -11,3 +11,5 @@ public interface UserStatusDetails {
 
 	Collection<String> getAttributes(String type);
 }
+
+//need to confirm

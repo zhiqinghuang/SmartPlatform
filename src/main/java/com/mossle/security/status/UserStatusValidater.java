@@ -29,3 +29,5 @@ public class UserStatusValidater {
 		return (status & mask) != 0;
 	}
 }
+
+//need to confirm

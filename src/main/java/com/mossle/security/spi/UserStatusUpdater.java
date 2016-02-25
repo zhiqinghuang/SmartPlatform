@@ -5,3 +5,5 @@ public interface UserStatusUpdater {
 
 	void removeUser(String username);
 }
+
+//need to confirm

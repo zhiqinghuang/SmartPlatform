@@ -19,3 +19,5 @@ public interface UserStatusFetcher {
 	 */
 	int getUserStatus(String username) throws UsernameNotFoundException;
 }
+
+//need to confirm
