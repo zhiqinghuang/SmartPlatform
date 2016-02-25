@@ -8,3 +8,5 @@ public class CmsConstants {
 	public static final int TYPE_PDF = 4;
 	public static final int TYPE_ETC = 5;
 }
+
+//need to confirm

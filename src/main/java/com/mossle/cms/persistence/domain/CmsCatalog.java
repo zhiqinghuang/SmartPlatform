@@ -193,3 +193,4 @@ public class CmsCatalog implements java.io.Serializable {
 		this.cmsArticles = cmsArticles;
 	}
 }
+//need to confirm

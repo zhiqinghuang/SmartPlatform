@@ -7,3 +7,5 @@ public class RemoteCacheStrategy implements CacheStrategy {
 		return cache;
 	}
 }
+
+//need to confirm

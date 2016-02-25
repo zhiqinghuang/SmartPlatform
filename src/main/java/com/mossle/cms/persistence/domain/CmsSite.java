@@ -115,3 +115,4 @@ public class CmsSite implements java.io.Serializable {
 		this.cmsCatalogs = cmsCatalogs;
 	}
 }
+//need to confirm

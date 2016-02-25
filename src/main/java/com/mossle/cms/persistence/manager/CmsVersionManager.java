@@ -8,3 +8,5 @@ import com.mossle.core.hibernate.HibernateEntityDao;
 @Service
 public class CmsVersionManager extends HibernateEntityDao<CmsVersion> {
 }
+
+//need to confirm

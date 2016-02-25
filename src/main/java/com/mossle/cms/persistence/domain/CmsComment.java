@@ -153,3 +153,4 @@ public class CmsComment implements java.io.Serializable {
 		this.cmsComments = cmsComments;
 	}
 }
+//need to confirm

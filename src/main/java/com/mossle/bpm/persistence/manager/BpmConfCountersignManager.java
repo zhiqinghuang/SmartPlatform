@@ -8,3 +8,5 @@ import com.mossle.core.hibernate.HibernateEntityDao;
 @Service
 public class BpmConfCountersignManager extends HibernateEntityDao<BpmConfCountersign> {
 }
+
+//need to confirm

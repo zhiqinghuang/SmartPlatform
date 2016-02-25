@@ -397,3 +397,4 @@ public class CmsArticle implements java.io.Serializable {
 		this.cmsSites = cmsSites;
 	}
 }
+//need to confirm

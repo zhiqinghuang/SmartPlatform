@@ -79,3 +79,4 @@ public class CmsTag implements java.io.Serializable {
 		this.cmsTagArticles = cmsTagArticles;
 	}
 }
+//need to confirm

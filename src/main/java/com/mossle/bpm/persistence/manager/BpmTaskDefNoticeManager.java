@@ -8,3 +8,5 @@ import com.mossle.core.hibernate.HibernateEntityDao;
 @Service
 public class BpmTaskDefNoticeManager extends HibernateEntityDao<BpmTaskDefNotice> {
 }
+
+//need to confirm

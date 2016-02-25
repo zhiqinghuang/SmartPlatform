@@ -8,3 +8,5 @@ import com.mossle.core.hibernate.HibernateEntityDao;
 @Service
 public class CmsFavoriteManager extends HibernateEntityDao<CmsFavorite> {
 }
+
+//need to confirm

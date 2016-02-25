@@ -48,3 +48,5 @@ public class BpmConfNodeController {
 		this.bpmConfBaseManager = bpmConfBaseManager;
 	}
 }
+
+//need to confirm

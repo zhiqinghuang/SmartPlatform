@@ -79,3 +79,4 @@ public class CmsTagArticle implements java.io.Serializable {
 		this.tenantId = tenantId;
 	}
 }
+//need to confirm

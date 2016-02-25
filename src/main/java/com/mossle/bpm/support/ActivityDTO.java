@@ -20,3 +20,5 @@ public class ActivityDTO {
 		this.name = name;
 	}
 }
+
+//need to confirm

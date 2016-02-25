@@ -118,3 +118,4 @@ public class DatabaseCmsConnector implements CmsConnector {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 }
+//need to confirm

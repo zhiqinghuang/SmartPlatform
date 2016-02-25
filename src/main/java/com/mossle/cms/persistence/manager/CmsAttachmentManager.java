@@ -8,3 +8,5 @@ import com.mossle.core.hibernate.HibernateEntityDao;
 @Service
 public class CmsAttachmentManager extends HibernateEntityDao<CmsAttachment> {
 }
+
+//need to confirm

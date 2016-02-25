@@ -52,3 +52,5 @@ public class CmsModuleSpecification implements ModuleSpecification {
 		this.initData = initData;
 	}
 }
+
+//need to confirm

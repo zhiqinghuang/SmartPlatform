@@ -7,3 +7,5 @@ public interface Cache {
 
 	void remove(String key);
 }
+
+//need to confirm

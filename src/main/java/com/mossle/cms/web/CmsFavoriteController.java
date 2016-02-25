@@ -126,3 +126,5 @@ public class CmsFavoriteController {
 		this.messageHelper = messageHelper;
 	}
 }
+
+//need to confirm

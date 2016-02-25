@@ -8,3 +8,5 @@ import com.mossle.core.hibernate.HibernateEntityDao;
 @Service
 public class CmsTagManager extends HibernateEntityDao<CmsTag> {
 }
+
+//need to confirm

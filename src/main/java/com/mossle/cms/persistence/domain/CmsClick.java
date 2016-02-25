@@ -105,3 +105,4 @@ public class CmsClick implements java.io.Serializable {
 		this.tenantId = tenantId;
 	}
 }
+//need to confirm

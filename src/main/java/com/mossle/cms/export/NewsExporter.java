@@ -11,3 +11,5 @@ public class NewsExporter {
 		new SiteExporter().doExport(dir, jdbcTemplate, "default");
 	}
 }
+
+//need to confirm

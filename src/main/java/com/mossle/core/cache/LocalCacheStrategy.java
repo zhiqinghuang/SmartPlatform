@@ -19,3 +19,5 @@ public class LocalCacheStrategy implements CacheStrategy {
 		return cache;
 	}
 }
+
+//need to confirm

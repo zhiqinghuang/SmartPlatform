@@ -90,3 +90,4 @@ public class CmsContent implements java.io.Serializable {
 		this.cmsVersions = cmsVersions;
 	}
 }
+//need to confirm

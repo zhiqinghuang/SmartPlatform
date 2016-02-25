@@ -8,3 +8,5 @@ import com.mossle.core.hibernate.HibernateEntityDao;
 @Service
 public class CmsClickManager extends HibernateEntityDao<CmsClick> {
 }
+
+//need to confirm

@@ -8,3 +8,5 @@ import com.mossle.core.hibernate.HibernateEntityDao;
 @Service
 public class BpmCategoryManager extends HibernateEntityDao<BpmCategory> {
 }
+
+//need to confirm
