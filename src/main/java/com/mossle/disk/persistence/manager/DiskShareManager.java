@@ -8,3 +8,5 @@ import com.mossle.disk.persistence.domain.DiskShare;
 @Service
 public class DiskShareManager extends HibernateEntityDao<DiskShare> {
 }
+
+//need to confirm

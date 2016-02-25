@@ -115,3 +115,4 @@ public class DictSchema implements java.io.Serializable {
 		this.dictDatas = dictDatas;
 	}
 }
+//need to confirm

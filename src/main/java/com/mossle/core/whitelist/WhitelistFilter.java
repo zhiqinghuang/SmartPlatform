@@ -69,3 +69,4 @@ public class WhitelistFilter implements Filter {
 		this.value = value;
 	}
 }
+//need to confirm

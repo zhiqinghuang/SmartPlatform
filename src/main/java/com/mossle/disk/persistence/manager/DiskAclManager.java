@@ -8,3 +8,5 @@ import com.mossle.disk.persistence.domain.DiskAcl;
 @Service
 public class DiskAclManager extends HibernateEntityDao<DiskAcl> {
 }
+
+//need to confirm

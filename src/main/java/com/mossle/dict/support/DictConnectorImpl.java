@@ -83,3 +83,5 @@ public class DictConnectorImpl implements DictConnector {
 		this.dictTypeManager = dictTypeManager;
 	}
 }
+
+//need to confirm

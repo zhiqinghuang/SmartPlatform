@@ -8,3 +8,5 @@ public class FieldType {
 	// boolean
 	// date
 }
+
+//need to confirm

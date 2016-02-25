@@ -101,3 +101,4 @@ public class DictType implements java.io.Serializable {
 		this.dictInfos = dictInfos;
 	}
 }
+//need to confirm

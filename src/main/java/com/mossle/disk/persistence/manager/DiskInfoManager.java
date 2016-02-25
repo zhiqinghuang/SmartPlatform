@@ -8,3 +8,5 @@ import com.mossle.disk.persistence.domain.DiskInfo;
 @Service
 public class DiskInfoManager extends HibernateEntityDao<DiskInfo> {
 }
+
+//need to confirm

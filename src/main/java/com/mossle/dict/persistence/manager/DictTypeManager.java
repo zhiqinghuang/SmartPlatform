@@ -8,3 +8,5 @@ import com.mossle.dict.persistence.domain.DictType;
 @Service
 public class DictTypeManager extends HibernateEntityDao<DictType> {
 }
+
+//need to confirm
