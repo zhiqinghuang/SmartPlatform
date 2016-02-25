@@ -8,3 +8,5 @@ import com.mossle.humantask.persistence.domain.TaskDefEscalation;
 @Service
 public class TaskDefEscalationManager extends HibernateEntityDao<TaskDefEscalation> {
 }
+
+//need to confirm

@@ -8,3 +8,5 @@ import com.mossle.humantask.persistence.domain.TaskDefDeadline;
 @Service
 public class TaskDefDeadlineManager extends HibernateEntityDao<TaskDefDeadline> {
 }
+
+//need to confirm

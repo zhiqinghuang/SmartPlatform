@@ -8,3 +8,5 @@ import com.mossle.humantask.persistence.domain.TaskConfUser;
 @Service
 public class TaskConfUserManager extends HibernateEntityDao<TaskConfUser> {
 }
+
+//need to confirm

@@ -8,3 +8,5 @@ import com.mossle.humantask.persistence.domain.TaskDefNotification;
 @Service
 public class TaskDefNotificationManager extends HibernateEntityDao<TaskDefNotification> {
 }
+
+//need to confirm

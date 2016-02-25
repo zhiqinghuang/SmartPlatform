@@ -8,3 +8,5 @@ import com.mossle.humantask.persistence.domain.TaskInfo;
 @Service
 public class TaskInfoManager extends HibernateEntityDao<TaskInfo> {
 }
+
+//need to confirm

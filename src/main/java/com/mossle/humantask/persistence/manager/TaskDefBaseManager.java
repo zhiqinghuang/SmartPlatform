@@ -8,3 +8,5 @@ import com.mossle.humantask.persistence.domain.TaskDefBase;
 @Service
 public class TaskDefBaseManager extends HibernateEntityDao<TaskDefBase> {
 }
+
+//need to confirm

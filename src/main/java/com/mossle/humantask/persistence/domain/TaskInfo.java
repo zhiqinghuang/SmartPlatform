@@ -554,3 +554,4 @@ public class TaskInfo implements java.io.Serializable {
 		this.taskLogs = taskLogs;
 	}
 }
+//need to confirm

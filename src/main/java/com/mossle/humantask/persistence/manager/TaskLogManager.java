@@ -8,3 +8,5 @@ import com.mossle.humantask.persistence.domain.TaskLog;
 @Service
 public class TaskLogManager extends HibernateEntityDao<TaskLog> {
 }
+
+//need to confirm

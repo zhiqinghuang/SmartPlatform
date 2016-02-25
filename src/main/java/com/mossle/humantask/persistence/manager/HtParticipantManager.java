@@ -8,3 +8,5 @@ import com.mossle.humantask.persistence.domain.HtParticipant;
 @Service
 public class HtParticipantManager extends HibernateEntityDao<HtParticipant> {
 }
+
+//need to confirm
