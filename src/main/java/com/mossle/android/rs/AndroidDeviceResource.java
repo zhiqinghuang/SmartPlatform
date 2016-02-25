@@ -136,3 +136,4 @@ public class AndroidDeviceResource {
 		this.userConnector = userConnector;
 	}
 }
+//need to confirm

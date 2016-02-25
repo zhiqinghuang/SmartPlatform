@@ -4,3 +4,5 @@ public class MockMsgConnector implements MsgConnector {
 	public void send(String subject, String content, String receiverId, String senderId) {
 	}
 }
+
+//need to confirm

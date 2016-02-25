@@ -7,3 +7,5 @@ public interface UserAvatarConnector {
 
 	String findAvatarBase64(String userId);
 }
+
+//need to confirm

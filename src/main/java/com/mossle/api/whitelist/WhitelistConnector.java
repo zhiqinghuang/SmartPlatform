@@ -7,3 +7,5 @@ public interface WhitelistConnector {
 
 	List<WhitelistDTO> getWhitelists(String code, String tenantId);
 }
+
+//need to confirm

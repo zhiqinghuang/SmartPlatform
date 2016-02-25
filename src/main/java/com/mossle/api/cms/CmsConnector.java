@@ -38,3 +38,5 @@ public interface CmsConnector {
 	 */
 	void addComment(String articleId, String content, String userId);
 }
+
+//need to confirm

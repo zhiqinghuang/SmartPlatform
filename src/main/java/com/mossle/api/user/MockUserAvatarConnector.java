@@ -11,3 +11,5 @@ public class MockUserAvatarConnector implements UserAvatarConnector {
 		return null;
 	}
 }
+
+//need to confirm

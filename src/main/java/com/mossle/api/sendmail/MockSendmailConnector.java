@@ -7,3 +7,5 @@ public class MockSendmailConnector implements SendmailConnector {
 	public void send(SendmailDTO sendmailDto, String tenantId) {
 	}
 }
+
+//need to confirm

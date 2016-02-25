@@ -5,3 +5,5 @@ public interface DictConnector {
 
 	DictDTO findDictByType(String typeName, String tenantId);
 }
+
+//need to confirm

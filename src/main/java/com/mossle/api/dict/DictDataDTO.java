@@ -42,3 +42,5 @@ public class DictDataDTO {
 		return Double.parseDouble(value);
 	}
 }
+
+//need to confirm

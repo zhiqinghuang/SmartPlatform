@@ -5,3 +5,5 @@ public interface SendmailConnector {
 
 	void send(SendmailDTO sendmailDto, String tenantId);
 }
+
+//need to confirm

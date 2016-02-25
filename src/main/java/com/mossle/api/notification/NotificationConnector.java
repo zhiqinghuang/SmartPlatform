@@ -7,3 +7,5 @@ public interface NotificationConnector {
 
 	Collection<String> getTypes(String tenantId);
 }
+
+//need to confirm

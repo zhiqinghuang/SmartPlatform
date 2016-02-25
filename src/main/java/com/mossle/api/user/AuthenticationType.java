@@ -14,3 +14,5 @@ public class AuthenticationType {
 	public static final String LDAP_OTP = "ldap-otp";
 	public static final String SPECIAL_OR_LDAP = "special-or-ldap";
 }
+
+//need to confirm

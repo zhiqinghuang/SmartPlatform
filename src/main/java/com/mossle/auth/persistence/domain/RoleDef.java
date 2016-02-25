@@ -94,3 +94,4 @@ public class RoleDef implements java.io.Serializable {
 		this.perms = perms;
 	}
 }
+//need to confirm

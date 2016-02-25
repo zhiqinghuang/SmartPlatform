@@ -95,3 +95,4 @@ public class Role implements java.io.Serializable {
 		this.userStatuses = userStatuses;
 	}
 }
+//need to confirm

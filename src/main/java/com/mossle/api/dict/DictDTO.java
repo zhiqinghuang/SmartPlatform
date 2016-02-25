@@ -71,3 +71,5 @@ public class DictDTO {
 		return data.get(dataName).getDouble();
 	}
 }
+
+//need to confirm

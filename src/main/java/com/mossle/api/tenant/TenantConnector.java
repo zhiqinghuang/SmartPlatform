@@ -13,3 +13,5 @@ public interface TenantConnector {
 
 	List<TenantDTO> findSharedTenants();
 }
+
+//need to confirm

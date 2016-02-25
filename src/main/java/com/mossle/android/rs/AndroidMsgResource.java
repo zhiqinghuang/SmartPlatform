@@ -95,3 +95,4 @@ public class AndroidMsgResource {
 		this.pimDeviceManager = pimDeviceManager;
 	}
 }
+//need to confirm

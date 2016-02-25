@@ -8,3 +8,5 @@ import com.mossle.core.hibernate.HibernateEntityDao;
 @Service
 public class AuditBaseManager extends HibernateEntityDao<AuditBase> {
 }
+
+//need to confirm

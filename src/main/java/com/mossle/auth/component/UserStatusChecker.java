@@ -22,3 +22,5 @@ public class UserStatusChecker implements MessageSourceAware {
 		this.messages = new MessageSourceAccessor(messageSource);
 	}
 }
+
+//need to confirm

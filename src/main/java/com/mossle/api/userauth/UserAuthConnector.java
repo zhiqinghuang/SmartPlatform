@@ -7,3 +7,4 @@ public interface UserAuthConnector {
 
 	UserAuthDTO findById(String id, String tenantId);
 }
+//need to confirm

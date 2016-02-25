@@ -7,3 +7,5 @@ public interface TemplateConnector {
 
 	List<TemplateDTO> findAll(String tenantId);
 }
+
+//need to confirm

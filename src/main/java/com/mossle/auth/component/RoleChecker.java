@@ -22,3 +22,5 @@ public class RoleChecker implements MessageSourceAware {
 		this.messages = new MessageSourceAccessor(messageSource);
 	}
 }
+
+//need to confirm

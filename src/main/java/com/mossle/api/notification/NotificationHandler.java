@@ -5,3 +5,5 @@ public interface NotificationHandler {
 
 	void handle(NotificationDTO notificationDto, String tenantId);
 }
+
+//need to confirm

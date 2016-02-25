@@ -43,3 +43,5 @@ public interface UserConnector {
 	 */
 	UserDTO findByNickName(String nickName, String userRepoRef);
 }
+
+//need to confirm

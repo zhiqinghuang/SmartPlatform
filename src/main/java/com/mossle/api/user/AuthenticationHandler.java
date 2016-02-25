@@ -5,3 +5,4 @@ public interface AuthenticationHandler {
 
 	String doAuthenticate(String username, String password, String application);
 }
+//need to confirm

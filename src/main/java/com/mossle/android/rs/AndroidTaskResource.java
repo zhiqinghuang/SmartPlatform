@@ -194,3 +194,4 @@ public class AndroidTaskResource {
 		this.storeConnector = storeConnector;
 	}
 }
+//need to confirm

@@ -7,3 +7,4 @@ public interface MenuConnector {
 
 	List<MenuDTO> findSystemMenus(String userId);
 }
+//need to confirm

@@ -30,3 +30,5 @@ public class MockCmsConnector implements CmsConnector {
 	public void addComment(String articleId, String content, String userId) {
 	}
 }
+
+//need to confirm

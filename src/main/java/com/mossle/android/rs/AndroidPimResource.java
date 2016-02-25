@@ -86,3 +86,4 @@ public class AndroidPimResource {
 		this.pimDeviceManager = pimDeviceManager;
 	}
 }
+//need to confirm

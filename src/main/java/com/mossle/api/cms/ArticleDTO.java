@@ -94,3 +94,5 @@ public class ArticleDTO {
 		this.catalogCode = catalogCode;
 	}
 }
+
+//need to confirm

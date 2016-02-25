@@ -58,3 +58,5 @@ public class WhitelistDTO {
 		this.ips.addAll(list);
 	}
 }
+
+//need to confirm

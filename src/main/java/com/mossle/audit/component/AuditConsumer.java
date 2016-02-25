@@ -76,3 +76,4 @@ public class AuditConsumer implements Runnable {
 		this.batchSize = batchSize;
 	}
 }
+//need to confirm
