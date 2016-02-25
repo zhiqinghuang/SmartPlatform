@@ -8,3 +8,5 @@ import com.mossle.user.persistence.domain.UserSchema;
 @Service
 public class UserSchemaManager extends HibernateEntityDao<UserSchema> {
 }
+
+//need to confirm

@@ -8,3 +8,5 @@ import com.mossle.user.persistence.domain.UserAttr;
 @Service
 public class UserAttrManager extends HibernateEntityDao<UserAttr> {
 }
+
+//need to confirm

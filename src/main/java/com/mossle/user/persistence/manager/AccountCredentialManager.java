@@ -8,3 +8,5 @@ import com.mossle.user.persistence.domain.AccountCredential;
 @Service
 public class AccountCredentialManager extends HibernateEntityDao<AccountCredential> {
 }
+
+//need to confirm

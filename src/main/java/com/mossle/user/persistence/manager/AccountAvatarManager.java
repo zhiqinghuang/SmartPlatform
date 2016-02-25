@@ -8,3 +8,5 @@ import com.mossle.user.persistence.domain.AccountAvatar;
 @Service
 public class AccountAvatarManager extends HibernateEntityDao<AccountAvatar> {
 }
+
+//need to confirm

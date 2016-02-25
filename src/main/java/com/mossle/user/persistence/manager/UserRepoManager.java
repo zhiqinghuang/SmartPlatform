@@ -8,3 +8,5 @@ import com.mossle.user.persistence.domain.UserRepo;
 @Service
 public class UserRepoManager extends HibernateEntityDao<UserRepo> {
 }
+
+//need to confirm

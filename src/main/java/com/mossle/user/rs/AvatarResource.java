@@ -53,3 +53,5 @@ public class AvatarResource {
 		this.tenantHolder = tenantHolder;
 	}
 }
+
+//need to confirm

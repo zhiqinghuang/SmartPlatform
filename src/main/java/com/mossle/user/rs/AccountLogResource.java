@@ -71,3 +71,5 @@ public class AccountLogResource {
 		this.accountLogQueue = accountLogQueue;
 	}
 }
+
+//need to confirm

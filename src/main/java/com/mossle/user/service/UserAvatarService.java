@@ -92,3 +92,5 @@ public class UserAvatarService {
 		this.storeConnector = storeConnector;
 	}
 }
+
+//need to confirm

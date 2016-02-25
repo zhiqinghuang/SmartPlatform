@@ -77,3 +77,5 @@ public class UserRemovedSubscriber implements Subscribable<String> {
 		this.userAuthConnector = userAuthConnector;
 	}
 }
+
+//need to confirm

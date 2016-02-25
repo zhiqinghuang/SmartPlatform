@@ -8,3 +8,5 @@ import com.mossle.user.persistence.domain.AccountLog;
 @Service
 public class AccountLogManager extends HibernateEntityDao<AccountLog> {
 }
+
+//need to confirm

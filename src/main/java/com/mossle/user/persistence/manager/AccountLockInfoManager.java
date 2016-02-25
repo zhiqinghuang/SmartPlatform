@@ -8,3 +8,5 @@ import com.mossle.user.persistence.domain.AccountLockInfo;
 @Service
 public class AccountLockInfoManager extends HibernateEntityDao<AccountLockInfo> {
 }
+
+//need to confirm
