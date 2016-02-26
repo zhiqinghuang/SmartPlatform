@@ -48,7 +48,6 @@ public class ApplicationPropertiesFactoryBean extends PropertiesLoaderSupport im
 	protected void readProperties() throws IOException {
 		Resource propertiesListResource = resourceLoader.getResource(propertiesListLocation);
 		List<Resource> resources = new ArrayList<Resource>();
-
 		if (!propertiesListResource.exists()) {
 			logger.info("use default properties");
 			resources.add(resourceLoader.getResource("classpath:/application.properties"));
@@ -56,28 +55,22 @@ public class ApplicationPropertiesFactoryBean extends PropertiesLoaderSupport im
 			resources.add(resourceLoader.getResource("classpath:/application.server.properties"));
 		} else {
 			String text = IoUtils.readString(propertiesListResource);
-
 			for (String str : text.split("\n")) {
 				str = str.trim();
-
 				if (str.length() == 0) {
 					continue;
 				}
-
 				resources.add(resourceLoader.getResource(str));
 			}
 		}
-
 		setLocations(resources.toArray(new Resource[0]));
 	}
 
 	public Map<String, Object> getMap() {
 		Map<String, Object> map = new HashMap<String, Object>();
-
 		for (String key : properties.stringPropertyNames()) {
 			map.put(key, properties.get(key));
 		}
-
 		return map;
 	}
 
