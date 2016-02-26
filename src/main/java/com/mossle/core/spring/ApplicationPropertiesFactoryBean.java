@@ -17,7 +17,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.io.support.PropertiesLoaderSupport;
 
 import com.mossle.core.util.IoUtils;
-
+//need to confirm
 public class ApplicationPropertiesFactoryBean extends PropertiesLoaderSupport implements FactoryBean<Properties>, InitializingBean {
 	private static Logger logger = LoggerFactory.getLogger(ApplicationPropertiesFactoryBean.class);
 	private ResourceLoader resourceLoader = new DefaultResourceLoader();
@@ -89,5 +89,3 @@ public class ApplicationPropertiesFactoryBean extends PropertiesLoaderSupport im
 		this.propertiesListLocation = propertiesListLocation;
 	}
 }
-
-//need to confirm
