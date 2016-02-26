@@ -25,7 +25,9 @@
 					<li class="${currentHeader == menu.code ? 'active' : ''}"><a href="${tenantPrefix}/${menu.url}"><i class="icon-user"></i>${menu.title}</a></li>
 				</c:if>
 				<c:if test="${not empty menu.children}">
-					<li class="dropdown ${currentHeader == menu.code ? 'active' : ''}"><a data-toggle="dropdown" class="dropdown-toggle" href="${tenantPrefix}/${menu.url}"> <i class="icon-user"></i>${menu.title} <b class="caret"></b>
+					<li class="dropdown ${currentHeader == menu.code ? 'active' : ''}">
+					<a data-toggle="dropdown" class="dropdown-toggle" href="${tenantPrefix}/${menu.url}">
+						<i class="icon-user"></i>${menu.title} <b class="caret"></b>
 					</a>
 						<ul class="dropdown-menu">
 							<c:forEach items="${menu.children}" var="child">
