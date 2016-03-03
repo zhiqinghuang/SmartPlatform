@@ -20,7 +20,7 @@
 			List<MenuDTO> menuDtos = menuConnector.findMenus(systemCode, userId);
 			for (MenuDTO menuDto : menuDtos) {
 				jspContext.setAttribute("menu", menuDto);
-%>
+				%>
 				<c:if test="${empty menu.children}">
 					<li class="${currentHeader == menu.code ? 'active' : ''}"><a href="${tenantPrefix}/${menu.url}"><i class="icon-user"></i>${menu.title}</a></li>
 				</c:if>
@@ -35,8 +35,8 @@
 							</c:forEach>
 						</ul></li>
 				</c:if>
-<%
-	}
+				<%
+			}
 		} catch (Exception ex) {
 			System.out.println(ex);
 		}
