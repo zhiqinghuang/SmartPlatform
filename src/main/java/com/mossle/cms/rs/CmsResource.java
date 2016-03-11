@@ -3,6 +3,8 @@ package com.mossle.cms.rs;
 import java.io.InputStream;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Component;
 import com.mossle.api.store.StoreConnector;
 import com.mossle.api.store.StoreDTO;
 import com.mossle.api.tenant.TenantHolder;
+import com.mossle.core.util.ServletUtils;
 
 @Component
 @Path("cms")
@@ -30,7 +33,6 @@ public class CmsResource {
 	public InputStream image(@QueryParam("key") String key) throws Exception {
 		String tenantId = tenantHolder.getTenantId();
 		StoreDTO storeDto = storeConnector.getStore("cms/html/r/image", key, tenantId);
-
 		return storeDto.getDataSource().getInputStream();
 	}
 
@@ -40,7 +42,6 @@ public class CmsResource {
 	public InputStream video(@QueryParam("key") String key) throws Exception {
 		String tenantId = tenantHolder.getTenantId();
 		StoreDTO storeDto = storeConnector.getStore("cms/html/r/video", key, tenantId);
-
 		return storeDto.getDataSource().getInputStream();
 	}
 
@@ -60,7 +61,6 @@ public class CmsResource {
 	public InputStream pdf(@QueryParam("key") String key) throws Exception {
 		String tenantId = tenantHolder.getTenantId();
 		StoreDTO storeDto = storeConnector.getStore("cms/html/r/pdf", key, tenantId);
-
 		return storeDto.getDataSource().getInputStream();
 	}
 
@@ -70,11 +70,20 @@ public class CmsResource {
 	public InputStream zip(@QueryParam("key") String key) throws Exception {
 		String tenantId = tenantHolder.getTenantId();
 		StoreDTO storeDto = storeConnector.getStore("cms/html/r/attachment", key, tenantId);
-
 		return storeDto.getDataSource().getInputStream();
 	}
 
-	@Resource
+	@GET
+	@Path("attachments")
+	@Produces(MediaType.APPLICATION_OCTET_STREAM)
+	public InputStream attachments(@QueryParam("key") String key, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String tenantId = tenantHolder.getTenantId();
+		StoreDTO storeDto = storeConnector.getStore("cms/html/r/attachments", key, tenantId);
+		ServletUtils.setFileDownloadHeader(request, response, storeDto.getDisplayName());
+		return storeDto.getDataSource().getInputStream();
+	}
+
+    @Resource
 	public void setStoreConnector(StoreConnector storeConnector) {
 		this.storeConnector = storeConnector;
 	}
@@ -84,5 +93,4 @@ public class CmsResource {
 		this.tenantHolder = tenantHolder;
 	}
 }
-
 //need to confirm

@@ -82,7 +82,7 @@ public class CmsArticleController {
 	}
 
 	@RequestMapping("cms-article-save")
-	public String save(@ModelAttribute CmsArticle cmsArticle, @RequestParam("cmsCatalogId") Long cmsCatalogId, RedirectAttributes redirectAttributes) {
+	public String save(@ModelAttribute CmsArticle cmsArticle, @RequestParam("cmsCatalogId") Long cmsCatalogId, @RequestParam(value = "file", required = false) MultipartFile file, RedirectAttributes redirectAttributes) throws Exception {
 		String tenantId = tenantHolder.getTenantId();
 		Long id = cmsArticle.getId();
 		CmsArticle dest = null;
@@ -102,6 +102,17 @@ public class CmsArticleController {
 
 		dest.setCmsCatalog(cmsCatalogManager.get(cmsCatalogId));
 
+		cmsArticleManager.save(dest);
+
+		// attachment
+		if (file != null) {
+			StoreDTO storeDto = storeConnector.saveStore("cms/html/r/attachments", new MultipartFileDataSource(file), tenantId);
+			CmsAttachment cmsAttachment = new CmsAttachment();
+			cmsAttachment.setCmsArticle(dest);
+			cmsAttachment.setName(file.getOriginalFilename());
+			cmsAttachment.setPath(storeDto.getKey());
+			cmsAttachmentManager.save(cmsAttachment);
+		}
 		cmsArticleManager.save(dest);
 		messageHelper.addFlashMessage(redirectAttributes, "core.success.save", "保存成功");
 
@@ -342,4 +353,4 @@ public class CmsArticleController {
 	}
 }
 
-//need to confirm
+// need to confirm
