@@ -70,7 +70,7 @@
 							<div class="form-group">
 								<label class="col-md-2 control-label" for="username"><spring:message code="core.login.username" text="账号" /></label>
 								<div class="col-md-10">
-									<input type='text' id="username" name='j_username' class="form-control" value="${empty sessionScope['SECURITY_LAST_USERNAME'] ? cookie['SECURITY_LAST_USERNAME'].value : sessionScope['SECURITY_LAST_USERNAME']}" aria-describedby="inputSuccess3Status"><span id="usernameText" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" style="right: 15px; cursor: pointer; pointer-events: auto;" onclick="$('#username').val('');$('#usernameText').hide();"></span>
+									<input type='text' id="username" name='j_username' class="form-control" value="${empty sessionScope['SECURITY_LAST_USERNAME'] ? cookie['SECURITY_LAST_USERNAME'].value : sessionScope['SECURITY_LAST_USERNAME']}" aria-describedby="inputSuccess3Status"> <span id="usernameText" class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" style="right: 15px; cursor: pointer; pointer-events: auto;" onclick="$('#username').val('');$('#usernameText').hide();"></span>
 								</div>
 							</div>
 							<div class="form-group">
