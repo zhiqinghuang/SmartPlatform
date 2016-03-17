@@ -8,7 +8,6 @@ import java.io.OutputStreamWriter;
 
 public class TestCase {
 
-	@org.junit.Test
 	public void test() {
 		appendToFiles("D:/workspace/SmartPlatform/SmartPlatform/src/main/java");
 	}
