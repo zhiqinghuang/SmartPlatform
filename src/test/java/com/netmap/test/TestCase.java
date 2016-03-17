@@ -6,9 +6,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
+import org.junit.Test;
+
 public class TestCase {
 
+	@Test
 	public void test() {
+	}
+
+	public static void appendNeedToConfirm2JavaFile(){
 		appendToFiles("D:/workspace/SmartPlatform/SmartPlatform/src/main/java");
 	}
 
