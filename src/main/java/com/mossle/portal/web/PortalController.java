@@ -15,10 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.mossle.api.tenant.TenantHolder;
 import com.mossle.core.auth.CurrentUserHolder;
 import com.mossle.core.mapper.BeanMapper;
-import com.mossle.core.spring.MessageHelper;
 import com.mossle.portal.persistence.domain.PortalInfo;
 import com.mossle.portal.persistence.domain.PortalItem;
 import com.mossle.portal.persistence.domain.PortalRef;
@@ -37,9 +35,9 @@ public class PortalController {
 	private PortalItemManager portalItemManager;
 	private PortalRefManager portalRefManager;
 	private BeanMapper beanMapper = new BeanMapper();
-	private MessageHelper messageHelper;
+	//private MessageHelper messageHelper;
 	private CurrentUserHolder currentUserHolder;
-	private TenantHolder tenantHolder;
+	//private TenantHolder tenantHolder;
 
 	@RequestMapping("index")
 	public String index(Model model) {
@@ -199,19 +197,19 @@ public class PortalController {
 		this.portalRefManager = portalRefManager;
 	}
 
-	@Resource
-	public void setMessageHelper(MessageHelper messageHelper) {
-		this.messageHelper = messageHelper;
-	}
+	//@Resource
+	//public void setMessageHelper(MessageHelper messageHelper) {
+		//this.messageHelper = messageHelper;
+	//}
 
 	@Resource
 	public void setCurrentUserHolder(CurrentUserHolder currentUserHolder) {
 		this.currentUserHolder = currentUserHolder;
 	}
 
-	@Resource
-	public void setTenantHolder(TenantHolder tenantHolder) {
-		this.tenantHolder = tenantHolder;
-	}
+	//@Resource
+	//public void setTenantHolder(TenantHolder tenantHolder) {
+		//this.tenantHolder = tenantHolder;
+	//}
 }
 //need to confirm
