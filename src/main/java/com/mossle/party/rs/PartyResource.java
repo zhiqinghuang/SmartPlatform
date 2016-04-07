@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -13,9 +14,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import com.mossle.api.user.UserConnector;
+import com.mossle.api.user.UserDTO;
 
 import com.mossle.party.persistence.domain.PartyEntity;
 import com.mossle.party.persistence.domain.PartyStruct;
@@ -25,6 +25,11 @@ import com.mossle.party.persistence.manager.PartyStructManager;
 import com.mossle.party.persistence.manager.PartyTypeManager;
 import com.mossle.party.service.PartyService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.springframework.stereotype.Component;
+
 @Component
 @Path("party")
 public class PartyResource {
@@ -33,6 +38,7 @@ public class PartyResource {
 	private PartyEntityManager partyEntityManager;
 	private PartyStructManager partyStructManager;
 	private PartyService partyService;
+	private UserConnector userConnector;
 
 	@GET
 	@Path("types")
@@ -123,6 +129,12 @@ public class PartyResource {
 				if (partyStruct.getPartyStructType().getId() == partyStructTypeId) {
 					PartyEntity childPartyEntity = partyStruct.getChildEntity();
 
+					if (childPartyEntity == null) {
+						logger.info("child party entity is null");
+
+						continue;
+					}
+
 					if (childPartyEntity.getPartyType().getType() != 1) {
 						partyEntities.add(childPartyEntity);
 					}
@@ -153,6 +165,27 @@ public class PartyResource {
 		return names;
 	}
 
+	@GET
+	@Path("searchUser")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Map<String, String>> searchUser(@QueryParam("parentId") Long parentId) {
+		String hql = "select child from PartyEntity child join child.parentStructs parent where child.partyType.id=1 and parent.parentEntity.id=?";
+		List<PartyEntity> partyEntities = partyEntityManager.find(hql, parentId);
+
+		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+
+		for (PartyEntity partyEntity : partyEntities) {
+			Map<String, String> map = new HashMap<String, String>();
+			UserDTO userDto = userConnector.findById(partyEntity.getRef());
+			map.put("id", userDto.getId());
+			map.put("username", userDto.getUsername());
+			map.put("displayName", userDto.getDisplayName());
+			list.add(map);
+		}
+
+		return list;
+	}
+
 	// ~ ==================================================
 	@Resource
 	public void setPartyTypeManager(PartyTypeManager partyTypeManager) {
@@ -172,6 +205,11 @@ public class PartyResource {
 	@Resource
 	public void setPartyService(PartyService partyService) {
 		this.partyService = partyService;
+	}
+
+	@Resource
+	public void setUserConnector(UserConnector userConnector) {
+		this.userConnector = userConnector;
 	}
 
 	// ~ ==================================================
