@@ -1306,7 +1306,7 @@
 		<jansi.version>1.11</jansi.version>
 		<janino.version>2.7.8</janino.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
-		<commons-beanutils.version>1.9.2</commons-beanutils.version>
+		<commons-beanutils.version>1.9.4</commons-beanutils.version>
 		<commons-codec.version>1.10</commons-codec.version>
 		<commons-io.version>2.4</commons-io.version>
 		<poi.version>3.13</poi.version>
