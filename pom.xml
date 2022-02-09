@@ -1295,7 +1295,7 @@
 		<jetty.version>9.3.8.v20160314</jetty.version>
 		<spring.version>4.0.9.RELEASE</spring.version>
 		<spring-security.version>3.2.9.RELEASE</spring-security.version>
-		<hibernate.version>4.3.11.Final</hibernate.version>
+		<hibernate.version>5.4.24.Final</hibernate.version>
 		<hibernate-validator.version>5.2.2.Final</hibernate-validator.version>
 		<javassist.version>3.20.0-GA</javassist.version>
 		<ehcache.version>2.10.1</ehcache.version>
