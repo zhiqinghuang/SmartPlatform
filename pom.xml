@@ -1293,7 +1293,7 @@
 		<servlet.version>3.0.1</servlet.version>
 		<jsp.version>2.1</jsp.version>
 		<jetty.version>9.3.8.v20160314</jetty.version>
-		<spring.version>4.0.9.RELEASE</spring.version>
+		<spring.version>5.3.18</spring.version>
 		<spring-security.version>3.2.9.RELEASE</spring-security.version>
 		<hibernate.version>4.3.11.Final</hibernate.version>
 		<hibernate-validator.version>5.2.2.Final</hibernate-validator.version>
